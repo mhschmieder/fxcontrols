@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxControls Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the FxControls
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
@@ -44,15 +44,20 @@ import javafx.scene.paint.Color;
  *
  * @author Mark Schmieder
  */
-public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color > {
+public abstract class ColorPickerTableCell< RT >
+        extends XTableCell< RT, Color > {
 
     // This is a custom cell so we declare our own Color Picker to handle it.
     protected XColorPicker _colorPicker;
 
-    // NOTE: It is better to pass in the Table Column than to query at
-    // run-time, as the latter can result in null pointer exceptions during
-    // initialization, due to order-dependency.
-    public ColorPickerTableCell( final TableColumn< RT, Color > column, final String tooltipText ) {
+    // NOTE: It is better to pass in the Table Column than to query at run-time,
+    //  as the latter can result in null pointer exceptions during
+    //  initialization, due to order-dependency.
+    // NOTE: The color editable flag is needed for conditionally blocking the
+    //  color picker from popping up for edits; this table cell may be used for
+    //  display-only color tables so we need to cover both basic usage contexts.
+    public ColorPickerTableCell( final TableColumn< RT, Color > column,
+                                 final String tooltipText ) {
         // Always call the superclass constructor first!
         super();
 
@@ -64,8 +69,8 @@ public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color >
         }
     }
 
-    private final void initTableCell( final TableColumn< RT, Color > column,
-                                      final String tooltipText ) {
+    private void initTableCell( final TableColumn< RT, Color > column,
+                                final String tooltipText ) {
         // Make the Color Picker with initial specified selection state.
         _colorPicker = new XColorPicker( tooltipText );
         _colorPicker.setMaxWidth( Double.MAX_VALUE );
@@ -73,32 +78,36 @@ public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color >
         // Try to make the Color Picker fill the entire Table Cell.
         // NOTE: We have to account for insets and margins though.
         // NOTE: Setting height causes incremental growth per click!
-        _colorPicker.minWidthProperty().bind( widthProperty().subtract( 8.0d ) );
+        _colorPicker.minWidthProperty().bind( widthProperty().subtract(
+                8.0d ) );
         _colorPicker.prefWidthProperty().bind( widthProperty() );
 
         _colorPicker.editableProperty().bind( column.editableProperty() );
-        _colorPicker.disableProperty().bind( column.editableProperty().not() );
+        _colorPicker.disableProperty().bind(
+                column.editableProperty().not() );
 
         // It is safer to manually show the Color Picker and put it into editing
         // mode, than to deal with the complexities of the base class
         // implementation, as the Color Picker has a very different workflow and
         // event model from a standard supported control like a Text Field.
-        _colorPicker.setOnShowing( evt -> {
+        _colorPicker.setOnShowing(evt -> {
             // Bring up the Color Picker to edit the Color value.
             final TableView< RT > tableView = getTableView();
-            final TableViewSelectionModel< RT > selectionModel = tableView.getSelectionModel();
+            final TableViewSelectionModel< RT > selectionModel
+                    = tableView.getSelectionModel();
             final int selectedIndex = getTableRow().getIndex();
             selectionModel.select( selectedIndex );
-            final int selectedIndexCorrected = selectionModel.getSelectedIndex();
+            final int selectedIndexCorrected
+                    = selectionModel.getSelectedIndex();
             tableView.edit( selectedIndexCorrected, column );
         } );
 
         // Register a callback to handle user actions that commit a choice.
         // NOTE: This covers direct clicks in the palette, and confirmation of
-        // custom colors, but deliberately avoids cases where the user canceled
-        // the custom color pop-up or the main palette (via mouse focus), so
-        // that we do not unnecessarily sync or commit unchanged values (which
-        // could possibly falsely trigger the project-level dirty flag).
+        //  custom colors, but deliberately avoids cases where the user canceled
+        //  the custom color pop-up or the main palette (via mouse focus), so
+        //  that we do not unnecessarily sync or commit unchanged values (which
+        //  could possibly falsely trigger the project-level dirty flag).
         _colorPicker.setOnAction( evt -> {
             // Save the edits from the Color Picker to the property bean.
             saveEdits();
@@ -108,7 +117,7 @@ public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color >
         setContentDisplay( ContentDisplay.GRAPHIC_ONLY );
     }
 
-    private final void saveEdits() {
+    private void saveEdits() {
         // Get the current displayed value of the Color Picker.
         final Color color = _colorPicker.getValue();
 
@@ -117,7 +126,8 @@ public abstract class ColorPickerTableCell< RT > extends XTableCell< RT, Color >
     }
 
     @Override
-    public void updateItem( final Color item, final boolean empty ) {
+    public void updateItem( final Color item,
+                            final boolean empty ) {
         // Make sure the table cell knows the current state.
         super.updateItem( item, empty );
 
