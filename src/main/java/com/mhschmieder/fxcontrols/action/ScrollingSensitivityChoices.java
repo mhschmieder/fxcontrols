@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.action;
 
-import com.mhschmieder.fxgraphics.input.ScrollingSensitivity;
+import com.mhschmieder.jgraphics.input.ScrollingSensitivity;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import org.controlsfx.control.action.Action;
 

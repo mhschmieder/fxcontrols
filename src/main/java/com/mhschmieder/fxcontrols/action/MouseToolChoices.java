@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.action;
 
-import com.mhschmieder.fxgraphics.input.MouseToolMode;
+import com.mhschmieder.jgraphics.input.MouseToolMode;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import org.controlsfx.control.action.Action;
 
