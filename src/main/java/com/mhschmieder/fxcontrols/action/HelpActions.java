@@ -56,25 +56,37 @@ public class HelpActions {
     public final XAction _teamMembersAction;
     public final XAction _thirdPartyLibrariesAction;
     public final XAction _eulaAction;
+    public final XAction _viewInformationAction;
 
     public HelpActions( final ClientProperties pClientProperties, 
                         final String applicationName ) {
-        _helpAction = LabeledActionFactory.getHelpHelpAction( pClientProperties );
-        _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction( pClientProperties );
-        _releaseNotesAction = LabeledActionFactory.getHelpReleaseNotesAction( pClientProperties );
-        _issueTrackingAction = LabeledActionFactory.getIssueTrackingAction( pClientProperties );
-        _reportIssueAction = LabeledActionFactory.getReportIssueAction( pClientProperties );
-        _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction( pClientProperties );
+        _helpAction = LabeledActionFactory.getHelpHelpAction(
+                pClientProperties );
+        _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction(
+                pClientProperties );
+        _releaseNotesAction = LabeledActionFactory.getReleaseNotesAction(
+                pClientProperties );
+        _issueTrackingAction = LabeledActionFactory.getIssueTrackingAction(
+                pClientProperties );
+        _reportIssueAction = LabeledActionFactory.getReportIssueAction(
+                pClientProperties );
+        _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction(
+                pClientProperties );
         _accountManagementAction = LabeledActionFactory
                 .getHelpAccountManagementAction( pClientProperties );
         _checkForUpdatesAction =
-                LabeledActionFactory.getHelpCheckForUpdatesAction( pClientProperties );
-        _teamMembersAction = LabeledActionFactory.getHelpTeamMembersAction( pClientProperties );
+                LabeledActionFactory.getHelpCheckForUpdatesAction(
+                        pClientProperties );
+        _teamMembersAction = LabeledActionFactory.getHelpTeamMembersAction(
+                pClientProperties );
         _thirdPartyLibrariesAction = LabeledActionFactory
                 .getHelpThirdPartyLibrariesAction( pClientProperties );
         _aboutAction = LabeledActionFactory
                 .getHelpAboutAction( pClientProperties, applicationName );
-        _eulaAction = LabeledActionFactory.getHelpEulaAction( pClientProperties );
+        _eulaAction = LabeledActionFactory.getHelpEulaAction(
+                pClientProperties );
+        _viewInformationAction = LabeledActionFactory
+                .getViewInformationAction( pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
