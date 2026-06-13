@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.jgraphics.input.ScrollingSensitivity;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jgraphics.input.ScrollingSensitivity;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Slider;
