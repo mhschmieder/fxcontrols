@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxGuiToolkit
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
@@ -42,7 +42,7 @@ import java.util.Collection;
  */
 public final class MouseToolChoices {
 
-    // Declare all of the Mouse Tool choices.
+    // Declare all the Mouse Tool choices.
     public XAction      _selectToolChoice;
     public XAction      _panToolChoice;
     public XAction      _zoomToolChoice;
@@ -53,31 +53,36 @@ public final class MouseToolChoices {
     public XActionGroup _mouseToolChoiceGroup;
 
     // Default constructor
-    @SuppressWarnings("nls")
     public MouseToolChoices( final ClientProperties pClientProperties ) {
-        _selectToolChoice = LabeledActionFactory.getSelectToolChoice( pClientProperties );
-        _panToolChoice = LabeledActionFactory.getPanToolChoice( pClientProperties );
-        _zoomToolChoice = LabeledActionFactory.getZoomToolChoice( pClientProperties );
-        _rotateToolChoice = LabeledActionFactory.getRotateToolChoice( pClientProperties );
-        _lineToolChoice = LabeledActionFactory.getLineToolChoice( pClientProperties );
+        _selectToolChoice = LabeledActionFactory.getSelectToolChoice(
+                pClientProperties );
+        _panToolChoice = LabeledActionFactory.getPanToolChoice(
+                pClientProperties );
+        _zoomToolChoice = LabeledActionFactory.getZoomToolChoice(
+                pClientProperties );
+        _rotateToolChoice = LabeledActionFactory.getRotateToolChoice(
+                pClientProperties );
+        _lineToolChoice = LabeledActionFactory.getLineToolChoice(
+                pClientProperties );
 
         final Collection< Action > mouseToolChoiceCollection = getMouseToolChoiceCollection();
 
-        _mouseToolChoiceGroup = ActionFactory.makeChoiceGroup( pClientProperties,
+        _mouseToolChoiceGroup = ActionFactory.makeChoiceGroup(
+                pClientProperties,
                 mouseToolChoiceCollection,
                 LabeledActionFactory.BUNDLE_NAME,
-                "mouseTool",
+                "mouseTools",
                 null,
                 true );
     }
 
     public Collection< Action > getMouseToolChoiceCollection() {
-        final Collection< Action > mouseToolChoiceCollection = Arrays
-                .asList( _selectToolChoice,
-                        _panToolChoice,
-                        _zoomToolChoice,
-                        _rotateToolChoice,
-                        _lineToolChoice );
+        final Collection< Action > mouseToolChoiceCollection = Arrays.asList(
+                _selectToolChoice,
+                _panToolChoice,
+                _zoomToolChoice,
+                _rotateToolChoice,
+                _lineToolChoice );
         return mouseToolChoiceCollection;
     }
 
