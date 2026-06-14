@@ -73,7 +73,7 @@ public final class LabeledControlFactory {
     private LabeledControlFactory() {}
 
     // NOTE: We must substitute "." for resource directory tree delimiters.
-    public static final String BUNDLE_NAME = "properties.CommonActionLabels";
+    public static final String BUNDLE_NAME = "properties.ActionLabels";
 
     public static Button getButton( final String label,
                                     final Font font,
