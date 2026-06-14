@@ -1271,6 +1271,6 @@ public class LabeledActionFactory {
                 BUNDLE_NAME,
                 "simulation",
                 "batchRun",
-                "/icons/yusukeKamiyamane/ArrowRepeat16.png" );
+                "/icons/yusukeKamiyamane/fugue/ArrowRepeat16.png" );
     }
 }
