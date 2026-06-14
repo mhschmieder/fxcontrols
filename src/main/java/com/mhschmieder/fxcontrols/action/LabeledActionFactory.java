@@ -1214,7 +1214,7 @@ public class LabeledActionFactory {
                 BUNDLE_NAME,
                 "view",
                 "zoomIn",
-                "/icons/mhschmieder/ZoomIn16.png" );
+                "/icons/mhschmieder/ZoomInSmall16.png" );
     }
 
     public static XAction getViewZoomOutAction( final ClientProperties pClientProperties ) {
@@ -1223,7 +1223,7 @@ public class LabeledActionFactory {
                 BUNDLE_NAME,
                 "view",
                 "zoomOut",
-                "/icons/mhschmieder/ZoomOut16.png" );
+                "/icons/mhschmieder/ZoomOutSmall16.png" );
     }
 
     public static XAction getStopPlaybackAction(
