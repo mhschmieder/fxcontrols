@@ -794,4 +794,29 @@ public final class LabeledControlFactory {
 
         return toggleButton;
     }
+
+    public static CheckBox getUseAirAttenuationCheckBox( final ClientProperties clientProperties,
+                                                         final XAction useAirAttenuationAction ) {
+        return ControlUtilities.getLabeledCheckBox( useAirAttenuationAction );
+    }
+
+    public static Label getSplRangeLabel( final ClientProperties clientProperties ) {
+        return ControlUtilities
+                .getLabeledLabel( clientProperties, BUNDLE_NAME, "settings", "splRange" );
+    }
+
+    public static CheckBox getAutoRangeSplCheckBox( final ClientProperties clientProperties ) {
+        return ControlUtilities
+                .getLabeledCheckBox( clientProperties, BUNDLE_NAME, "settings", "autoRangeSpl" );
+    }
+
+    public static Label getDitheringLabel( final ClientProperties clientProperties ) {
+        return ControlUtilities
+                .getLabeledLabel( clientProperties, BUNDLE_NAME, "test", "ditheringAmount" );
+    }
+
+    public static CheckBox getUseDitheringCheckBox( final ClientProperties clientProperties ) {
+        return ControlUtilities
+                .getLabeledCheckBox( clientProperties, BUNDLE_NAME, "test", "useDithering" );
+    }
 }

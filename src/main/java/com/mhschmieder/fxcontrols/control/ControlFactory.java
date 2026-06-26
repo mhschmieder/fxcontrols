@@ -33,6 +33,11 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.fxcontrols.util.RegionUtilities;
 import com.mhschmieder.fxgraphics.geometry.SurfaceMaterial;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.measure.AngleUnit;
+import com.mhschmieder.jphysics.measure.DistanceUnit;
+import com.mhschmieder.jphysics.measure.PressureUnit;
+import com.mhschmieder.jphysics.measure.TemperatureUnit;
+import com.mhschmieder.jphysics.measure.WeightUnit;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
@@ -61,6 +66,12 @@ public class ControlFactory {
     // Predefine the notes/notices colors.
     public static final Color NOTES_BACKGROUND_COLOR = Color.FLORALWHITE;
     public static final Color NOTES_FOREGROUND_COLOR = Color.BLACK;
+
+    // Default SPL range, for best "out of box" experience.
+    public static final int SPL_RANGE_DB_DEFAULT = 42;
+
+    // Default Dithering Amount, for best "out of box" experience.
+    public static final double DITHERING_AMOUNT_DEFAULT = 8.0d;
 
     /**
      * The default constructor is disabled, as this is a static factory class.
@@ -355,5 +366,347 @@ public class ControlFactory {
                 minimumNumberOfProjectionZones,
                 maximumNumberOfProjectionZones,
                 projectionZonesIncrement );
+    }
+
+    // Helper method to get an Angle Editor, standalone or paired.
+    public static AngleEditor makeAngleEditor(final ClientProperties clientProperties,
+                                              final String tooltipText,
+                                              final double minimumValue,
+                                              final double maximumValue,
+                                              final double initialValue) {
+        return makeAngleEditor( clientProperties,
+                tooltipText,
+                AngleUnit.DEGREES.abbreviation(),
+                minimumValue,
+                maximumValue,
+                initialValue );
+    }
+
+    // Helper method to get an Angle Editor, standalone or paired.
+    public static AngleEditor makeAngleEditor(final ClientProperties clientProperties,
+                                              final String tooltipText,
+                                              final String measurementUnit,
+                                              final double minimumValue,
+                                              final double maximumValue,
+                                              final double initialValue) {
+        return makeAngleEditor( clientProperties,
+                tooltipText,
+                0,
+                2,
+                0,
+                10,
+                measurementUnit,
+                minimumValue,
+                maximumValue,
+                initialValue );
+    }
+
+    // Helper method to get an Angle Editor, standalone or paired.
+    public static AngleEditor makeAngleEditor(final ClientProperties clientProperties,
+                                              final String tooltipText,
+                                              final int minFractionDigitsFormat,
+                                              final int maxFractionDigitsFormat,
+                                              final int minFractionDigitsParse,
+                                              final int maxFractionDigitsParse,
+                                              final String measurementUnit,
+                                              final double minimumValue,
+                                              final double maximumValue,
+                                              final double initialValue) {
+        // Get the current value and format it as initial text.
+        final String initialText = Double.toString( initialValue ) + measurementUnit;
+
+        final AngleEditor angleEditor = new AngleEditor( clientProperties,
+                initialText,
+                tooltipText,
+                minFractionDigitsFormat,
+                maxFractionDigitsFormat,
+                minFractionDigitsParse,
+                maxFractionDigitsParse,
+                minimumValue,
+                maximumValue,
+                initialValue );
+
+        angleEditor.setMeasurementUnitString( measurementUnit );
+
+        return angleEditor;
+    }
+
+    // Helper method to get an Angle Editor, standalone or paired.
+    public static AngleEditor makeAngleEditor(final ClientProperties clientProperties,
+                                              final String tooltipText,
+                                              final int minFractionDigitsFormat,
+                                              final int maxFractionDigitsFormat,
+                                              final int minFractionDigitsParse,
+                                              final int maxFractionDigitsParse,
+                                              final String measurementUnit,
+                                              final double minimumValue,
+                                              final double maximumValue,
+                                              final double initialValue,
+                                              final double valueIncrement) {
+        // Get the current value and format it as initial text.
+        final String initialText = Double.toString( initialValue ) + measurementUnit;
+
+        final AngleEditor angleEditor = new AngleEditor( clientProperties,
+                initialText,
+                tooltipText,
+                minFractionDigitsFormat,
+                maxFractionDigitsFormat,
+                minFractionDigitsParse,
+                maxFractionDigitsParse,
+                minimumValue,
+                maximumValue,
+                initialValue,
+                valueIncrement );
+
+        angleEditor.setMeasurementUnitString( measurementUnit );
+
+        return angleEditor;
+    }
+
+    // Helper method to get an Angle Editor to pair with a slider.
+    public static AngleEditor makeAngleSliderEditor(
+            final ClientProperties clientProperties,
+            final AngleSlider angleSlider ) {
+
+        return makeAngleSliderEditor(
+                clientProperties,
+                angleSlider,
+                0,
+                2,
+                0,
+                10 );
+    }
+
+    // Helper method to get an Angle Editor to pair with a slider.
+    public static AngleEditor makeAngleSliderEditor(final ClientProperties clientProperties,
+                                                    final AngleSlider angleSlider,
+                                                    final int minFractionDigitsFormat,
+                                                    final int maxFractionDigitsFormat,
+                                                    final int minFractionDigitsParse,
+                                                    final int maxFractionDigitsParse) {
+        // Use the current slider value and limits to set the number textField.
+        return makeAngleEditor( clientProperties,
+                null,
+                minFractionDigitsFormat,
+                maxFractionDigitsFormat,
+                minFractionDigitsParse,
+                maxFractionDigitsParse,
+                angleSlider.getMeasurementUnitString(),
+                angleSlider.getMin(),
+                angleSlider.getMax(),
+                angleSlider.getValue() );
+    }
+
+    // Helper method to get a custom Temperature Editor.
+    public static TemperatureEditor makeTemperatureEditor(
+            final ClientProperties clientProperties ) {
+        // Format the default Temperature value as the initial text.
+        final double initialValue = TemperatureSlider.INITIAL_TEMPERATURE_KELVIN_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        return new TemperatureEditor(
+                clientProperties,
+                initialText,
+                null,
+                TemperatureSlider.MINIMUM_TEMPERATURE_KELVIN_DEFAULT,
+                TemperatureSlider.MAXIMUM_TEMPERATURE_KELVIN_DEFAULT,
+                initialValue );
+    }
+
+    // Helper method to get a custom Pressure Editor.
+    public static PressureEditor makePressureEditor(
+            final ClientProperties clientProperties) {
+        // Format the default Pressure value as the initial text.
+        final double initialValue = PressureSlider.INITIAL_PRESSURE_PASCALS_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        return new PressureEditor(
+                clientProperties,
+                initialText,
+                null,
+                PressureSlider.MINIMUM_PRESSURE_PASCALS_DEFAULT,
+                PressureSlider.MAXIMUM_PRESSURE_PASCALS_DEFAULT,
+                initialValue );
+    }
+
+    // Helper method to get a humidity textField to pair with a slider.
+    public static HumidityEditor makeHumiditySliderEditor(final ClientProperties clientProperties,
+                                                          final HumiditySlider humiditySlider) {
+        // Get the current slider value and format it as initial text.
+        final double initialValue = HumiditySlider.INITIAL_RELATIVE_HUMIDITY_DEFAULT;
+        final String initialText = Double.toString( initialValue );
+
+        final HumidityEditor humidityEditor =
+                new HumidityEditor( clientProperties,
+                        initialText,
+                        null,
+                        HumiditySlider.MINIMUM_RELATIVE_HUMIDITY_DEFAULT,
+                        HumiditySlider.MAXIMUM_RELATIVE_HUMIDITY_DEFAULT,
+                        initialValue );
+
+        final String measurementUnitString = humiditySlider.getMeasurementUnitString();
+        humidityEditor.setMeasurementUnitString( measurementUnitString );
+
+        return humidityEditor;
+    }
+
+    public static XComboBox<DistanceUnit> makeDistanceUnitSelector(
+            final ClientProperties pClientProperties,
+            final boolean applyToolkitCss,
+            final boolean includeUnitless,
+            final DistanceUnit defaultDistanceUnit ) {
+        final DistanceUnit[] distanceUnitsKnown = {
+                DistanceUnit.MILLIMETERS,
+                DistanceUnit.CENTIMETERS,
+                DistanceUnit.METERS,
+                DistanceUnit.INCHES,
+                DistanceUnit.FEET,
+                DistanceUnit.YARDS };
+        final DistanceUnit[] supportedValues = includeUnitless
+                ? DistanceUnit.values()
+                : distanceUnitsKnown;
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                supportedValues,
+                "Supported Distance Units",
+                defaultDistanceUnit );
+    }
+
+    public static XComboBox< AngleUnit > makeAngleUnitSelector(
+            final ClientProperties pClientProperties,
+            final boolean applyToolkitCss,
+            final AngleUnit defaultAngleUnit ) {
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                AngleUnit.values(),
+                "Supported Angle Units",
+                defaultAngleUnit );
+    }
+
+    public static XComboBox<WeightUnit> makeWeightUnitSelector(
+            final ClientProperties pClientProperties,
+            final boolean applyToolkitCss,
+            final WeightUnit defaultWeightUnit ) {
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                WeightUnit.values(),
+                "Supported Weight Units",
+                defaultWeightUnit );
+    }
+
+    public static XComboBox<TemperatureUnit> makeTemperatureUnitSelector(
+            final ClientProperties pClientProperties,
+            final boolean applyToolkitCss,
+            final TemperatureUnit defaultTemperatureUnit ) {
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                TemperatureUnit.values(),
+                "Supported Temperature Units",
+                defaultTemperatureUnit );
+    }
+
+    public static XComboBox<PressureUnit> makePressureUnitSelector(
+            final ClientProperties pClientProperties,
+            final boolean applyToolkitCss,
+            final PressureUnit defaultPressureUnit ) {
+        // NOTE: Atmospheres are generally an unwieldy and coarse unit in
+        //  most contexts, so this default convenience method leaves it out.
+        final PressureUnit[] supportedValues = {
+                PressureUnit.KILOPASCALS,
+                PressureUnit.PASCALS,
+                PressureUnit.MILLIBARS };
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                supportedValues,
+                "Supported Pressure Units",
+                defaultPressureUnit );
+    }
+
+    // Helper method to get a standalone Frequency Editor.
+    public static FrequencyEditor getFrequencyEditor(final ClientProperties clientProperties,
+                                                     final String tooltipText,
+                                                     final String measurementUnitString,
+                                                     final double minimumValue,
+                                                     final double maximumValue,
+                                                     final double initialValue,
+                                                     final double pPrecisionCutoffFrequencyHz,
+                                                     final int pNumberOfDecimalPlaces ) {
+        // Get the current value and format it as initial text.
+        // TODO: Make sure this is locale-sensitive?
+        final String initialText = Double.toString( initialValue );
+
+        final FrequencyEditor frequencyEditor = new FrequencyEditor( clientProperties,
+                initialText,
+                tooltipText,
+                minimumValue,
+                maximumValue,
+                initialValue,
+                pPrecisionCutoffFrequencyHz,
+                pNumberOfDecimalPlaces );
+
+        frequencyEditor.setMeasurementUnitString( measurementUnitString );
+
+        return frequencyEditor;
+    }
+
+    public static Spinner< Integer > getSplRangeSpinnerInstance(
+            final ClientProperties clientProperties,
+            final boolean applyToolkitCss,
+            final boolean useExtendedRange ) {
+        final int minimumSplRangeDb = useExtendedRange ? 3 : 42;
+        final int maximumSplRangeDb = useExtendedRange ? 120 : 72;
+        final int splRangeIncrementDb = 3;
+        final int defaultSplRangeDb = SPL_RANGE_DB_DEFAULT;
+
+        final String numericFormatterPattern = "##0";
+
+        // Try to limit the size as this control can get too wide.
+        final double maximumSpinnerWidth = 90.0d;
+
+        // Return the fully initialized SPL Range Spinner.
+        final String valueDescriptor = "an SPL range";
+        return ControlFactory.makeIntegerSpinner(
+                clientProperties,
+                applyToolkitCss,
+                valueDescriptor,
+                minimumSplRangeDb,
+                maximumSplRangeDb,
+                defaultSplRangeDb,
+                splRangeIncrementDb,
+                false,
+                numericFormatterPattern,
+                " dB",
+                maximumSpinnerWidth );
+    }
+
+    public static Spinner< Double > getDitheringAmountSpinnerInstance(
+            final ClientProperties clientProperties,
+            final boolean applyToolkitCss ) {
+        // NOTE: The number formatter knows how to deal with percentages.
+        final double minimumDitheringAmount = 0.0d;
+        final double maximumDitheringAmount = 0.15d;
+        final double ditheringAmountIncrement = 0.005d;
+        final double defaultDitheringAmount = DITHERING_AMOUNT_DEFAULT;
+
+        final String numericFormatterPattern = "##0.#";
+
+        // Try to limit the size as this control can get too wide.
+        final double maximumSpinnerWidth = 90.0d;
+
+        // Return the fully initialized Dithering Amount Spinner.
+        // TODO: Switch to a handcrafted percentile spinner (see examples).
+        final String valueDescriptor = "amount to dither individual sound sources";
+        return ControlFactory.makeDoubleSpinner(
+                clientProperties,
+                applyToolkitCss,
+                valueDescriptor,
+                minimumDitheringAmount,
+                maximumDitheringAmount,
+                defaultDitheringAmount,
+                ditheringAmountIncrement,
+                true,
+                numericFormatterPattern,
+                " %",
+                maximumSpinnerWidth );
     }
 }

@@ -30,6 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
+import com.mhschmieder.fxcontrols.action.NaturalEnvironmentActions;
 import com.mhschmieder.fxcontrols.action.Region2DActions;
 import com.mhschmieder.fxcontrols.action.XActionUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
@@ -53,4 +54,13 @@ public final class MenuFactory {
         return region2DMenuBar;
     }
 
+    public static MenuBar getNaturalEnvironmentMenuBar( final ClientProperties pClientProperties,
+                                                        final NaturalEnvironmentActions naturalEnvironmentActions ) {
+        final Collection< Action > naturalEnvironmentMenuBarActionCollection =
+                naturalEnvironmentActions
+                        .getNaturalEnvironmentMenuBarActionCollection( pClientProperties );
+        final MenuBar naturalEnvironmentMenuBar = XActionUtilities
+                .createMenuBar( naturalEnvironmentMenuBarActionCollection );
+        return naturalEnvironmentMenuBar;
+    }
 }
