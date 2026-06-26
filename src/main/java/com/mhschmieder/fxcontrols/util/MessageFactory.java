@@ -427,32 +427,32 @@ public class MessageFactory {
         return "Raster Graphics Export Options";
     }
 
-    public static final String getReadProtectedFileMessage( final File file ) {
+    public static String getReadProtectedFileMessage(final File file) {
         final String errorMessageBody = " is read-protected.";
         final String readProtectedFileMessage = getFileErrorMessage( errorMessageBody, file );
         return readProtectedFileMessage;
     }
 
-    public static final String getSaveFileChangesMasthead() {
+    public static String getSaveFileChangesMasthead() {
         return "Confirm Save File Changes";
     }
 
-    public static final String getSaveFileChangesMessage( final File file ) {
+    public static String getSaveFileChangesMessage(final File file) {
         final String promptMessageBody = " has been modified."
                 + " Save changes?";
         final String saveFileChangesMessage = getFilePromptMessage( promptMessageBody, file );
         return saveFileChangesMessage;
     }
 
-    public static final String getSecurityManagedFileMessage( final File file,
-                                                              final String fileMode ) {
+    public static String getSecurityManagedFileMessage(final File file,
+                                                       final String fileMode) {
         final String errorMessageBody = "is denied " + fileMode
                 + " access by the Security Manager.";
         final String securityManagedFileMessage = getFileErrorMessage( errorMessageBody, file );
         return securityManagedFileMessage;
     }
 
-    public static final String getServerRequestFileWriteErrorMessage( final File file ) {
+    public static String getServerRequestFileWriteErrorMessage(final File file) {
         final String errorMessageBody = " could not save server request due to write access denied."
                 + " Please see Session Log for details (if the JRE forwarded exceptions).";
         final String serverRequestFileNotSavedMessage =
@@ -460,7 +460,7 @@ public class MessageFactory {
         return serverRequestFileNotSavedMessage;
     }
 
-    public static final String getServerResponseFileWriteErrorMessage( final File file ) {
+    public static String getServerResponseFileWriteErrorMessage(final File file) {
         final String errorMessageBody =
                                       " could not save server response due to write access denied."
                                               + " Please see Session Log for details (if the JRE forwarded exceptions).";
@@ -469,19 +469,38 @@ public class MessageFactory {
         return serverResponseFileNotSavedMessage;
     }
 
-    public static final String getUserAuthorizationErrorTitle() {
+    public static String getUserAuthorizationErrorTitle() {
         return "User Authorization Error";
     }
 
-    public static final String getVectorGraphicsExportOptionsMasthead() {
+    public static String getVectorGraphicsExportOptionsMasthead() {
         return "Vector Graphics Export Options";
     }
 
-    public static final String getWriteProtectedFileMessage( final File file ) {
+    public static String getWriteProtectedFileMessage(final File file) {
         final String errorMessageBody = " is write-protected.";
         final String writeProtectedFileMessage = MessageFactory
                 .getFileErrorMessage( errorMessageBody, file );
         return writeProtectedFileMessage;
     }
 
+    public static String getCopyReferencePointTitle() {
+        return "Copy Reference Point";
+    }
+
+    public static String getGraphicsImportHelpBanner() {
+        return "Graphics Import Help";
+    }
+
+    public static String getGraphicsImportOptionsMasthead() {
+        return "Graphics Import Options";
+    }
+
+    public static String getInsertReferencePointTitle() {
+        return "Insert Reference Point";
+    }
+
+    public static String getSurfaceMaterialTooltip() {
+        return "Double-Click for List of Materials from Elements of Acoustical Engineering (Olson); Click ESC to Cancel and Exit List and Cell";
+    }
 }

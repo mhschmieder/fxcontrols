@@ -1273,4 +1273,33 @@ public class LabeledActionFactory {
                 "batchRun",
                 "/icons/yusukeKamiyamane/fugue/ArrowRepeat16.png" );
     }
+
+    public static XAction getViewDrawingLimitsAction(
+            final ClientProperties clientProperties ) {
+        return ActionFactory.makeAction( clientProperties,
+                BUNDLE_NAME,
+                "view",
+                "drawingLimits",
+                "/icons/led24/RulerCrop16.png" );
+    }
+
+    public static XAction getViewZoomToDrawingLimitsAction(
+            final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
+                BUNDLE_NAME,
+                "view",
+                "zoomToDrawingLimits",
+                "/icons/everaldo/ViewMagFit16.png" );
+    }
+
+    @SuppressWarnings("nls")
+    public static XAction getViewZoomToReferencePlaneAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
+                BUNDLE_NAME,
+                "view",
+                "zoomToReferencePlane",
+                "/icons/everaldo/ViewMagToReference16.png" );
+    }
 }

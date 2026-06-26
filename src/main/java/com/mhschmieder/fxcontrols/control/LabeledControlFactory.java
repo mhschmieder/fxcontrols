@@ -772,4 +772,26 @@ public final class LabeledControlFactory {
 
         return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "delete-button" ); //$NON-NLS-1$
     }
+
+    public static XToggleButton getSurfaceBypassedToggleButton( final boolean applyAspectRatio,
+                                                                final double aspectRatio,
+                                                                final boolean wordWrap,
+                                                                final boolean selected ) {
+        final String selectedText = "Bypassed"; //$NON-NLS-1$
+        final String deselectedText = "Enabled"; //$NON-NLS-1$
+        final String tooltipText = "Click to Toggle Surface Status Between Bypassed and Enabled"; //$NON-NLS-1$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        //  auto-selects the foreground for text fill, but we override.
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                "bypass-toggle", //$NON-NLS-1$
+                applyAspectRatio,
+                aspectRatio,
+                wordWrap,
+                selected );
+
+        return toggleButton;
+    }
 }

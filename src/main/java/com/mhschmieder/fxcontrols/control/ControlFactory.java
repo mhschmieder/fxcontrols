@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.util.RegionUtilities;
+import com.mhschmieder.fxgraphics.geometry.SurfaceMaterial;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
@@ -310,4 +311,49 @@ public class ControlFactory {
         return noticeWebView;
     }
 
+    public static XComboBox<SurfaceMaterial> getSurfaceMaterialSelector(
+            final ClientProperties pClientProperties,
+            final String tooltipText,
+            final boolean applyToolkitCss ) {
+        final SurfaceMaterial[] supportedValues = {
+                SurfaceMaterial.ACOUSTIC_TILE_ON_RIGID_SURF_KF,
+                SurfaceMaterial.BRICK_WALL_PAINTED_LB,
+                SurfaceMaterial.BRICK_WALL_UNPAINTED_LB,
+                SurfaceMaterial.CARPET_HEAVY_ON_CONCRETE_CH,
+                SurfaceMaterial.CONCRETE_BLOCK_PAINTED_CH,
+                SurfaceMaterial.CONCRETE_BLOCK_UNPAINTED_CH,
+                SurfaceMaterial.PLASTER_ON_LATHE_CH,
+                SurfaceMaterial.POURED_CONCRETE_PAINTED_LB,
+                SurfaceMaterial.POURED_CONCRETE_UNPAINTED_LB,
+                SurfaceMaterial.RIGID,
+                SurfaceMaterial.VELOUR_TEN_OZ_PER_YARD_SQR_TOUCHING_WALL_CH };
+        return ListViewUtilities.makeLabeledSelector(
+                pClientProperties,
+                supportedValues,
+                tooltipText,
+                SurfaceMaterial.defaultValue() );
+    }
+
+    public static IntegerSelector getProjectionZonesSelector( final ClientProperties pClientProperties,
+                                                              final boolean applyToolkitCss,
+                                                              final String tooltipText) {
+        // NOTE: Limit to 12 zones vs. 24 for now, due to moire patterns that
+        // occur in integer-based pixel systems such as AWT (JavaFX is
+        // floating-point based), when the number of zones is large relative to
+        // the number of pixels between start and end points of the Linear Object.
+        final int minimumNumberOfProjectionZones = 1;
+        final int maximumNumberOfProjectionZones = 12; // 24
+        final int projectionZonesIncrement = 1;
+
+        return new IntegerSelector(
+                pClientProperties,
+                true,
+                tooltipText,
+                applyToolkitCss,
+                false,
+                false,
+                minimumNumberOfProjectionZones,
+                maximumNumberOfProjectionZones,
+                projectionZonesIncrement );
+    }
 }
