@@ -1550,4 +1550,13 @@ public class LabeledActionFactory {
                 "useAirAttenuation",
                 null );
     }
+
+    public static XAction getProcessorInvertedCheck( final ClientProperties clientProperties ) {
+        return ActionFactory.makeCheck( clientProperties,
+                BUNDLE_NAME,
+                "view",
+                "processorInverted",
+                "/icons/yusukeKamiyamane/Function16.png",
+                true );
+    }
 }

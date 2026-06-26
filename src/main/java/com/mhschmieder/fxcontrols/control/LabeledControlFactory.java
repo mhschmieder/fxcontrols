@@ -819,4 +819,205 @@ public final class LabeledControlFactory {
         return ControlUtilities
                 .getLabeledCheckBox( clientProperties, BUNDLE_NAME, "test", "useDithering" );
     }
+
+    public static XToggleButton getPolarityToggleButton( final boolean applyAspectRatio,
+                                                         final boolean selected ) {
+        final String selectedText = "Reversed"; //$NON-NLS-1$
+        final String deselectedText = "Normal"; //$NON-NLS-1$
+        final String tooltipText = "Click to Toggle Polarity Status Between Normal and Reversed"; //$NON-NLS-1$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill; we use a custom fill.
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                "polarity-toggle", //$NON-NLS-1$
+                applyAspectRatio,
+                3.0d,
+                false,
+                selected );
+
+        return toggleButton;
+    }
+
+    public static XToggleButton getMuteToggleButton( final boolean applyAspectRatio,
+                                                     final boolean selected ) {
+        final String selectedText = "Muted"; //$NON-NLS-1$
+        final String deselectedText = "Mute"; //$NON-NLS-1$
+        final String tooltipText = "Click to Toggle Mute Status Between Muted and Unmuted"; //$NON-NLS-1$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill; we use a custom fill.
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                "mute-toggle", //$NON-NLS-1$
+                applyAspectRatio,
+                3.0d,
+                false,
+                selected );
+
+        return toggleButton;
+    }
+
+
+    @SuppressWarnings("nls")
+    public static XToggleButton getProcessingToggleButton( final String selectedText,
+                                                           final String deselectedText,
+                                                           final String tooltipText,
+                                                           final boolean applyAspectRatio,
+                                                           final double aspectRatio,
+                                                           final boolean wordWrap,
+                                                           final boolean selected ) {
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        //  auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                "bypass-toggle",
+                applyAspectRatio,
+                aspectRatio,
+                wordWrap,
+                selected );
+
+        return toggleButton;
+    }
+
+
+    public static ToggleButton getSingleFilterToggleButton( final int filterNumber,
+                                                            final boolean applyAspectRatio,
+                                                            final boolean selected ) {
+        final String selectedText = filterNumber + " Bypassed"; //$NON-NLS-1$
+        final String deselectedText = filterNumber + " Enabled"; //$NON-NLS-1$
+        final String tooltipText = "Bypass/Enable Filter"; //$NON-NLS-1$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        //  auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final ToggleButton toggleButton = getProcessingToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                applyAspectRatio,
+                4.0d,
+                false,
+                selected );
+
+        // NOTE: Single filter toggle buttons are typically used in dense
+        //  layouts with many filters and columns, so it is better to clip the
+        //  text than to have an ellipsis (the default overrun handler)
+        //  potentially cut off even the all-important filter number.
+        toggleButton.setTextOverrun( OverrunStyle.CLIP );
+
+        return toggleButton;
+    }
+
+
+    public static XToggleButton getProcessingFilterToggleButton( final String filterName,
+                                                                 final boolean applyAspectRatio,
+                                                                 final boolean selected ) {
+        final XToggleButton toggleButton = getFilterToggleButton( filterName,
+                applyAspectRatio,
+                2.0d,
+                true,
+                selected );
+
+        return toggleButton;
+    }
+
+
+    public static ToggleButton getParametricToggleButton( final boolean applyAspectRatio ) {
+        final ToggleButton toggleButton = getProcessingFilterToggleButton( "Parametric", //$NON-NLS-1$
+                applyAspectRatio,
+                false );
+
+        return toggleButton;
+    }
+
+
+    public static XToggleButton getHighLowPassToggleButton( final String filterName,
+                                                            final boolean applyAspectRatio,
+                                                            final boolean selected ) {
+        final String selectedText = "Bypassed"; //$NON-NLS-1$
+        final String deselectedText = "Enabled"; //$NON-NLS-1$
+        final String tooltipText = "Bypass/Enable " + filterName + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final XToggleButton toggleButton = getProcessingToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                applyAspectRatio,
+                4.0d,
+                false,
+                selected );
+
+        return toggleButton;
+    }
+
+
+    public static ToggleButton getGeneralAllPassToggleButton( final boolean applyAspectRatio ) {
+        final ToggleButton toggleButton = getProcessingFilterToggleButton( "All Pass", //$NON-NLS-1$
+                applyAspectRatio,
+                true );
+
+        return toggleButton;
+    }
+
+
+    public static XToggleButton getFilterToggleButton( final String filterName,
+                                                       final boolean applyAspectRatio,
+                                                       final double aspectRatio,
+                                                       final boolean wordWrap,
+                                                       final boolean selected ) {
+        final String selectedText = filterName + " Bypassed"; //$NON-NLS-1$
+        final String deselectedText = filterName + " Enabled"; //$NON-NLS-1$
+        final String tooltipText = "Bypass/Enable " + filterName + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final XToggleButton toggleButton = getProcessingToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                applyAspectRatio,
+                aspectRatio,
+                wordWrap,
+                selected );
+
+        return toggleButton;
+    }
+
+
+    public static ToggleButton getEqualizationToggleButton( final boolean applyAspectRatio ) {
+        // NOTE: We only have to abbreviate when in the channel strip context.
+        final String filterName = applyAspectRatio ? "Equalization" : "EQ"; //$NON-NLS-1$ //$NON-NLS-2$
+        final ToggleButton toggleButton = getProcessingFilterToggleButton( filterName,
+                applyAspectRatio,
+                false );
+
+        return toggleButton;
+    }
+
+
+    public static ToggleButton getAllFiltersToggleButton( final boolean applyAspectRatio,
+                                                          final boolean selected ) {
+        final String selectedText = "<<<"; //$NON-NLS-1$
+        final String deselectedText = ">>>"; //$NON-NLS-1$
+        final String tooltipText = "Bypass/Enable All Filters"; //$NON-NLS-1$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final ToggleButton toggleButton = getProcessingToggleButton( selectedText,
+                deselectedText,
+                tooltipText,
+                applyAspectRatio,
+                4.0d,
+                false,
+                selected );
+
+        return toggleButton;
+    }
 }
