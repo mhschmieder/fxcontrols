@@ -31,12 +31,10 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import impl.org.controlsfx.skin.SearchableComboBoxSkin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Skin;
 import javafx.scene.control.Tooltip;
 import org.apache.commons.math3.util.FastMath;
 
@@ -143,16 +141,22 @@ public class XComboBox< T > extends ComboBox< T > {
         }
     }
 
+    // TODO: Re-enable this once we see how to do the SearchableComboBox in
+    //  ControlsFX v11 without using Private API as in v8.
+    /*
     @Override
     protected Skin< ? > createDefaultSkin() {
-        return _searchable ? new SearchableComboBoxSkin<>( this ) : super.createDefaultSkin();
+        return _searchable
+                ? new SearchableComboBoxSkin<>( this )
+                : super.createDefaultSkin();
     }
+    */
 
-    private final void initComboBox( final String tooltipText,
-                                     final boolean applyToolkitCss,
-                                     final boolean editable,
-                                     final int visibleRowCount,
-                                     final T defaultValue ) {
+    private void initComboBox( final String tooltipText,
+                               final boolean applyToolkitCss,
+                               final boolean editable,
+                               final int visibleRowCount,
+                               final T defaultValue ) {
         // Provide Tool Tips in case this component is used in a sparse context
         // like a Tool Bar, where there may be no associated descriptive label.
         if ( ( tooltipText != null ) && !tooltipText.trim().isEmpty() ) {
