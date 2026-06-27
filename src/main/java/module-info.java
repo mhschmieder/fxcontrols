@@ -35,6 +35,7 @@ module fxcontrols {
     exports com.mhschmieder.fxcontrols.util;
     requires commons.math3;
     requires fxgraphics;
+    requires java.desktop;
     requires javafx.graphics;
     requires javafx.web;
     requires jcommons;
@@ -42,7 +43,6 @@ module fxcontrols {
     requires jgraphics;
     requires jmath;
     requires jphysics;
-    requires org.controlsfx.controls;
     requires jsigproc;
-    requires java.desktop;
+    requires org.controlsfx.controls;
 }
