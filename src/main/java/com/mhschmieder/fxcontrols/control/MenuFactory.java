@@ -30,6 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
+import com.mhschmieder.fxcontrols.action.LayerManagementActions;
 import com.mhschmieder.fxcontrols.action.NaturalEnvironmentActions;
 import com.mhschmieder.fxcontrols.action.Region2DActions;
 import com.mhschmieder.fxcontrols.action.XActionUtilities;
@@ -43,6 +44,15 @@ import java.util.Collection;
  * This is a factory class for generating Menus for CAD.
  */
 public final class MenuFactory {
+
+    public static MenuBar getLayerManagementMenuBar( final ClientProperties pClientProperties,
+                                                     final LayerManagementActions layerManagementActions ) {
+        final Collection< Action > layerManagementMenuBarActionCollection = layerManagementActions
+                .getLayerManagementMenuBarActionCollection( pClientProperties );
+        final MenuBar layerManagementMenuBar = XActionUtilities
+                .createMenuBar( layerManagementMenuBarActionCollection );
+        return layerManagementMenuBar;
+    }
 
     public static MenuBar getRegion2DMenuBar( final ClientProperties pClientProperties,
                                               final Region2DActions region2DActions,
