@@ -21,19 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.jacoustics.FrequencyRange;
-import com.mhschmieder.jacoustics.FrequencySignalUtilities;
-import com.mhschmieder.jacoustics.RelativeBandwidth;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.acoustics.FrequencyRange;
+import com.mhschmieder.jphysics.acoustics.FrequencySignalUtilities;
+import com.mhschmieder.jphysics.acoustics.RelativeBandwidth;
 
 import java.text.NumberFormat;
 
@@ -118,7 +118,8 @@ public final class FrequencyRangeControls {
     public void updateFrequencyRange( final FrequencyRange frequencyRange ) {
         // Select the new Frequency Range values, which must be pre-vetted as
         // valid. It is otherwise unsafe to set all three values at once.
-        final RelativeBandwidth relativeBandwidth = frequencyRange.getRelativeBandwidth();
+        final RelativeBandwidth relativeBandwidth = frequencyRange
+                .getRelativeBandwidth();
         final String sOctaveRange = frequencyRange.getOctaveRange();
         final double centerFrequency = frequencyRange.getCenterFrequency();
 
@@ -136,7 +137,8 @@ public final class FrequencyRangeControls {
     public void updateOctaveRangeForBandwidthAndFrequency( final RelativeBandwidth relativeBandwidth,
                                                            final String sOctaveRange,
                                                            final double centerFrequency ) {
-        _octaveRangeSelector.updateOctaveRangeForBandwidthAndFrequency( relativeBandwidth,
-                                                                        centerFrequency );
+        _octaveRangeSelector.updateOctaveRangeForBandwidthAndFrequency(
+                relativeBandwidth,
+                centerFrequency );
     }
 }

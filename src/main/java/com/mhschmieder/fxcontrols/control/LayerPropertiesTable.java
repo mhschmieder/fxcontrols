@@ -21,25 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxLayerControls Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxLayerControls Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxlayercontrols
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.control.DynamicXTableView;
-import com.mhschmieder.fxcontrols.control.TableColumnFactory;
-import com.mhschmieder.fxcontrols.control.TableUtilities;
 import com.mhschmieder.fxcontrols.control.cell.LayerColorTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerDisplayTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerLockTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerNameTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerStatusTableCell;
-import com.mhschmieder.fxlayercontrols.model.LayerProperties;
-import com.mhschmieder.fxlayercontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.model.LayerProperties;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class LayerPropertiesTable extends DynamicXTableView<LayerProperties> {
+public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
     // Do not allow the user to sort by other than Layer Name.
     // NOTE: This has been reverted to disallowed due to our check for

@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxLayerGraphics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxLayerGraphics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxlayergraphics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.model;
 
-import com.mhschmieder.fxlayercontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
 import com.mhschmieder.jcommons.lang.LabeledObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;

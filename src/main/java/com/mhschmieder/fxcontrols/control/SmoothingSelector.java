@@ -21,22 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.jacoustics.Smoothing;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.acoustics.Smoothing;
 
 /**
  * This is a selector for different Smoothing resolutions.
  */
-public final class SmoothingSelector extends XComboBox< Smoothing > {
+public final class SmoothingSelector extends XComboBox<Smoothing> {
 
     public SmoothingSelector( final ClientProperties pClientProperties,
                               final boolean pToolbarContext ) {

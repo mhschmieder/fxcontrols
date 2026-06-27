@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGui Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxCadGui
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgui
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.fxgraphics.LabelAssignable;
-import com.mhschmieder.fxcontrols.model.LayerNameAssignable;
 import com.mhschmieder.jcommons.lang.NumberUtilities;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

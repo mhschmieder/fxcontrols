@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxLayerGui Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxLayerGui Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxlayergui
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
-import com.mhschmieder.fxlayercontrols.model.LayerProperties;
-import com.mhschmieder.fxlayercontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.model.LayerProperties;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.ObservableList;
 
@@ -40,7 +40,8 @@ import java.util.List;
 /**
  * Special textField to handle specifics of Layer Name editing restrictions.
  */
-public final class LayerNameTableCell extends LabelEditorTableCell<LayerProperties, String > {
+public final class LayerNameTableCell
+        extends LabelEditorTableCell< LayerProperties, String > {
 
     public LayerNameTableCell( final boolean pBlankTextAllowed,
                                final ClientProperties pClientProperties ) {
@@ -63,9 +64,10 @@ public final class LayerNameTableCell extends LabelEditorTableCell<LayerProperti
         // Enforce the Unique Layer Name Policy.
         final ObservableList< LayerProperties > layerCollection = getTableView().getItems();
         final String oldLayerName = selectedRecord.getLayerName();
-        LayerPropertiesManager.uniquefyLayerName( layerCollection,
-                                          newLayerName,
-                                          oldLayerName,
-                                          uniquefierNumberFormat );
+        LayerPropertiesManager.uniquefyLayerName(
+                layerCollection,
+                newLayerName,
+                oldLayerName,
+                uniquefierNumberFormat );
     }
 }

@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxLayerControls Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxLayerControls Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxlayercontrols
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
-import com.mhschmieder.fxlayercontrols.model.LayerProperties;
+import com.mhschmieder.fxcontrols.model.LayerProperties;
 import javafx.scene.control.TableColumn;
 import javafx.scene.paint.Color;
 
@@ -38,7 +38,7 @@ import javafx.scene.paint.Color;
  * This class gives us a way to interact with the Color Picker in tables.
  */
 public final class LayerColorTableCell
-        extends ColorPickerTableCell< LayerProperties > {
+        extends ColorPickerTableCell<LayerProperties> {
 
     public LayerColorTableCell(
             final TableColumn< LayerProperties, Color > column ) {

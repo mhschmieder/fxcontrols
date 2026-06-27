@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
@@ -59,15 +59,15 @@ public final class FrequencyAmplitudeVerticalZoomChoices {
     // Default constructor
     @SuppressWarnings("nls")
     public FrequencyAmplitudeVerticalZoomChoices( final ClientProperties clientProperties ) {
-        _div1dbChoice = AcousticsLabeledActionFactory.getDiv1DbChoice( clientProperties );
-        _div2dbChoice = AcousticsLabeledActionFactory.getDiv2DbChoice( clientProperties );
-        _div3dbChoice = AcousticsLabeledActionFactory.getDiv3DbChoice( clientProperties );
-        _div6dbChoice = AcousticsLabeledActionFactory.getDiv6DbChoice( clientProperties );
-        _div10dbChoice = AcousticsLabeledActionFactory.getDiv10DbChoice( clientProperties );
-        _div12dbChoice = AcousticsLabeledActionFactory.getDiv12DbChoice( clientProperties );
-        _div15dbChoice = AcousticsLabeledActionFactory.getDiv15DbChoice( clientProperties );
-        _div20dbChoice = AcousticsLabeledActionFactory.getDiv20DbChoice( clientProperties );
-        _div30dbChoice = AcousticsLabeledActionFactory.getDiv30DbChoice( clientProperties );
+        _div1dbChoice = LabeledActionFactory.getDiv1DbChoice( clientProperties );
+        _div2dbChoice = LabeledActionFactory.getDiv2DbChoice( clientProperties );
+        _div3dbChoice = LabeledActionFactory.getDiv3DbChoice( clientProperties );
+        _div6dbChoice = LabeledActionFactory.getDiv6DbChoice( clientProperties );
+        _div10dbChoice = LabeledActionFactory.getDiv10DbChoice( clientProperties );
+        _div12dbChoice = LabeledActionFactory.getDiv12DbChoice( clientProperties );
+        _div15dbChoice = LabeledActionFactory.getDiv15DbChoice( clientProperties );
+        _div20dbChoice = LabeledActionFactory.getDiv20DbChoice( clientProperties );
+        _div30dbChoice = LabeledActionFactory.getDiv30DbChoice( clientProperties );
 
         final Collection< Action > frequencyAmplitudeVerticalZoomChoiceCollection = Arrays
                 .asList( _div1dbChoice,
@@ -83,7 +83,7 @@ public final class FrequencyAmplitudeVerticalZoomChoices {
         _frequencyAmplitudeVerticalZoomChoiceGroup = ActionFactory
                 .makeChoiceGroup( clientProperties,
                                  frequencyAmplitudeVerticalZoomChoiceCollection,
-                                 AcousticsLabeledActionFactory.BUNDLE_NAME,
+                                 LabeledActionFactory.BUNDLE_NAME,
                                  "verticalZoom",
                                  "/icons/ahaSoft/UpDown16.png",
                                  true );

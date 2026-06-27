@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
-import com.mhschmieder.jacoustics.SplPaletteResolution;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.acoustics.SplPaletteResolution;
 import org.controlsfx.control.action.Action;
 
 import java.util.Arrays;
@@ -54,15 +54,15 @@ public final class SplPaletteChoices {
 
     // Default constructor
     public SplPaletteChoices( final ClientProperties clientProperties ) {
-        _splPaletteColors256Choice = AcousticsLabeledActionFactory
+        _splPaletteColors256Choice = LabeledActionFactory
                 .getSplPaletteColors256Choice( clientProperties );
-        _splPaletteColors64Choice = AcousticsLabeledActionFactory
+        _splPaletteColors64Choice = LabeledActionFactory
                 .getSplPaletteColors64Choice( clientProperties );
-        _splPaletteColor1dbChoice = AcousticsLabeledActionFactory
+        _splPaletteColor1dbChoice = LabeledActionFactory
                 .getSplPaletteColor1dbChoice( clientProperties );
-        _splPaletteColor2dbChoice = AcousticsLabeledActionFactory
+        _splPaletteColor2dbChoice = LabeledActionFactory
                 .getSplPaletteColor2dbChoice( clientProperties );
-        _splPaletteColor3dbChoice = AcousticsLabeledActionFactory
+        _splPaletteColor3dbChoice = LabeledActionFactory
                 .getSplPaletteColor3dbChoice( clientProperties );
     }
 
@@ -76,7 +76,8 @@ public final class SplPaletteChoices {
         return splPaletteChoiceCollection;
     }
 
-    public void setSplPaletteResolution( final SplPaletteResolution splPaletteResolution ) {
+    public void setSplPaletteResolution(
+            final SplPaletteResolution splPaletteResolution ) {
         switch ( splPaletteResolution ) {
         case RES_256:
             _splPaletteColors256Choice.setSelected( true );

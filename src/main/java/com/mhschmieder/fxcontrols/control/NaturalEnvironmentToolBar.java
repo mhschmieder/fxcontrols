@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxPhysics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxPhysics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxphysics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
@@ -67,7 +67,7 @@ public final class NaturalEnvironmentToolBar extends ToolBar {
         // Make the Nodes for the Tool Bar.
         _predictButtons = new PredictButtons( pClientProperties,
                                               naturalEnvironmentActions.simulationActions );
-        _useAirAttenuationCheckBox = PhysicsLabeledControlFactory
+        _useAirAttenuationCheckBox = LabeledControlFactory
                 .getUseAirAttenuationCheckBox( pClientProperties,
                                                naturalEnvironmentActions.useAirAttenuationAction );
         _resetButton = LabeledControlFactory

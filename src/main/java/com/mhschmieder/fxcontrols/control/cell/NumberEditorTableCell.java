@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
@@ -36,7 +36,8 @@ import javafx.geometry.Pos;
 import java.text.NumberFormat;
 import java.util.List;
 
-public abstract class NumberEditorTableCell< RT, Number > extends EditorTableCell< RT, Number > {
+public abstract class NumberEditorTableCell< RT, Number >
+        extends EditorTableCell< RT, Number > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
     @SuppressWarnings("nls") protected String _measurementUnit = "";

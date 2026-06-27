@@ -28,42 +28,21 @@
  *
  * Project: https://github.com/mhschmieder/fxcontrols
  */
-package com.mhschmieder.fxcontrols.action;
-
-import com.mhschmieder.jcommons.util.ClientProperties;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.control.action.ActionUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-/**
- * This is a struct-like container for common Tools actions.
- * <p>
- * NOTE: This class is not final, so that it can be derived for additions.
- */
-public class ToolsActions {
-
-    public XAction projectReportAction;
-    public XAction csvViewerAction;
-
-    public ToolsActions( final ClientProperties pClientProperties ) {
-        projectReportAction = LabeledActionFactory.getProjectReportAction( 
-                pClientProperties );
-        csvViewerAction = LabeledActionFactory.getCsvViewerAction( 
-                pClientProperties );
-    }
-
-    // NOTE: This method is not final, so that it can be derived for
-    //  additions.
-    public Collection< Action > getToolsActionCollection( 
-            final ClientProperties pClientProperties ) {
-        final Collection< Action > toolsActionCollection = new ArrayList<>();
-
-        toolsActionCollection.add( projectReportAction );
-        toolsActionCollection.add( ActionUtils.ACTION_SEPARATOR );
-        toolsActionCollection.add( csvViewerAction );
-
-        return toolsActionCollection;
-    }
+module fxcontrols {
+    exports com.mhschmieder.fxcontrols.action;
+    exports com.mhschmieder.fxcontrols.control;
+    exports com.mhschmieder.fxcontrols.model;
+    exports com.mhschmieder.fxcontrols.util;
+    requires commons.math3;
+    requires fxgraphics;
+    requires javafx.graphics;
+    requires javafx.web;
+    requires jcommons;
+    requires jcontrols;
+    requires jgraphics;
+    requires jmath;
+    requires jphysics;
+    requires org.controlsfx.controls;
+    requires jsigproc;
+    requires java.desktop;
 }

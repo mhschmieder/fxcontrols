@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
@@ -47,8 +47,10 @@ import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcontrols.control.ButtonUtilities;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -74,6 +76,8 @@ public final class LabeledControlFactory {
 
     // NOTE: We must substitute "." for resource directory tree delimiters.
     public static final String BUNDLE_NAME = "properties.ActionLabels";
+
+    public static final double LABEL_EDITOR_WIDTH_DEFAULT = 320.0d;
 
     public static Button getButton( final String label,
                                     final Font font,
@@ -1010,14 +1014,74 @@ public final class LabeledControlFactory {
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill, but we mimic legacy apps.
         // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
-        final ToggleButton toggleButton = getProcessingToggleButton( selectedText,
+
+        return getProcessingToggleButton(
+                selectedText,
                 deselectedText,
                 tooltipText,
                 applyAspectRatio,
                 4.0d,
                 false,
                 selected );
+    }
 
-        return toggleButton;
+    public static Button getAddRowButton( final String type ) {
+        return getAddElementButton( type, "Row" );
+    }
+
+    public static Button getAddColumnButton( final String type ) {
+        return getAddElementButton( type, "Column" );
+    }
+
+    public static Button getAddElementButton( final String type,
+                                              final String rowOrColumn ) {
+        final String buttonLabel = "Add " + type;
+        final String tooltipText = "Add New " + type
+                + " after Selected " + rowOrColumn;
+
+        return ControlUtilities.getLabeledButton(
+                buttonLabel,
+                tooltipText,
+                "add-element-button" );
+    }
+
+    public static Button getRemoveElementButton( final String type ) {
+        final String buttonLabel = "Remove " + type;
+        final String tooltipText = "Remove Selected " + type + "(s) from Table";
+
+        return ControlUtilities.getLabeledButton(
+                buttonLabel,
+                tooltipText,
+                "remove-element-button" );
+    }
+
+    public static Button getImportGraphics3dsButton(
+            final ClientProperties pClientProperties ) {
+        // Get the label from the localized properties file.
+        final String buttonLabel = ControlUtilities.getLabeledControlLabel(
+                pClientProperties,
+                BUNDLE_NAME,
+                "import",
+                "graphics3ds",
+                false );
+
+        // Get the icon from JAR-local resources. This one is in fxcadgui lib.
+        final ImageView icon = ImageUtilities.createIcon(
+                "/icons/deviantArt/psferox/Studio3dMax16.png" );
+
+        // Make a button that has both an icon and a label, as this button will
+        // be used in a top-level layout, not a menu or a toolbar.
+        final Button button = new Button( buttonLabel, icon );
+
+        // Set the tool tip, drop-shadow effect, etc.
+        ControlUtilities.setControlProperties(
+                pClientProperties,
+                BUNDLE_NAME,
+                "import",
+                "graphics3ds",
+                button,
+                null );
+
+        return button;
     }
 }

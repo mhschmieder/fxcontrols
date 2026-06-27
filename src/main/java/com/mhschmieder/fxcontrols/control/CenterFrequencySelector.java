@@ -21,20 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.jacoustics.CenterFrequencies;
-import com.mhschmieder.jacoustics.FrequencyRange;
-import com.mhschmieder.jacoustics.FrequencySignalUtilities;
-import com.mhschmieder.jacoustics.RelativeBandwidth;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.acoustics.CenterFrequencies;
+import com.mhschmieder.jphysics.acoustics.FrequencyRange;
+import com.mhschmieder.jphysics.acoustics.FrequencySignalUtilities;
+import com.mhschmieder.jphysics.acoustics.RelativeBandwidth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.math3.util.FastMath;
@@ -142,8 +142,8 @@ public final class CenterFrequencySelector extends DoubleSelector {
             startIndex = _startIndexForOneOctave;
             stopIndex = 15;
             for ( int i = startIndex; i < stopIndex; i++ ) {
-                final double wideBandCenterFrequency =
-                                                     CenterFrequencies.NOMINAL_FULL_OCTAVE_CENTER_FREQUENCIES[ i ];
+                final double wideBandCenterFrequency = CenterFrequencies
+                        .NOMINAL_FULL_OCTAVE_CENTER_FREQUENCIES[ i ];
                 centerFrequencies.add( wideBandCenterFrequency );
             }
             break;
@@ -153,8 +153,8 @@ public final class CenterFrequencySelector extends DoubleSelector {
             startIndex = _startIndexForThirdOctave;
             stopIndex = 43;
             for ( int i = startIndex; i < stopIndex; i++ ) {
-                final double wideBandCenterFrequency =
-                                                     CenterFrequencies.NOMINAL_THIRD_OCTAVE_CENTER_FREQUENCIES[ i ];
+                final double wideBandCenterFrequency = CenterFrequencies
+                        .NOMINAL_THIRD_OCTAVE_CENTER_FREQUENCIES[ i ];
                 centerFrequencies.add( wideBandCenterFrequency );
             }
             break;

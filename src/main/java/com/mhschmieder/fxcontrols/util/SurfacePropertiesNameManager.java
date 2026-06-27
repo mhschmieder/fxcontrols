@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the fxcadgui Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the fxcadgui
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgui
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.util;
 
-import com.mhschmieder.fxcadcontrols.model.SurfaceProperties;
+import com.mhschmieder.fxcontrols.model.SurfaceProperties;
 import com.mhschmieder.jcommons.text.TextUtilities;
 import javafx.collections.ObservableList;
 

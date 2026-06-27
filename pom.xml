@@ -68,6 +68,16 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>25.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>25.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.mhschmieder</groupId>
             <artifactId>jcommons</artifactId>
             <version>1.0.1</version>
@@ -76,6 +86,11 @@
             <groupId>com.mhschmieder</groupId>
             <artifactId>jcontrols</artifactId>
             <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mhschmieder</groupId>
+            <artifactId>jsigproc</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>

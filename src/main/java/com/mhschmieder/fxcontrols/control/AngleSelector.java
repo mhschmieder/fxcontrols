@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxPhysics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxPhysics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxphysics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
@@ -42,8 +42,8 @@ import javafx.scene.control.SingleSelectionModel;
  * degrees, currently restricted to be uneditable.
  * <p>
  * TODO: Use the richer logic of this class's list updater method to inform a
- * consolidation of the two current approaches in the super-class, and note that
- * this class adds a third approach as well. All are mutually exclusive.
+ *  consolidation of the two current approaches in the super-class, and note
+ *  that this class adds a third approach as well. All are mutually exclusive.
  */
 public final class AngleSelector extends DoubleSelector {
 

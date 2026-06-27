@@ -21,17 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxSigProc Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxSigProc Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxsigproc
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxsigproccontrols.control.SigprocControlFactory;
-import com.mhschmieder.fxsigproccontrols.control.SigprocLabeledControlFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.ToggleButton;
 
@@ -65,10 +63,10 @@ public final class ParametricFilterControls {
 
     public ParametricFilterControls( final ClientProperties clientProperties,
                                      final int filterNumber ) {
-        _filterToggleButton = SigprocLabeledControlFactory
+        _filterToggleButton = LabeledControlFactory
                 .getSingleFilterToggleButton( filterNumber, true, false );
 
-        _frequencyEditor = SigprocControlFactory
+        _frequencyEditor = ControlFactory
                 .getFrequencyEditor( clientProperties,
                                      "Parametric Filter Center Frequency",
                                      " Hz",
@@ -79,12 +77,12 @@ public final class ParametricFilterControls {
                                      2 );
         _frequencyEditor.setValueIncrement( 0.1d );
 
-        _bandwidthEditor = SigprocControlFactory.getBandwidthEditor( clientProperties,
+        _bandwidthEditor = ControlFactory.getBandwidthEditor( clientProperties,
                                                                        BANDWIDTH_MINIMUM_OCTAVES,
                                                                        BANDWIDTH_MAXIMUM_OCTAVES,
                                                                        1 );
 
-        _gainEditor = SigprocControlFactory.getGainEditor( clientProperties,
+        _gainEditor = ControlFactory.getGainEditor( clientProperties,
                                                              " dB",
                                                              GAIN_MINIMUM_DB,
                                                              GAIN_MAXIMUM_DB,

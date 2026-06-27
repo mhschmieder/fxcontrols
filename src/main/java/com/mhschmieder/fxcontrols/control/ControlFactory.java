@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
@@ -267,10 +267,10 @@ public class ControlFactory {
         return integerSpinner;
     }
 
-    public static final TextArea makeNoticeTextArea( final String noticeTextContent,
-                                                     final boolean editable,
-                                                     final int numberOfColumns,
-                                                     final int numberOfRows ) {
+    public static TextArea makeNoticeTextArea(final String noticeTextContent,
+                                              final boolean editable,
+                                              final int numberOfColumns,
+                                              final int numberOfRows) {
         final TextArea noticeTextArea = new TextArea( noticeTextContent );
         noticeTextArea.setEditable( editable );
         noticeTextArea.setWrapText( true );
@@ -284,9 +284,9 @@ public class ControlFactory {
         return noticeTextArea;
     }
 
-    public static final TextFlow makeNoticeTextFlow( final Text noticeText,
-                                                     final int numberOfColumns,
-                                                     final int numberOfRows ) {
+    public static TextFlow makeNoticeTextFlow(final Text noticeText,
+                                              final int numberOfColumns,
+                                              final int numberOfRows) {
         // NOTE: The sizing is a temporary hack to avoid full-screen.
         final TextFlow noticeTextFlow = new TextFlow( noticeText );
         noticeTextFlow.setMaxWidth( numberOfRows * 12d );
@@ -299,7 +299,7 @@ public class ControlFactory {
         return noticeTextFlow;
     }
 
-    public static final WebView makeNoticeWebView( final String noticeHtmlContent ) {
+    public static WebView makeNoticeWebView(final String noticeHtmlContent) {
         final WebView noticeWebView = new WebView();
         noticeWebView.getEngine().loadContent( noticeHtmlContent );
         noticeWebView.autosize();
@@ -307,7 +307,7 @@ public class ControlFactory {
         return noticeWebView;
     }
 
-    public static final WebView makeNoticeWebView( final URL noticeUrl ) {
+    public static WebView makeNoticeWebView(final URL noticeUrl) {
         final WebView noticeWebView = new WebView();
         final WebEngine noticeWebEngine = noticeWebView.getEngine();
         noticeWebEngine.load( noticeUrl.toString() );

@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxPhysics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxPhysics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxphysics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
@@ -59,7 +59,7 @@ public final class NaturalEnvironmentActions {
         settingsActions = new SettingsActions( pClientProperties );
         simulationActions = new SimulationActions( pClientProperties );
 
-        useAirAttenuationAction = PhysicsLabeledActionFactory
+        useAirAttenuationAction = LabeledActionFactory
                 .getUseAirAttenuationAction( pClientProperties );
 
         resetAction = LabeledActionFactory.getResetAction( pClientProperties );

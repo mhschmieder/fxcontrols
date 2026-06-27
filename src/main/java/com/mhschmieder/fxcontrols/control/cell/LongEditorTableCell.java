@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
@@ -38,7 +38,8 @@ import javafx.scene.control.TextField;
 
 import java.util.List;
 
-public class LongEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Long > {
+public class LongEditorTableCell< RT, VT >
+        extends NumberEditorTableCell< RT, Long > {
 
     // Cache the raw Long representation of the data cachedValue.
     // NOTE: This field has to follow JavaFX Property Beans conventions.

@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGui Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxCadGui
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgui
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxgraphics.collections.GraphicalObjectCollection;
 import com.mhschmieder.fxgraphics.geometry.LinearObject;
-import com.mhschmieder.fxgui.util.GuiUtilities;
-import com.mhschmieder.fxlayercontrols.control.LayerSelector;
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.scene.control.CheckBox;
@@ -71,9 +69,10 @@ public final class LinearObjectPropertiesControls {
             projectionZonesTooltipText.append( " for " );
             projectionZonesTooltipText.append( projectionZonesUsageContext );
         }
-        _projectionZonesSelector = CadControlFactory.getProjectionZonesSelector( pClientProperties,
-                                                                                 applyToolkitCss,
-                                                                                 projectionZonesTooltipText.toString() );
+        _projectionZonesSelector = ControlFactory.getProjectionZonesSelector(
+                pClientProperties,
+                applyToolkitCss,
+                projectionZonesTooltipText.toString() );
 
         // Try to get the buttons to be as tall as possible.
         GridPane.setFillHeight( _linearObjectLabelEditor, true );
@@ -83,9 +82,9 @@ public final class LinearObjectPropertiesControls {
 
         // Try to force sufficient width for custom label editing.
         _linearObjectLabelEditor.setMinWidth(
-                GuiUtilities.LABEL_EDITOR_WIDTH_DEFAULT );
+                LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
         _linearObjectLabelEditor.setPrefWidth(
-                GuiUtilities.LABEL_EDITOR_WIDTH_DEFAULT );
+                LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
 
         // Try to force minimum width on Use as Projector Check Box to
         // avoid clipping.

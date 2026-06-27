@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
@@ -158,25 +158,25 @@ public final class AnalysisTimeHorizontalZoomChoices {
     // Default constructor
     @SuppressWarnings("nls")
     public AnalysisTimeHorizontalZoomChoices( final ClientProperties clientProperties ) {
-        _zoom7msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom7msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom7msChoice( clientProperties );
-        _zoom70msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom70msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom70msChoice( clientProperties );
-        _zoom14msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom14msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom14msChoice( clientProperties );
-        _zoom140msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom140msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom140msChoice( clientProperties );
-        _zoom28msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom28msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom28msChoice( clientProperties );
-        _zoom280msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom280msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom280msChoice( clientProperties );
-        _zoom56msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom56msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom56msChoice( clientProperties );
-        _zoom560msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom560msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom560msChoice( clientProperties );
-        _zoom112msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom112msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom112msChoice( clientProperties );
-        _zoom1120msAnalysisTimeChoice = AcousticsLabeledActionFactory
+        _zoom1120msAnalysisTimeChoice = LabeledActionFactory
                 .getHorizontalZoom1120msChoice( clientProperties );
 
         final Collection< Action > analysisTimeHorizontalZoomChoiceCollection = Arrays
@@ -194,7 +194,7 @@ public final class AnalysisTimeHorizontalZoomChoices {
         _analysisTimeHorizontalZoomChoiceGroup = ActionFactory
                 .makeChoiceGroup( clientProperties,
                                  analysisTimeHorizontalZoomChoiceCollection,
-                                 AcousticsLabeledActionFactory.BUNDLE_NAME,
+                                 LabeledActionFactory.BUNDLE_NAME,
                                  "horizontalZoom",
                                  "/icons/ahaSoft/LeftRight16.png",
                                  true );

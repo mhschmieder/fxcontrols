@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.action;
 
@@ -64,17 +64,17 @@ public final class FrequencyRangeHorizontalZoomChoices {
     // Default constructor
     @SuppressWarnings("nls")
     public FrequencyRangeHorizontalZoomChoices( final ClientProperties clientProperties ) {
-        _zoomFullRangeChoice = AcousticsLabeledActionFactory
+        _zoomFullRangeChoice = LabeledActionFactory
                 .getZoomFullFrequencyRangeChoice( clientProperties );
-        _zoomLowFreqChoice = AcousticsLabeledActionFactory
+        _zoomLowFreqChoice = LabeledActionFactory
                 .getZoomLowFrequencyRangeChoice( clientProperties );
-        _zoomLowMidFreqChoice = AcousticsLabeledActionFactory
+        _zoomLowMidFreqChoice = LabeledActionFactory
                 .getZoomLowMidFrequencyRangeChoice( clientProperties );
-        _zoomMidFreqChoice = AcousticsLabeledActionFactory
+        _zoomMidFreqChoice = LabeledActionFactory
                 .getZoomMidFrequencyRangeChoice( clientProperties );
-        _zoomMidHighFreqChoice = AcousticsLabeledActionFactory
+        _zoomMidHighFreqChoice = LabeledActionFactory
                 .getZoomMidHighFrequencyRangeChoice( clientProperties );
-        _zoomHighFreqChoice = AcousticsLabeledActionFactory
+        _zoomHighFreqChoice = LabeledActionFactory
                 .getZoomHighFrequencyRangeChoice( clientProperties );
 
         final Collection< Action > frequencyRangeHorizontalZoomChoiceCollection = Arrays
@@ -88,7 +88,7 @@ public final class FrequencyRangeHorizontalZoomChoices {
         _frequencyRangeHorizontalZoomChoiceGroup = ActionFactory
                 .makeChoiceGroup( clientProperties,
                                  frequencyRangeHorizontalZoomChoiceCollection,
-                                 AcousticsLabeledActionFactory.BUNDLE_NAME,
+                                 LabeledActionFactory.BUNDLE_NAME,
                                  "horizontalZoom",
                                  "/icons/ahaSoft/LeftRight16.png",
                                  true );

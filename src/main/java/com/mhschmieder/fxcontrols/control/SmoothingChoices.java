@@ -21,21 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxAcoustics Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the FxAcoustics
+ * You should have received a copy of the MIT License along with the fxcontrols
  *  Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxacoustics
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxacousticscontrols.action.AcousticsLabeledActionFactory;
 import com.mhschmieder.fxcontrols.action.ActionFactory;
+import com.mhschmieder.fxcontrols.action.LabeledActionFactory;
 import com.mhschmieder.fxcontrols.action.XAction;
 import com.mhschmieder.fxcontrols.action.XActionGroup;
-import com.mhschmieder.jacoustics.Smoothing;
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.acoustics.Smoothing;
 import org.controlsfx.control.action.Action;
 
 import java.util.Arrays;
@@ -59,11 +59,11 @@ public final class SmoothingChoices {
     // Default constructor
     @SuppressWarnings("nls")
     public SmoothingChoices( final ClientProperties clientProperties ) {
-        _smoothingNarrowChoice = AcousticsLabeledActionFactory
+        _smoothingNarrowChoice = LabeledActionFactory
                 .getSmoothingNarrowChoice( clientProperties );
-        _smoothingSixthOctaveChoice = AcousticsLabeledActionFactory
+        _smoothingSixthOctaveChoice = LabeledActionFactory
                 .getSmoothingSixthOctaveChoice( clientProperties );
-        _smoothingThirdOctaveChoice = AcousticsLabeledActionFactory
+        _smoothingThirdOctaveChoice = LabeledActionFactory
                 .getSmoothingThirdOctaveChoice( clientProperties );
 
         final Collection< Action > smoothingChoiceCollection = Arrays
@@ -74,7 +74,7 @@ public final class SmoothingChoices {
         _smoothingChoiceGroup = ActionFactory
                 .makeChoiceGroup( clientProperties,
                                   smoothingChoiceCollection,
-                                  AcousticsLabeledActionFactory.BUNDLE_NAME,
+                                  LabeledActionFactory.BUNDLE_NAME,
                                   "smoothing",
                                   "/icons/ahaSoft/Smooth16.png",
                                   true );

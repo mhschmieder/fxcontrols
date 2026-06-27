@@ -21,20 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the fxcadcontrols Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * fxcadcontrols Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadcontrols
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.model;
 
-import com.mhschmieder.fxcadcontrols.util.SurfacePropertiesNameManager;
+import com.mhschmieder.fxcontrols.util.SurfacePropertiesNameManager;
+import com.mhschmieder.fxgraphics.beans.BeanFactory;
 import com.mhschmieder.fxgraphics.geometry.Region2D;
 import com.mhschmieder.fxgraphics.geometry.Surface;
 import com.mhschmieder.fxgraphics.geometry.SurfaceMaterial;
-import com.mhschmieder.fxgraphics.beans.BeanFactory;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

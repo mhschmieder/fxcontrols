@@ -21,18 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxSigProc Library
+ * This file is part of the fxcontrols Library
  *
- * You should have received a copy of the MIT License along with the
- * FxSigProc Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxcontrols
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxsigproc
+ * Project: https://github.com/mhschmieder/fxcontrols
  */
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.util.LabelFactory;
-import com.mhschmieder.fxsigproccontrols.control.SigprocControlFactory;
-import com.mhschmieder.fxsigproccontrols.control.SigprocLabeledControlFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jsigproc.filter.ElectronicFilterType;
 import javafx.geometry.HPos;
@@ -71,7 +69,7 @@ public final class HighLowPassFilterControls {
         _highLowPassCutoffFrequencyLabel = ControlUtilities.getControlLabel(
                 LabelFactory.getFrequencyLabel() );
         final String highLowPassCutoffFrequencyTooltip = filterTypeName + " Cutoff Frequency";
-        _highLowPassCutoffFrequencyEditor = SigprocControlFactory
+        _highLowPassCutoffFrequencyEditor = ControlFactory
                 .getFrequencyEditor( clientProperties,
                                      highLowPassCutoffFrequencyTooltip,
                                      " Hz",
@@ -82,7 +80,7 @@ public final class HighLowPassFilterControls {
                                      2 );
         _highLowPassCutoffFrequencyEditor.setValueIncrement( 0.1d );
 
-        _highLowPassToggleButton = SigprocLabeledControlFactory
+        _highLowPassToggleButton = LabeledControlFactory
                 .getHighLowPassToggleButton( filterTypeName, true, true );
 
         // Force all the labels to right-justify, to match standard constraints.
