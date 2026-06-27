@@ -31,7 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.model.LayerProperties;
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.ObservableList;
 
@@ -64,7 +64,7 @@ public final class LayerNameTableCell
         // Enforce the Unique Layer Name Policy.
         final ObservableList< LayerProperties > layerCollection = getTableView().getItems();
         final String oldLayerName = selectedRecord.getLayerName();
-        LayerPropertiesManager.uniquefyLayerName(
+        LayerPropertiesManagement.uniquefyLayerName(
                 layerCollection,
                 newLayerName,
                 oldLayerName,

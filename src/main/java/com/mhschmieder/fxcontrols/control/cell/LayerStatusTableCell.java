@@ -31,7 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.model.LayerProperties;
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import javafx.collections.ObservableList;
 
@@ -69,7 +69,7 @@ public class LayerStatusTableCell
         final ObservableList< LayerProperties > layerCollection
                 = getTableView().getItems();
         final String layerName = selectedRecord.getLayerName();
-        LayerPropertiesManager.enforceActiveLayerPolicy(
+        LayerPropertiesManagement.enforceActiveLayerPolicy(
                 layerCollection, layerName, false );
     }
 }

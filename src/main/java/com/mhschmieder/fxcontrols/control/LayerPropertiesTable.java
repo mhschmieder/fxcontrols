@@ -36,7 +36,7 @@ import com.mhschmieder.fxcontrols.control.cell.LayerLockTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerNameTableCell;
 import com.mhschmieder.fxcontrols.control.cell.LayerStatusTableCell;
 import com.mhschmieder.fxcontrols.model.LayerProperties;
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,7 +79,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
     // Declare the enforced default row/index of 0 for the Default Layer.
     public static final int                   ROW_DEFAULT_LAYER        =
-            LayerPropertiesManager.DEFAULT_LAYER_INDEX;
+            LayerPropertiesManagement.DEFAULT_LAYER_INDEX;
 
     // Declare the array of column names to be displayed in the table header.
     public static final String[] _columnName =new String[] {
@@ -139,7 +139,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         }
 
         // Insert a new cloned Layer into the Layer Collection.
-        final LayerProperties layer = LayerPropertiesManager.addLayerClone(
+        final LayerProperties layer = LayerPropertiesManagement.addLayerClone(
                 _layerCollection, insertIndex );
 
         // Make sure we catch failed inserts, to avoid null pointers later on.
@@ -185,7 +185,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         }
 
         // Now, make sure the Layer at the selected row isn't locked.
-        final LayerProperties layerToDelete = LayerPropertiesManager.getLayer(
+        final LayerProperties layerToDelete = LayerPropertiesManagement.getLayer(
                 _layerCollection, deleteIndex );
         return ( layerToDelete != null ) && !layerToDelete.isLayerLocked();
     }
@@ -307,13 +307,13 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
             final Comparator< LayerProperties > comparator = (
                     layer1, layer2 ) -> {
                 final String layerName1 = layer1.getLayerName();
-                if ( LayerPropertiesManager.DEFAULT_LAYER_NAME.equals(
+                if ( LayerPropertiesManagement.DEFAULT_LAYER_NAME.equals(
                         layerName1 ) ) {
                     return -1;
                 }
 
                 final String layerName2 = layer2.getLayerName();
-                if ( LayerPropertiesManager.DEFAULT_LAYER_NAME.equals(
+                if ( LayerPropertiesManagement.DEFAULT_LAYER_NAME.equals(
                         layerName2 ) ) {
                     return 1;
                 }

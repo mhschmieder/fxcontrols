@@ -31,7 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.model.LayerProperties;
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import javafx.collections.ObservableList;
 
@@ -55,7 +55,7 @@ public final class LayerDisplayTableCell
         final ObservableList< LayerProperties > layerCollection
                 = getTableView().getItems();
         final String layerName = selectedRecord.getLayerName();
-        LayerPropertiesManager.enforceHiddenLayerPolicy(
+        LayerPropertiesManagement.enforceHiddenLayerPolicy(
                 layerCollection,
                 layerName,
                 !selectedRecord.isLayerVisible() );

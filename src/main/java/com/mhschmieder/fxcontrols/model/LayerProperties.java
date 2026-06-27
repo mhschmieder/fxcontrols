@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.model;
 
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.jcommons.lang.LabeledObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -72,13 +72,13 @@ public final class LayerProperties implements Comparable< LayerProperties >,
     public int compareTo( final LayerProperties otherLayerProperties ) {
         // If this Layer is the Default Layer, it is "less than" the other.
         final String thisLayerName = getLayerName();
-        if ( LayerPropertiesManager.DEFAULT_LAYER_NAME.equals( thisLayerName ) ) {
+        if ( LayerPropertiesManagement.DEFAULT_LAYER_NAME.equals( thisLayerName ) ) {
             return -1;
         }
 
         // If the other Layer is the Default Layer, it is "more than" this.
         final String otherLayerName = otherLayerProperties.getLayerName();
-        if ( LayerPropertiesManager.DEFAULT_LAYER_NAME.equals( otherLayerName ) ) {
+        if ( LayerPropertiesManagement.DEFAULT_LAYER_NAME.equals( otherLayerName ) ) {
             return 1;
         }
 

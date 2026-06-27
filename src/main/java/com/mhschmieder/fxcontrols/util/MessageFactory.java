@@ -54,72 +54,68 @@ public class MessageFactory {
      */
     private MessageFactory() {}
 
-    public static final String getAcceptEulaMasthead( final String productName ) {
-        final String acceptEulaMasthead = "Accept " + productName
-                + " End User License Agreement?";
-        return acceptEulaMasthead;
+    public static String getAcceptEulaMasthead( final String productName ) {
+        return "Accept " + productName + " End User License Agreement?";
     }
 
-    public static final String getAccountManagementPreamble() {
+    public static String getAccountManagementPreamble() {
         return "To review your login credentials, go to";
     }
 
-    public static final String getAutoAppendExtensionMayOverwriteMasthead() {
+    public static String getAutoAppendExtensionMayOverwriteMasthead() {
         return "Auto-Append of Default Extension May Overwrite Existing File";
     }
 
-    public static final String getBadUrlMasthead() {
+    public static String getBadUrlMasthead() {
         return "Bad URL or URI deviation from RFC 2396";
     }
 
-    public static final String getBrowserLaunchErrorMasthead() {
+    public static String getBrowserLaunchErrorMasthead() {
         return "Bad URL or Unsupported Browser";
     }
 
-    public static final String getBrowserLaunchErrorMessage() {
+    public static String getBrowserLaunchErrorMessage() {
         return "Unable to launch default browser. See Session Log for details.";
     }
 
-    public static final String getBrowserLaunchErrorTitle() {
+    public static String getBrowserLaunchErrorTitle() {
         return "Browser Launch Error";
     }
 
-    public static final String getCheckForUpdatesPreamble() {
+    public static String getCheckForUpdatesPreamble() {
         return "Check for";
     }
 
-    public static final String getClientServerProtocolErrorTitle() {
+    public static String getClientServerProtocolErrorTitle() {
         return "Client-Server Protocol Error";
     }
 
-    public static final String getConfirmCoordinatesMasthead() {
+    public static String getConfirmCoordinatesMasthead() {
         return "Please Confirm Coordinates";
     }
 
-    public static final String getContinueWithFileSaveMessage() {
+    public static String getContinueWithFileSaveMessage() {
         return "Continue with File Save?";
     }
 
-    public static final String getEulaBanner( final String productName ) {
-        final String eulaBanner = productName + " End User License Agreement";
-        return eulaBanner;
+    public static String getEulaBanner( final String productName ) {
+        return productName + " End User License Agreement";
     }
     
-    public static final String getFileAutoSaveTitle() {
+    public static String getFileAutoSaveTitle() {
         return "File Auto-Save";
     }
 
-    public static final String getFileCloseMasthead() {
+    public static String getFileCloseMasthead() {
         return "Confirm Save File Changes and Close Window";
     }
 
-    public static final String getFileErrorMessage( final String errorMessageBody,
-                                                    final File file ) {
+    public static String getFileErrorMessage( final String errorMessageBody,
+                                              final File file ) {
         try {
             final Path path = file.toPath();
-            final String fileError = "File: " + '"' + path.toString() + '"'
-                    + " " + errorMessageBody;
-            return fileError;
+            return "File: " + '"' + path.toString() + '"' + " "
+                    + errorMessageBody;
         }
         catch ( final InvalidPathException ipe ) {
             ipe.printStackTrace();
@@ -127,122 +123,118 @@ public class MessageFactory {
         }
     }
 
-    public static final String getFileExitMasthead() {
+    public static String getFileExitMasthead() {
         return "Confirm Save File Changes and Exit Application";
     }
 
-    public static final String getFileExitMessage( final File file ) {
+    public static String getFileExitMessage( final File file ) {
         final String promptMessageBody = " has been modified."
-                + " Save changes and exit?";
-        final String saveFileChangesMessage = getFilePromptMessage( promptMessageBody, file );
-        return saveFileChangesMessage;
+                + "\nSave changes and exit?";
+        returngetFilePromptMessage( promptMessageBody, file );
     }
 
-    public static final String getFileExitTitle( final String productName ) {
+    public static String getFileExitTitle( final String productName ) {
         return "Exit " + productName;
     }
 
-    public static final String getFileImportErrorMessage( final FileMode fileMode,
-                                                          final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
-            ? " could not load graphics data due to invalid file content."
-            : " was opened for project data, but could not load graphics data due to invalid file content.";
-        final String graphicsFileNotOpenedMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsFileNotOpenedMessage;
+    public static String getFileImportErrorMessage( final FileMode fileMode,
+                                                    final File file ) {
+        final String errorMessageQualifier
+                = FileMode.IMPORT_CAD.equals( fileMode )
+                ? ""
+                : " was opened for project data, but";
+        final String errorMessageBody = errorMessageQualifier
+                + " could not load graphics data due to invalid file content.";
+        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getFileImportOutOfMemoryMessage( final FileMode fileMode,
-                                                                final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
-            ? " could not load graphics data as it requires more Java heap space memory than is available."
-            : " was opened for project data, but could not load graphics data as it requires"
-                    + " more Java heap space memory than is available.";
-        final String graphicsImportOutOfMemoryMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsImportOutOfMemoryMessage;
-    }
+    public static String getFileImportOutOfMemoryMessage(
+            final FileMode fileMode,
+            final File file ) {
+        final String errorMessageQualifier
+                = FileMode.IMPORT_CAD.equals( fileMode )
+                ? ""
+                : " was opened for project data, but" ;
+        final String errorMessageBody = errorMessageQualifier
+                + " could not load graphics data as more Java heap space memory"
+                + " is required than is available.";
+        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+     }
 
-    public static final String getFileNameConflictTitle() {
+    public static String getFileNameConflictTitle() {
         return "File Name Conflict";
     }
 
-    public static final String getFileNewerThanClientMessage() {
+    public static String getFileNewerThanClientMessage() {
         return "Selected file contains new parameters not supported by this client."
                 + "\nPlease upgrade to the latest client and try again.";
     }
 
-    public static final String getFileNotLoadedMessage( final File file ) {
+    public static String getFileNotLoadedMessage( final File file ) {
         final String errorMessageBody = " could not be loaded.";
         return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getFileNotOpenedMasthead() {
+    public static String getFileNotOpenedMasthead() {
         return "File Not Opened";
     }
 
-    public static final String getFileNotOpenedMasthead( final FileMode fileMode ) {
-        final String fileNotOpenedMasthead = FileMode.IMPORT_CAD.equals( fileMode )
+    public static String getFileNotOpenedMasthead( final FileMode fileMode ) {
+        return FileMode.IMPORT_CAD.equals( fileMode )
             ? "File Partially Opened"
             : getFileNotOpenedMasthead();
-        return fileNotOpenedMasthead;
     }
     
-    public static final String getFileNotOpenedMessage( final File file ) {
-        final String errorMessageBody = " could not be opened (in full or in part).";
-        final String fileNotOpenedMessage = getFileErrorMessage( errorMessageBody, file );
-        return fileNotOpenedMessage;
+    public static String getFileNotOpenedMessage( final File file ) {
+        final String errorMessageBody
+                = " could not be opened (in full or in part).";
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getFileNotSavedMasthead() {
+    public static String getFileNotSavedMasthead() {
         return "File Not Saved";
     }
 
-    public static final String getFileNotSavedMessage( final File file ) {
+    public static String getFileNotSavedMessage( final File file ) {
         final String errorMessageBody = " could not be saved.";
-        final String fileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
-        return fileNotSavedMessage;
-    }
+        return getFileErrorMessage( errorMessageBody, file );
+     }
 
-    public static final String getFileReadErrorMessage( final FileMode fileMode, 
-                                                        final File file ) {
+    public static String getFileReadErrorMessage( final FileMode fileMode,
+                                                  final File file ) {
         final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
             ? " could not load file contents due to parsing errors."
             : " could not fully load file contents due to parsing errors."
                     + " File content may be wrong data type for selected action.";
-        final String graphicsFileNotOpenedMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsFileNotOpenedMessage;
+        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
     }
 
 
-    public static final String getFileOpenErrorTitle() {
+    public static String getFileOpenErrorTitle() {
         return "File Open Error";
     }
 
-    public static final String getFileOpenOptionsTitle() {
+    public static String getFileOpenOptionsTitle() {
         return "File Open Options";
     }
 
-    public static final String getFilePartiallySavedMasthead() {
+    public static String getFilePartiallySavedMasthead() {
         return "File Partially Saved";
     }
 
-    public static final String getFilePromptMessage( final String promptMessageBody,
-                                                     final File file ) {
+    public static String getFilePromptMessage( final String promptMessageBody,
+                                               final File file ) {
         final String fileName = file.getName();
-        final String fileError = "File: " + '"' + fileName + '"' + " "
-                + promptMessageBody;
-        return fileError;
+        return "File: " + '"' + fileName + '"' + " " + promptMessageBody;
     }
 
-    public static final String getFileReadErrorMessage( final File file ) {
+    public static String getFileReadErrorMessage( final File file ) {
         final String errorMessageBody = " could not open."
                 + " Check the Session Log for possible run-time exceptions.";
         return getFileErrorMessage( errorMessageBody, file );
     }
     
-    public static final String getFileReadErrorTitle() {
+    public static String getFileReadErrorTitle() {
         return "File Read Error";
     }
 
@@ -253,7 +245,8 @@ public class MessageFactory {
      * @param fileAction The file action type that determines the post-save clause
      * @return the descriptive clause to insert in "Confirm File Changes" alert
      */
-    public static final String getFileSavePostActionClause( final FileAction fileAction ) {
+    public static String getFileSavePostActionClause(
+            final FileAction fileAction ) {
         String actionClause = "";
         switch ( fileAction ) {
         case NEW:
@@ -279,151 +272,141 @@ public class MessageFactory {
         return actionClause;
     }
 
-    public static final String getFileSaveErrorTitle() {
+    public static String getFileSaveErrorTitle() {
         return "File Save Error";
     }
 
-    public static final String getFileSaveOptionsTitle() {
+    public static String getFileSaveOptionsTitle() {
         return "File Save Options";
     }
 
-    public static final String getFileWriteErrorMessage( final File file ) {
+    public static String getFileWriteErrorMessage( final File file ) {
         final String errorMessageBody = " could not save."
                 + " Check the Session Log for possible run-time exceptions.";
         return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getGeneratedReportWriteErrorMessage( final File file ) {
-        final String errorMessageBody =
-                                      " could not save generated report due to write access denied."
-                                              + " Please see Session Log for details (if the JRE forwarded exceptions).";
-        final String reportNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
-        return reportNotSavedMessage;
+    public static String getGeneratedReportWriteErrorMessage( final File file ) {
+        final String errorMessageBody
+                = " could not save generated report due to write access denied."
+                + " Please see Session Log for details (if the JRE forwarded exceptions).";
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getGraphicsFileReadErrorMessage( final FileMode fileMode,
-                                                                final File file ) {
+    public static String getGraphicsFileReadErrorMessage(
+            final FileMode fileMode,
+            final File file ) {
         final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
             ? " could not load graphics data due to parsing errors."
             : " was opened for project data, but could not load graphics data due to parsing errors.";
-        final String graphicsFileNotOpenedMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return graphicsFileNotOpenedMessage;
+        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getGraphicsFileWriteErrorMessage( final File file ) {
+    public static String getGraphicsFileWriteErrorMessage( final File file ) {
         final String errorMessageBody = " could not save graphics data due to parsing errors."
                 + " Please Zoom to Extents and try again.";
-        final String graphicsFileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
-        return graphicsFileNotSavedMessage;
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getGraphicsImportStatusBanner() {
+    public static String getGraphicsImportStatusBanner() {
         return "Graphics Import Status";
     }
 
-    public static final String getIncompatibleClientMasthead( final String productName ) {
+    public static String getIncompatibleClientMasthead( final String productName ) {
         return "Incompatible Client";
     }
 
-    public static final String getIncompatibleClientMessage( final String productName ) {
-        final String incompatibleClientMessage = "Your "
-                + productName + " client is out of date and incompatible with the server.";
-        return incompatibleClientMessage;
+    public static String getIncompatibleClientMessage( final String productName ) {
+        return "Your " + productName
+                + " client is out of date and incompatible with the server.";
     }
 
-    public static final String getInvalidUserAccountMasthead() {
+    public static String getInvalidUserAccountMasthead() {
         return "Invalid User Account or Login Credentials";
     }
 
-    public static final String getLoginCredentialsMasthead( final LoginType loginType,
+    public static String getLoginCredentialsMasthead( final LoginType loginType,
                                                             final String loginTarget ) {
-        final String loginCredentialsMasthead = "Please Log In to the "
-                + loginTarget + " " + loginType.label();
-        return loginCredentialsMasthead;
+        return "Please Log In to the " + loginTarget + " " + loginType.label();
     }
 
-    public static final String getLoginCredentialsTitle( final LoginType loginType ) {
-        final String loginCredentialsTitle =
-                                           loginType.label() + " Login Credentials";
-        return loginCredentialsTitle;
+    public static String getLoginCredentialsTitle( final LoginType loginType ) {
+        return loginType.label() + " Login Credentials";
     }
 
-    public static final String getLoginErrorMasthead() {
+    public static String getLoginErrorMasthead() {
         return "Logins Disabled for This Session";
     }
 
-    public static final String getLoginErrorTitle() {
+    public static String getLoginErrorTitle() {
         return "Login Error";
     }
 
-    public static final String getMissingGraphicsSourceOnSaveMessage( final File file ) {
-        final String errorMessageBody =
-                                      " was partially saved as the graphics import source has moved,"
-                                              + " is missing from file system, or is corrupted.";
-        final String filePartiallySavedMessage = MessageFactory
-                .getFileErrorMessage( errorMessageBody, file );
-        return filePartiallySavedMessage;
+    public static String getMissingGraphicsSourceOnSaveMessage( final File file ) {
+        final String errorMessageBody
+                = " was partially saved as the graphics import source has moved,"
+                + " is missing from file system, or is corrupted.";
+        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getNoPrinterAvailableMessage() {
+    public static String getNoPrinterAvailableMessage() {
         return "No Printer Available to Application";
     }
 
-    public static final String getNoSuchFileMessage( final File file ) {
+    public static String getNoSuchFileMessage( final File file ) {
         final String errorMessageBody = " does not exist.";
-        final String noSuchFileMessage = getFileErrorMessage( errorMessageBody, file );
-        return noSuchFileMessage;
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getNoTempFileMessage( final File file ) {
-        final String errorMessageBody = " could not be saved as an intermediary temp file"
+    public static String getNoTempFileMessage( final File file ) {
+        final String errorMessageBody
+                = " could not be saved as an intermediary temp file"
                 + " cannot be created on the file system.";
-        final String fileNotSavedMessage = getFileErrorMessage( errorMessageBody, file );
-        return fileNotSavedMessage;
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
-    public static final String getNullPrintJobMessage() {
+    public static String getNullPrintJobMessage() {
         return "Nothing to print, or Printer not set up correctly";
     }
 
-    public static final String getObjectPropertyEditorApplyToolTip() {
-        return "Applies current parameters and overwites related project settings";
+    public static String getObjectPropertyEditorApplyToolTip() {
+        return "Applies current parameters and overwrites related project settings";
     }
 
-    public static final String getObjectPropertyEditorInsertToolTip() {
-        return "Inserts at selected location using current parameters and overwites related project settings";
+    public static String getObjectPropertyEditorInsertToolTip() {
+        return "Inserts at selected location using current parameters and"
+                + " overwrites related project settings";
     }
 
-    public static final String getPasteCommandRejectedTitle() {
+    public static String getPasteCommandRejectedTitle() {
         return "Paste Command Rejected";
     }
 
-    public static final String getPasteReferencePointTitle() {
+    public static String getPasteReferencePointTitle() {
         return "Paste Reference Point";
     }
 
-    public static final String getPrinterBlockedMessage() {
+    public static String getPrinterBlockedMessage() {
         return "Cannot print due to Printer blocked by other Print Job";
     }
 
-    public static final String getPrintJobCanceledMessage() {
+    public static String getPrintJobCanceledMessage() {
         return "Print Job Canceled";
     }
 
-    public static final String getPrintJobNotStartedMessage() {
+    public static String getPrintJobNotStartedMessage() {
         return "Unknown internal failure; Print Job not started";
     }
 
-    public static final String getPrintServicesProblemMasthead() {
+    public static String getPrintServicesProblemMasthead() {
         return "Problem with Print Services";
     }
 
-    public static final String getProjectReportHelpBanner() {
+    public static String getProjectReportHelpBanner() {
         return "Project Report Help";
     }
 
-    public static final String getRasterGraphicsExportOptionsMasthead() {
+    public static String getRasterGraphicsExportOptionsMasthead() {
         return "Raster Graphics Export Options";
     }
 
@@ -502,5 +485,17 @@ public class MessageFactory {
 
     public static String getSurfaceMaterialTooltip() {
         return "Double-Click for List of Materials from Elements of Acoustical Engineering (Olson); Click ESC to Cancel and Exit List and Cell";
+    }
+
+    public static String getDeleteLayersMasthead() {
+        return "Confirm Delete Layers";
+    }
+
+    public static String getDeleteLayersMessage() {
+        return "Are you sure you want to delete the selected layers?";
+    }
+
+    public static String getDeleteLayersTitle() {
+        return "Delete Layers";
     }
 }

@@ -30,9 +30,9 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.util.LayerPropertiesManager;
+import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,7 +78,7 @@ public class LayerSelector extends TextSelector {
         // NOTE: We start with just the Default Layer.
         final ObservableList< Layer > defaultLayerCollection = FXCollections
                 .observableArrayList();
-        final Layer defaultLayer = LayerManager.makeDefaultLayer();
+        final Layer defaultLayer = LayerManagement.makeDefaultLayer();
         defaultLayerCollection.add( defaultLayer );
         setLayerCollection( defaultLayerCollection, defaultLayer );
 
@@ -91,7 +91,7 @@ public class LayerSelector extends TextSelector {
                     if ( item != null ) {
                         setText( item );
 
-                        final boolean disable = LayerPropertiesManager
+                        final boolean disable = LayerPropertiesManagement
                                 .VARIOUS_LAYER_NAME.equals( item );
                         setDisable( disable );
                     }
@@ -149,7 +149,7 @@ public class LayerSelector extends TextSelector {
             else if ( layerNames.size() > 0 ) {
                 // If no match found, default to first item in display list.
                 final String layerNameDefault = layerNames.get(
-                        LayerPropertiesManager.DEFAULT_LAYER_INDEX );
+                        LayerPropertiesManagement.DEFAULT_LAYER_INDEX );
                 if ( layerNameDefault != null ) {
                     setValue( layerNameDefault );
                 }
@@ -171,7 +171,7 @@ public class LayerSelector extends TextSelector {
 
     public final boolean updateLayerNames() {
         // Conditionally replace the entire list with the new collection.
-        final List< String > layerNames = LayerManager
+        final List< String > layerNames = LayerManagement
                 .getAssignableLayerNames( _layerCollection, _supportMultiEdit );
         if ( !layerNames.equals( _layerNames ) ) {
             // If the list size shrank, the selected index is automatically

@@ -32,7 +32,7 @@ package com.mhschmieder.fxcontrols.util;
 
 import com.mhschmieder.fxcontrols.model.LayerProperties;
 import com.mhschmieder.fxcontrols.model.LayerPropertiesAssignable;
-import com.mhschmieder.jcommons.lang.LabeledObjectManager;
+import com.mhschmieder.jcommons.lang.LabeledObjectManagement;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +43,7 @@ import java.text.NumberFormat;
 /**
  * Utility class to manage observable layer properties.
  */
-public final class LayerPropertiesManager {
+public final class LayerPropertiesManagement {
 
     // Declare default values for all the Layer Properties.
     public static final String  LAYER_NAME_DEFAULT    = "Layer";    //$NON-NLS-1$
@@ -82,7 +82,7 @@ public final class LayerPropertiesManager {
             // none of them are unadorned (even the first).
             layerCandidateName = LAYER_NAME_DEFAULT;
             final int uniquefierNumber = 1;
-            layerCandidateName = LabeledObjectManager.getUniqueLabel(
+            layerCandidateName = LabeledObjectManagement.getUniqueLabel(
                     layerCollection,
                     layerCandidateName,
                     labelToExclude,
@@ -92,7 +92,7 @@ public final class LayerPropertiesManager {
         else {
             // Recursively search for (and enforce) name-uniqueness of the
             // Layer candidate, leaving unadorned if possible.
-            layerCandidateName = LabeledObjectManager.getUniqueLabel(
+            layerCandidateName = LabeledObjectManagement.getUniqueLabel(
                     layerCollection,
                     layerCandidateName,
                     labelToExclude,
@@ -372,7 +372,7 @@ public final class LayerPropertiesManager {
                                                  final ObservableList< LayerProperties > layerCollection ) {
         // Bump beyond the current count -- as the new Layer hasn't been added
         // to the collection yet -- but account for numbering starting at 0.
-        return LabeledObjectManager.getNewLabelDefault( layerCollection,
+        return LabeledObjectManagement.getNewLabelDefault( layerCollection,
                 layerNameDefault,
                 " ",
                 true );
@@ -537,7 +537,7 @@ public final class LayerPropertiesManager {
         final String oldLayerName = layerProperties.getLayerName();
         final String newLayerName = ( DEFAULT_LAYER_NAME == labelToExclude )
                 ? DEFAULT_LAYER_NAME
-                : LabeledObjectManager.getUniqueLabel( layerCollection,
+                : LabeledObjectManagement.getUniqueLabel( layerCollection,
                 layerNameCandidate,
                 labelToExclude,
                 uniquefierNumberFormat );
@@ -558,6 +558,6 @@ public final class LayerPropertiesManager {
     }
 
     // NOTE: The constructor is disabled, as this is a static class.
-    private LayerPropertiesManager() {}
+    private LayerPropertiesManagement() {}
 
 }

@@ -39,15 +39,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-public final class LayerManagementToolBar extends ToolBar {
+public final class LayerManagerToolBar extends ToolBar {
 
     // Declare all of the Tool Bar Nodes.
     public PredictButtons     _predictButtons;
     public LayerActionButtons _layerActionButtons;
 
     // Default constructor
-    public LayerManagementToolBar( final ClientProperties pClientProperties,
-                                   final LayerManagementActions layerManagementActions ) {
+    public LayerManagerToolBar(final ClientProperties pClientProperties,
+                               final LayerManagementActions layerManagementActions ) {
         // Always call the superclass constructor first!
         super();
 

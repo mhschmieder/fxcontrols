@@ -35,12 +35,12 @@ import javafx.scene.control.TabPane;
 
 import java.util.List;
 
-public class TabManager {
+public class TabManagement {
 
     /**
      * The default constructor is disabled, as this is a static utilities class.
      */
-    private TabManager() {}
+    private TabManagement() {}
 
     public static void showTab( final TabPane tabPane,
                                 final Tab tab,
