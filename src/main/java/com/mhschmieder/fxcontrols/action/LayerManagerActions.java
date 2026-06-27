@@ -38,15 +38,15 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * This is a struct-like container for actions used by Layer Management.
+ * This is a struct-like container for actions used by the Layer Managemr.
  */
-public final class LayerManagementActions {
+public final class LayerManagerActions {
 
     public FileActions fileActions;
     public SettingsActions settingsActions;
     public SimulationActions simulationActions;
 
-    public LayerManagementActions( final ClientProperties pClientProperties ) {
+    public LayerManagerActions(final ClientProperties pClientProperties ) {
         fileActions = new FileActions( pClientProperties );
         settingsActions = new SettingsActions( pClientProperties );
         simulationActions = new SimulationActions( pClientProperties );
@@ -68,7 +68,7 @@ public final class LayerManagementActions {
         return fileActions.getFileActionCollection( pClientProperties, true, false );
     }
 
-    public Collection< Action > getLayerManagementMenuBarActionCollection( 
+    public Collection< Action > getLayerManagerMenuBarActionCollection(
             final ClientProperties pClientProperties ) {
         final XActionGroup fileActionGroup = LabeledActionFactory
                 .getFileActionGroup( pClientProperties, fileActions, true, false );
@@ -79,12 +79,10 @@ public final class LayerManagementActions {
         final XActionGroup simulationActionGroup = LabeledActionFactory
                 .getSimulationActionGroup( pClientProperties, simulationActions );
 
-        final Collection< Action > layerManagementMenuBarActionCollection = Arrays
-                .asList( fileActionGroup, 
-                         settingsActionGroup, 
-                         simulationActionGroup );
-
-        return layerManagementMenuBarActionCollection;
+        return Arrays.asList(
+                fileActionGroup,
+                settingsActionGroup,
+                simulationActionGroup );
     }
 
     public String getSelectedBackgroundColorName() {

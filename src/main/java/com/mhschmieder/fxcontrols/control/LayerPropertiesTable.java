@@ -185,8 +185,8 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         }
 
         // Now, make sure the Layer at the selected row isn't locked.
-        final LayerProperties layerToDelete = LayerPropertiesManagement.getLayer(
-                _layerCollection, deleteIndex );
+        final LayerProperties layerToDelete = LayerPropertiesManagement
+                .getLayer( _layerCollection, deleteIndex );
         return ( layerToDelete != null ) && !layerToDelete.isLayerLocked();
     }
 

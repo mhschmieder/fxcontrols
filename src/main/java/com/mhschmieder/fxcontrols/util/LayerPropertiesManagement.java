@@ -368,17 +368,20 @@ public final class LayerPropertiesManagement {
     }
 
     // Get the next available Layer Name for a new Layer in the collection.
-    public static String getNewLayerNameDefault( final String layerNameDefault,
-                                                 final ObservableList< LayerProperties > layerCollection ) {
+    public static String getNewLayerNameDefault(
+            final String layerNameDefault,
+            final ObservableList< LayerProperties > layerCollection ) {
         // Bump beyond the current count -- as the new Layer hasn't been added
         // to the collection yet -- but account for numbering starting at 0.
-        return LabeledObjectManagement.getNewLabelDefault( layerCollection,
+        return LabeledObjectManagement.getNewLabelDefault(
+                layerCollection,
                 layerNameDefault,
                 " ",
                 true );
     }
 
-    public static boolean hasActiveLayer( final ObservableList< LayerProperties > layerCollection ) {
+    public static boolean hasActiveLayer(
+            final ObservableList< LayerProperties > layerCollection ) {
         for ( final LayerProperties layer : layerCollection ) {
             if ( layer.isLayerActive() ) {
                 return true;
@@ -388,8 +391,9 @@ public final class LayerPropertiesManagement {
         return false;
     }
 
-    public static boolean hasLayer( final ObservableList< LayerProperties > layerCollection,
-                                    final LayerProperties referenceLayer ) {
+    public static boolean hasLayer(
+            final ObservableList< LayerProperties > layerCollection,
+            final LayerProperties referenceLayer ) {
         final String referenceLayerName = referenceLayer.getLayerName();
 
         for ( final LayerProperties layer : layerCollection ) {

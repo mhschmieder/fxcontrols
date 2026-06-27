@@ -915,43 +915,42 @@ public class LabeledActionFactory {
                 "/icons/led24/DocExcelCsv16.png" );
     }
 
-    @SuppressWarnings("nls")
     public static XAction getImportVectorGraphicsAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction( pClientProperties,
+        return ActionFactory.makeAction(
+                pClientProperties,
                 BUNDLE_NAME,
                 "import",
                 "vectorGraphics",
                 "/icons/oxygenIcons/SvgMimeType16.png" );
     }
 
-    @SuppressWarnings("nls")
-    public static XAction getLayerManagementAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction( pClientProperties,
+    public static XAction getLayerManagerAction(
+            final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction(
+                pClientProperties,
                 BUNDLE_NAME,
                 "settings",
-                "layerManagement",
+                "layerManager",
                 "/icons/ahaSoft/Layers16.png" );
     }
 
-    @SuppressWarnings("nls")
     public static XActionGroup getLoadActionGroup( final ClientProperties clientProperties,
                                                    final LoadActions loadActions ) {
         final Collection< Action > loadActionCollection = loadActions
                 .getLoadActionCollection();
 
-        final XActionGroup loadActionGroup = ActionFactory
-                .makeActionGroup( clientProperties,
-                        loadActionCollection,
-                        LabeledActionFactory.BUNDLE_NAME,
-                        "load",
-                        "/icons/everaldo/FileImport16.png" );
-
-        return loadActionGroup;
+        return ActionFactory.makeActionGroup(
+                clientProperties,
+                loadActionCollection,
+                LabeledActionFactory.BUNDLE_NAME,
+                "load",
+                "/icons/everaldo/FileImport16.png" );
     }
 
-    @SuppressWarnings("nls")
-    public static XAction getLoadProjectSettingsAction( final ClientProperties clientProperties ) {
-        return ActionFactory.makeAction( clientProperties,
+    public static XAction getLoadProjectSettingsAction(
+            final ClientProperties clientProperties ) {
+        return ActionFactory.makeAction(
+                clientProperties,
                 BUNDLE_NAME,
                 "load",
                 "projectSettings",

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
-import com.mhschmieder.fxcontrols.action.LayerManagementActions;
+import com.mhschmieder.fxcontrols.action.LayerManagerActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -46,13 +46,13 @@ public final class LayerManagerToolBar extends ToolBar {
     public LayerActionButtons _layerActionButtons;
 
     // Default constructor
-    public LayerManagerToolBar(final ClientProperties pClientProperties,
-                               final LayerManagementActions layerManagementActions ) {
+    public LayerManagerToolBar( final ClientProperties pClientProperties,
+                                final LayerManagerActions layerManagerActions ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initToolBar( pClientProperties, layerManagementActions );
+            initToolBar( pClientProperties, layerManagerActions);
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -60,10 +60,11 @@ public final class LayerManagerToolBar extends ToolBar {
     }
 
     private void initToolBar( final ClientProperties pClientProperties,
-                              final LayerManagementActions layerManagementActions ) {
+                              final LayerManagerActions layerManagerActions ) {
         // Make the Nodes for the Tool Bar.
-        _predictButtons =
-                        new PredictButtons( pClientProperties, layerManagementActions.simulationActions );
+        _predictButtons = new PredictButtons(
+                pClientProperties,
+                layerManagerActions.simulationActions );
         _layerActionButtons = new LayerActionButtons();
 
         // Add some spacers to separate logical groupings.

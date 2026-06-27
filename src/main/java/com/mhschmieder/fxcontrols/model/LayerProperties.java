@@ -42,7 +42,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Observable Layer implementation for common settings that cut across most
- * applications that expose some form of layer management. Use this version for
+ * applications that expose some form of Layer Management. Use this version for
  * binding to related GUI controls purposes; there is a non-observable Layer
  * class in the graphics library for Layer Management, for most other purposes.
  */
