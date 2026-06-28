@@ -130,7 +130,7 @@ public class MessageFactory {
     public static String getFileExitMessage( final File file ) {
         final String promptMessageBody = " has been modified."
                 + "\nSave changes and exit?";
-        returngetFilePromptMessage( promptMessageBody, file );
+        return getFilePromptMessage( promptMessageBody, file );
     }
 
     public static String getFileExitTitle( final String productName ) {

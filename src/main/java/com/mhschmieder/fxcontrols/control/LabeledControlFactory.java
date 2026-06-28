@@ -46,6 +46,8 @@ import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcontrols.control.ButtonUtilities;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -59,6 +61,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import org.apache.commons.math3.util.FastMath;
 
 import java.util.ResourceBundle;
 
@@ -685,7 +688,6 @@ public final class LabeledControlFactory {
                                                      ColorConstants.PREDICT_BACKGROUND_COLOR );
     }
 
-    @SuppressWarnings("nls")
     public static Button getCancelButton( final ClientProperties pClientProperties ) {
         return ControlUtilities.getLabeledButton( pClientProperties,
                                                      BUNDLE_NAME,
@@ -694,7 +696,6 @@ public final class LabeledControlFactory {
                                                      ColorConstants.CANCEL_BACKGROUND_COLOR );
     }
 
-    @SuppressWarnings("nls")
     public static Button getClearButton( final ClientProperties pClientProperties ) {
         return ControlUtilities.getLabeledButton( pClientProperties,
                                                      BUNDLE_NAME,
@@ -1083,5 +1084,42 @@ public final class LabeledControlFactory {
                 null );
 
         return button;
+    }
+
+    /**
+     * Creates and returns a unitless NumberAxis with the given upper and lower
+     * bound.
+     *
+     * @param pAxisLabel
+     *            The name to display for this axis
+     * @param pLowerBound
+     *            The lower bound for this axis, i.e. min plottable value
+     * @param pUpperBound
+     *            The upper bound for this axis, i.e. max plottable value
+     * @param pTickUnit
+     *            The tick unit, i.e. space between tick marks
+     * @param pAxisSide
+     *            The side of the hose chart to show the axis on
+     * @return A unitless Number Axis
+     */
+    public static NumberAxis getUnitlessAxis(final String pAxisLabel,
+                                             final double pLowerBound,
+                                             final double pUpperBound,
+                                             final double pTickUnit,
+                                             final Side pAxisSide ) {
+        // Make sure the outer ticks are whole numbers or else all tick labels
+        // get too long to avoid overlap (and also are less usable).
+        final double axisMin = FastMath.floor( pLowerBound );
+        final double axisMax = FastMath.ceil( pUpperBound );
+
+        final NumberAxis unitlessAxis = new NumberAxis( pAxisLabel, axisMin, axisMax, pTickUnit );
+
+        unitlessAxis.setTickMarkVisible( true );
+        unitlessAxis.setTickLabelsVisible( true );
+        unitlessAxis.setMinorTickCount( 6 );
+
+        unitlessAxis.setSide( pAxisSide );
+
+        return unitlessAxis;
     }
 }

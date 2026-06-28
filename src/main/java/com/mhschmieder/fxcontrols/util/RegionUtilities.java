@@ -204,7 +204,6 @@ public class RegionUtilities {
      * @param backColor The desired background {@link Color} for the {@code Region}
      * @return A {@link Background} object designed to be passed to
      * {@code Region.setBackground()}
-     * @version 1.0
      */
     public static Background makeRegionBackground(final Color backColor) {
         final BackgroundFill backgroundFill = new BackgroundFill(backColor,

@@ -67,11 +67,9 @@ public final class TableUtilities {
      *
      * @param column
      *            The {@link TableColumn} whose header properties should be set
-     *
-     * @version 1.0
      */
-    @SuppressWarnings("nls")
-    public static void setTableColumnHeaderProperties( final TableColumn< ? extends Object, ? > column ) {
+    public static void setTableColumnHeaderProperties(
+            final TableColumn< ? extends Object, ? > column ) {
         // Apply custom style guidelines to table headers and make them wrap.
         //
         // Larger fonts are used on the Mac in general, by default.
@@ -102,13 +100,12 @@ public final class TableUtilities {
      *            The {@link TableColumn} whose cell value factory should be set
      * @param columnPropertyName
      *            The name of the table property that this column manages
-     *
-     * @version 1.0
      */
-    public static < TD, CT > void setCellValueFactory( final TableColumn< TD, CT > tableColumn,
-                                                       final String columnPropertyName ) {
-        final Callback< CellDataFeatures< TD, CT >, ObservableValue< CT > > callback =
-                                                                                     new PropertyValueFactory<>( columnPropertyName );
+    public static < TD, CT > void setCellValueFactory(
+            final TableColumn< TD, CT > tableColumn,
+            final String columnPropertyName ) {
+        final Callback< CellDataFeatures< TD, CT >, ObservableValue< CT > >
+                callback = new PropertyValueFactory<>( columnPropertyName );
         tableColumn.setCellValueFactory( callback );
     }
 
@@ -125,13 +122,11 @@ public final class TableUtilities {
      *            {@link TableColumn}
      * @param tableColumn
      *            The {@link TableColumn} whose cell alignment should be set
-     *
-     * @version 1.0
      */
-    public static < TD, CT > void setCellAlignment( final TableColumn< TD, CT > tableColumn ) {
+    public static < TD, CT > void setCellAlignment(
+            final TableColumn< TD, CT > tableColumn ) {
         tableColumn.setCellFactory( column -> {
             final TableCell< TD, CT > cell = new TableCell< TD, CT >() {
-                @SuppressWarnings("nls")
                 private String getString() {
                     return getItem() == null ? "" : getItem().toString();
                 }

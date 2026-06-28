@@ -66,8 +66,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for non-specified {@link Object} types
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, Object > makeTableColumnForObject( final String columnName,
                                                                              final double columnWidth,
@@ -102,8 +100,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link String} values
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, String > makeTableColumnForString( final String columnName,
                                                                              final double columnWidth,
@@ -138,8 +134,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Integer} values
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, Integer > makeTableColumnForInteger( final String columnName,
                                                                                final double columnWidth,
@@ -174,8 +168,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Long} values
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, Long > makeTableColumnForLong( final String columnName,
                                                                          final double columnWidth,
@@ -210,8 +202,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Float} values
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, Float > makeTableColumnForFloat( final String columnName,
                                                                            final double columnWidth,
@@ -246,8 +236,6 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Double} values
-     *
-     * @version 1.0
      */
     public static < TD > TableColumn< TD, Double > makeTableColumnForDouble( final String columnName,
                                                                              final double columnWidth,
@@ -282,13 +270,12 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Boolean} values
-     *
-     * @version 1.0
      */
-    public static < TD > TableColumn< TD, Boolean > makeTableColumnForBoolean( final String columnName,
-                                                                               final double columnWidth,
-                                                                               final String columnPropertyName,
-                                                                               final boolean sortable ) {
+    public static < TD > TableColumn< TD, Boolean > makeTableColumnForBoolean(
+            final String columnName,
+            final double columnWidth,
+            final String columnPropertyName,
+            final boolean sortable ) {
         final TableColumn< TD, Boolean > tableColumn = new TableColumn<>( columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
@@ -318,13 +305,12 @@ public final class TableColumnFactory {
      * @param sortable
      *            If {@code true}, this columns can be used to sort the rows
      * @return A {@link TableColumn} for managing {@link Color} values
-     *
-     * @version 1.0
      */
-    public static < TD > TableColumn< TD, Color > makeTableColumnForColor( final String columnName,
-                                                                           final double columnWidth,
-                                                                           final String columnPropertyName,
-                                                                           final boolean sortable ) {
+    public static < TD > TableColumn< TD, Color > makeTableColumnForColor(
+            final String columnName,
+            final double columnWidth,
+            final String columnPropertyName,
+            final boolean sortable ) {
         final TableColumn< TD, Color > tableColumn = new TableColumn<>( columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
@@ -337,5 +323,4 @@ public final class TableColumnFactory {
 
         return tableColumn;
     }
-
 }
