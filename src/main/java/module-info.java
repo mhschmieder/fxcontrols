@@ -31,6 +31,7 @@
 module fxcontrols {
     exports com.mhschmieder.fxcontrols.action;
     exports com.mhschmieder.fxcontrols.control;
+    exports com.mhschmieder.fxcontrols.control.cell;
     exports com.mhschmieder.fxcontrols.model;
     exports com.mhschmieder.fxcontrols.util;
     requires commons.math3;
