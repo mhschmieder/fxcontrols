@@ -93,7 +93,7 @@ public class DataTableView extends XTableView< ObservableList< String > > {
         // Convert to a TableView that has no property names due to being
         // non-editable, and has default initial cell width as each column will
         // be an indeterminate size.
-        final ArrayList< TableColumn< ObservableList< String >, String > > 
+        final List< TableColumn< ObservableList< String >, String > >
                 tableColumnCollection = new ArrayList<>( maxColumn );
         for ( int i = 0; i < maxColumn; i++ ) {
             // NOTE: We appear to have to use an approach more akin to an SQL

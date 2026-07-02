@@ -220,7 +220,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
         final ObservableList< TableColumn< LayerProperties, ? > > columns
                 = getColumns();
-        final ArrayList< TableColumn< LayerProperties, ? > > tableColumnCollection =
+        final List< TableColumn< LayerProperties, ? > > tableColumnCollection =
                 new ArrayList<>( NUMBER_OF_COLUMNS );
 
         int columnIndex = COLUMN_LAYER_NAME;
