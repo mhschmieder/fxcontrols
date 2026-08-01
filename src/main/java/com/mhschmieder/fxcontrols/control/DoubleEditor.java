@@ -281,15 +281,11 @@ public class DoubleEditor extends NumberEditor {
     public final double getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
-        final double clampedValue = fromString( undecoratedText );
-
-        return clampedValue;
+        return fromString( undecoratedText );
     }
 
     public double getClampedValue( final double unclampedValue ) {
-        final double clampedValue = FastMath.min( 
-            FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
-        return clampedValue;
+        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
     }
 
     public final double getMinimumValue() {

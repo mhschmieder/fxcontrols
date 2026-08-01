@@ -92,21 +92,17 @@ public final class AngleSlider extends NumberSlider {
     public double getClampedValue( final double unclampedValue ) {
         // If the allowed angle range is a full period or more (360+ degrees),
         // then unwrap the angle. Otherwise, apply standard min/max clamping.
-        final double clampedValue = ( FastMath.abs( getMax() - getMin() ) >= 360d )
+        return ( FastMath.abs( getMax() - getMin() ) >= 360d )
             ? getUnwrappedAngleDegrees( unclampedValue )
-            : FastMath.min( FastMath.max( unclampedValue, getMin() ), getMax() );
-
-        return clampedValue;
+            : Math.clamp( unclampedValue, getMin(), getMax() );
     }
 
     public double getUnwrappedAngleDegrees( final double unclampedValue ) {
         // Unwrap the angle based on period, using the established minimum and
         // maximum so that we don't accidentally clamp, but still clamp if the
         // allowed range itself is less than a full period.
-        double unwrappedAngleDegrees = MathUtilities.unwrapAngleRangeDegrees(
+        return MathUtilities.unwrapAngleRangeDegrees(
              unclampedValue, getMin(), getMax() );
-
-        return unwrappedAngleDegrees;
     }
 
     private void initSlider() {

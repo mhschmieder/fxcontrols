@@ -394,7 +394,8 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
             newValue = numericValue.intValue();
         }
         catch ( final ParseException pe ) {
-            final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
+            final int measurementUnitIndex = stringValue.indexOf(
+                    _measurementUnitString );
             try {
                 final String numericString = ( measurementUnitIndex < 0 )
                     ? stringValue
@@ -411,23 +412,18 @@ public final class IntegerSpinnerStringConverter extends StringConverter< Intege
         // If limits were established, enforce them by range-checking and
         // restricting the parsed or defaulted value. Always check though, to
         // avoid overflow and underflow conditions.
-        final int clampedValue = getClampedValue( newValue );
-
-        return clampedValue;
+        return getClampedValue( newValue );
     }
 
     public int getClampedValue( final int unclampedValue ) {
-        final int clampedValue = FastMath.min( FastMath.max( unclampedValue, _minimumNumericValue ),
-                                           _maximumNumericValue );
-        return clampedValue;
+        return Math.clamp(
+                unclampedValue, _minimumNumericValue, _maximumNumericValue );
     }
 
     public int getRestrictedValue() {
         // The fromString method performs input validation.
         final String text = _editor.getText();
-        final int restrictedValue = fromString( text );
-
-        return restrictedValue;
+        return fromString( text );
     }
 
     /**

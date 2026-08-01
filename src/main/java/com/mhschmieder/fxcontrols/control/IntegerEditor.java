@@ -235,15 +235,11 @@ public class IntegerEditor extends NumberEditor {
     public final int getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
-        final int clampedValue = fromString( undecoratedText );
-
-        return clampedValue;
+        return fromString( undecoratedText );
     }
 
     public int getClampedValue( final int unclampedValue ) {
-        final int clampedValue =
-                FastMath.min( FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
-        return clampedValue;
+        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
     }
 
     public final int getMinimumValue() {

@@ -411,23 +411,17 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         // If limits were established, enforce them by range-checking and
         // restricting the parsed or defaulted value. Always check though, to
         // avoid overflow and underflow conditions.
-        final double clampedValue = getClampedValue( newValue );
-
-        return clampedValue;
+        return getClampedValue( newValue );
     }
 
     public double getClampedValue( final double unclampedValue ) {
-        final double clampedValue = FastMath.min( FastMath.max( unclampedValue, _minimumNumericValue ),
-                                              _maximumNumericValue );
-        return clampedValue;
+        return Math.clamp( unclampedValue, _minimumNumericValue, _maximumNumericValue );
     }
 
     public double getRestrictedValue() {
         // The fromString method performs input validation.
         final String text = _editor.getText();
-        final double restrictedValue = fromString( text );
-
-        return restrictedValue;
+        return fromString( text );
     }
 
     /**

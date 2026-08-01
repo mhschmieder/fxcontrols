@@ -236,15 +236,11 @@ public class LongEditor extends NumberEditor {
     public final long getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
-        final long clampedValue = fromString( undecoratedText );
-
-        return clampedValue;
+        return fromString( undecoratedText );
     }
 
     public long getClampedValue( final long unclampedValue ) {
-        final long clampedValue =
-                FastMath.min( FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
-        return clampedValue;
+        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
     }
 
     public final long getMinimumValue() {

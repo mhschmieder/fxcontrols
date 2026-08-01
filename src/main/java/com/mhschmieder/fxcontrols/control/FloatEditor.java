@@ -281,15 +281,11 @@ public class FloatEditor extends NumberEditor {
     public final float getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
-        final float clampedValue = fromString( undecoratedText );
-
-        return clampedValue;
+        return fromString( undecoratedText );
     }
 
     public float getClampedValue( final float unclampedValue ) {
-        final float clampedValue = FastMath.min( 
-            FastMath.max( unclampedValue, _minimumValue ), _maximumValue );
-        return clampedValue;
+        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
     }
 
     public final float getMinimumValue() {
