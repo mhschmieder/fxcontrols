@@ -49,19 +49,25 @@ import javafx.scene.input.KeyCode;
 
 public class DurationEditor extends XTextField {
 
-    private static System.Logger LOGGER
+    private static final System.Logger LOGGER
             = System.getLogger( DurationEditor.class.getName() );
+
     // ChronoUnit reference for how to interpret raw unformatted typed values.
     protected final ChronoUnit chronoUnit;
+
     // Cache the raw numeric representation of the data value.
     // NOTE: This field must follow JavaFX Property Beans conventions.
     private final ObjectProperty< Duration > value;
+
     // The format to use for the string/text representation of duration/time.
     private final DurationFormat durationFormat;
+
     // Cache the default data value, to use when backing out edits.
     protected Duration defaultValue = Duration.ZERO;
+
     // The amount to increment or decrement by, using the arrow keys.
     protected long valueIncrementSeconds;
+
     // Number format cache used for locale-specific number parsing.
     protected NumberFormat numberParse;
 
@@ -294,7 +300,7 @@ public class DurationEditor extends XTextField {
      */
     protected Duration parseDurationText( final String durationText )
             throws DateTimeParseException {
-        Duration newDuration;
+        final Duration newDuration;
 
         switch ( durationFormat ) {
             case ISO_8601 ->
@@ -321,7 +327,7 @@ public class DurationEditor extends XTextField {
      * @return The ISO-8601 string form of {@code duration}
      */
     public String toString( final Duration duration ) {
-        String newText;
+        final String newText;
 
         switch ( durationFormat ) {
             case ISO_8601 ->

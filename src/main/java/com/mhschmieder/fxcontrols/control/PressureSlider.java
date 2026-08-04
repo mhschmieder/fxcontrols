@@ -48,11 +48,11 @@ public class PressureSlider extends NumberSlider {
             = PhysicsConstants.PRESSURE_REFERENCE_PA;
 
     // Default tick spacing in pascals.
-    private static final double MAJOR_TICK_SPACING_PASCALS = 10000d;
-    private static final double MINOR_TICK_SPACING_PASCALS = 2000d;
+    private static final double MAJOR_TICK_SPACING_PASCALS = 10000.0d;
+    private static final double MINOR_TICK_SPACING_PASCALS = 2000.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
-    private static final double BLOCK_INCREMENT_PASCALS = 1000d;
+    private static final double BLOCK_INCREMENT_PASCALS = 1000.0d;
 
     // Store the Pressure Unit so we'll know when we need to convert.
     private PressureUnit _pressureUnit;
@@ -103,7 +103,7 @@ public class PressureSlider extends NumberSlider {
         // orientation is vertical, which we only know per context.
         // NOTE: This is a safety value that should be overloaded by the parent
         // node, per usage context.
-        setMinHeight( 150d );
+        setMinHeight( 150.0d );
 
         // Update the Pressure Unit and related resolutions and ranges.
         updatePressureUnit( _pressureUnit );
@@ -138,11 +138,11 @@ public class PressureSlider extends NumberSlider {
                 setBlockIncrement( 1.0d );
                 break;
             case PASCALS:
-                setTickResolution( 10000d, 2000d );
-                setBlockIncrement( 1000d );
+                setTickResolution( 10000.0d, 2000.0d );
+                setBlockIncrement( 1000.0d );
                 break;
             case MILLIBARS:
-                setTickResolution( 100d, 20.0d );
+                setTickResolution( 100.0d, 20.0d );
                 setBlockIncrement( 10.0d );
                 break;
             case ATMOSPHERES:

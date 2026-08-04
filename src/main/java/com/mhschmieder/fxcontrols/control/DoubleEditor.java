@@ -56,7 +56,7 @@ public class DoubleEditor extends NumberEditor {
     // The amount to increment or decrement by, using the arrow keys.
     protected double _valueIncrement;
 
-    public DoubleEditor( final ClientProperties clientProperties,
+    public DoubleEditor( final ClientProperties pClientProperties,
                          final String initialText,
                          final String tooltipText,
                          final boolean applyToolkitCss,
@@ -64,7 +64,7 @@ public class DoubleEditor extends NumberEditor {
                          final int maxFractionDigitsFormat,
                          final int minFractionDigitsParse,
                          final int maxFractionDigitsParse ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -76,7 +76,7 @@ public class DoubleEditor extends NumberEditor {
               Double.MAX_VALUE );
     }
 
-    public DoubleEditor( final ClientProperties clientProperties,
+    public DoubleEditor( final ClientProperties pClientProperties,
                          final String initialText,
                          final String tooltipText,
                          final boolean applyToolkitCss,
@@ -86,7 +86,7 @@ public class DoubleEditor extends NumberEditor {
                          final int maxFractionDigitsParse,
                          final double minimumValue,
                          final double maximumValue ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -100,7 +100,7 @@ public class DoubleEditor extends NumberEditor {
               0.0d );
     }
 
-    public DoubleEditor( final ClientProperties clientProperties,
+    public DoubleEditor( final ClientProperties pClientProperties,
                          final String initialText,
                          final String tooltipText,
                          final boolean applyToolkitCss,
@@ -113,7 +113,7 @@ public class DoubleEditor extends NumberEditor {
                          final double defaultValue,
                          final double valueIncrement ) {
         // Always call the superclass constructor first!
-        super( clientProperties, initialText, tooltipText, applyToolkitCss );
+        super( pClientProperties, initialText, tooltipText, applyToolkitCss );
 
         _defaultValue = defaultValue;
 
@@ -293,19 +293,6 @@ public class DoubleEditor extends NumberEditor {
     }
 
     @Override
-    public String getAllowedCharacters() {
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0 )
-                                         ? ( _maximumValue > 0 )
-                                           ? "[0-9.,+-]"
-                                           : "[0-9.,-]"
-                                         : ( _maximumValue > 0 )
-                                           ? "[0-9.,+]"
-                                           : "[0-9.,]";
-        return allowedCharacters;
-    }
-
-    @Override
     public final String getDecoratedText() {
         // Get the most recently committed value.
         final double savedValue = getValue();
@@ -330,6 +317,16 @@ public class DoubleEditor extends NumberEditor {
     }
 
     @Override
+    public final void clampValue() {
+        // Get the clamped, edited value, stripped of decorations and
+        // formatting.
+        final double clampedValue = getClampedValue();
+
+        // Update the cached property from the clamped, edited value.
+        setValue( clampedValue );
+    }
+
+    @Override
     public final void updateText() {
         // Get the most recently committed value.
         final double savedValue = getValue();
@@ -339,13 +336,16 @@ public class DoubleEditor extends NumberEditor {
     }
 
     @Override
-    public final void clampValue() {
-        // Get the clamped, edited value, stripped of decorations and
-        // formatting.
-        final double clampedValue = getClampedValue();
-
-        // Update the cached property from the clamped, edited value.
-        setValue( clampedValue );
+    public String getAllowedCharacters() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = ( _minimumValue < 0 )
+                                         ? ( _maximumValue > 0 )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( _maximumValue > 0 )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
+        return allowedCharacters;
     }
 
     public final double getClampedValue() {
@@ -390,8 +390,8 @@ public class DoubleEditor extends NumberEditor {
                                                                       + 1 );
                 doubleValue = Double.parseDouble( numericString );
             }
-            catch ( IndexOutOfBoundsException | NumberFormatException |
-                    NullPointerException e ) {
+            catch ( final IndexOutOfBoundsException | NumberFormatException |
+                          NullPointerException e ) {
                 if ( _reset != null ) {
                     _reset.run();
                 }

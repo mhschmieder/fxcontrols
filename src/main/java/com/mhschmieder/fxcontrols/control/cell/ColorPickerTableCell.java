@@ -35,7 +35,6 @@ import com.mhschmieder.fxcontrols.control.XColorPicker;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.paint.Color;
 
 /**
@@ -56,8 +55,8 @@ public abstract class ColorPickerTableCell< RT >
     // NOTE: The color editable flag is needed for conditionally blocking the
     //  color picker from popping up for edits; this table cell may be used for
     //  display-only color tables so we need to cover both basic usage contexts.
-    public ColorPickerTableCell( final TableColumn< RT, Color > column,
-                                 final String tooltipText ) {
+    protected ColorPickerTableCell( final TableColumn< RT, Color > column,
+                                    final String tooltipText ) {
         // Always call the superclass constructor first!
         super();
 
@@ -92,7 +91,7 @@ public abstract class ColorPickerTableCell< RT >
         _colorPicker.setOnShowing( evt -> {
             // Bring up the Color Picker to edit the Color value.
             final TableView< RT > tableView = getTableView();
-            final TableViewSelectionModel< RT > selectionModel
+            final TableView.TableViewSelectionModel< RT > selectionModel
                     = tableView.getSelectionModel();
             final int selectedIndex = getTableRow().getIndex();
             selectionModel.select( selectedIndex );

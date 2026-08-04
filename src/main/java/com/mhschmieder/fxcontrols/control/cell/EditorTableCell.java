@@ -54,9 +54,9 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     // Cache the Client Properties as they may be needed after initialization.
     protected ClientProperties clientProperties;
 
-    public EditorTableCell( final List< Integer > pUneditableRows,
-                            final boolean pBlankTextAllowed,
-                            final ClientProperties pClientProperties ) {
+    protected EditorTableCell( final List< Integer > pUneditableRows,
+                               final boolean pBlankTextAllowed,
+                               final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super();
 
@@ -365,7 +365,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     private TableColumn< RT, ? > getNextColumn( final boolean forward ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
-        for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
+        for ( final TableColumn< RT, ? > column : getTableView().getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
 
@@ -374,7 +374,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             return null;
         }
 
-        int currentIndex = columns.indexOf( getTableColumn() );
+        final int currentIndex = columns.indexOf( getTableColumn() );
         int nextIndex = currentIndex;
         if ( forward ) {
             nextIndex++;
@@ -393,18 +393,18 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     }
 
     private Point getNextCellPosition( final boolean forward ) {
-        int columnCount = getTableView().getColumns().size();
-        int rowCount = getTableView().getItems().size();
-        int currentRow = getTableRow().getIndex();
+        final int columnCount = getTableView().getColumns().size();
+        final int rowCount = getTableView().getItems().size();
+        final int currentRow = getTableRow().getIndex();
         int newRow = currentRow;
         int newColumn = 0;
 
-        List< TableColumn< RT, ? > > columns = new ArrayList<>();
-        for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
+        final List< TableColumn< RT, ? > > columns = new ArrayList<>();
+        for ( final TableColumn< RT, ? > column : getTableView().getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
 
-        int currentColumn = columns.indexOf( getTableColumn() );
+        final int currentColumn = columns.indexOf( getTableColumn() );
         newColumn = currentColumn;
 
         if ( currentColumn == 0 && currentRow == 0 && !forward ) {
@@ -438,8 +438,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         }
 
         System.out.println(
-                "from " + currentColumn + "," + currentRow + " to " + newColumn
-                + "," + newRow + "" );
+                "from " + currentColumn + ',' + currentRow + " to " + newColumn
+                + ',' + newRow );
 
         return new Point( newColumn, newRow );
     }
@@ -455,7 +455,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             return columns;
         }
 
-        for ( TableColumn< RT, ? > column : root.getColumns() ) {
+        for ( final TableColumn< RT, ? > column : root.getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
 

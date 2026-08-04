@@ -125,7 +125,7 @@ public class ListViewUtilities {
 
                     @Override
                     protected void updateItem( final T item,
-                                               boolean empty ) {
+                                               final boolean empty ) {
                         super.updateItem( item, empty );
 
                         final Labeled currentLabelAssignable = ( ( item
@@ -215,7 +215,7 @@ public class ListViewUtilities {
 
                     @Override
                     protected void updateItem( final Month item,
-                                               boolean empty ) {
+                                               final boolean empty ) {
                         super.updateItem( item, empty );
 
                         final Month currentMonth = ( ( item == null ) || empty )

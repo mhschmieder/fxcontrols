@@ -47,20 +47,24 @@ public class IntegerEditor extends NumberEditor {
     // Cache the raw numeric representation of the data value.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final IntegerProperty value;
+
     // Cache the minimum allowed data value (negative).
     protected int _minimumValue;
+
     // Cache the maximum allowed data value (positive).
     protected int _maximumValue;
+
     // Cache the default data value.
     protected int _defaultValue;
+
     // The amount to increment or decrement by, using the arrow keys.
     protected int _valueIncrement;
 
-    public IntegerEditor( final ClientProperties clientProperties,
+    public IntegerEditor( final ClientProperties pClientProperties,
                           final String initialText,
                           final String tooltipText,
                           final boolean applyToolkitCss ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -68,13 +72,13 @@ public class IntegerEditor extends NumberEditor {
               Integer.MAX_VALUE );
     }
 
-    public IntegerEditor( final ClientProperties clientProperties,
+    public IntegerEditor( final ClientProperties pClientProperties,
                           final String initialText,
                           final String tooltipText,
                           final boolean applyToolkitCss,
                           final int minimumValue,
                           final int maximumValue ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -84,7 +88,7 @@ public class IntegerEditor extends NumberEditor {
               0 );
     }
 
-    public IntegerEditor( final ClientProperties clientProperties,
+    public IntegerEditor( final ClientProperties pClientProperties,
                           final String initialText,
                           final String tooltipText,
                           final boolean applyToolkitCss,
@@ -93,7 +97,7 @@ public class IntegerEditor extends NumberEditor {
                           final int defaultValue,
                           final int valueIncrement ) {
         // Always call the superclass constructor first!
-        super( clientProperties, initialText, tooltipText, applyToolkitCss );
+        super( pClientProperties, initialText, tooltipText, applyToolkitCss );
 
         _defaultValue = defaultValue;
 
@@ -115,7 +119,7 @@ public class IntegerEditor extends NumberEditor {
     }
 
     @SuppressWarnings( "nls" )
-    private final void initEditor() {
+    private void initEditor() {
         // Now it is safe to restrict keyboard input while referencing class
         // variables and potentially local number formatting instances.
         restrictKeyboardInput();
@@ -349,8 +353,8 @@ public class IntegerEditor extends NumberEditor {
                                                                       + 1 );
                 intValue = Integer.parseInt( numericString );
             }
-            catch ( IndexOutOfBoundsException | NumberFormatException |
-                    NullPointerException e ) {
+            catch ( final IndexOutOfBoundsException | NumberFormatException |
+                          NullPointerException e ) {
                 if ( _reset != null ) {
                     _reset.run();
                 }

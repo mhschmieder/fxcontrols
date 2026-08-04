@@ -70,11 +70,11 @@ public final class MasterLevelSettingsControls {
         GridPane.setFillHeight( _muteToggleButton, true );
 
         // Try to set widths that force insets in the buttons.
-        _polarityToggleButton.setPrefWidth( 120d );
-        _muteToggleButton.setPrefWidth( 80d );
+        _polarityToggleButton.setPrefWidth( 120.0d );
+        _muteToggleButton.setPrefWidth( 80.0d );
 
         // Try to set smallish widths for the editable filter values.
-        _gainEditor.setPrefWidth( 100d );
+        _gainEditor.setPrefWidth( 100.0d );
 
         // Make sure all the buttons stretch to match the height of the first
         // button in layout order (forward references do not apply the match).

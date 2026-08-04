@@ -477,7 +477,7 @@ public final class LabeledControlFactory {
                 pClientProperties,
                 BUNDLE_NAME,
                 false );
-        final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
+        final String fileMruNumber = "mru" + mruFileNumber;
         final String fileMruHeader = ButtonUtilities.getButtonText( "file",
                                                                     fileMruNumber,
                                                                     resourceBundle );
@@ -867,9 +867,9 @@ public final class LabeledControlFactory {
                                                                 final boolean selected ) {
         final String selectedText = "Bypassed"; //$NON-NLS-1$
         final String deselectedText = "Enabled"; //$NON-NLS-1$
-        final String tooltipText
-                = "Click to Toggle Surface Status Between Bypassed and "
-                  + "Enabled"; //$NON-NLS-1$
+        final String tooltipText =
+                "Click to Toggle Surface Status Between Bypassed and "
+                + "Enabled"; //$NON-NLS-1$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         //  auto-selects the foreground for text fill, but we override.
@@ -923,9 +923,9 @@ public final class LabeledControlFactory {
                                                          final boolean selected ) {
         final String selectedText = "Reversed"; //$NON-NLS-1$
         final String deselectedText = "Normal"; //$NON-NLS-1$
-        final String tooltipText
-                = "Click to Toggle Polarity Status Between Normal and "
-                  + "Reversed"; //$NON-NLS-1$
+        final String tooltipText =
+                "Click to Toggle Polarity Status Between Normal and "
+                + "Reversed"; //$NON-NLS-1$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill; we use a custom fill.

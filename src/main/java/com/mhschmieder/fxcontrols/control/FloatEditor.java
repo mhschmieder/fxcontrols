@@ -293,19 +293,6 @@ public class FloatEditor extends NumberEditor {
     }
 
     @Override
-    public String getAllowedCharacters() {
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0 )
-                                         ? ( _maximumValue > 0 )
-                                           ? "[0-9.,+-]"
-                                           : "[0-9.,-]"
-                                         : ( _maximumValue > 0 )
-                                           ? "[0-9.,+]"
-                                           : "[0-9.,]";
-        return allowedCharacters;
-    }
-
-    @Override
     public final String getDecoratedText() {
         // Get the most recently committed value.
         final float savedValue = getValue();
@@ -330,6 +317,16 @@ public class FloatEditor extends NumberEditor {
     }
 
     @Override
+    public final void clampValue() {
+        // Get the clamped, edited value, stripped of decorations and
+        // formatting.
+        final float clampedValue = getClampedValue();
+
+        // Update the cached property from the clamped, edited value.
+        setValue( clampedValue );
+    }
+
+    @Override
     public final void updateText() {
         // Get the most recently committed value.
         final float savedValue = getValue();
@@ -339,13 +336,16 @@ public class FloatEditor extends NumberEditor {
     }
 
     @Override
-    public final void clampValue() {
-        // Get the clamped, edited value, stripped of decorations and
-        // formatting.
-        final float clampedValue = getClampedValue();
-
-        // Update the cached property from the clamped, edited value.
-        setValue( clampedValue );
+    public String getAllowedCharacters() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = ( _minimumValue < 0 )
+                                         ? ( _maximumValue > 0 )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( _maximumValue > 0 )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
+        return allowedCharacters;
     }
 
     public final float getClampedValue() {
@@ -390,8 +390,8 @@ public class FloatEditor extends NumberEditor {
                                                                       + 1 );
                 floatValue = Float.parseFloat( numericString );
             }
-            catch ( IndexOutOfBoundsException | NumberFormatException |
-                    NullPointerException e ) {
+            catch ( final IndexOutOfBoundsException | NumberFormatException |
+                          NullPointerException e ) {
                 if ( _reset != null ) {
                     _reset.run();
                 }

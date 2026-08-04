@@ -39,8 +39,8 @@ public final class HumiditySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial humidity for { 0, 100 }.
     public static final double MINIMUM_RELATIVE_HUMIDITY_DEFAULT = 0.0d;
-    public static final double MAXIMUM_RELATIVE_HUMIDITY_DEFAULT = 100d;
-    public static final double INITIAL_RELATIVE_HUMIDITY_DEFAULT = 50d;
+    public static final double MAXIMUM_RELATIVE_HUMIDITY_DEFAULT = 100.0d;
+    public static final double INITIAL_RELATIVE_HUMIDITY_DEFAULT = 50.0d;
 
     // Default tick spacing in percentiles.
     private static final double MAJOR_TICK_SPACING_PERCENT = 10.0d;
@@ -93,7 +93,7 @@ public final class HumiditySlider extends NumberSlider {
         //  orientation is vertical, which we only know per context.
         // NOTE: This is a safety value that should be overloaded by the parent
         //  node, per usage context.
-        setMinHeight( 150d );
+        setMinHeight( 150.0d );
 
         // Cache the string representation of the humidity unit.
         // NOTE: We set this directly as there currently is no unit conversion,

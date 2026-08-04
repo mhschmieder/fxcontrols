@@ -103,7 +103,7 @@ public class BinaryOperatorCell< T >
             }
 
             @Override
-            public BinaryConditionalOperator fromString( String string ) {
+            public BinaryConditionalOperator fromString( final String string ) {
                 // Find the enum whose label matches.
                 for ( final BinaryConditionalOperator operator :
                         BinaryConditionalOperator.values() ) {

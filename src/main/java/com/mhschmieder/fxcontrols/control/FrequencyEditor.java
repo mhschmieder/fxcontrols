@@ -50,12 +50,12 @@ public final class FrequencyEditor extends DoubleEditor {
     /**
      * Precision cutoff frequency for using integers vs. decimal places.
      */
-    protected double precisionCutoffFrequencyHz;
+    private double precisionCutoffFrequencyHz;
 
     /**
      * The number of decimal places to use for display purposes, when active.
      */
-    protected int numberOfDecimalPlaces;
+    private int numberOfDecimalPlaces;
 
     public FrequencyEditor( final ClientProperties pClientProperties,
                             final String initialText,
@@ -112,19 +112,19 @@ public final class FrequencyEditor extends DoubleEditor {
         return precisionAdjustedValue;
     }
 
-    public final double getPrecisionCutoffFrequencyHz() {
+    public double getPrecisionCutoffFrequencyHz() {
         return precisionCutoffFrequencyHz;
     }
 
-    public final void setPrecisionCutoffFrequencyHz( final double pPrecisionCutoffFrequencyHz ) {
+    public void setPrecisionCutoffFrequencyHz( final double pPrecisionCutoffFrequencyHz ) {
         precisionCutoffFrequencyHz = pPrecisionCutoffFrequencyHz;
     }
 
-    public final int getNumberOfDecimalPlaces() {
+    public int getNumberOfDecimalPlaces() {
         return numberOfDecimalPlaces;
     }
 
-    public final void setNumberOfDecimalPlaces( final int pNumberOfDecimalPlaces ) {
+    public void setNumberOfDecimalPlaces( final int pNumberOfDecimalPlaces ) {
         numberOfDecimalPlaces = pNumberOfDecimalPlaces;
     }
 }

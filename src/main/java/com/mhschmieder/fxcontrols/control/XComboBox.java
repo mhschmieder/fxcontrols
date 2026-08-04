@@ -76,7 +76,7 @@ public class XComboBox< T > extends ComboBox< T > {
               applyToolkitCss,
               editable,
               searchable,
-              FXCollections.< T >observableArrayList() );
+              FXCollections.observableArrayList() );
     }
 
     public XComboBox( final ClientProperties pClientProperties,
@@ -290,7 +290,7 @@ public class XComboBox< T > extends ComboBox< T > {
               applyToolkitCss,
               editable,
               searchable,
-              FXCollections.< T >observableArrayList( items ) );
+              FXCollections.observableArrayList( items ) );
     }
 
     // Update the drop-list of available values.

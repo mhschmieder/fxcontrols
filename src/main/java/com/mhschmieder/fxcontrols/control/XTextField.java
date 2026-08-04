@@ -95,12 +95,12 @@ public class XTextField extends TextField {
         // Try to make sure the text field uses enough height so that commas
         // don't look like periods. More height is required on the Mac for these
         // and other characters involving descenders, to avoid clipping.
-        setPrefHeight( SystemType.MACOS.equals( clientProperties.systemType )
-                       ? 24d
-                       : 22d );
-        setMinHeight( SystemType.MACOS.equals( clientProperties.systemType )
-                      ? 24d
-                      : 22d );
+        setPrefHeight( SystemType.MACOS == clientProperties.systemType
+                       ? 24.0d
+                       : 22.0d );
+        setMinHeight( SystemType.MACOS == clientProperties.systemType
+                      ? 24.0d
+                      : 22.0d );
 
         // Just in case we use or derive this class without overriding special
         // key handling, add some rudimentary behavior that minimizes surprises.

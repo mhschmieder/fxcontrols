@@ -52,7 +52,7 @@ public final class AngleSelector extends DoubleSelector {
     public static final int LIMIT_ANGLE_DEFAULT = 0;
 
     // Maintain a reference to the Angle Unit.
-    protected AngleUnit _angleUnit;
+    private AngleUnit _angleUnit;
 
     public AngleSelector( final ClientProperties clientProperties,
                           final String tooltipText,

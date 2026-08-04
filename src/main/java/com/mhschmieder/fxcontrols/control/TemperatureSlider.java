@@ -103,7 +103,7 @@ public class TemperatureSlider extends NumberSlider {
         // orientation is vertical, which we only know per context.
         // NOTE: This is a safety value that should be overloaded by the parent
         // node, per usage context.
-        setMinHeight( 150d );
+        setMinHeight( 150.0d );
 
         // Update the Temperature Unit and related resolutions and ranges.
         updateTemperatureUnit( _temperatureUnit );

@@ -37,6 +37,7 @@ import com.mhschmieder.jphysics.acoustics.FrequencySignalUtilities;
 import com.mhschmieder.jphysics.acoustics.RelativeBandwidth;
 import org.apache.commons.math3.util.FastMath;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 import javafx.collections.FXCollections;
@@ -95,7 +96,7 @@ public final class CenterFrequencySelector extends DoubleSelector {
         // Frequencies, selected at 4 kHz.
         updateCenterFrequencyForBandwidthAndOctave( RelativeBandwidth.defaultValue(),
                                                     OctaveRangeSelector.OCTAVE_RANGE_WIDE_DEFAULT,
-                                                    4000.0d,
+                                                    4_000.0d,
                                                     false );
     }
 
@@ -111,13 +112,13 @@ public final class CenterFrequencySelector extends DoubleSelector {
         // many edge cases that either do the wrong thing, result in a blank
         // selection field, or do not generate a callback.
         // NOTE: Using a Tree Set forces all numbers to be in ascending order.
-        final TreeSet< Double > centerFrequencies = new TreeSet<>();
+        final Set< Double > centerFrequencies = new TreeSet<>();
 
-        int startIndex;
-        int stopIndex;
+        final int startIndex;
+        final int stopIndex;
         boolean narrowBand = false;
         switch ( relativeBandwidth ) {
-            case RelativeBandwidth.ONE_OCTAVE:
+            case ONE_OCTAVE:
                 // Update the list of Center Frequencies to match full octave
                 // bandwidth, displaying only the valid operating range.
                 startIndex = _startIndexForOneOctave;
@@ -129,7 +130,7 @@ public final class CenterFrequencySelector extends DoubleSelector {
                     centerFrequencies.add( wideBandCenterFrequency );
                 }
                 break;
-            case RelativeBandwidth.THIRD_OCTAVE:
+            case THIRD_OCTAVE:
                 // Update the list of Center Frequencies to match third octave
                 // bandwidth, displaying only the valid operating range.
                 startIndex = _startIndexForThirdOctave;
@@ -141,10 +142,10 @@ public final class CenterFrequencySelector extends DoubleSelector {
                     centerFrequencies.add( wideBandCenterFrequency );
                 }
                 break;
-            case RelativeBandwidth.SIXTH_OCTAVE:
-            case RelativeBandwidth.TWELFTH_OCTAVE:
-            case RelativeBandwidth.TWENTY_FOURTH_OCTAVE:
-            case RelativeBandwidth.FORTY_EIGHTH_OCTAVE:
+            case SIXTH_OCTAVE:
+            case TWELFTH_OCTAVE:
+            case TWENTY_FOURTH_OCTAVE:
+            case FORTY_EIGHTH_OCTAVE:
                 narrowBand = true;
 
                 final int octaveDivider = relativeBandwidth.toOctaveDivider();
@@ -177,8 +178,8 @@ public final class CenterFrequencySelector extends DoubleSelector {
                     // duplicates between integer values and algorithmically
                     // generated values, we use a TreeSet of Double objects.
                     for ( int j = 0; j <= 10; j++ ) {
-                        final double narrowBandCenterFrequency = 10000d + ( j
-                                                                            * 1000d );
+                        final double narrowBandCenterFrequency = 10_000.0d + ( j
+                                                                               * 1_000.0d );
                         centerFrequencies.add( narrowBandCenterFrequency );
                     }
                 }

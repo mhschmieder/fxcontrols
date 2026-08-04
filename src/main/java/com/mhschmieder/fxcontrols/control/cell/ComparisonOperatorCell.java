@@ -38,7 +38,6 @@ import com.mhschmieder.jmath.logic.ComparisonOperator;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.util.StringConverter;
 
 public class ComparisonOperatorCell< T >
@@ -101,7 +100,7 @@ public class ComparisonOperatorCell< T >
 
         comboBox.setOnShowing( event -> {
             final TableView< T > tableView = getTableView();
-            final TableViewSelectionModel< T > selectionModel
+            final TableView.TableViewSelectionModel< T > selectionModel
                     = tableView.getSelectionModel();
             final int selectedIndex = getTableRow().getIndex();
             selectionModel.select( selectedIndex );

@@ -60,13 +60,13 @@ public abstract class ToggleButtonTableCell< RT, VT >
     //  TableView API in terms of momentary blocking of table cell editing.
     protected ToggleButton _toggleButton;
 
-    public ToggleButtonTableCell( final String selectedText,
-                                  final String deselectedText,
-                                  final Color selectedBackgroundColor,
-                                  final Color deselectedBackgroundColor,
-                                  final Color selectedTextFillColor,
-                                  final Color deselectedTextFillColor,
-                                  final String tooltipText ) {
+    protected ToggleButtonTableCell( final String selectedText,
+                                     final String deselectedText,
+                                     final Color selectedBackgroundColor,
+                                     final Color deselectedBackgroundColor,
+                                     final Color selectedTextFillColor,
+                                     final Color deselectedTextFillColor,
+                                     final String tooltipText ) {
         // Always call the superclass constructor first!
         super();
 

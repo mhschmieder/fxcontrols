@@ -55,7 +55,7 @@ public final class SurfaceSelectorControls {
                                     final int surfaceNumber ) {
         // Make the permanent static label for the Surface ID.
         final String surfaceId = "Surface "
-                                 + Integer.toString( surfaceNumber ); //$NON
+                                 + surfaceNumber; //$NON
         // -NLS-1$
         _surfaceIdLabel = new Label( surfaceId );
         _surfaceIdLabel.setAlignment( Pos.CENTER );

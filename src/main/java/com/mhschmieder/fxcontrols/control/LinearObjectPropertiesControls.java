@@ -95,7 +95,7 @@ public final class LinearObjectPropertiesControls {
 
         // Try to force minimum width on Use as Projector Check Box to
         // avoid clipping.
-        _useAsProjectorCheckBox.setMinWidth( 140d );
+        _useAsProjectorCheckBox.setMinWidth( 140.0d );
 
         // Bind Projection Zones Pane enablement to the Projector Check Box.
         _projectionZonesSelector.disableProperty()

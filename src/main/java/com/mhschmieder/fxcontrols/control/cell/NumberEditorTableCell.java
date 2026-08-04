@@ -46,14 +46,14 @@ public abstract class NumberEditorTableCell< RT, Number >
     @SuppressWarnings( "nls" )
     protected String _measurementUnit = "";
 
-    public NumberEditorTableCell( final boolean pAllowedToBeBlank,
-                                  final ClientProperties pClientProperties ) {
+    protected NumberEditorTableCell( final boolean pAllowedToBeBlank,
+                                     final ClientProperties pClientProperties ) {
         this( null, pAllowedToBeBlank, pClientProperties );
     }
 
-    public NumberEditorTableCell( final List< Integer > pUneditableRows,
-                                  final boolean pAllowedToBeBlank,
-                                  final ClientProperties pClientProperties ) {
+    protected NumberEditorTableCell( final List< Integer > pUneditableRows,
+                                     final boolean pAllowedToBeBlank,
+                                     final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
@@ -88,7 +88,7 @@ public abstract class NumberEditorTableCell< RT, Number >
             super.commitEdit( newValue );
         }
         else {
-            super.cancelEdit();
+            cancelEdit();
         }
     }
 

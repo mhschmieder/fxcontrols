@@ -61,14 +61,14 @@ public class XTableView< TD > extends TableView< TD > {
     //////////////////////////// Constructors ////////////////////////////////
 
     /**
-     * Constructs an {@link XTableView} with auto-selection disabled.
+     * Constructs an  with auto-selection disabled.
      */
     public XTableView() {
         this( false );
     }
 
     /**
-     * Constructs an {@link XTableView} with the specified auto-selection.
+     * Constructs an  with the specified auto-selection.
      *
      * @param autoSelectionIsEnabled {@code true} if auto-selection is enabled
      *                               when nothing is manually or

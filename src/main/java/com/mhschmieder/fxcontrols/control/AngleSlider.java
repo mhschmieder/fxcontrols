@@ -40,12 +40,12 @@ import javafx.geometry.Orientation;
 public final class AngleSlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial angles for { -180, 180 }.
-    public static final double MINIMUM_ANGLE_DEGREES_DEFAULT = -180d;
-    public static final double MAXIMUM_ANGLE_DEGREES_DEFAULT = 180d;
+    public static final double MINIMUM_ANGLE_DEGREES_DEFAULT = -180.0d;
+    public static final double MAXIMUM_ANGLE_DEGREES_DEFAULT = 180.0d;
     public static final double INITIAL_ANGLE_DEGREES_DEFAULT = 0.0d;
 
     // Default tick spacing in degrees.
-    public static final double MAJOR_TICK_SPACING_DEGREES = 60d;
+    public static final double MAJOR_TICK_SPACING_DEGREES = 60.0d;
     public static final double MINOR_TICK_SPACING_DEGREES = 10.0d;
 
     // Declare block increment/decrement amount for left and right arrow keys.
@@ -98,7 +98,7 @@ public final class AngleSlider extends NumberSlider {
         // Make sure the tick marks aren't bunched together.
         // NOTE: We can't do this on the base class in case the slider's
         // orientation is vertical, which we only know per context.
-        setMinWidth( 220d );
+        setMinWidth( 220.0d );
 
         // Cache the string representation of the angle unit.
         // NOTE: We set this directly as there currently is no unit conversion,
@@ -118,7 +118,7 @@ public final class AngleSlider extends NumberSlider {
     public double getClampedValue( final double unclampedValue ) {
         // If the allowed angle range is a full period or more (360+ degrees),
         // then unwrap the angle. Otherwise, apply standard min/max clamping.
-        return ( FastMath.abs( getMax() - getMin() ) >= 360d )
+        return ( FastMath.abs( getMax() - getMin() ) >= 360.0d )
                ? getUnwrappedAngleDegrees( unclampedValue )
                : Math.clamp( unclampedValue, getMin(), getMax() );
     }

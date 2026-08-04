@@ -39,14 +39,15 @@ public final class ParametricFilterControls {
     // Declare default constants, where appropriate, for all fields.
     // NOTE: The bandwidth values may not follow common conventions.
     public static final double FREQUENCY_MINIMUM_HZ = 10.0d;
-    public static final double FREQUENCY_MAXIMUM_HZ = 20000d;
+    public static final double FREQUENCY_MAXIMUM_HZ = 20000.0d;
     public static final double BANDWIDTH_MINIMUM_OCTAVES = 0.1d;
     public static final double BANDWIDTH_MAXIMUM_OCTAVES = 2.0d;
-    public static final double GAIN_MINIMUM_DB = -18d;
-    public static final double GAIN_MAXIMUM_DB = 18d;
+    public static final double GAIN_MINIMUM_DB = -18.0d;
+    public static final double GAIN_MAXIMUM_DB = 18.0d;
 
-    private static final Double[] DEFAULT_FREQUENCIES = new Double[] {
-            32d, 63d, 125d, 250d, 500d, 1000d, 2000d, 4000d, 8000d, 16000d
+    private static final Double[] DEFAULT_FREQUENCIES = {
+            32.0d, 63.0d, 125.0d, 250.0d, 500.0d, 1000.0d,
+            2000.0d, 4000.0d, 8000.0d, 16000.0d
     };
 
     public ToggleButton _filterToggleButton;

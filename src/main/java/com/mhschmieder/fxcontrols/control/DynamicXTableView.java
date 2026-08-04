@@ -54,7 +54,7 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      *
      * @since 1.0
      */
-    public DynamicXTableView() {
+    protected DynamicXTableView() {
         this( false );
     }
 
@@ -70,7 +70,7 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      *                               programmatically selected
      * @since 1.0
      */
-    public DynamicXTableView( final boolean autoSelectionIsEnabled ) {
+    protected DynamicXTableView( final boolean autoSelectionIsEnabled ) {
         // Always call the superclass constructor first!
         super( autoSelectionIsEnabled );
 

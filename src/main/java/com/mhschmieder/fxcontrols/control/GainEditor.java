@@ -39,7 +39,7 @@ public final class GainEditor extends DoubleEditor {
     public static final double VALUE_INCREMENT_DEFAULT_DB = 0.1d;
 
     // Cache the preference for defaulting to negative gain.
-    protected boolean _defaultToNegativeGain;
+    private final boolean defaultToNegativeGain;
 
     public GainEditor( final ClientProperties pClientProperties,
                        final String initialText,
@@ -47,7 +47,7 @@ public final class GainEditor extends DoubleEditor {
                        final double gainMinimumDb,
                        final double gainMaximumDb,
                        final double gainDefaultDb,
-                       final boolean defaultToNegativeGain ) {
+                       final boolean pDefaultToNegativeGain ) {
         // Always call the superclass constructor first!
         // NOTE: We use up to one decimal place of precision for displaying
         // gain, and up to four decimal places for parsing gain.
@@ -64,7 +64,7 @@ public final class GainEditor extends DoubleEditor {
                gainDefaultDb,
                VALUE_INCREMENT_DEFAULT_DB );
 
-        _defaultToNegativeGain = defaultToNegativeGain;
+        this.defaultToNegativeGain = pDefaultToNegativeGain;
     }
 
     @Override
@@ -79,7 +79,7 @@ public final class GainEditor extends DoubleEditor {
         // TODO: Find a way to exempt zero values from prepending the "+" sign?
         // TODO: Test to see if the new condition on value > 0 fixes this.
         final String decoratedText =
-                _defaultToNegativeGain && ( savedValue > 0.0d )
+                defaultToNegativeGain && ( savedValue > 0.0d )
                 ? StringUtilities.attachPositiveSign( savedText )
                 : savedText;
 
@@ -94,7 +94,7 @@ public final class GainEditor extends DoubleEditor {
         // correctly vs. throwing exceptions and defaulting to previous values.
         // NOTE: If defaulting to negative numbers, we must also add the
         //  negative sign when the positive sign is not explicitly typed.
-        final String undecoratedText = _defaultToNegativeGain
+        final String undecoratedText = defaultToNegativeGain
                                        ?
                                        StringUtilities.defaultToNegativeNumber(
                 savedText )

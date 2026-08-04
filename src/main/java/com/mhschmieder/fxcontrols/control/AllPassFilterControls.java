@@ -38,15 +38,12 @@ public final class AllPassFilterControls {
 
     // Declare default constants, where appropriate, for all fields.
     public static final double FREQUENCY_MINIMUM_HZ = 10.0d;
-    public static final double FREQUENCY_MAXIMUM_HZ = 20000d;
+    public static final double FREQUENCY_MAXIMUM_HZ = 20_000.0d;
     public static final double BANDWIDTH_MINIMUM_Q = 0.5d;
     public static final double BANDWIDTH_MAXIMUM_Q = 10.0d;
 
-    private static final Double[] DEFAULT_FREQUENCIES = new Double[] {
-            32d,
-            64d,
-            128d,
-            256d
+    private static final Double[] DEFAULT_FREQUENCIES = {
+            32.0d, 64.0d, 128.0d, 256.0d
     };
 
     public ToggleButton _filterToggleButton;
@@ -75,7 +72,7 @@ public final class AllPassFilterControls {
                                                                 filterNumber
                                                                 - 1 ]
                                                               : 100.0d,
-                                                              1000.0d,
+                                                              1_000.0d,
                                                               2 );
         _frequencyEditor.setValueIncrement( 0.1d );
 

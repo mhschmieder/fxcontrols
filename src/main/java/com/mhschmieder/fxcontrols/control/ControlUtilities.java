@@ -94,15 +94,15 @@ public class ControlUtilities {
     public static final char JAVAFX_MNEMONIC_MARKER = '_';
     // TODO: Make a bunch of partial CSS string constants, to reduce
     // copy/paste.
-    public static final String UNDECORATED_BORDERED_REGION_CSS
-            = "-fx-content-display: center; -fx-padding: 16; "
-              + "-fx-background-color: black; -fx-border-color: white; "
-              + "-fx-border-width: 1; -fx-border-radius: 7.5;";
-    public static final String UNDECORATED_LABELED_CSS
-            = "-fx-content-display: center; -fx-padding: 4 8 4 8; "
-              + "-fx-background-color: black; -fx-text-fill: white; "
-              + "-fx-border-color: white; -fx-border-width: 1; "
-              + "-fx-border-radius: 7.5;";
+    public static final String UNDECORATED_BORDERED_REGION_CSS =
+            "-fx-content-display: center; -fx-padding: 16; "
+            + "-fx-background-color: black; -fx-border-color: white; "
+            + "-fx-border-width: 1; -fx-border-radius: 7.5;";
+    public static final String UNDECORATED_LABELED_CSS =
+            "-fx-content-display: center; -fx-padding: 4 8 4 8; "
+            + "-fx-background-color: black; -fx-text-fill: white; "
+            + "-fx-border-color: white; -fx-border-width: 1; "
+            + "-fx-border-radius: 7.5;";
     /**
      * This is the most common inset for most contexts of icon hosting, to avoid
      * clutter, but if we add menus later on, those usually use an inset of 2.
@@ -272,7 +272,7 @@ public class ControlUtilities {
         // NOTE: We also must supply the blur radius, set to slightly more than
         // the default of 10%, as otherwise it doesn't show up against similar
         // backgrounds, and as 20% causes the mouse to select the wrong control.
-        final DropShadow dropShadow = new DropShadow( 12d, Color.NAVY );
+        final DropShadow dropShadow = new DropShadow( 12.0d, Color.NAVY );
         node.setOnMouseEntered( mouseEvent -> node.setEffect( dropShadow ) );
         node.setOnMouseExited( mouseEvent -> node.setEffect( null ) );
         node.focusedProperty()
@@ -931,7 +931,7 @@ public class ControlUtilities {
                          + "; -fx-border-radius: " + borderRadiusCss
                          + "; -fx-border-width: " + borderWidthCss + "; "
                          + padding + "; -fx-text-fill: " + foregroundColorCss
-                         + ";" );
+                         + ';' );
     }
 
     public static void applyApplicationButtonStyle( final Button button,
@@ -1018,10 +1018,9 @@ public class ControlUtilities {
 
         // TODO: Review whether units these are in pixels by default, and
         // remove the "px" suffix in the CSS parameters if so.
-        final String radiusPixelsCss = Integer.toString( radiusPixels ) + "px";
-        final String spanPixelsCss = Integer.toString( spanPixels ) + "px";
-        final String borderWidthPixelsCss =
-                Integer.toString( borderWidthPixels ) + "px";
+        final String radiusPixelsCss = radiusPixels + "px";
+        final String spanPixelsCss = spanPixels + "px";
+        final String borderWidthPixelsCss = borderWidthPixels + "px";
 
         button.setStyle(
                 "-fx-content-display: center" + "; -fx-base: " + backColorCss
@@ -1034,7 +1033,7 @@ public class ControlUtilities {
                 + "; -fx-min-width: " + spanPixelsCss + "; -fx-min-height: "
                 + spanPixelsCss + "; -fx-max-width: " + spanPixelsCss
                 + "; -fx-max-height: " + spanPixelsCss + "; -fx-pref-width: "
-                + spanPixelsCss + "; -fx-pref-height: " + spanPixelsCss + ";" );
+                + spanPixelsCss + "; -fx-pref-height: " + spanPixelsCss + ';' );
     }
 
     public static void applyRegionStyle( final Region region,
@@ -1058,7 +1057,7 @@ public class ControlUtilities {
                 + "; -fx-background-color: " + backColorCss
                 + "; -fx-border-color: " + borderColorCss
                 + "; -fx-border-width: " + borderWidthCss
-                + "; -fx-border-radius: " + borderRadiusCss + ";" );
+                + "; -fx-border-radius: " + borderRadiusCss + ';' );
     }
 
     /**

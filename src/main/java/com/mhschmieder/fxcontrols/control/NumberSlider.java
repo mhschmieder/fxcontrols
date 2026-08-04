@@ -245,7 +245,7 @@ public class NumberSlider extends Slider {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // traditional mouse scroll wheel events.
-        if ( ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
+        if ( ScrollingSensitivity.OFF == scrollingSensitivity ) {
             return;
         }
 
@@ -342,7 +342,7 @@ public class NumberSlider extends Slider {
     }
 
     protected void updateTooltipText() {
-        setTooltip( new Tooltip( "Use ARROW Keys to Step by " + Double.toString(
-                getBlockIncrement() ) + measurementUnitString ) );
+        setTooltip( new Tooltip( "Use ARROW Keys to Step by " + getBlockIncrement()
+                                 + measurementUnitString ) );
     }
 }

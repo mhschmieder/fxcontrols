@@ -112,13 +112,13 @@ public final class SmoothingChoices {
     public void setSmoothing( final Smoothing smoothing ) {
         // Sync up the choices with the current Smoothing value.
         switch ( smoothing ) {
-            case Smoothing.NARROW_BAND:
+            case NARROW_BAND:
                 _smoothingNarrowChoice.setSelected( true );
                 break;
-            case Smoothing.SIXTH_OCTAVE_BAND:
+            case SIXTH_OCTAVE_BAND:
                 _smoothingSixthOctaveChoice.setSelected( true );
                 break;
-            case Smoothing.THIRD_OCTAVE_BAND:
+            case THIRD_OCTAVE_BAND:
                 _smoothingThirdOctaveChoice.setSelected( true );
                 break;
             default:

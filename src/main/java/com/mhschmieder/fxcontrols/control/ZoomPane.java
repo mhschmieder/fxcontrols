@@ -43,11 +43,11 @@ import javafx.scene.transform.Scale;
  */
 public class ZoomPane extends ScrollPane {
 
-    final protected Group _zoomGroup;
+    protected final Group _zoomGroup;
 
-    final protected Node _content;
+    protected final Node _content;
 
-    final protected Scale _scaleTransform;
+    protected final Scale _scaleTransform;
 
     public ZoomPane( final Node content ) {
         _content = content;

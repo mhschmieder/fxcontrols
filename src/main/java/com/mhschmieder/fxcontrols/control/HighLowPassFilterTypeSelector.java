@@ -81,12 +81,12 @@ public final class HighLowPassFilterTypeSelector extends TextSelector {
                 = FXCollections.observableArrayList();
 
         switch ( _filterType ) {
-            case ElectronicFilterType.HIGH_LOW_PASS:
+            case HIGH_LOW_PASS:
                 filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
                 break;
-            case ElectronicFilterType.HIGH_PASS:
+            case HIGH_PASS:
                 filterTypes.add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.BUTTERWORTH_1_HIGH_PASS.toPresentationString() );
@@ -110,7 +110,7 @@ public final class HighLowPassFilterTypeSelector extends TextSelector {
                 filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_2_HIGH_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_4_HIGH_PASS.toPresentationString() );
                 break;
-            case ElectronicFilterType.LOW_PASS:
+            case LOW_PASS:
                 filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.BUTTERWORTH_1_LOW_PASS.toPresentationString() );
                 filterTypes.add( HighLowPassFilterType.BUTTERWORTH_2_LOW_PASS.toPresentationString() );
@@ -140,13 +140,13 @@ public final class HighLowPassFilterTypeSelector extends TextSelector {
         // Determine the initial default High/Low Pass Filter Type.
         String defaultFilterType = null;
         switch ( _filterType ) {
-            case ElectronicFilterType.HIGH_LOW_PASS:
+            case HIGH_LOW_PASS:
                 defaultFilterType = HIGH_LOW_PASS_FILTER_TYPE_DEFAULT;
                 break;
-            case ElectronicFilterType.HIGH_PASS:
+            case HIGH_PASS:
                 defaultFilterType = HIGH_PASS_FILTER_TYPE_DEFAULT;
                 break;
-            case ElectronicFilterType.LOW_PASS:
+            case LOW_PASS:
                 defaultFilterType = LOW_PASS_FILTER_TYPE_DEFAULT;
                 break;
             default:

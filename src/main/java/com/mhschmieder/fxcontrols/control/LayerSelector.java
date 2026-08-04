@@ -149,17 +149,16 @@ public class LayerSelector extends TextSelector {
             // changed. When the entire list is replaced, we ignore this flag.
             // Note that we delegate list order differences to the higher level
             // logic that decides whether to preserve by name or by index.
-            final boolean selectedLayerIndexInvalid = ( _layerNames == null )
-                                                      ? true
-                                                      : layerNames.size()
-                                                        < _layerNames.size();
+            final boolean selectedLayerIndexInvalid = _layerNames == null
+                                                      || layerNames.size()
+                                                         < _layerNames.size();
 
             _layerNames = layerNames;
             setItems( FXCollections.observableArrayList( _layerNames ) );
 
             // Make sure the Combo Box width grows, if necessary, to support
             // longer names that may have just been added or changed.
-            setMaxWidth( 160d );
+            setMaxWidth( 160.0d );
             setNeedsLayout( true );
 
             return selectedLayerIndexInvalid;

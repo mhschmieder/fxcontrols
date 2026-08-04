@@ -69,7 +69,7 @@ public final class IntegerSpinnerStringConverter
     private NumberFormat _numberFormat;
 
     /**
-     * Creates an {@link IntegerSpinnerStringConverter}.
+     * Creates an .
      * <p>
      * Swallows {@link NumberFormatException} but does nothing in response until
      * {@link #setReset} is defined.
@@ -78,7 +78,7 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an {@link IntegerSpinnerStringConverter} with an textField reset
+     * Creates an  with an textField reset
      * callback.
      * <p>
      * Specifying {@code null} has the same effect as the default constructor.
@@ -91,7 +91,7 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an {@link IntegerSpinnerStringConverter} with the specified input
+     * Creates an  with the specified input
      * range.
      * <p>
      * Preemptively monitors {@code textField} to reject any invalid characters
@@ -275,16 +275,16 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an {@link IntegerSpinnerStringConverter} for the specified
+     * Creates an  for the specified
      * {@link Spinner}.
      * <p>
      * Uses the {@link TextField} and minimum and maximum values of the
      * specified {@link Spinner} for construction, and also sets the new
-     * {@link IntegerSpinnerStringConverter} on its
+     *  on its
      * {@link SpinnerValueFactory.IntegerSpinnerValueFactory}.
      *
      * @param integerSpinner          The {@link Spinner} to create a
-     *                                {@link IntegerSpinnerStringConverter} for
+     *                                 for
      * @param valueDescriptor         The descriptor for the spinner's value
      *                                category, used mostly in tool tips
      * @param defaultNumericValue     The default {@link Integer} value
@@ -297,7 +297,7 @@ public final class IntegerSpinnerStringConverter
      *                                Measurement Unit to tag onto the numbers
      *                                after they've been edited and committed
      * @param locale                  The locale to use for number formatting
-     * @return The new {@link IntegerSpinnerStringConverter}
+     * @return The new
      * @throws NullPointerException If {@code spinner} is {@code null}
      */
     public static IntegerSpinnerStringConverter createFor( final Spinner< Integer > integerSpinner,
@@ -393,7 +393,7 @@ public final class IntegerSpinnerStringConverter
      * Sets the textField reset callback.
      * <p>
      * Specify {@code null} to clear a previously set {@link Runnable}. When
-     * creating an {@link IntegerSpinnerStringConverter} for a {@link TextField}
+     * creating an  for a {@link TextField}
      * or {@link Spinner}, this callback is automatically defined to reset
      * committed invalid input to the closest value to zero within the legal
      * range. Setting a different callback will overwrite this functionality.

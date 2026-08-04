@@ -51,16 +51,16 @@ public abstract class NumberSelector extends XComboBox< String > {
     // Number format cache used for locale-specific number parsing.
     protected NumberFormat _numberParse;
 
-    public NumberSelector( final ClientProperties clientProperties,
-                           final int minFractionDigitsFormat,
-                           final int maxFractionDigitsFormat,
-                           final int minFractionDigitsParse,
-                           final int maxFractionDigitsParse,
-                           final boolean useLocale,
-                           final String tooltipText,
-                           final boolean applyToolkitCss,
-                           final boolean editable,
-                           final boolean searchable ) {
+    protected NumberSelector( final ClientProperties clientProperties,
+                              final int minFractionDigitsFormat,
+                              final int maxFractionDigitsFormat,
+                              final int minFractionDigitsParse,
+                              final int maxFractionDigitsParse,
+                              final boolean useLocale,
+                              final String tooltipText,
+                              final boolean applyToolkitCss,
+                              final boolean editable,
+                              final boolean searchable ) {
         // Always call the superclass constructor first!
         super( clientProperties,
                tooltipText,

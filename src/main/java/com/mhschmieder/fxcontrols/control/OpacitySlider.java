@@ -94,7 +94,7 @@ public final class OpacitySlider extends NumberSlider {
         //  orientation is vertical, which we only know per context.
         // NOTE: This is a safety value that should be overloaded by the parent
         //  node, per usage context.
-        setMinWidth( 400d );
+        setMinWidth( 400.0d );
 
         // Cache the string representation of the opacity unit.
         // NOTE: We set this directly as there currently is no unit conversion,

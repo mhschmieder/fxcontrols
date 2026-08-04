@@ -111,7 +111,7 @@ public class LabelEditorTableCell< RT, VT >
             super.commitEdit( newValue );
         }
         else {
-            super.cancelEdit();
+            cancelEdit();
         }
     }
 

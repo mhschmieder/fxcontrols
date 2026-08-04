@@ -148,7 +148,7 @@ public class ControlFactory {
                                                         final double maximumOpacityPercent,
                                                         final double initialOpacityPercent ) {
         // Get the current value and format it as initial text.
-        final String initialText = Double.toString( initialOpacityPercent )
+        final String initialText = initialOpacityPercent
                                    + measurementUnit;
 
         // Declare value increment/decrement amount for up and down arrow keys,
@@ -214,8 +214,8 @@ public class ControlFactory {
                                                final int numberOfRows ) {
         // NOTE: The sizing is a temporary hack to avoid full-screen.
         final TextFlow noticeTextFlow = new TextFlow( noticeText );
-        noticeTextFlow.setMaxWidth( numberOfRows * 12d );
-        noticeTextFlow.setMaxHeight( numberOfColumns * 12d );
+        noticeTextFlow.setMaxWidth( numberOfRows * 12.0d );
+        noticeTextFlow.setMaxHeight( numberOfColumns * 12.0d );
 
         final Background background = RegionUtilities.makeRegionBackground(
                 NOTES_BACKGROUND_COLOR );
@@ -337,7 +337,7 @@ public class ControlFactory {
                                                final double maximumValue,
                                                final double initialValue ) {
         // Get the current value and format it as initial text.
-        final String initialText = Double.toString( initialValue )
+        final String initialText = initialValue
                                    + measurementUnit;
 
         final AngleEditor angleEditor = new AngleEditor( clientProperties,
@@ -369,7 +369,7 @@ public class ControlFactory {
                                                final double initialValue,
                                                final double valueIncrement ) {
         // Get the current value and format it as initial text.
-        final String initialText = Double.toString( initialValue )
+        final String initialText = initialValue
                                    + measurementUnit;
 
         final AngleEditor angleEditor = new AngleEditor( clientProperties,
@@ -588,7 +588,7 @@ public class ControlFactory {
 
         // Return the fully initialized SPL Range Spinner.
         final String valueDescriptor = "an SPL range";
-        return ControlFactory.makeIntegerSpinner( clientProperties,
+        return makeIntegerSpinner( clientProperties,
                                                   applyToolkitCss,
                                                   valueDescriptor,
                                                   minimumSplRangeDb,
@@ -657,7 +657,7 @@ public class ControlFactory {
         // TODO: Switch to a handcrafted percentile spinner (see examples).
         final String valueDescriptor
                 = "amount to dither individual sound sources";
-        return ControlFactory.makeDoubleSpinner( clientProperties,
+        return makeDoubleSpinner( clientProperties,
                                                  applyToolkitCss,
                                                  valueDescriptor,
                                                  minimumDitheringAmount,

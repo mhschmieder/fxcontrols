@@ -210,7 +210,8 @@ public final class ActionFactory {
 
         // Generate the resource lookup key for the action accelerator.
         final String resourceKey = actionName + ".accelerator"
-                                   + ( SystemType.MACOS.equals( clientProperties.systemType )
+                                   + ( SystemType.MACOS
+                                       == clientProperties.systemType
                                        ? ".mac"
                                        : "" );
 

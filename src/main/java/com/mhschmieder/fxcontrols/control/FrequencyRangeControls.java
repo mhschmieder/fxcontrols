@@ -45,7 +45,7 @@ public final class FrequencyRangeControls {
     public CenterFrequencySelector _centerFrequencySelector;
 
     // Number format cache used for locale-specific number formatting.
-    private NumberFormat _numberFormat;
+    private final NumberFormat _numberFormat;
 
     // Default constructor
     public FrequencyRangeControls( final NumberFormat numberFormat,
@@ -57,7 +57,7 @@ public final class FrequencyRangeControls {
         _numberFormat = numberFormat;
 
         // Make the individual controls.
-        final RelativeBandwidth[] supportedValues = new RelativeBandwidth[] {
+        final RelativeBandwidth[] supportedValues = {
                 RelativeBandwidth.ONE_OCTAVE,
                 RelativeBandwidth.THIRD_OCTAVE,
                 RelativeBandwidth.SIXTH_OCTAVE,

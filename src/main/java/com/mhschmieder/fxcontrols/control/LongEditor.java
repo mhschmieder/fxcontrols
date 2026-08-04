@@ -47,20 +47,24 @@ public class LongEditor extends NumberEditor {
     // Cache the raw numeric representation of the data value.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final LongProperty value;
+
     // Cache the minimum allowed data value (negative).
     protected long _minimumValue;
+
     // Cache the maximum allowed data value (positive).
     protected long _maximumValue;
+
     // Cache the default data value.
     protected long _defaultValue;
+
     // The amount to increment or decrement by, using the arrow keys.
     protected long _valueIncrement;
 
-    public LongEditor( final ClientProperties clientProperties,
+    public LongEditor( final ClientProperties pClientProperties,
                        final String initialText,
                        final String tooltipText,
                        final boolean applyToolkitCss ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -68,13 +72,13 @@ public class LongEditor extends NumberEditor {
               Long.MAX_VALUE );
     }
 
-    public LongEditor( final ClientProperties clientProperties,
+    public LongEditor( final ClientProperties pClientProperties,
                        final String initialText,
                        final String tooltipText,
                        final boolean applyToolkitCss,
                        final long minimumValue,
                        final long maximumValue ) {
-        this( clientProperties,
+        this( pClientProperties,
               initialText,
               tooltipText,
               applyToolkitCss,
@@ -84,7 +88,7 @@ public class LongEditor extends NumberEditor {
               0L );
     }
 
-    public LongEditor( final ClientProperties clientProperties,
+    public LongEditor( final ClientProperties pClientProperties,
                        final String initialText,
                        final String tooltipText,
                        final boolean applyToolkitCss,
@@ -93,7 +97,7 @@ public class LongEditor extends NumberEditor {
                        final long defaultValue,
                        final long valueIncrement ) {
         // Always call the superclass constructor first!
-        super( clientProperties, initialText, tooltipText, applyToolkitCss );
+        super( pClientProperties, initialText, tooltipText, applyToolkitCss );
 
         _defaultValue = defaultValue;
 
@@ -115,7 +119,7 @@ public class LongEditor extends NumberEditor {
     }
 
     @SuppressWarnings( "nls" )
-    private final void initEditor() {
+    private void initEditor() {
         // Now it is safe to restrict keyboard input while referencing class
         // variables and potentially local number formatting instances.
         restrictKeyboardInput();
@@ -253,19 +257,6 @@ public class LongEditor extends NumberEditor {
     }
 
     @Override
-    public String getAllowedCharacters() {
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0L )
-                                         ? ( _maximumValue > 0L )
-                                           ? "[0-9.,+-]"
-                                           : "[0-9.,-]"
-                                         : ( _maximumValue > 0L )
-                                           ? "[0-9.,+]"
-                                           : "[0-9.,]";
-        return allowedCharacters;
-    }
-
-    @Override
     public final String getDecoratedText() {
         // Get the most recently committed value.
         final long savedValue = getValue();
@@ -290,6 +281,16 @@ public class LongEditor extends NumberEditor {
     }
 
     @Override
+    public final void clampValue() {
+        // Get the clamped, edited value, stripped of decorations and
+        // formatting.
+        final long clampedValue = getClampedValue();
+
+        // Update the cached property from the clamped, edited value.
+        setValue( clampedValue );
+    }
+
+    @Override
     public final void updateText() {
         // Get the most recently committed value.
         final long savedValue = getValue();
@@ -299,13 +300,16 @@ public class LongEditor extends NumberEditor {
     }
 
     @Override
-    public final void clampValue() {
-        // Get the clamped, edited value, stripped of decorations and
-        // formatting.
-        final long clampedValue = getClampedValue();
-
-        // Update the cached property from the clamped, edited value.
-        setValue( clampedValue );
+    public String getAllowedCharacters() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = ( _minimumValue < 0L )
+                                         ? ( _maximumValue > 0L )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( _maximumValue > 0L )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
+        return allowedCharacters;
     }
 
     public final long getClampedValue() {
@@ -350,8 +354,8 @@ public class LongEditor extends NumberEditor {
                                                                       + 1 );
                 longValue = Long.parseLong( numericString );
             }
-            catch ( IndexOutOfBoundsException | NumberFormatException |
-                    NullPointerException e ) {
+            catch ( final IndexOutOfBoundsException | NumberFormatException |
+                          NullPointerException e ) {
                 if ( _reset != null ) {
                     _reset.run();
                 }

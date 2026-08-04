@@ -56,7 +56,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
             = LayerPropertiesManagement.DEFAULT_LAYER_INDEX;
     // Declare preferred widths for each column.
     // NOTE: These numbers must add up to the assumed table width of 440.
-    protected static final int[] _columnWidth = new int[] {
+    protected static final int[] _columnWidth = {
             240, // COLUMN_LAYER_NAME
             120, // COLUMN_COLOR
             60, // COLUMN_STATUS
@@ -80,17 +80,17 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
     private static final boolean SORTABLE_DEFAULT = true;
     // Declare the table column header names.
     private static final String COLUMN_HEADER_LAYER_NAME = "LAYER NAME";
-            //$NON-NLS-1$
+    //$NON-NLS-1$
     private static final String COLUMN_HEADER_COLOR = "COLOR";
-            //$NON-NLS-1$
-            //$NON-NLS-1$
+    //$NON-NLS-1$
+    //$NON-NLS-1$
     private static final String COLUMN_HEADER_STATUS = "STATUS";
-            //$NON-NLS-1$
+    //$NON-NLS-1$
     private static final String COLUMN_HEADER_DISPLAY = "DISPLAY";
-            //$NON-NLS-1$
+    //$NON-NLS-1$
     private static final String COLUMN_HEADER_LOCK = "LOCK";
     // Declare the array of column names to be displayed in the table header.
-    public static final String[] _columnName = new String[] {
+    public static final String[] _columnName = {
             COLUMN_HEADER_LAYER_NAME,
             COLUMN_HEADER_COLOR,
             COLUMN_HEADER_STATUS,
@@ -129,8 +129,8 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
         // Try to force the preferred size to the total column width and eight
         // initial rows of data plus the header.
-        setPrefSize( 600d, 240d );
-        setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+        setPrefSize( 600.0d, 240.0d );
+        setColumnResizePolicy( CONSTRAINED_RESIZE_POLICY );
 
         final ObservableList< TableColumn< LayerProperties, ? > > columns
                 = getColumns();

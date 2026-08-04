@@ -59,10 +59,10 @@ public abstract class NumberEditor extends XTextField {
     // This is a functional interface for resetting the control.
     protected Runnable _reset;
 
-    public NumberEditor( final ClientProperties clientProperties,
-                         final String initialText,
-                         final String tooltipText,
-                         final boolean applyToolkitCss ) {
+    protected NumberEditor( final ClientProperties clientProperties,
+                            final String initialText,
+                            final String tooltipText,
+                            final boolean applyToolkitCss ) {
         // Always call the superclass constructor first!
         super( initialText, tooltipText, applyToolkitCss, clientProperties );
 

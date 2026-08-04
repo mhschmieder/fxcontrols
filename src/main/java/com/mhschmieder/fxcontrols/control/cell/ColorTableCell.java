@@ -37,15 +37,15 @@ import javafx.scene.paint.Color;
 
 public class ColorTableCell< C > extends XTableCell< C, Color > {
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
     public ColorTableCell( final double width,
                            final double height ) {
         // Always call the superclass constructor first!
         super();
 
-        this.setWidth( width );
-        this.setHeight( height );
+        setWidth( width );
+        setHeight( height );
 
         canvas = new ResizableCanvas();
     }

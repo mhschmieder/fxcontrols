@@ -36,7 +36,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -103,7 +102,7 @@ public final class TableUtilities {
     public static < TD, CT > void setCellValueFactory( final TableColumn< TD,
                                                                CT > tableColumn,
                                                        final String columnPropertyName ) {
-        final Callback< CellDataFeatures< TD, CT >, ObservableValue< CT > >
+        final Callback< TableColumn.CellDataFeatures< TD, CT >, ObservableValue< CT > >
                 callback = new PropertyValueFactory<>( columnPropertyName );
         tableColumn.setCellValueFactory( callback );
     }

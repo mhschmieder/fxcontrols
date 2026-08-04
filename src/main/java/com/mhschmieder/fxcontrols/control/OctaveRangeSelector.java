@@ -48,12 +48,12 @@ public class OctaveRangeSelector extends TextSelector {
             = FrequencyRange.OCTAVE_RANGE_NARROW_DEFAULT;
 
     // List the single wide Octave Range for full frequency spectrum.
-    private static final String[] OCTAVE_RANGES_WIDE = new String[] {
+    private static final String[] OCTAVE_RANGES_WIDE = {
             OCTAVE_RANGE_WIDE_DEFAULT
     };
 
     // List each narrow Octave Range as a full inclusive range.
-    private static final String[] OCTAVE_RANGES_NARROW = new String[] {
+    private static final String[] OCTAVE_RANGES_NARROW = {
             "20 Hz to 40 Hz",
             //$NON-NLS-1$
             "40 Hz to 80 Hz",
@@ -75,7 +75,7 @@ public class OctaveRangeSelector extends TextSelector {
             "10 kHz to 20 kHz"
             //$NON-NLS-1$
     };
-    private static final String[] OCTAVE_RANGES_NARROW_EXTENDED = new String[] {
+    private static final String[] OCTAVE_RANGES_NARROW_EXTENDED = {
             "10 Hz to 20 Hz",
             //$NON-NLS-1$
             "20 Hz to 40 Hz",
@@ -135,18 +135,18 @@ public class OctaveRangeSelector extends TextSelector {
     public final void updateOctaveRangeForBandwidthAndFrequency( final RelativeBandwidth relativeBandwidth,
                                                                  final double centerFrequency ) {
         // Determine and set the correct Octave Ranges to use.
-        final String[] octaveRanges = ( RelativeBandwidth.ONE_OCTAVE.equals(
-                relativeBandwidth ) || RelativeBandwidth.THIRD_OCTAVE.equals(
-                relativeBandwidth ) )
+        final String[] octaveRanges = ( RelativeBandwidth.ONE_OCTAVE
+                                        == relativeBandwidth || RelativeBandwidth.THIRD_OCTAVE
+                                       == relativeBandwidth )
                                       ? OCTAVE_RANGES_WIDE
                                       : _useExtendedRange
                                         ? OCTAVE_RANGES_NARROW_EXTENDED
                                         : OCTAVE_RANGES_NARROW;
 
         // Determine which Octave Range contains the current Center Frequency.
-        final String defaultOctaveRange = ( RelativeBandwidth.ONE_OCTAVE.equals(
-                relativeBandwidth ) || RelativeBandwidth.THIRD_OCTAVE.equals(
-                relativeBandwidth ) )
+        final String defaultOctaveRange = ( RelativeBandwidth.ONE_OCTAVE
+                                            == relativeBandwidth || RelativeBandwidth.THIRD_OCTAVE
+                                       == relativeBandwidth )
                                           ? OCTAVE_RANGE_WIDE_DEFAULT
                                           :
                                           FrequencyRange.getNominalOctaveRangeDefaultForCenterFrequency(
