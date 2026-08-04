@@ -47,15 +47,16 @@ public class SimulationActions {
     public XAction clearAction;
 
     public SimulationActions( final ClientProperties pClientProperties ) {
-        predictAction = LabeledActionFactory.getPredictAction( pClientProperties );
+        predictAction
+                = LabeledActionFactory.getPredictAction( pClientProperties );
         clearAction = LabeledActionFactory.getClearAction( pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
     //  additions.
-    public Collection< Action > getSimulationActionCollection( 
-            final ClientProperties pClientProperties ) {
-        final Collection< Action > simulationActionCollection = new ArrayList<>();
+    public Collection< Action > getSimulationActionCollection( final ClientProperties pClientProperties ) {
+        final Collection< Action > simulationActionCollection
+                = new ArrayList<>();
 
         simulationActionCollection.add( predictAction );
         simulationActionCollection.add( clearAction );

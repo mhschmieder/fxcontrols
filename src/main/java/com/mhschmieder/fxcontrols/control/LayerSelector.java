@@ -34,12 +34,13 @@ import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.SingleSelectionModel;
-
-import java.util.List;
 
 public class LayerSelector extends TextSelector {
 
@@ -48,16 +49,21 @@ public class LayerSelector extends TextSelector {
 
     // Cache the displayed list of Layer Names, so we can compare during
     // updates.
-    protected List< String >          _layerNames;
+    protected List< String > _layerNames;
 
     // Keep track of whether this instance supports multi-edit ("various").
-    protected boolean                           _supportMultiEdit;
+    protected boolean _supportMultiEdit;
 
     public LayerSelector( final ClientProperties pClientProperties,
                           final boolean applyToolkitCss,
                           final boolean supportMultiEdit ) {
         // Always call the superclass constructor first!
-        super( pClientProperties, "Layer", applyToolkitCss, false, false, 32 ); //$NON-NLS-1$
+        super( pClientProperties,
+               "Layer",
+               applyToolkitCss,
+               false,
+               false,
+               32 ); //$NON-NLS-1$
 
         _supportMultiEdit = supportMultiEdit;
 
@@ -69,15 +75,11 @@ public class LayerSelector extends TextSelector {
         }
     }
 
-    public final String getLayerName() {
-        return getValue();
-    }
-
     private final void initComboBox() {
         // Set the non-editable drop-list of Layers.
         // NOTE: We start with just the Default Layer.
-        final ObservableList< Layer > defaultLayerCollection = FXCollections
-                .observableArrayList();
+        final ObservableList< Layer > defaultLayerCollection
+                = FXCollections.observableArrayList();
         final Layer defaultLayer = LayerManagement.makeDefaultLayer();
         defaultLayerCollection.add( defaultLayer );
         setLayerCollection( defaultLayerCollection, defaultLayer );
@@ -86,13 +88,16 @@ public class LayerSelector extends TextSelector {
         setCellFactory( param -> {
             final ListCell< String > cell = new ListCell< String >() {
                 @Override
-                public void updateItem( final String item, final boolean empty ) {
+                public void updateItem( final String item,
+                                        final boolean empty ) {
                     super.updateItem( item, empty );
                     if ( item != null ) {
                         setText( item );
 
-                        final boolean disable = LayerPropertiesManagement
-                                .VARIOUS_LAYER_NAME.equals( item );
+                        final boolean disable
+                                =
+                                LayerPropertiesManagement.VARIOUS_LAYER_NAME.equals(
+                                item );
                         setDisable( disable );
                     }
                     else {
@@ -106,23 +111,12 @@ public class LayerSelector extends TextSelector {
     }
 
     // Set the drop-list of available Layer Names from the collection.
-    public final void setLayerCollection( final List<Layer> layerCollection ) {
-        // Cache the global reference so it stays in sync vs. using setItems()
-        // -- otherwise renamings and Add/Delete would require resetting the
-        // collection here vs. depending on run-time extraction methods.
-        _layerCollection = layerCollection;
-
-        // Reset the Combo Box to use the new list of Layer Names.
-        updateLayerNames();
-    }
-
-    // Set the drop-list of available Layer Names from the collection.
     private final void setLayerCollection( final ObservableList< Layer > layerCollection,
                                            final Layer layerCurrent ) {
         // Save the selection to reinstate after replacing the drop-list.
         final String layerNameCurrent = ( layerCurrent != null )
-            ? layerCurrent.getLayerName()
-            : getValue();
+                                        ? layerCurrent.getLayerName()
+                                        : getValue();
 
         // Set the drop-list of available Layer Names from the collection.
         setLayerCollection( layerCollection );
@@ -133,11 +127,45 @@ public class LayerSelector extends TextSelector {
         setLayerNameCurrent( layerNameCurrent );
     }
 
-    public final void setLayerName( final String layerNameCandidate ) {
-        final ObservableList< String > layerNames = getItems();
-        if ( layerNames.contains( layerNameCandidate ) ) {
-            setValue( layerNameCandidate );
+    // Set the drop-list of available Layer Names from the collection.
+    public final void setLayerCollection( final List< Layer > layerCollection ) {
+        // Cache the global reference so it stays in sync vs. using setItems()
+        // -- otherwise renamings and Add/Delete would require resetting the
+        // collection here vs. depending on run-time extraction methods.
+        _layerCollection = layerCollection;
+
+        // Reset the Combo Box to use the new list of Layer Names.
+        updateLayerNames();
+    }
+
+    public final boolean updateLayerNames() {
+        // Conditionally replace the entire list with the new collection.
+        final List< String > layerNames
+                = LayerManagement.getAssignableLayerNames( _layerCollection,
+                                                           _supportMultiEdit );
+        if ( !layerNames.equals( _layerNames ) ) {
+            // If the list size shrank, the selected index is automatically
+            // invalid; whereas in other cases a Layer Name may be all that
+            // changed. When the entire list is replaced, we ignore this flag.
+            // Note that we delegate list order differences to the higher level
+            // logic that decides whether to preserve by name or by index.
+            final boolean selectedLayerIndexInvalid = ( _layerNames == null )
+                                                      ? true
+                                                      : layerNames.size()
+                                                        < _layerNames.size();
+
+            _layerNames = layerNames;
+            setItems( FXCollections.observableArrayList( _layerNames ) );
+
+            // Make sure the Combo Box width grows, if necessary, to support
+            // longer names that may have just been added or changed.
+            setMaxWidth( 160d );
+            setNeedsLayout( true );
+
+            return selectedLayerIndexInvalid;
         }
+
+        return false;
     }
 
     private final void setLayerNameCurrent( final String layerNameCurrent ) {
@@ -169,32 +197,15 @@ public class LayerSelector extends TextSelector {
         }
     }
 
-    public final boolean updateLayerNames() {
-        // Conditionally replace the entire list with the new collection.
-        final List< String > layerNames = LayerManagement
-                .getAssignableLayerNames( _layerCollection, _supportMultiEdit );
-        if ( !layerNames.equals( _layerNames ) ) {
-            // If the list size shrank, the selected index is automatically
-            // invalid; whereas in other cases a Layer Name may be all that
-            // changed. When the entire list is replaced, we ignore this flag.
-            // Note that we delegate list order differences to the higher level
-            // logic that decides whether to preserve by name or by index.
-            final boolean selectedLayerIndexInvalid = ( _layerNames == null )
-                ? true
-                : layerNames.size() < _layerNames.size();
+    public final String getLayerName() {
+        return getValue();
+    }
 
-            _layerNames = layerNames;
-            setItems(FXCollections.observableArrayList( _layerNames ) );
-
-            // Make sure the Combo Box width grows, if necessary, to support
-            // longer names that may have just been added or changed.
-            setMaxWidth( 160d );
-            setNeedsLayout( true );
-
-            return selectedLayerIndexInvalid;
+    public final void setLayerName( final String layerNameCandidate ) {
+        final ObservableList< String > layerNames = getItems();
+        if ( layerNames.contains( layerNameCandidate ) ) {
+            setValue( layerNameCandidate );
         }
-
-        return false;
     }
 
     // Update the drop-list of available Layer Names from the collection.
@@ -202,7 +213,8 @@ public class LayerSelector extends TextSelector {
                                         final boolean preserveSelectedLayerByName ) {
         // Cache the current selection so we can restore after updating Layer
         // Names, as we can't do this by setting the old name in the new list.
-        final SingleSelectionModel< String > selectionModel = getSelectionModel();
+        final SingleSelectionModel< String > selectionModel
+                = getSelectionModel();
         final int selectedLayerIndex = selectionModel.getSelectedIndex();
         updateLayerNames( selectedLayerIndex,
                           preserveSelectedLayerByIndex,
@@ -215,7 +227,8 @@ public class LayerSelector extends TextSelector {
                                         final boolean preserveSelectedLayerByName ) {
         // Cache the current selection so we can restore after updating Layer
         // Names, as we can't do this by setting the old name in the new list.
-        final SingleSelectionModel< String > selectionModel = getSelectionModel();
+        final SingleSelectionModel< String > selectionModel
+                = getSelectionModel();
         final int selectedLayerIndex = currentSelectedIndex;
         final String selectedLayerName = selectionModel.getSelectedItem();
 
@@ -226,12 +239,14 @@ public class LayerSelector extends TextSelector {
         final boolean selectedLayerIndexInvalid = updateLayerNames();
 
         // Restore the previous selected Layer Name by index or by name.
-        if ( preserveSelectedLayerByIndex && ( selectedLayerIndex < _layerNames.size() )
-                && !selectedLayerIndexInvalid ) {
+        if ( preserveSelectedLayerByIndex && ( selectedLayerIndex
+                                               < _layerNames.size() )
+             && !selectedLayerIndexInvalid ) {
             selectionModel.select( selectedLayerIndex );
         }
-        else if ( ( preserveSelectedLayerByName
-                || ( preserveSelectedLayerByIndex && selectedLayerIndexInvalid ) )
+        else if (
+                ( preserveSelectedLayerByName || ( preserveSelectedLayerByIndex
+                                                   && selectedLayerIndexInvalid ) )
                 && ( _layerNames.contains( selectedLayerName ) ) ) {
             selectionModel.select( selectedLayerName );
         }
@@ -239,5 +254,4 @@ public class LayerSelector extends TextSelector {
             selectionModel.selectFirst();
         }
     }
-
 }

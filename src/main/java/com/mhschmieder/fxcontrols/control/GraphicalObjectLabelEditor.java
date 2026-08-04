@@ -44,30 +44,20 @@ import java.text.NumberFormat;
 public final class GraphicalObjectLabelEditor extends TextEditor {
 
     // Declare a default base label for new Graphical Objects.
-    private final String                                             _graphicalObjectLabelDefault;
-
-    // Declare a collection of Graphical Objects.
-    protected GraphicalObjectCollection< ? extends GraphicalObject > _graphicalObjectCollection;
-
+    private final String _graphicalObjectLabelDefault;
     // Number format cache used for locale-specific number formatting of
     // uniquefier appendices.
-    public NumberFormat                                              _uniquefierNumberFormat;
+    public NumberFormat _uniquefierNumberFormat;
+    // Declare a collection of Graphical Objects.
+    protected GraphicalObjectCollection< ? extends GraphicalObject >
+            _graphicalObjectCollection;
 
     public GraphicalObjectLabelEditor( final ClientProperties pClientProperties,
                                        final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
-        this( graphicalObjectCollection.getNewLabelDefault( graphicalObjectLabelDefault ),
-              null,
-              pClientProperties,
-              graphicalObjectLabelDefault,
-              graphicalObjectCollection );
-    }
-
-    public GraphicalObjectLabelEditor( final String initialText,
-                                       final ClientProperties pClientProperties,
-                                       final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
-        this( initialText,
+                                       final GraphicalObjectCollection< ?
+                                               extends GraphicalObject > graphicalObjectCollection ) {
+        this( graphicalObjectCollection.getNewLabelDefault(
+                      graphicalObjectLabelDefault ),
               null,
               pClientProperties,
               graphicalObjectLabelDefault,
@@ -78,7 +68,8 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
                                        final String tooltipText,
                                        final ClientProperties pClientProperties,
                                        final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
+                                       final GraphicalObjectCollection< ?
+                                               extends GraphicalObject > graphicalObjectCollection ) {
         // Always call the superclass constructor first!
         super( initialText, tooltipText, true, true, pClientProperties );
 
@@ -94,8 +85,21 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
     }
 
     private void initEditor() {
-        _uniquefierNumberFormat = NumberFormatUtilities
-                .getUniquefierNumberFormat( clientProperties.locale );
+        _uniquefierNumberFormat
+                = NumberFormatUtilities.getUniquefierNumberFormat(
+                clientProperties.locale );
+    }
+
+    public GraphicalObjectLabelEditor( final String initialText,
+                                       final ClientProperties pClientProperties,
+                                       final String graphicalObjectLabelDefault,
+                                       final GraphicalObjectCollection< ?
+                                               extends GraphicalObject > graphicalObjectCollection ) {
+        this( initialText,
+              null,
+              pClientProperties,
+              graphicalObjectLabelDefault,
+              graphicalObjectCollection );
     }
 
     @Override
@@ -107,35 +111,40 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
         final String currentValue = getValue();
 
         // Forward this method to the specialized label uniquefier.
-        final String adjustedValue = getUniqueGraphicalObjectLabel( trimmedValue, currentValue );
+        final String adjustedValue
+                = getUniqueGraphicalObjectLabel( trimmedValue, currentValue );
 
         return adjustedValue;
-    }
-
-    public String getNewGraphicalObjectLabelDefault() {
-        return _graphicalObjectCollection.getNewLabelDefault( _graphicalObjectLabelDefault );
-    }
-
-    // Get a unique Graphical Object Label from the candidate label.
-    // NOTE: The default label is only used when the edited label is blank.
-    public String getUniqueGraphicalObjectLabel( final String graphicalObjectLabelCandidate ) {
-        return getUniqueGraphicalObjectLabel( graphicalObjectLabelCandidate, null );
     }
 
     // Get a unique Graphical Object Label from the candidate label.
     // NOTE: The default label is only used when the edited label is blank.
     public String getUniqueGraphicalObjectLabel( final String graphicalObjectLabelCandidate,
                                                  final String graphicalObjectLabelCurrent ) {
-        final String graphicalObjectLabelDefault = getNewGraphicalObjectLabelDefault();
-        return _graphicalObjectCollection.getUniqueLabel( graphicalObjectLabelCandidate,
-                                                          graphicalObjectLabelDefault,
-                                                          graphicalObjectLabelCurrent,
-                                                          _uniquefierNumberFormat );
+        final String graphicalObjectLabelDefault
+                = getNewGraphicalObjectLabelDefault();
+        return _graphicalObjectCollection.getUniqueLabel(
+                graphicalObjectLabelCandidate,
+                graphicalObjectLabelDefault,
+                graphicalObjectLabelCurrent,
+                _uniquefierNumberFormat );
+    }
+
+    public String getNewGraphicalObjectLabelDefault() {
+        return _graphicalObjectCollection.getNewLabelDefault(
+                _graphicalObjectLabelDefault );
+    }
+
+    // Get a unique Graphical Object Label from the candidate label.
+    // NOTE: The default label is only used when the edited label is blank.
+    public String getUniqueGraphicalObjectLabel( final String graphicalObjectLabelCandidate ) {
+        return getUniqueGraphicalObjectLabel( graphicalObjectLabelCandidate,
+                                              null );
     }
 
     // Find out if the candidate label is unique.
     public boolean isGraphicalObjectLabelUnique( final String graphicalObjectLabelCandidate ) {
-        return _graphicalObjectCollection.isLabelUnique( graphicalObjectLabelCandidate );
+        return _graphicalObjectCollection.isLabelUnique(
+                graphicalObjectLabelCandidate );
     }
-
 }

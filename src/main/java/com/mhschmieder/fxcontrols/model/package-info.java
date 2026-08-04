@@ -30,9 +30,5 @@
  */
 /**
  * This package contains the model classes for associated JavaFX GUI elements.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxcontrols.model;

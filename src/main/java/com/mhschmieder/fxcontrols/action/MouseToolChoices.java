@@ -43,11 +43,11 @@ import java.util.Collection;
 public final class MouseToolChoices {
 
     // Declare all the Mouse Tool choices.
-    public XAction      _selectToolChoice;
-    public XAction      _panToolChoice;
-    public XAction      _zoomToolChoice;
-    public XAction      _rotateToolChoice;
-    public XAction      _lineToolChoice;
+    public XAction _selectToolChoice;
+    public XAction _panToolChoice;
+    public XAction _zoomToolChoice;
+    public XAction _rotateToolChoice;
+    public XAction _lineToolChoice;
 
     // Cache the associated choice group, for ease of overall enablement.
     public XActionGroup _mouseToolChoiceGroup;
@@ -65,15 +65,16 @@ public final class MouseToolChoices {
         _lineToolChoice = LabeledActionFactory.getLineToolChoice(
                 pClientProperties );
 
-        final Collection< Action > mouseToolChoiceCollection = getMouseToolChoiceCollection();
+        final Collection< Action > mouseToolChoiceCollection
+                = getMouseToolChoiceCollection();
 
-        _mouseToolChoiceGroup = ActionFactory.makeChoiceGroup(
-                pClientProperties,
-                mouseToolChoiceCollection,
-                LabeledActionFactory.BUNDLE_NAME,
-                "mouseTools",
-                null,
-                true );
+        _mouseToolChoiceGroup
+                = ActionFactory.makeChoiceGroup( pClientProperties,
+                                                 mouseToolChoiceCollection,
+                                                 LabeledActionFactory.BUNDLE_NAME,
+                                                 "mouseTools",
+                                                 null,
+                                                 true );
     }
 
     public Collection< Action > getMouseToolChoiceCollection() {

@@ -43,9 +43,10 @@ public final class TemperatureEditor extends DoubleEditor {
     public static final double VALUE_INCREMENT_K = 0.1d;
 
     // Store the Temperature Unit so we'll know when we need to convert.
-    private TemperatureUnit    _temperatureUnit;
+    private TemperatureUnit _temperatureUnit;
 
-    // //////////////////////////////////////////////////////////////////////////
+    //
+    // ////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
     public TemperatureEditor( final ClientProperties pClientProperties1,
                               final String initialText,
@@ -79,17 +80,49 @@ public final class TemperatureEditor extends DoubleEditor {
         }
     }
 
-    // Convert current Temperature value from display units to Kelvin.
-    // NOTE: This method is unused currently, but is provided in case we
-    // change our mind about having the related slider be the data master.
-    public double getTemperatureK() {
-        return UnitConversion
-                .convertTemperature( getValue(), _temperatureUnit, TemperatureUnit.KELVIN );
-    }
-
     private void initEditor() {
         // Update the Temperature Unit and related resolutions and ranges.
         updateTemperatureUnit( _temperatureUnit );
+    }
+
+    public void updateTemperatureUnit( final TemperatureUnit temperatureUnit ) {
+        // Store the new Temperature Unit to provide context for next change.
+        _temperatureUnit = temperatureUnit;
+
+        // Set the level of precision based on the granularity of the unit.
+        switch ( _temperatureUnit ) {
+            case KELVIN:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            case CELSIUS:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            case FAHRENHEIT:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            default:
+                break;
+        }
+
+        // NOTE: Text Editors must set their adjusted range before setting the
+        //  adjusted current value, as we manage value legality within callbacks
+        //  that check the locally cached minimum and maximum values.
+        // NOTE: Unit conversion is done in the sliders for the doubled-up
+        //  controls, so ideally we can move that code to these respective
+        //  editors to help make the editors consistently own the data and the
+        //  measurement units. The Distance Editor is the model for doing this.
+        // NOTE: The attempted consolidation of bindings strategies ended up
+        //  causing too many conflicts and problems, as we aren't handling
+        //  sliders and editors consistently so it gets confusing very
+        //  quickly as
+        //  to the order of callbacks and events as well as when and whether
+        //  unit
+        //  conversion has already been applied when values are synced or bound.
+        setMinimumTemperatureK( PhysicsConstants.TEMPERATURE_MINIMUM_K );
+        setMaximumTemperatureK( PhysicsConstants.TEMPERATURE_MAXIMUM_K );
+
+        // Set the embedded unit label in the generic number textField.
+        setMeasurementUnitString( _temperatureUnit.abbreviation() );
     }
 
     // Convert maximum Temperature value from Kelvin to display units.
@@ -106,49 +139,21 @@ public final class TemperatureEditor extends DoubleEditor {
                                                             _temperatureUnit ) );
     }
 
+    // Convert current Temperature value from display units to Kelvin.
+    // NOTE: This method is unused currently, but is provided in case we
+    // change our mind about having the related slider be the data master.
+    public double getTemperatureK() {
+        return UnitConversion.convertTemperature( getValue(),
+                                                  _temperatureUnit,
+                                                  TemperatureUnit.KELVIN );
+    }
+
     // Convert new Temperature value from Kelvin to display units.
     // NOTE: This method is unused currently, but is provided in case we
     // change our mind about having the related slider be the data master.
     public void setTemperatureK( final double temperatureK ) {
-        setValue( UnitConversion
-                .convertTemperature( temperatureK, TemperatureUnit.KELVIN, _temperatureUnit ) );
-    }
-
-    public void updateTemperatureUnit( final TemperatureUnit temperatureUnit ) {
-        // Store the new Temperature Unit to provide context for next change.
-        _temperatureUnit = temperatureUnit;
-
-        // Set the level of precision based on the granularity of the unit.
-        switch ( _temperatureUnit ) {
-        case KELVIN:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        case CELSIUS:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        case FAHRENHEIT:
-            _numberFormat.setMaximumFractionDigits( 1 );
-            break;
-        default:
-            break;
-        }
-
-        // NOTE: Text Editors must set their adjusted range before setting the
-        //  adjusted current value, as we manage value legality within callbacks
-        //  that check the locally cached minimum and maximum values.
-        // NOTE: Unit conversion is done in the sliders for the doubled-up
-        //  controls, so ideally we can move that code to these respective
-        //  editors to help make the editors consistently own the data and the
-        //  measurement units. The Distance Editor is the model for doing this.
-        // NOTE: The attempted consolidation of bindings strategies ended up
-        //  causing too many conflicts and problems, as we aren't handling
-        //  sliders and editors consistently so it gets confusing very quickly as
-        //  to the order of callbacks and events as well as when and whether unit
-        //  conversion has already been applied when values are synced or bound.
-        setMinimumTemperatureK( PhysicsConstants.TEMPERATURE_MINIMUM_K );
-        setMaximumTemperatureK( PhysicsConstants.TEMPERATURE_MAXIMUM_K );
-
-        // Set the embedded unit label in the generic number textField.
-        setMeasurementUnitString( _temperatureUnit.abbreviation() );
+        setValue( UnitConversion.convertTemperature( temperatureK,
+                                                     TemperatureUnit.KELVIN,
+                                                     _temperatureUnit ) );
     }
 }

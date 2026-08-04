@@ -44,16 +44,17 @@ import java.util.Collection;
 public class LoadActions {
 
     public XAction _projectSettingsAction;
-    
+
     /**
      * This is the default constructor, when no customization is required.
      *
-     * @param pClientProperties
-     *            The Client Properties, including Client Type and OS Name
+     * @param pClientProperties The Client Properties, including Client Type and
+     *                          OS Name
      */
     public LoadActions( final ClientProperties pClientProperties ) {
-        _projectSettingsAction = LabeledActionFactory
-                .getLoadProjectSettingsAction( pClientProperties );
+        _projectSettingsAction
+                = LabeledActionFactory.getLoadProjectSettingsAction(
+                pClientProperties );
     }
 
     public final Collection< Action > getLoadActionCollection() {

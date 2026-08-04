@@ -36,20 +36,22 @@ import org.apache.commons.math3.util.FastMath;
 
 public final class FrequencyEditor extends DoubleEditor {
 
-    // Declare default value increment/decrement amount for up and down arrow keys.
+    // Declare default value increment/decrement amount for up and down arrow
+    // keys.
     public static final double VALUE_INCREMENT_DEFAULT_HZ = 10.0d;
-    
+
     // Declare default value for precision cutoff frequency.
     public static final double PRECISION_CUTOFF_FREQUENCY_DEFAULT_HZ = 100.0d;
-    
-    // Declare default value for number of decimal places precision (when active).
+
+    // Declare default value for number of decimal places precision (when
+    // active).
     public static final int NUMBER_OF_DECIMAL_PLACES_DEFAULT = 1;
-    
+
     /**
      * Precision cutoff frequency for using integers vs. decimal places.
      */
     protected double precisionCutoffFrequencyHz;
-    
+
     /**
      * The number of decimal places to use for display purposes, when active.
      */
@@ -94,32 +96,34 @@ public final class FrequencyEditor extends DoubleEditor {
                frequencyMaximumHz,
                frequencyInitialHz,
                VALUE_INCREMENT_DEFAULT_HZ );
-        
+
         precisionCutoffFrequencyHz = pPrecisionCutoffFrequencyHz;
         numberOfDecimalPlaces = pNumberOfDecimalPlaces;
     }
 
     @Override
     public double adjustPrecision( final double doubleValue ) {
-        final double precisionAdjustedValue 
-            = ( doubleValue >= precisionCutoffFrequencyHz )
-            ? FastMath.round( doubleValue )
-            : MathUtilities.roundDecimal( doubleValue, numberOfDecimalPlaces );
+        final double precisionAdjustedValue = ( doubleValue
+                                                >= precisionCutoffFrequencyHz )
+                                              ? FastMath.round( doubleValue )
+                                              : MathUtilities.roundDecimal(
+                                                      doubleValue,
+                                                      numberOfDecimalPlaces );
         return precisionAdjustedValue;
     }
-    
+
     public final double getPrecisionCutoffFrequencyHz() {
         return precisionCutoffFrequencyHz;
     }
-    
+
     public final void setPrecisionCutoffFrequencyHz( final double pPrecisionCutoffFrequencyHz ) {
         precisionCutoffFrequencyHz = pPrecisionCutoffFrequencyHz;
     }
-    
+
     public final int getNumberOfDecimalPlaces() {
         return numberOfDecimalPlaces;
     }
-    
+
     public final void setNumberOfDecimalPlaces( final int pNumberOfDecimalPlaces ) {
         numberOfDecimalPlaces = pNumberOfDecimalPlaces;
     }

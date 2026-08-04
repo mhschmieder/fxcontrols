@@ -41,11 +41,11 @@ public final class FrequencyRangeControls {
 
     // Declare controls for Frequency Range related actions.
     public XComboBox< RelativeBandwidth > _relativeBandwidthSelector;
-    public OctaveRangeSelector       _octaveRangeSelector;
-    public CenterFrequencySelector   _centerFrequencySelector;
+    public OctaveRangeSelector _octaveRangeSelector;
+    public CenterFrequencySelector _centerFrequencySelector;
 
     // Number format cache used for locale-specific number formatting.
-    private NumberFormat             _numberFormat;
+    private NumberFormat _numberFormat;
 
     // Default constructor
     public FrequencyRangeControls( final NumberFormat numberFormat,
@@ -62,64 +62,51 @@ public final class FrequencyRangeControls {
                 RelativeBandwidth.THIRD_OCTAVE,
                 RelativeBandwidth.SIXTH_OCTAVE,
                 RelativeBandwidth.TWELFTH_OCTAVE,
-                RelativeBandwidth.TWENTY_FOURTH_OCTAVE}; //,
-                //RelativeBandwidth.FORTYEIGHTH_OCTAVE };
+                RelativeBandwidth.TWENTY_FOURTH_OCTAVE
+        }; //,
+        //RelativeBandwidth.FORTYEIGHTH_OCTAVE };
         _relativeBandwidthSelector = ListViewUtilities.makeLabeledSelector(
                 pClientProperties,
                 supportedValues,
                 "Relative Bandwidth",
                 RelativeBandwidth.defaultValue() );
         _octaveRangeSelector = new OctaveRangeSelector( pClientProperties,
-                                                        applyToolkitCss, 
+                                                        applyToolkitCss,
                                                         useExtendedRange );
-        _centerFrequencySelector = new CenterFrequencySelector( pClientProperties, 
-                                                                applyToolkitCss,
-                                                                startIndexForOneOctave,
-                                                                startIndexForThirdOctave );
+        _centerFrequencySelector = new CenterFrequencySelector(
+                pClientProperties,
+                applyToolkitCss,
+                startIndexForOneOctave,
+                startIndexForThirdOctave );
     }
 
     public String getCenterFrequency() {
         return _centerFrequencySelector.getCenterFrequency();
     }
 
-    public String getOctaveRange() {
-        return _octaveRangeSelector.getOctaveRange();
-    }
-
     public RelativeBandwidth getRelativeBandwidth() {
         return _relativeBandwidthSelector.getValue();
-    }
-
-    public void setCenterFrequency( final String sOctaveRange,
-                                    final double centerFrequency ) {
-        final String sCenterFrequency = FrequencySignalUtilities
-                .getFormattedFrequency( centerFrequency, _numberFormat );
-        _centerFrequencySelector.setCenterFrequency( sOctaveRange, sCenterFrequency );
-    }
-
-    public void setOctaveRange( final String sOctaveRange ) {
-        _octaveRangeSelector.setOctaveRange( sOctaveRange );
     }
 
     public void setRelativeBandwidth( final RelativeBandwidth relativeBandwidth ) {
         _relativeBandwidthSelector.setValue( relativeBandwidth );
     }
 
-    public void updateCenterFrequencyForBandwidthAndOctave( final RelativeBandwidth relativeBandwidth,
-                                                            final String sOctaveRange,
-                                                            final double centerFrequency,
-                                                            final boolean preserveSelection ) {
-        _centerFrequencySelector.updateCenterFrequencyForBandwidthAndOctave( relativeBandwidth,
-                                                                             sOctaveRange,
-                                                                             centerFrequency,
-                                                                             preserveSelection );
+    public void setCenterFrequency( final String sOctaveRange,
+                                    final double centerFrequency ) {
+        final String sCenterFrequency
+                = FrequencySignalUtilities.getFormattedFrequency(
+                centerFrequency,
+                _numberFormat );
+        _centerFrequencySelector.setCenterFrequency( sOctaveRange,
+                                                     sCenterFrequency );
     }
 
     public void updateFrequencyRange( final FrequencyRange frequencyRange ) {
         // Select the new Frequency Range values, which must be pre-vetted as
         // valid. It is otherwise unsafe to set all three values at once.
-        final RelativeBandwidth relativeBandwidth = frequencyRange
-                .getRelativeBandwidth();
+        final RelativeBandwidth relativeBandwidth
+                = frequencyRange.getRelativeBandwidth();
         final String sOctaveRange = frequencyRange.getOctaveRange();
         final double centerFrequency = frequencyRange.getCenterFrequency();
 
@@ -132,6 +119,25 @@ public final class FrequencyRangeControls {
                                                     sOctaveRangeCorrected,
                                                     centerFrequency,
                                                     false );
+    }
+
+    public String getOctaveRange() {
+        return _octaveRangeSelector.getOctaveRange();
+    }
+
+    public void setOctaveRange( final String sOctaveRange ) {
+        _octaveRangeSelector.setOctaveRange( sOctaveRange );
+    }
+
+    public void updateCenterFrequencyForBandwidthAndOctave( final RelativeBandwidth relativeBandwidth,
+                                                            final String sOctaveRange,
+                                                            final double centerFrequency,
+                                                            final boolean preserveSelection ) {
+        _centerFrequencySelector.updateCenterFrequencyForBandwidthAndOctave(
+                relativeBandwidth,
+                sOctaveRange,
+                centerFrequency,
+                preserveSelection );
     }
 
     public void updateOctaveRangeForBandwidthAndFrequency( final RelativeBandwidth relativeBandwidth,

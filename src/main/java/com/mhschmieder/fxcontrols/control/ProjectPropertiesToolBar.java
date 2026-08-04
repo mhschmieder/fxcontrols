@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.ProjectPropertiesActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
@@ -60,9 +61,8 @@ public final class ProjectPropertiesToolBar extends ToolBar {
     private void initToolBar( final ClientProperties pClientProperties,
                               final ProjectPropertiesActions projectPropertiesActions ) {
         // Make the nodes for the tool bar.
-        resetButton = LabeledControlFactory.getResetButton( 
-                pClientProperties, 
-                projectPropertiesActions.resetAction );
+        resetButton = LabeledControlFactory.getResetButton( pClientProperties,
+                                                            projectPropertiesActions.resetAction );
 
         final Region spacer = new Region();
         HBox.setHgrow( spacer, Priority.ALWAYS );

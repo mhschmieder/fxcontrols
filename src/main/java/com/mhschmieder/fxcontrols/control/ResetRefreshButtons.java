@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 
 /**
@@ -46,8 +47,9 @@ public class ResetRefreshButtons {
     // Default constructor
     public ResetRefreshButtons( final ClientProperties pClientProperties ) {
         // Make the JavaFX image buttons.
-        _resetButton = LabeledControlFactory.getResetButton( pClientProperties );
-        _refreshButton = LabeledControlFactory.getRefreshButton( pClientProperties );
+        _resetButton
+                = LabeledControlFactory.getResetButton( pClientProperties );
+        _refreshButton = LabeledControlFactory.getRefreshButton(
+                pClientProperties );
     }
-
 }

@@ -31,12 +31,13 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * This class formalizes aspects of list selection that are specific to
- * text value sets.
+ * This class formalizes aspects of list selection that are specific to text
+ * value sets.
  */
 public class TextSelector extends XComboBox< String > {
 
@@ -49,14 +50,35 @@ public class TextSelector extends XComboBox< String > {
                          final boolean editable,
                          final boolean searchable,
                          final int visibleRowCount ) {
-        this( pClientProperties, 
-               tooltipText, 
-               applyToolkitCss, 
-               editable, 
+        this( pClientProperties,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable,
+              visibleRowCount,
+              null,
+              FXCollections.observableArrayList() );
+    }
+
+    // This is the constructor to call when we know the initial drop-list.
+    // For this version, we expect an already-constructed observable list.
+    public TextSelector( final ClientProperties pClientProperties,
+                         final String tooltipText,
+                         final boolean applyToolkitCss,
+                         final boolean editable,
+                         final boolean searchable,
+                         final int visibleRowCount,
+                         final String defaultValue,
+                         final ObservableList< String > valuesList ) {
+        // Always call the superclass constructor first!
+        super( pClientProperties,
+               tooltipText,
+               applyToolkitCss,
+               editable,
                searchable,
                visibleRowCount,
-               null,
-               FXCollections.observableArrayList() );
+               defaultValue,
+               valuesList );
     }
 
     // This is the constructor to call when we know the initial drop-list.
@@ -78,40 +100,12 @@ public class TextSelector extends XComboBox< String > {
               visibleRowCount,
               defaultValue,
               ( textValues != null ) && ( textValues.length > 0 )
-                  ? FXCollections.observableArrayList( textValues )
-                  : FXCollections.observableArrayList() );
-    }
-
-    // This is the constructor to call when we know the initial drop-list.
-    // For this version, we expect an already-constructed observable list.
-    public TextSelector( final ClientProperties pClientProperties,
-                         final String tooltipText,
-                         final boolean applyToolkitCss,
-                         final boolean editable,
-                         final boolean searchable,
-                         final int visibleRowCount,
-                         final String defaultValue,
-                         final ObservableList< String > valuesList ) {
-        // Always call the superclass constructor first!
-        super( pClientProperties, 
-               tooltipText, 
-               applyToolkitCss, 
-               editable, 
-               searchable,
-               visibleRowCount,
-               defaultValue,
-               valuesList );
+              ? FXCollections.observableArrayList( textValues )
+              : FXCollections.observableArrayList() );
     }
 
     public final String getTextValue() {
         return getValue();
-    }
-
-    public final boolean isValueAllowed( final String textValue ) {
-        final ObservableList< String > textValues = getItems();
-        final boolean valueAllowed = ( textValue != null )
-                && ( isEditable() || textValues.contains( textValue ) );
-        return valueAllowed;
     }
 
     public final void setTextValue( final String textValue ) {
@@ -122,4 +116,11 @@ public class TextSelector extends XComboBox< String > {
         }
     }
 
+    public final boolean isValueAllowed( final String textValue ) {
+        final ObservableList< String > textValues = getItems();
+        final boolean valueAllowed = ( textValue != null ) && ( isEditable()
+                                                                || textValues.contains(
+                textValue ) );
+        return valueAllowed;
+    }
 }

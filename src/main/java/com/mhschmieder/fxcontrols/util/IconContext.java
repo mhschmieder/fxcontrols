@@ -35,9 +35,8 @@ package com.mhschmieder.fxcontrols.util;
  * determining offsets and sizes for icons when used in more than one place in
  * an application.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public enum IconContext {
     /**

@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.model.LayerProperties;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.paint.Color;
 
@@ -38,21 +39,19 @@ import javafx.scene.paint.Color;
  * This class gives us a way to interact with the Color Picker in tables.
  */
 public final class LayerColorTableCell
-        extends ColorPickerTableCell<LayerProperties> {
+        extends ColorPickerTableCell< LayerProperties > {
 
-    public LayerColorTableCell(
-            final TableColumn< LayerProperties, Color > column ) {
+    public LayerColorTableCell( final TableColumn< LayerProperties, Color > column ) {
         // Always call the superclass constructor first!
-        super(
-                column,
-                "Click to Select Color for This Layer" );
+        super( column, "Click to Select Color for This Layer" );
     }
 
     @Override
     public void setBeanProperty( final LayerProperties selectedRecord ) {
         // TODO: This is redundant, so is commented out, as bindings outside
         //  the table cell handlers already take care of syncing the bean
-        //  property, and as we don't filter the value or enforce any constraints
+        //  property, and as we don't filter the value or enforce any
+        //  constraints
         //  or rules and what are allowable colors (for now).
         // selectedRecord.setLayerColor( selectedRecord.getLayerColor() );
     }

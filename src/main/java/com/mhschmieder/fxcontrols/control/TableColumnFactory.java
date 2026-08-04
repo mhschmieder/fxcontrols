@@ -38,40 +38,38 @@ import javafx.scene.paint.Color;
  * with specific parameterization, data types, and initialization behavior plus
  * visual layout characteristics.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class TableColumnFactory {
 
     /**
      * The default constructor is disabled, as this is a static factory class.
      */
-    private TableColumnFactory() {}
+    private TableColumnFactory() {
+    }
 
     /**
      * Returns a {@link TableColumn} for non-specified {@link Object} types; the
      * highest abstraction possible before type-specific behavior is required.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for non-specified {@link Object} types
      */
     public static < TD > TableColumn< TD, Object > makeTableColumnForObject( final String columnName,
                                                                              final double columnWidth,
                                                                              final String columnPropertyName,
                                                                              final boolean sortable ) {
-        final TableColumn< TD, Object > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, Object > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -87,25 +85,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link String} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link String} values
      */
     public static < TD > TableColumn< TD, String > makeTableColumnForString( final String columnName,
                                                                              final double columnWidth,
                                                                              final String columnPropertyName,
                                                                              final boolean sortable ) {
-        final TableColumn< TD, String > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, String > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -121,25 +117,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Integer} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Integer} values
      */
     public static < TD > TableColumn< TD, Integer > makeTableColumnForInteger( final String columnName,
                                                                                final double columnWidth,
                                                                                final String columnPropertyName,
                                                                                final boolean sortable ) {
-        final TableColumn< TD, Integer > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, Integer > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -155,25 +149,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Long} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Long} values
      */
     public static < TD > TableColumn< TD, Long > makeTableColumnForLong( final String columnName,
                                                                          final double columnWidth,
                                                                          final String columnPropertyName,
                                                                          final boolean sortable ) {
-        final TableColumn< TD, Long > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, Long > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -189,25 +181,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Float} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Float} values
      */
     public static < TD > TableColumn< TD, Float > makeTableColumnForFloat( final String columnName,
                                                                            final double columnWidth,
                                                                            final String columnPropertyName,
                                                                            final boolean sortable ) {
-        final TableColumn< TD, Float > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, Float > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -223,25 +213,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Double} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Double} values
      */
     public static < TD > TableColumn< TD, Double > makeTableColumnForDouble( final String columnName,
                                                                              final double columnWidth,
                                                                              final String columnPropertyName,
                                                                              final boolean sortable ) {
-        final TableColumn< TD, Double > tableColumn = new TableColumn<>( columnName );
+        final TableColumn< TD, Double > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -257,26 +245,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Boolean} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Boolean} values
      */
-    public static < TD > TableColumn< TD, Boolean > makeTableColumnForBoolean(
-            final String columnName,
-            final double columnWidth,
-            final String columnPropertyName,
-            final boolean sortable ) {
-        final TableColumn< TD, Boolean > tableColumn = new TableColumn<>( columnName );
+    public static < TD > TableColumn< TD, Boolean > makeTableColumnForBoolean( final String columnName,
+                                                                               final double columnWidth,
+                                                                               final String columnPropertyName,
+                                                                               final boolean sortable ) {
+        final TableColumn< TD, Boolean > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -292,26 +277,23 @@ public final class TableColumnFactory {
     /**
      * Returns a {@link TableColumn} for managing {@link Color} values.
      *
-     * @param <TD>
-     *            The data type for the table
-     * @param columnName
-     *            The string to show when the TableColumn is placed within the
-     *            TableView
-     * @param columnWidth
-     *            The minimum width the table column is permitted to be resized
-     *            to
-     * @param columnPropertyName
-     *            The name of the table property that this column manages
-     * @param sortable
-     *            If {@code true}, this columns can be used to sort the rows
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
      * @return A {@link TableColumn} for managing {@link Color} values
      */
-    public static < TD > TableColumn< TD, Color > makeTableColumnForColor(
-            final String columnName,
-            final double columnWidth,
-            final String columnPropertyName,
-            final boolean sortable ) {
-        final TableColumn< TD, Color > tableColumn = new TableColumn<>( columnName );
+    public static < TD > TableColumn< TD, Color > makeTableColumnForColor( final String columnName,
+                                                                           final double columnWidth,
+                                                                           final String columnPropertyName,
+                                                                           final boolean sortable ) {
+        final TableColumn< TD, Color > tableColumn = new TableColumn<>(
+                columnName );
         tableColumn.setMinWidth( columnWidth );
         TableUtilities.setTableColumnHeaderProperties( tableColumn );
 

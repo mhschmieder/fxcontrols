@@ -31,40 +31,41 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.text.ParseException;
+
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
-import org.apache.commons.math3.util.FastMath;
-
-import java.text.ParseException;
 
 /**
  * This class formalizes aspects of text editing that are specific to integers.
  */
 public class IntegerEditor extends NumberEditor {
 
-    // Cache the minimum allowed data value (negative).
-    protected int                 _minimumValue;
-
-    // Cache the maximum allowed data value (positive).
-    protected int                 _maximumValue;
-
-    // Cache the default data value.
-    protected int                 _defaultValue;
-
-    // The amount to increment or decrement by, using the arrow keys.
-    protected int                 _valueIncrement;
-
     // Cache the raw numeric representation of the data value.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final IntegerProperty value;
+    // Cache the minimum allowed data value (negative).
+    protected int _minimumValue;
+    // Cache the maximum allowed data value (positive).
+    protected int _maximumValue;
+    // Cache the default data value.
+    protected int _defaultValue;
+    // The amount to increment or decrement by, using the arrow keys.
+    protected int _valueIncrement;
 
     public IntegerEditor( final ClientProperties clientProperties,
                           final String initialText,
                           final String tooltipText,
                           final boolean applyToolkitCss ) {
-        this( clientProperties, initialText, tooltipText, applyToolkitCss, -Integer.MAX_VALUE, Integer.MAX_VALUE );
+        this( clientProperties,
+              initialText,
+              tooltipText,
+              applyToolkitCss,
+              -Integer.MAX_VALUE,
+              Integer.MAX_VALUE );
     }
 
     public IntegerEditor( final ClientProperties clientProperties,
@@ -73,7 +74,14 @@ public class IntegerEditor extends NumberEditor {
                           final boolean applyToolkitCss,
                           final int minimumValue,
                           final int maximumValue ) {
-        this( clientProperties, initialText, tooltipText, applyToolkitCss, minimumValue, maximumValue, 0, 0 );
+        this( clientProperties,
+              initialText,
+              tooltipText,
+              applyToolkitCss,
+              minimumValue,
+              maximumValue,
+              0,
+              0 );
     }
 
     public IntegerEditor( final ClientProperties clientProperties,
@@ -106,7 +114,7 @@ public class IntegerEditor extends NumberEditor {
         }
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     private final void initEditor() {
         // Now it is safe to restrict keyboard input while referencing class
         // variables and potentially local number formatting instances.
@@ -131,56 +139,116 @@ public class IntegerEditor extends NumberEditor {
         setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
-            case ENTER:
-                // NOTE: Nothing to do, as ENTER is best handled via onAction.
-                break;
-            case ESCAPE:
-                // Revert to the most recent committed value.
-                cancelEdit();
+                case ENTER:
+                    // NOTE: Nothing to do, as ENTER is best handled via
+                    // onAction.
+                    break;
+                case ESCAPE:
+                    // Revert to the most recent committed value.
+                    cancelEdit();
 
-                Platform.runLater( () -> {
-                    // Update the displayed text to include all of the
-                    // decorations.
-                    decorateText();
+                    Platform.runLater( () -> {
+                        // Update the displayed text to include all of the
+                        // decorations.
+                        decorateText();
 
-                    // Reselect the reformatted text, to mimic Focus Gained.
-                    selectAll();
-                } );
+                        // Reselect the reformatted text, to mimic Focus Gained.
+                        selectAll();
+                    } );
 
-                break;
-            case TAB:
-                // NOTE: Nothing to do, as Text Input Controls commit edits and
-                // then release focus when the TAB key is pressed, so the Focus
-                // Lost handler is where value restrictions should be applied.
-                break;
-            case UP:
-                // Increment the current value by the set amount.
-                if ( _valueIncrement != 0 ) {
-                    setValue( getValue() + _valueIncrement );
-                }
+                    break;
+                case TAB:
+                    // NOTE: Nothing to do, as Text Input Controls commit
+                    // edits and
+                    // then release focus when the TAB key is pressed, so the
+                    // Focus
+                    // Lost handler is where value restrictions should be
+                    // applied.
+                    break;
+                case UP:
+                    // Increment the current value by the set amount.
+                    if ( _valueIncrement != 0 ) {
+                        setValue( getValue() + _valueIncrement );
+                    }
 
-                break;
-            case DOWN:
-                // Decrement the current value by the set amount.
-                if ( _valueIncrement != 0 ) {
-                    setValue( getValue() - _valueIncrement );
-                }
+                    break;
+                case DOWN:
+                    // Decrement the current value by the set amount.
+                    if ( _valueIncrement != 0 ) {
+                        setValue( getValue() - _valueIncrement );
+                    }
 
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
     }
 
-    @Override
-    public String getAllowedCharacters() {
-        // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumValue < 0 )
-            ? ( _maximumValue > 0 ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( _maximumValue > 0 ) ? "[0-9.,+]" : "[0-9.,]";
-        return allowedCharacters;
+    public final void updateText( final int savedValue ) {
+        // Show the number with units to indicate we committed edits.
+        final String formattedValue = toString( savedValue );
+
+        // Update the displayed text to match the cached value.
+        setText( formattedValue );
+    }
+
+    /**
+     * Converts the specified integer into its {@link String} form, with the
+     * measurement unit string appended for a complete representation.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param intValue The integer to convert
+     * @return The {@link String} form of {@code intValue}
+     */
+    public final String toString( final int intValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
+        String stringValue = toFormattedString( intValue );
+        stringValue += _measurementUnitString;
+
+        return stringValue;
+    }
+
+    /**
+     * Converts the specified integer into its {@link String} form.
+     * <p>
+     * A {@code null} argument is converted into the default value.
+     *
+     * @param intValue The integer to convert
+     * @return The {@link String} form of {@code intValue}
+     */
+    public final String toFormattedString( final int intValue ) {
+        // Do a simple string conversion to a number, in case we get arithmetic
+        // exceptions using the number formatter.
+        String stringValue = Integer.toString( intValue );
+
+        try {
+            stringValue = _numberFormat.format( intValue );
+        }
+        catch ( final ArithmeticException ae ) {
+            ae.printStackTrace();
+        }
+
+        return stringValue;
+    }
+
+    public int getClampedValue( final int unclampedValue ) {
+        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
+    }
+
+    public final int getValue() {
+        return value.get();
+    }
+
+    public final void setValue( final int pValue ) {
+        value.set( pValue );
+    }
+
+    public final IntegerProperty valueProperty() {
+        return value;
     }
 
     @Override
@@ -192,34 +260,19 @@ public class IntegerEditor extends NumberEditor {
         final String formattedText = toString( savedValue );
 
         // Decorate the text as that is the context of interest.
-        final String decoratedText = getDecoratedText( savedValue, formattedText );
+        final String decoratedText = getDecoratedText( savedValue,
+                                                       formattedText );
 
         return decoratedText;
     }
 
     // NOTE: This is an opportunity to pre-parse the typed text before
     // converting to a number, such as when we disallow positive numbers (e.g.).
-    public String getDecoratedText( final int savedValue, final String savedText ) {
+    public String getDecoratedText( final int savedValue,
+                                    final String savedText ) {
         final String decoratedText = savedText;
 
         return decoratedText;
-    }
-
-    @Override
-    public final void updateText() {
-        // Get the most recently committed value.
-        final int savedValue = getValue();
-
-        // Update the displayed text to match the cached value.
-        updateText( savedValue );
-    }
-
-    public final void updateText( final int savedValue ) {
-        // Show the number with units to indicate we committed edits.
-        final String formattedValue = toString( savedValue );
-
-        // Update the displayed text to match the cached value.
-        setText( formattedValue );
     }
 
     @Override
@@ -232,14 +285,84 @@ public class IntegerEditor extends NumberEditor {
         setValue( clampedValue );
     }
 
+    @Override
+    public final void updateText() {
+        // Get the most recently committed value.
+        final int savedValue = getValue();
+
+        // Update the displayed text to match the cached value.
+        updateText( savedValue );
+    }
+
+    @Override
+    public String getAllowedCharacters() {
+        // Restrict keyboard input to numerals, sign, and delimiters.
+        final String allowedCharacters = ( _minimumValue < 0 )
+                                         ? ( _maximumValue > 0 )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( _maximumValue > 0 )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
+        return allowedCharacters;
+    }
+
     public final int getClampedValue() {
         // The fromString method performs input validation.
         final String undecoratedText = getUndecoratedText();
         return fromString( undecoratedText );
     }
 
-    public int getClampedValue( final int unclampedValue ) {
-        return Math.clamp( unclampedValue, _minimumValue, _maximumValue );
+    /**
+     * Converts the specified {@link String} into its integer value.
+     * <p>
+     * A {@code null}, empty, or otherwise invalid argument returns zero and
+     * also executes the textField reset callback, if any.
+     *
+     * @param stringValue The {@link String} to convert
+     * @return The integer value of {@code stringValue}
+     * @see #setReset
+     */
+    public int fromString( final String stringValue ) {
+        // Return with current value vs. penalizing user for internal errors.
+        final int currentValue = getValue();
+        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
+            return currentValue;
+        }
+
+        // If the user typed a formatted number with units, parse it exactly;
+        // otherwise strip the units and try to directly convert the string to
+        // an integer.
+        int intValue = currentValue;
+        try {
+            final Number numericValue = _numberParse.parse( stringValue );
+            intValue = numericValue.intValue();
+        }
+        catch ( final ParseException pe ) {
+            final int measurementUnitIndex = stringValue.indexOf(
+                    _measurementUnitString );
+            try {
+                final String numericString = ( measurementUnitIndex < 0 )
+                                             ? stringValue
+                                             : stringValue.substring( 0,
+                                                                      measurementUnitIndex
+                                                                      + 1 );
+                intValue = Integer.parseInt( numericString );
+            }
+            catch ( IndexOutOfBoundsException | NumberFormatException |
+                    NullPointerException e ) {
+                if ( _reset != null ) {
+                    _reset.run();
+                }
+            }
+        }
+
+        // If limits were established, enforce them by range-checking and
+        // restricting the parsed or defaulted value. Always check though, to
+        // avoid overflow and underflow conditions.
+        final int clampedValue = getClampedValue( intValue );
+
+        return clampedValue;
     }
 
     public final int getMinimumValue() {
@@ -260,109 +383,5 @@ public class IntegerEditor extends NumberEditor {
 
     public final void setValueIncrement( final int pValueIncrement ) {
         _valueIncrement = pValueIncrement;
-    }
-
-    public final int getValue() {
-        return value.get();
-    }
-
-    public final void setValue( final int pValue ) {
-        value.set( pValue );
-    }
-
-    public final IntegerProperty valueProperty() {
-        return value;
-    }
-
-    /**
-     * Converts the specified {@link String} into its integer value.
-     * <p>
-     * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the textField reset callback, if any.
-     *
-     * @param stringValue
-     *            The {@link String} to convert
-     * @return The integer value of {@code stringValue}
-     * @see #setReset
-     */
-    public int fromString( final String stringValue ) {
-        // Return with current value vs. penalizing user for internal errors.
-        final int currentValue = getValue();
-        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
-            return currentValue;
-        }
-
-        // If the user typed a formatted number with units, parse it exactly;
-        // otherwise strip the units and try to directly convert the string to
-        // an integer.
-        int intValue = currentValue;
-        try {
-            final Number numericValue = _numberParse.parse( stringValue );
-            intValue = numericValue.intValue();
-        }
-        catch ( final ParseException pe ) {
-            final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
-            try {
-                final String numericString = ( measurementUnitIndex < 0 )
-                    ? stringValue
-                    : stringValue.substring( 0, measurementUnitIndex + 1 );
-                intValue = Integer.parseInt( numericString );
-            }
-            catch ( IndexOutOfBoundsException | NumberFormatException | NullPointerException e ) {
-                if ( _reset != null ) {
-                    _reset.run();
-                }
-            }
-        }
-
-        // If limits were established, enforce them by range-checking and
-        // restricting the parsed or defaulted value. Always check though, to
-        // avoid overflow and underflow conditions.
-        final int clampedValue = getClampedValue( intValue );
-
-        return clampedValue;
-    }
-
-    /**
-     * Converts the specified integer into its {@link String} form, with the
-     * measurement unit string appended for a complete representation.
-     * <p>
-     * A {@code null} argument is converted into the default value.
-     *
-     * @param intValue
-     *            The integer to convert
-     * @return The {@link String} form of {@code intValue}
-     */
-    public final String toString( final int intValue ) {
-        // Do a simple string conversion to a number, in case we get arithmetic
-        // exceptions using the number formatter.
-        String stringValue = toFormattedString( intValue );
-        stringValue += _measurementUnitString;
-
-        return stringValue;
-    }
-
-    /**
-     * Converts the specified integer into its {@link String} form.
-     * <p>
-     * A {@code null} argument is converted into the default value.
-     *
-     * @param intValue
-     *            The integer to convert
-     * @return The {@link String} form of {@code intValue}
-     */
-    public final String toFormattedString( final int intValue ) {
-        // Do a simple string conversion to a number, in case we get arithmetic
-        // exceptions using the number formatter.
-        String stringValue = Integer.toString( intValue );
-
-        try {
-            stringValue = _numberFormat.format( intValue );
-        }
-        catch ( final ArithmeticException ae ) {
-            ae.printStackTrace();
-        }
-
-        return stringValue;
     }
 }

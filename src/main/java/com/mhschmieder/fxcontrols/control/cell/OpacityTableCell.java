@@ -32,9 +32,10 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.ControlFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.control.TextField;
 
 import java.util.List;
+
+import javafx.scene.control.TextField;
 
 public class OpacityTableCell< TD >
         extends DoubleEditorTableCell< TD, Double > {

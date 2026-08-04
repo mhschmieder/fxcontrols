@@ -31,27 +31,25 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.util.RegionUtilities;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.Comparator;
+
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.apache.commons.math3.util.FastMath;
-
-import java.util.Comparator;
 
 /**
  * {@code XTableView} is a concrete base class that serves as a specialization
  * of {@link TableView}, primarily to augment the core API so that derived
  * classes don't have to write copy/paste code that might diverge over time.
  *
- * @param <TD>
- *            The data type for the table
- *
- * @version 1.0
- *
+ * @param <TD> The data type for the table
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class XTableView< TD > extends TableView< TD > {
 
@@ -72,10 +70,9 @@ public class XTableView< TD > extends TableView< TD > {
     /**
      * Constructs an {@link XTableView} with the specified auto-selection.
      *
-     * @param autoSelectionIsEnabled
-     *            {@code true} if auto-selection is enabled when nothing is
-     *            manually or programmatically selected
-     *
+     * @param autoSelectionIsEnabled {@code true} if auto-selection is enabled
+     *                               when nothing is manually or
+     *                               programmatically selected
      * @since 1.0
      */
     public XTableView( final boolean autoSelectionIsEnabled ) {
@@ -135,7 +132,6 @@ public class XTableView< TD > extends TableView< TD > {
      *
      * @return {@code true} if auto-selection is enabled when nothing is
      *         manually or programmatically selected
-     *
      * @since 1.0
      */
     public final boolean isAutoSelectionEnabled() {
@@ -147,9 +143,7 @@ public class XTableView< TD > extends TableView< TD > {
      * {@link TableView} is editable, then also makes sure that the individual
      * table cells can be selected.
      *
-     * @param tableEditable
-     *            {@code true} if this {@link TableView} is editable
-     *
+     * @param tableEditable {@code true} if this {@link TableView} is editable
      * @since 1.0
      */
     public final void setTableEditable( final boolean tableEditable ) {
@@ -164,14 +158,11 @@ public class XTableView< TD > extends TableView< TD > {
      * Returns a {@link TableColumn} that is offset from the provided
      * {@link TableColumn}. It is up to the caller to provide a valid offset.
      *
-     * @param column
-     *            The {@link TableColumn} to use as the reference for the column
-     *            offset
-     * @param offset
-     *            The column offset to apply to the provided column
+     * @param column The {@link TableColumn} to use as the reference for the
+     *               column offset
+     * @param offset The column offset to apply to the provided column
      * @return A {@link TableColumn} that is offset from the provided
      *         {@link TableColumn}, or {@code null} if the offset is invalid
-     *
      * @since 1.0
      */
     public final TableColumn< TD, ? > getOffsetTableColumn( final TableColumn< TD, ? > column,
@@ -192,21 +183,11 @@ public class XTableView< TD > extends TableView< TD > {
     public final void clearSelection() {
         // Due to some thread timing bugs on macOS, and just for general
         // performance, it is best to avoid known no-op conditions.
-        final TableView.TableViewSelectionModel< TD > selectionModel = getSelectionModel();
+        final TableView.TableViewSelectionModel< TD > selectionModel
+                = getSelectionModel();
         if ( !selectionModel.isEmpty() ) {
             selectionModel.clearSelection();
         }
-    }
-
-    /**
-     * Returns the index of the last row in the table.
-     *
-     * @return The index of the last row in the table
-     *
-     * @since 1.0
-     */
-    public final int getLastRowIndex() {
-        return getItems().size() - 1;
     }
 
     /**
@@ -217,8 +198,8 @@ public class XTableView< TD > extends TableView< TD > {
     public final int getNumberOfSelectedRows() {
         final int[] selectedRowIndices = getSelectedRows();
         final int numberOfSelectedRows = ( selectedRowIndices != null )
-            ? selectedRowIndices.length
-            : 0;
+                                         ? selectedRowIndices.length
+                                         : 0;
 
         return numberOfSelectedRows;
     }
@@ -236,15 +217,16 @@ public class XTableView< TD > extends TableView< TD > {
      *
      * @return A list of the selected table row indices, or {@code null} if none
      *         selected
-     *
      * @since 1.0
      */
     public final int[] getSelectedRows() {
         // Get the selected row indices in reverse order, so that all indices
         // remain valid if we delete rows one at a time.
-        final TableViewSelectionModel< TD > selectionModel = getSelectionModel();
-        final SortedList< Integer > sortedRows = selectionModel.getSelectedIndices()
-                .sorted( Comparator.reverseOrder() );
+        final TableViewSelectionModel< TD > selectionModel
+                = getSelectionModel();
+        final SortedList< Integer > sortedRows
+                = selectionModel.getSelectedIndices()
+                                .sorted( Comparator.reverseOrder() );
         if ( ( sortedRows == null ) || sortedRows.isEmpty() ) {
             return null;
         }
@@ -267,11 +249,10 @@ public class XTableView< TD > extends TableView< TD > {
      * Returns the hierarchically-lower-most selected row, or the last row in
      * the table if none were selected.
      *
-     * @param minimumRowIndex
-     *            The lowest index that is considered valid for the selected row
+     * @param minimumRowIndex The lowest index that is considered valid for the
+     *                        selected row
      * @return The hierarchically-lower-most selected row, or the last row in
      *         the table if none were selected
-     *
      * @since 1.0
      */
     public final int getSelectedRow( final int minimumRowIndex ) {
@@ -281,7 +262,8 @@ public class XTableView< TD > extends TableView< TD > {
         int selectionIndex = minimumRowIndex - 1;
 
         final int[] selectedRowIndices = getSelectedRows();
-        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length > 0 ) ) {
+        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length
+                                                 > 0 ) ) {
             final int maximumRowIndex = selectedRowIndices.length - 1;
             selectionIndex = selectedRowIndices[ maximumRowIndex ];
         }
@@ -290,11 +272,22 @@ public class XTableView< TD > extends TableView< TD > {
             // the default selection to be the last valid row index.
             if ( autoSelectionEnabled ) {
                 final int maximumRowIndex = getLastRowIndex();
-                selectionIndex = FastMath.max( selectionIndex, maximumRowIndex );
+                selectionIndex = FastMath.max( selectionIndex,
+                                               maximumRowIndex );
             }
         }
 
         return selectionIndex;
+    }
+
+    /**
+     * Returns the index of the last row in the table.
+     *
+     * @return The index of the last row in the table
+     * @since 1.0
+     */
+    public final int getLastRowIndex() {
+        return getItems().size() - 1;
     }
 
     /**
@@ -313,17 +306,16 @@ public class XTableView< TD > extends TableView< TD > {
      * Selects the specified row in the table.
      * <p>
      * This method clears any active selections at the same time as setting the
-     * new row selection, using the safe combined {@link
-     * TableViewSelectionModel#clearAndSelect} method, so that only one row is
-     * selected at a time, avoiding confusion over focus and selection status.
+     * new row selection, using the safe combined
+     * {@link TableViewSelectionModel#clearAndSelect} method, so that only one
+     * row is selected at a time, avoiding confusion over focus and selection
+     * status.
      * <p>
      * This is safer than performing two separate actions, and also more
      * performant, as it avoids the interim state where the selected row index
      * is deliberately set to the invalid selection indicator of "-1".
      *
-     * @param rowIndex
-     *            The index of the table row to select
-     *
+     * @param rowIndex The index of the table row to select
      * @since 1.0
      */
     public final void selectRow( final int rowIndex ) {
@@ -331,11 +323,13 @@ public class XTableView< TD > extends TableView< TD > {
         // the requested row is invalid. If the table is now empty, select
         // nothing as otherwise an index out of range exception is thrown.
         final int lastRowIndex = getLastRowIndex();
-        final int adjustedRowIndex = ( ( rowIndex < 0 ) || ( rowIndex > lastRowIndex ) )
-            ? lastRowIndex
-            : FastMath.min( rowIndex, lastRowIndex );
+        final int adjustedRowIndex = ( ( rowIndex < 0 ) || ( rowIndex
+                                                             > lastRowIndex ) )
+                                     ? lastRowIndex
+                                     : FastMath.min( rowIndex, lastRowIndex );
         if ( adjustedRowIndex >= 0 ) {
-            final TableViewSelectionModel< TD > selectionModel = getSelectionModel();
+            final TableViewSelectionModel< TD > selectionModel
+                    = getSelectionModel();
             selectionModel.clearAndSelect( adjustedRowIndex );
         }
     }
@@ -345,14 +339,12 @@ public class XTableView< TD > extends TableView< TD > {
      * <p>
      * This effectively places editing focus in the specified row and column.
      *
-     * @param rowIndex
-     *            The row index of the table cell to select
-     * @param columnIndex
-     *            The column index of the table cell to select
-     *
+     * @param rowIndex    The row index of the table cell to select
+     * @param columnIndex The column index of the table cell to select
      * @since 1.0
      */
-    public final void setEditingFocus( final int rowIndex, final int columnIndex ) {
+    public final void setEditingFocus( final int rowIndex,
+                                       final int columnIndex ) {
         // Set the specific cell that should get editing focus.
         selectCell( rowIndex, columnIndex );
 
@@ -364,26 +356,26 @@ public class XTableView< TD > extends TableView< TD > {
      * Selects the specified cell in the table.
      * <p>
      * This method clears any active selections at the same time as setting the
-     * new cell selection, using the safe combined {@link
-     * TableViewSelectionModel#clearAndSelect} method, so that only one cell is
-     * selected at a time, avoiding confusion over focus and selection status.
+     * new cell selection, using the safe combined
+     * {@link TableViewSelectionModel#clearAndSelect} method, so that only one
+     * cell is selected at a time, avoiding confusion over focus and selection
+     * status.
      * <p>
      * This is safer than performing two separate actions, and also more
      * performant, as it avoids the interim state where the selected cell
      * indices are deliberately set to the invalid selection indicator of "-1".
      *
-     * @param rowIndex
-     *            The row index of the table cell to select
-     * @param columnIndex
-     *            The column index of the table cell to select
-     *
+     * @param rowIndex    The row index of the table cell to select
+     * @param columnIndex The column index of the table cell to select
      * @since 1.0
      */
-    public final void selectCell( final int rowIndex, final int columnIndex ) {
+    public final void selectCell( final int rowIndex,
+                                  final int columnIndex ) {
         // Select the requested cell, or do nothing if the row is invalid.
         final int lastRowIndex = getLastRowIndex();
         if ( ( rowIndex >= 0 ) && ( rowIndex <= lastRowIndex ) ) {
-            final TableViewSelectionModel< TD > selectionModel = getSelectionModel();
+            final TableViewSelectionModel< TD > selectionModel
+                    = getSelectionModel();
             final TableColumn< TD, ? > column = getColumns().get( columnIndex );
             selectionModel.clearAndSelect( rowIndex, column );
         }
@@ -403,9 +395,7 @@ public class XTableView< TD > extends TableView< TD > {
      * method override, before adding support for GUI elements unique to the
      * derived class hierarchy.
      *
-     * @param backColor
-     *            The current background color to apply to this table
-     *
+     * @param backColor The current background color to apply to this table
      * @since 1.0
      */
     public void setForegroundFromBackground( final Color backColor ) {

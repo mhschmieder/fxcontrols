@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>jxlab</artifactId>
         <groupId>com.mhschmieder</groupId>
         <version>1.0.0</version>
     </parent>
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fxcontrols</artifactId>
-	<version>1.0.0</version>
-	<packaging>jar</packaging>
+    <artifactId>fxcontrols</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-	<name>fxcontrols</name>
-	<url>https://github.com/mhschmieder/fxcontrols</url>
-	<description>Utilities and custom classes for JavaFX based GUI work.</description>
+    <name>fxcontrols</name>
+    <url>https://github.com/mhschmieder/fxcontrols</url>
+    <description>Utilities and custom classes for JavaFX based GUI work.
+    </description>
 
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>https://opensource.org/licenses/MIT</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<scm>
-		<url>https://github.com/mhschmieder/fxcontrols</url>
-		<connection>scm:git:git://github.com/mhschmieder/fxcontrols.git</connection>
-		<developerConnection>scm:git:git@github.com:mhschmieder/fxcontrols.git</developerConnection>
-	</scm>
+    <scm>
+        <url>https://github.com/mhschmieder/fxcontrols</url>
+        <connection>scm:git:git://github.com/mhschmieder/fxcontrols.git
+        </connection>
+        <developerConnection>scm:git:git@github.com:mhschmieder/fxcontrols.git
+        </developerConnection>
+    </scm>
 
-	<developers>
-		<developer>
-			<email>markhschmieder@gmail.com</email>
-			<name>Mark Schmieder</name>
-			<url>https://github.com/mhschmieder</url>
-		</developer>
+    <developers>
+        <developer>
+            <email>markhschmieder@gmail.com</email>
+            <name>Mark Schmieder</name>
+            <url>https://github.com/mhschmieder</url>
+        </developer>
         <developer>
             <email>brandon-t-harvey@pm.me</email>
             <name>Brandon Harvey</name>
             <url>https://github.com/brandon-t-harvey</url>
         </developer>
-	</developers>
+    </developers>
 
-	<dependencies>
+    <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
         </dependency>
-		<!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
-		<dependency>
-			<groupId>org.controlsfx</groupId>
-			<artifactId>controlsfx</artifactId>
-			<version>11.2.4</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.4</version>
+        </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
             <artifactId>fxgraphics</artifactId>

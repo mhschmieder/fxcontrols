@@ -34,6 +34,7 @@ import com.mhschmieder.fxcontrols.control.ListViewUtilities;
 import com.mhschmieder.fxcontrols.control.XComboBox;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jmath.logic.ComparisonOperator;
+
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,21 +52,18 @@ public class ComparisonOperatorCell< T >
 
     private XComboBox< ComparisonOperator > comboBox;
 
-    public ComparisonOperatorCell(
-            final TableColumn< T, ComparisonOperator > column,
-            final String tooltipText,
-            final ClientProperties clientProperties ) {
+    public ComparisonOperatorCell( final TableColumn< T, ComparisonOperator > column,
+                                   final String tooltipText,
+                                   final ClientProperties clientProperties ) {
         // Always call the superclass constructor first!
         super();
 
         try {
-            initTableCell(
-                    column,
-                    tooltipText,
-                    clientProperties );
+            initTableCell( column, tooltipText, clientProperties );
         }
         catch ( final Exception e ) {
-            // TODO: Move beyond Java 8 so that we can use the modern Logger API.
+            // TODO: Move beyond Java 8 so that we can use the modern Logger
+            //  API.
             /*
             LOGGER.log( Level.ERROR, e.getMessage(), e );
             */
@@ -73,15 +71,13 @@ public class ComparisonOperatorCell< T >
         }
     }
 
-    private void initTableCell(
-            final TableColumn< T, ComparisonOperator > column,
-            final String tooltipText,
-            final ClientProperties clientProperties ) {
-        comboBox = ListViewUtilities.makeLabeledSelector(
-                clientProperties,
-                ComparisonOperator.values(),
-                tooltipText,
-                ComparisonOperator.defaultValue() );
+    private void initTableCell( final TableColumn< T, ComparisonOperator > column,
+                                final String tooltipText,
+                                final ClientProperties clientProperties ) {
+        comboBox = ListViewUtilities.makeLabeledSelector( clientProperties,
+                                                          ComparisonOperator.values(),
+                                                          tooltipText,
+                                                          ComparisonOperator.defaultValue() );
 
         // TODO: Review the saveEdits() code and when/why it may have been
         //  necessary, as it threw errors, and taking it out doesn't cause the
@@ -97,8 +93,7 @@ public class ComparisonOperatorCell< T >
 
         comboBox.setMaxWidth( Double.MAX_VALUE );
 
-        comboBox.minWidthProperty().bind( widthProperty().subtract(
-                8.0d ) );
+        comboBox.minWidthProperty().bind( widthProperty().subtract( 8.0d ) );
         comboBox.prefWidthProperty().bind( widthProperty() );
 
         comboBox.editableProperty().bind( column.editableProperty() );
@@ -106,28 +101,31 @@ public class ComparisonOperatorCell< T >
 
         comboBox.setOnShowing( event -> {
             final TableView< T > tableView = getTableView();
-            final TableViewSelectionModel< T >
-                    selectionModel = tableView.getSelectionModel();
+            final TableViewSelectionModel< T > selectionModel
+                    = tableView.getSelectionModel();
             final int selectedIndex = getTableRow().getIndex();
             selectionModel.select( selectedIndex );
-            final int selectedIndexCorrected = selectionModel.getSelectedIndex();
+            final int selectedIndexCorrected
+                    = selectionModel.getSelectedIndex();
             tableView.edit( selectedIndexCorrected, column );
         } );
 
         // NOTE: We are including a string converter due to errors occurring
         //  during runtime that are thrown when setting the new value during
         //  edit commits. This syntax must change once moving beyond Java 8.
-        comboBox.setConverter( new StringConverter< ComparisonOperator>() {
+        comboBox.setConverter( new StringConverter< ComparisonOperator >() {
             @Override
             public String toString( final ComparisonOperator operator ) {
-                return operator == null ? "" : operator.label();
+                return operator == null
+                       ? ""
+                       : operator.label();
             }
 
             @Override
-            public ComparisonOperator fromString(final String string) {
+            public ComparisonOperator fromString( final String string ) {
                 // Find the enum whose label matches.
-                for ( final ComparisonOperator operator
-                        : ComparisonOperator.values() ) {
+                for ( final ComparisonOperator operator :
+                        ComparisonOperator.values() ) {
                     if ( operator.label().equals( string ) ) {
                         return operator;
                     }
@@ -157,8 +155,7 @@ public class ComparisonOperatorCell< T >
 
         comboBox.setMaxWidth( Double.MAX_VALUE );
 
-        comboBox.minWidthProperty().bind( widthProperty().subtract(
-                8.0d ) );
+        comboBox.minWidthProperty().bind( widthProperty().subtract( 8.0d ) );
         comboBox.prefWidthProperty().bind( widthProperty() );
 
         comboBox.editableProperty().bind( column.editableProperty() );
@@ -167,7 +164,7 @@ public class ComparisonOperatorCell< T >
         setContentDisplay( ContentDisplay.GRAPHIC_ONLY );
     }
 
-    private void saveEdits(){
+    private void saveEdits() {
         commitEdit( comboBox.getValue() );
     }
 

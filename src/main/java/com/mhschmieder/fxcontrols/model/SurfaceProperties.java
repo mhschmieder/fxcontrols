@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.fxgraphics.geometry.SurfaceMaterial;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -43,7 +44,7 @@ import javafx.beans.property.StringProperty;
 public final class SurfaceProperties {
 
     private final IntegerProperty surfaceNumber;
-    private final StringProperty  surfaceName;
+    private final StringProperty surfaceName;
     private final BooleanProperty surfaceBypassed;
     private final ObjectProperty< SurfaceMaterial > surfaceMaterial;
 

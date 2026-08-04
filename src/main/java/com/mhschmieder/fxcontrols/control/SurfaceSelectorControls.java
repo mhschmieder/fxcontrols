@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxgraphics.geometry.SurfaceMaterial;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -44,8 +45,8 @@ import javafx.scene.layout.GridPane;
  */
 public final class SurfaceSelectorControls {
 
-    public Label        _surfaceIdLabel;
-    public TextEditor   _surfaceNameEditor;
+    public Label _surfaceIdLabel;
+    public TextEditor _surfaceNameEditor;
     public ToggleButton _surfaceStatusButton;
     public XComboBox< SurfaceMaterial > _surfaceMaterialSelector;
 
@@ -53,25 +54,26 @@ public final class SurfaceSelectorControls {
                                     final boolean applyToolkitCss,
                                     final int surfaceNumber ) {
         // Make the permanent static label for the Surface ID.
-        final String surfaceId = "Surface " + Integer.toString( surfaceNumber ); //$NON-NLS-1$
+        final String surfaceId = "Surface "
+                                 + Integer.toString( surfaceNumber ); //$NON
+        // -NLS-1$
         _surfaceIdLabel = new Label( surfaceId );
         _surfaceIdLabel.setAlignment( Pos.CENTER );
 
         // Make a dummy default Surface Name until data is loaded.
         final String surfaceNameDefault = surfaceId;
-        _surfaceNameEditor = new TextEditor( surfaceNameDefault, 
-                                             applyToolkitCss, 
+        _surfaceNameEditor = new TextEditor( surfaceNameDefault,
+                                             applyToolkitCss,
                                              pClientProperties );
 
-        _surfaceStatusButton = LabeledControlFactory
-                .getSurfaceBypassedToggleButton(
-                        true,
-                        3.0d,
-                        false,
-                        true );
+        _surfaceStatusButton
+                = LabeledControlFactory.getSurfaceBypassedToggleButton( true,
+                                                                        3.0d,
+                                                                        false,
+                                                                        true );
 
-        final String tooltipText
-                = "The material whose absorption properties should be applied to "
+        final String tooltipText =
+                "The material whose absorption properties should be applied to "
                 + surfaceId;
         _surfaceMaterialSelector = ControlFactory.getSurfaceMaterialSelector(
                 pClientProperties,
@@ -96,13 +98,12 @@ public final class SurfaceSelectorControls {
 
         // Make sure all the buttons stretch to match the height of the first
         // button in layout order (forward references do not apply the match).
-        _surfaceNameEditor.prefHeightProperty().bind(
-                _surfaceIdLabel.heightProperty() );
-        _surfaceStatusButton.prefHeightProperty().bind(
-                _surfaceIdLabel.heightProperty() );
-        _surfaceMaterialSelector.prefHeightProperty().bind(
-                _surfaceIdLabel.heightProperty() );
+        _surfaceNameEditor.prefHeightProperty()
+                          .bind( _surfaceIdLabel.heightProperty() );
+        _surfaceStatusButton.prefHeightProperty()
+                            .bind( _surfaceIdLabel.heightProperty() );
+        _surfaceMaterialSelector.prefHeightProperty()
+                                .bind( _surfaceIdLabel.heightProperty() );
     }
-
 }
 

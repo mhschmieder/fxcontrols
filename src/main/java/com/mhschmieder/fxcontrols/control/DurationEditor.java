@@ -34,10 +34,6 @@ import com.mhschmieder.jcommons.time.DurationFormat;
 import com.mhschmieder.jcommons.time.DurationUtilities;
 import com.mhschmieder.jcommons.time.TimeUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.input.KeyCode;
 
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
@@ -46,27 +42,26 @@ import java.time.Duration;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
+import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.input.KeyCode;
+
 public class DurationEditor extends XTextField {
 
-    private static System.Logger LOGGER = System.getLogger( DurationEditor
-            .class.getName() );
-
-    // Cache the default data value, to use when backing out edits.
-    protected Duration defaultValue = Duration.ZERO;
-
-    // The amount to increment or decrement by, using the arrow keys.
-    protected long valueIncrementSeconds;
-
+    private static System.Logger LOGGER
+            = System.getLogger( DurationEditor.class.getName() );
+    // ChronoUnit reference for how to interpret raw unformatted typed values.
+    protected final ChronoUnit chronoUnit;
     // Cache the raw numeric representation of the data value.
     // NOTE: This field must follow JavaFX Property Beans conventions.
     private final ObjectProperty< Duration > value;
-
-    // ChronoUnit reference for how to interpret raw unformatted typed values.
-    protected final ChronoUnit chronoUnit;
-
     // The format to use for the string/text representation of duration/time.
     private final DurationFormat durationFormat;
-
+    // Cache the default data value, to use when backing out edits.
+    protected Duration defaultValue = Duration.ZERO;
+    // The amount to increment or decrement by, using the arrow keys.
+    protected long valueIncrementSeconds;
     // Number format cache used for locale-specific number parsing.
     protected NumberFormat numberParse;
 
@@ -77,11 +72,10 @@ public class DurationEditor extends XTextField {
                            final ChronoUnit pChronoUnit,
                            final DurationFormat pDurationFormat ) {
         // Always call the superclass constructor first!
-        super(
-                pInitialValue.toString(),
-                pTooltipText,
-                true,
-                pClientProperties );
+        super( pInitialValue.toString(),
+               pTooltipText,
+               true,
+               pClientProperties );
 
         valueIncrementSeconds = pValueIncrementSeconds;
         chronoUnit = pChronoUnit;
@@ -122,33 +116,28 @@ public class DurationEditor extends XTextField {
         } );
 
         // When focus is lost, commit the changes; otherwise format the text.
-        focusedProperty().addListener(
-                ( observableValue,
-                  wasFocused,
-                  isNowFocused ) -> {
-                    if ( isNowFocused ) {
-                        // Update the displayed text to include all formatting.
-                        formatText();
-                    }
-                    else {
-                        // Save edits from the Text Field to the property bean.
-                        saveEdits();
+        focusedProperty().addListener( ( observableValue, wasFocused,
+                                         isNowFocused ) -> {
+            if ( isNowFocused ) {
+                // Update the displayed text to include all formatting.
+                formatText();
+            }
+            else {
+                // Save edits from the Text Field to the property bean.
+                saveEdits();
 
-                        // Update the displayed text to match the cached value.
-                        updateText();
-                    }
-                } );
+                // Update the displayed text to match the cached value.
+                updateText();
+            }
+        } );
 
         // Make sure the value property is checked for non-null assignment, then
         // update the text field to be in sync with the formatted value.
-        valueProperty().addListener(
-                ( observableValue,
-                  oldValue,
-                  newValue ) -> {
-                    // Format the number to match how we display committed
-                    // values.
-                    updateText( newValue );
-                } );
+        valueProperty().addListener( ( observableValue, oldValue, newValue ) -> {
+            // Format the number to match how we display committed
+            // values.
+            updateText( newValue );
+        } );
 
         setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
@@ -161,7 +150,8 @@ public class DurationEditor extends XTextField {
                     cancelEdit();
 
                     // Post-process after caching the reverted value, due to
-                    // order dependency of text adjustments in various callbacks.
+                    // order dependency of text adjustments in various
+                    // callbacks.
                     Platform.runLater( () -> {
                         // Update the displayed text to include all decorations.
                         formatText();
@@ -180,16 +170,14 @@ public class DurationEditor extends XTextField {
                 case UP:
                     // Increment the current value by the set amount.
                     if ( valueIncrementSeconds != 0L ) {
-                        setValue( getValue().plusSeconds(
-                                valueIncrementSeconds ) );
+                        setValue( getValue().plusSeconds( valueIncrementSeconds ) );
                     }
 
                     break;
                 case DOWN:
                     // Decrement the current value by the set amount.
                     if ( valueIncrementSeconds != 0L ) {
-                        setValue( getValue().minusSeconds(
-                                valueIncrementSeconds ) );
+                        setValue( getValue().minusSeconds( valueIncrementSeconds ) );
                     }
 
                     break;
@@ -242,8 +230,7 @@ public class DurationEditor extends XTextField {
         }
     }
 
-    public final void setValueIncrementSeconds(
-            final long pValueIncrementSeconds ) {
+    public final void setValueIncrementSeconds( final long pValueIncrementSeconds ) {
         valueIncrementSeconds = pValueIncrementSeconds;
     }
 
@@ -267,8 +254,8 @@ public class DurationEditor extends XTextField {
      * <p>
      * NOTE: Text may be in ISO-8601 duration format, especially if unedited.
      *
-     * @param durationText
-     *            The duration string to convert to a Duration instance
+     * @param durationText The duration string to convert to a Duration
+     *                     instance
      * @return The Duration instance value of {@code durationText}
      */
     public Duration fromString( final String durationText ) {
@@ -278,10 +265,9 @@ public class DurationEditor extends XTextField {
         // Try to directly convert the string to a long integer.
         Duration newValue;
         try {
-            newValue = DurationUtilities.getDurationFromText(
-                    durationText,
-                    numberParse,
-                    chronoUnit );
+            newValue = DurationUtilities.getDurationFromText( durationText,
+                                                              numberParse,
+                                                              chronoUnit );
         }
         catch ( final ParseException pe ) {
             try {
@@ -302,23 +288,23 @@ public class DurationEditor extends XTextField {
     /**
      * Converts the specified duration/time string to a Duration instance.
      *
-     * @param durationText
-     *            The duration/time string to convert to a Duration instance
+     * @param durationText The duration/time string to convert to a Duration
+     *                     instance
      * @return The Duration instance value of {@code durationText}
      */
     protected Duration parseDurationText( final String durationText )
             throws DateTimeParseException {
         Duration newDuration;
 
-        switch( durationFormat ) {
+        switch ( durationFormat ) {
             case ISO_8601 ->
                 // Convert from ISO-8601 duration string to a Duration instance.
                     newDuration = Duration.parse( durationText );
             case HHH_MM_SS -> {
                 // Convert from HHH:MM:SS time format to a Duration instance.
-                final long seconds = TimeUtilities
-                        .secondsFromFormattedHoursMinutesSeconds(
-                                durationText );
+                final long seconds
+                        = TimeUtilities.secondsFromFormattedHoursMinutesSeconds(
+                        durationText );
                 newDuration = Duration.ofSeconds( seconds );
             }
             default -> throw new InvalidParameterException(
@@ -331,14 +317,13 @@ public class DurationEditor extends XTextField {
     /**
      * Converts the specified duration to ISO-8601 duration format.
      *
-     * @param duration
-     *            The duration to convert to ISO-8601 duration format
+     * @param duration The duration to convert to ISO-8601 duration format
      * @return The ISO-8601 string form of {@code duration}
      */
     public String toString( final Duration duration ) {
         String newText;
 
-        switch( durationFormat ) {
+        switch ( durationFormat ) {
             case ISO_8601 ->
                 // Convert to ISO-8601 duration string from a Duration instance.
                     newText = duration.toString();

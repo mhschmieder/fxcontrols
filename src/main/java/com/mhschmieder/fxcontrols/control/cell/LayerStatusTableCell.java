@@ -33,6 +33,7 @@ package com.mhschmieder.fxcontrols.control.cell;
 import com.mhschmieder.fxcontrols.model.LayerProperties;
 import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
+
 import javafx.collections.ObservableList;
 
 public class LayerStatusTableCell
@@ -46,7 +47,8 @@ public class LayerStatusTableCell
                ColorConstants.INACTIVE_BACKGROUND_COLOR,
                ColorConstants.ACTIVE_FOREGROUND_COLOR,
                ColorConstants.INACTIVE_FOREGROUND_COLOR,
-               "Click to Toggle Layer Status Between Active and Inactive" ); //$NON-NLS-1$
+               "Click to Toggle Layer Status Between Active and Inactive" );
+        //$NON-NLS-1$
     }
 
     @Override
@@ -69,7 +71,8 @@ public class LayerStatusTableCell
         final ObservableList< LayerProperties > layerCollection
                 = getTableView().getItems();
         final String layerName = selectedRecord.getLayerName();
-        LayerPropertiesManagement.enforceActiveLayerPolicy(
-                layerCollection, layerName, false );
+        LayerPropertiesManagement.enforceActiveLayerPolicy( layerCollection,
+                                                            layerName,
+                                                            false );
     }
 }

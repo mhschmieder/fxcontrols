@@ -32,11 +32,12 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.LongEditor;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.List;
+
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.scene.control.TextField;
-
-import java.util.List;
 
 public class LongEditorTableCell< RT, VT >
         extends NumberEditorTableCell< RT, Long > {
@@ -62,12 +63,6 @@ public class LongEditorTableCell< RT, VT >
         _numberFormat.setMaximumFractionDigits( 0 );
         _numberFormat.setParseIntegerOnly( true );
     }
-    
-    @Override
-    protected TextField makeTextField() {
-        return new LongEditor(
-            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
-    }
 
     @Override
     protected Long getEditorValue() {
@@ -75,9 +70,10 @@ public class LongEditorTableCell< RT, VT >
         if ( textValue == null ) {
             return null;
         }
-        
-        final long longValue = ( ( LongEditor ) textField ).fromString( textValue );
-        
+
+        final long longValue = ( ( LongEditor ) textField ).fromString(
+                textValue );
+
         return Long.valueOf( longValue );
     }
 
@@ -87,13 +83,25 @@ public class LongEditorTableCell< RT, VT >
         if ( longValue == null ) {
             return "";
         }
-        
+
         // This text goes to the editor, so we don't want to clutter the user's
         // editing session with measurement units, but do need localization.
-        final String stringValue 
-            = ( ( LongEditor ) textField ).toFormattedString( longValue );
-        
+        final String stringValue
+                = ( ( LongEditor ) textField ).toFormattedString( longValue );
+
         return stringValue;
+    }
+
+    @Override
+    protected TextField makeTextField() {
+        return new LongEditor( clientProperties,
+                               "0",
+                               "",
+                               blankTextAllowed,
+                               0,
+                               2,
+                               0,
+                               4 );
     }
 
     @Override
@@ -102,9 +110,10 @@ public class LongEditorTableCell< RT, VT >
         if ( longValue == null ) {
             return "";
         }
-        
-        final String textValue = ( ( LongEditor ) textField ).toString( longValue );
-        
+
+        final String textValue = ( ( LongEditor ) textField ).toString(
+                longValue );
+
         return textValue;
     }
 
@@ -124,7 +133,7 @@ public class LongEditorTableCell< RT, VT >
     public final long getCachedValue() {
         return cachedValue.get();
     }
-    
+
     public final void setCachedValue( final long pCachedValue ) {
         // Locally cache the new cachedValue, separately from the textField.
         cachedValue.set( pCachedValue );

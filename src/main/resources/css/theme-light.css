@@ -34,104 +34,104 @@
  * "Black against Light Background" contrast theme.                            *
  *                                                                             *
  ******************************************************************************/
- 
+
 .root {
     /* General Chart and Axis Color Palette */
     CHART_COLOR_TITLE: black;
     CHART_COLOR_LEGEND: black;
-    CHART_GRID_LINE: derive( gray, -40% ); 
-    CHART_ZERO_LINE: derive( gray, -30% ); 
+    CHART_GRID_LINE: derive(gray, -40%);
+    CHART_ZERO_LINE: derive(gray, -30%);
     AXIS_COLOR_BASIS: COLOR_GRAY25;
     AXIS_COLOR_LABEL: black;
     AXIS_FILL_TICK: null;
     AXIS_FILL_TICK_LABEL: black;
-    
+
     /* Control Color Palette */
     COLOR_BUTTON: COLOR_GRAY41;
     FILL_BUTTON: white;
-    
+
     COLOR_LABEL: COLOR_GRAY70;
     FILL_LABEL: black;
     BORDER_LABEL: COLOR_GRAY60_5;
-    
+
     COLOR_EDITOR: COLOR_GRAY80;
     FILL_EDITOR: black;
     BORDER_EDITOR: COLOR_GRAY70;
-    
+
     COLOR_SELECTOR: COLOR_GRAY45;
     FILL_SELECTOR: white;
-    
+
     COLOR_SPINNER: COLOR_GRAY45;
     FILL_SPINNER: white;
 
     COLOR_TOOL_BAR_BUTTON: COLOR_GRAY92;
     FILL_TOOL_BAR_BUTTON: black;
- 
+
     /* Control Color Palette */
     COLOR_TAB: COLOR_GRAY60;
     FILL_TAB: black;
-    
+
     /* Toggle Action Color Palette */
     COLOR_TOOL_BAR_TOGGLE_OFF: #a4a6a8; /* #a9a9a9 = dark gray */
     FILL_TOOL_BAR_TOGGLE_OFF: black;
     COLOR_TOOL_BAR_TOGGLE_ON: #d4d8e0; /* #dcdcdc = gainsboro */
     FILL_TOOL_BAR_TOGGLE_ON: black;
- 
+
     COLOR_POLARITY_NORMAL: COLOR_GRAY15;
     FILL_POLARITY_NORMAL: white;
     COLOR_POLARITY_REVERSED: COLOR_GRAY85;
     FILL_POLARITY_REVERSED: black;
-    
+
     COLOR_UNMUTED: #621818; /* #701c1c = Persian Plum */
     FILL_UNMUTED: white;
     COLOR_MUTED: #ff0000; /* red */
     FILL_MUTED: black;
-    
+
     COLOR_UNSOLOED: #8b4513; /* saddle brown */
     FILL_UNSOLOED: white;
     COLOR_SOLOED: #ffa500; /* orange */
     FILL_SOLOED: white;
-    
+
     COLOR_UNSELECTED: #006400; /* #006600 = Pakistan Green */
     FILL_UNSELECTED: white;
     COLOR_SELECTED: #adff2f; /* green-yellow */
     FILL_SELECTED: black;
-    
+
     COLOR_HIDDEN: #0000ff; /* blue */
     FILL_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
     COLOR_VISIBLE: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_VISIBLE: #0000ff; /* blue */
-    
+
     COLOR_ENABLED: #808000; /* olive */
     FILL_ENABLED: white;
     COLOR_BYPASSED: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_BYPASSED: black;
-    
+
     COLOR_INACTIVE: #08b8b3; /* #0abab5 = Tiffany Blue */
     FILL_INACTIVE: black;
     COLOR_ACTIVE: #00ffff; /* aqua (aka cyan) */
     FILL_ACTIVE: black;
-    
+
     COLOR_IGNORED: COLOR_GRAY30;
     FILL_IGNORED: white;
     COLOR_INCLUDED: aqua;
     FILL_INCLUDED: black;
-        
+
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;
     COLOR_LAYER_ACTIVE: #0aff0a; /* bright green */
     FILL_LAYER_ACTIVE: #0000ff; /* blue */
-    
+
     COLOR_LAYER_HIDDEN: #0000ff; /* blue */
     FILL_LAYER_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
     COLOR_LAYER_VISIBLE: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_LAYER_VISIBLE: #0000ff; /* blue */
-        
+
     COLOR_LAYER_UNLOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_LAYER_UNLOCKED: #0aff0a; /* bright green */
     COLOR_LAYER_LOCKED: #ff0a0a; /* bright red */
     FILL_LAYER_LOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
-    
+
     /* Action Color Palette */
     COLOR_SAVE: #20b2aa; /* light sea green */
     COLOR_LOAD: #ba55d3; /* medium orchid */
@@ -143,7 +143,7 @@
     COLOR_COPY: COLOR_CREATE;
     COLOR_DELETE: #dc143c; /* crimson */
     COLOR_REVERT: #00a321; /* #059033 = North Texas Green */
-    
+
     /* Action Color Palette */
     COLOR_HELP: COLOR_GRAY41;
     COLOR_HELP_ALTERNATE: COLOR_GRAY32_5;
@@ -171,7 +171,7 @@
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, derive( COLOR_TAB, 40% );
+    -fx-background-color: -fx-outer-border, -fx-inner-border, derive(COLOR_TAB, 40%);
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
@@ -203,8 +203,8 @@
 
 /* Set dark chart title  against all light backgrounds, vs. default derivation. */
 .chart-title {
-    -fx-text-background-color: CHART_COLOR_TITLE; 
- }
+    -fx-text-background-color: CHART_COLOR_TITLE;
+}
 
 /* Set dark chart legend against all light backgrounds, vs. default derivation. */
 .chart-legend {
@@ -227,12 +227,15 @@
 .axis:top {
     -fx-border-color: transparent transparent AXIS_COLOR transparent;
 }
+
 .axis:right {
     -fx-border-color: transparent transparent transparent AXIS_COLOR;
 }
+
 .axis:bottom {
     -fx-border-color: AXIS_COLOR transparent transparent transparent;
 }
+
 .axis:left {
     -fx-border-color: transparent AXIS_COLOR transparent transparent;
 }
@@ -276,7 +279,7 @@
  * Custom Toolkit Styles                                                       *
  *                                                                             *
  ******************************************************************************/
-  
+
 /* Match the "Day Mode" color for General Action Buttons. */
 .fxguitoolkit-button {
     -fx-background-color: COLOR_BUTTON;
@@ -298,9 +301,8 @@
 .fxguitoolkit-text-input {
     -fx-control-inner-background: COLOR_EDITOR;
     -fx-text-box-border: BORDER_EDITOR;
-    -fx-background-color:
-        linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-inner-color: FILL_EDITOR;
@@ -339,7 +341,7 @@
 }
 
 .fxguitoolkit-spinner > .text-field {
-     -fx-text-fill: FILL_SPINNER;
+    -fx-text-fill: FILL_SPINNER;
 }
 
 .fxguitoolkit-spinner .increment-arrow-button {
@@ -360,11 +362,10 @@
 
 /* Match the "Day Mode" color for Tool Bar Buttons. */
 .tool-bar-button {
-    -fx-background-color: 
-        -fx-shadow-highlight-color, 
-        -fx-outer-border, 
-        -fx-inner-border, 
-        derive( COLOR_TOOL_BAR_BUTTON, 0% );
+    -fx-background-color: -fx-shadow-highlight-color,
+    -fx-outer-border,
+    -fx-inner-border,
+    derive(COLOR_TOOL_BAR_BUTTON, 0%);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_BUTTON;
@@ -500,11 +501,10 @@
 
 /* Match the "Day Mode" color for Tool Bar Toggle Buttons. */
 .tool-bar-toggle {
-    -fx-background-color: 
-        -fx-shadow-highlight-color, 
-        -fx-outer-border, 
-        -fx-inner-border, 
-        derive( COLOR_TOOL_BAR_TOGGLE_OFF, 0% );
+    -fx-background-color: -fx-shadow-highlight-color,
+    -fx-outer-border,
+    -fx-inner-border,
+    derive(COLOR_TOOL_BAR_TOGGLE_OFF, 0%);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
@@ -513,10 +513,9 @@
 /* TODO: Find a way to get the inner border back. Every attempt to
     have four values feeding into the background color got errors */
 .tool-bar-toggle:selected {
-    -fx-background-color: 
-        -fx-shadow-highlight-color,
-        linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
-        linear-gradient(to bottom, derive( COLOR_TOOL_BAR_TOGGLE_ON, 0% ), COLOR_TOOL_BAR_TOGGLE_ON);
+    -fx-background-color: -fx-shadow-highlight-color,
+    linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
+    linear-gradient(to bottom, derive(COLOR_TOOL_BAR_TOGGLE_ON, 0%), COLOR_TOOL_BAR_TOGGLE_ON);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_ON;

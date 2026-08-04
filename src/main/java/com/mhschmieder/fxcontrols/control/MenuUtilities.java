@@ -33,13 +33,14 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.fxcontrols.action.ActionFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
+
+import java.util.Collection;
+import java.util.ResourceBundle;
+
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCombination;
-
-import java.util.Collection;
-import java.util.ResourceBundle;
 
 /**
  * Common utilities for working with menus, such as setting accelerators.
@@ -47,9 +48,11 @@ import java.util.ResourceBundle;
 public final class MenuUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private MenuUtilities() {}
+    private MenuUtilities() {
+    }
 
     // If an accelerator is assigned, set it by platform.
     public static void setMenuItemAccelerator( final ClientProperties clientProperties,
@@ -62,15 +65,17 @@ public final class MenuUtilities {
             return;
         }
 
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, false );
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                clientProperties,
+                bundleName,
+                false );
 
         // If an accelerator is assigned, get it from a resource bundle.
-        final KeyCombination acceleratorKeyCombination = ActionFactory
-                .makeAcceleratorKeyCombination( clientProperties,
-                                                menuName,
-                                                itemName,
-                                                resourceBundle );
+        final KeyCombination acceleratorKeyCombination
+                = ActionFactory.makeAcceleratorKeyCombination( clientProperties,
+                                                               menuName,
+                                                               itemName,
+                                                               resourceBundle );
         if ( acceleratorKeyCombination != null ) {
             menuItem.setAccelerator( acceleratorKeyCombination );
         }

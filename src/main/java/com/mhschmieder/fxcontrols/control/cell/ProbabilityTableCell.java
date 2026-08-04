@@ -32,28 +32,26 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.ControlFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.control.TextField;
 
 import java.util.List;
 
-public class ProbabilityTableCell< T > extends DoubleEditorTableCell< T, Double > {
+import javafx.scene.control.TextField;
+
+public class ProbabilityTableCell< T >
+        extends DoubleEditorTableCell< T, Double > {
 
     private final String tooltipText;
 
-    public ProbabilityTableCell(final boolean pAllowedToBeBlank,
-                                final String pTooltipText,
-                                final ClientProperties pClientProperties ) {
-        this(
-                null,
-                pAllowedToBeBlank,
-                pTooltipText,
-                pClientProperties );
+    public ProbabilityTableCell( final boolean pAllowedToBeBlank,
+                                 final String pTooltipText,
+                                 final ClientProperties pClientProperties ) {
+        this( null, pAllowedToBeBlank, pTooltipText, pClientProperties );
     }
 
-    public ProbabilityTableCell(final List< Integer > pUneditableRows,
-                                final boolean pAllowedToBeBlank,
-                                final String pTooltipText,
-                                final ClientProperties pClientProperties ) {
+    public ProbabilityTableCell( final List< Integer > pUneditableRows,
+                                 final boolean pAllowedToBeBlank,
+                                 final String pTooltipText,
+                                 final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
         super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
@@ -70,9 +68,8 @@ public class ProbabilityTableCell< T > extends DoubleEditorTableCell< T, Double 
      */
     @Override
     protected TextField makeTextField() {
-        return ControlFactory.makeDoublePercentEditor(
-                clientProperties,
-                tooltipText,
-                100.0d );
+        return ControlFactory.makeDoublePercentEditor( clientProperties,
+                                                       tooltipText,
+                                                       100.0d );
     }
 }

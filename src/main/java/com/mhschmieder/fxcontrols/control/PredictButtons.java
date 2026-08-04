@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.SimulationActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 
 public class PredictButtons {
@@ -50,19 +51,19 @@ public class PredictButtons {
 
         if ( simulationActions != null ) {
             // Make the Action Buttons.
-            predictButton = LabeledControlFactory
-                    .getPredictButton( clientProperties, 
-                                       simulationActions.predictAction );
-            clearButton = LabeledControlFactory
-                    .getClearButton( clientProperties, 
-                                     simulationActions.clearAction );
+            predictButton = LabeledControlFactory.getPredictButton(
+                    clientProperties,
+                    simulationActions.predictAction );
+            clearButton
+                    = LabeledControlFactory.getClearButton( clientProperties,
+                                                            simulationActions.clearAction );
         }
         else {
             // Make the Action Buttons.
-            predictButton = LabeledControlFactory
-                    .getPredictButton( clientProperties );
-            clearButton = LabeledControlFactory
-                    .getClearButton( clientProperties );
+            predictButton = LabeledControlFactory.getPredictButton(
+                    clientProperties );
+            clearButton
+                    = LabeledControlFactory.getClearButton( clientProperties );
         }
     }
 }

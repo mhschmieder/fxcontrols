@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxgraphics.io.GraphicsExportOptions;
+
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
@@ -58,26 +59,25 @@ public class GraphicsExportOptionsToggleGroup extends ToggleGroup {
                 graphicsExportAllLabel,
                 this,
                 graphicsExportOptions.isExportAll() );
-        _exportChartRadioButton = ControlUtilities
-                .getRadioButton( graphicsExportChartLabel,
-                                 this,
-                                 graphicsExportOptions.isExportChart() );
-        _exportAuxiliaryRadioButton = ControlUtilities
-                .getRadioButton( graphicsExportAuxiliaryLabel,
-                                 this,
-                                 graphicsExportOptions.isExportAuxiliary() );
+        _exportChartRadioButton = ControlUtilities.getRadioButton(
+                graphicsExportChartLabel,
+                this,
+                graphicsExportOptions.isExportChart() );
+        _exportAuxiliaryRadioButton = ControlUtilities.getRadioButton(
+                graphicsExportAuxiliaryLabel,
+                this,
+                graphicsExportOptions.isExportAuxiliary() );
 
         // Bind the Export All Radio Button to its associated property.
         _exportAllRadioButton.selectedProperty()
-                .bindBidirectional( graphicsExportOptions.exportAllProperty() );
+                             .bindBidirectional( graphicsExportOptions.exportAllProperty() );
 
         // Bind the Export Chart Radio Button to its associated property.
         _exportChartRadioButton.selectedProperty()
-                .bindBidirectional( graphicsExportOptions.exportChartProperty() );
+                               .bindBidirectional( graphicsExportOptions.exportChartProperty() );
 
         // Bind the Export Auxiliary Radio Button to its associated property.
         _exportAuxiliaryRadioButton.selectedProperty()
-                .bindBidirectional( graphicsExportOptions.exportAuxiliaryProperty() );
+                                   .bindBidirectional( graphicsExportOptions.exportAuxiliaryProperty() );
     }
-
 }

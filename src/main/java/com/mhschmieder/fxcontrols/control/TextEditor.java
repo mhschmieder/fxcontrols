@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -45,44 +46,16 @@ import javafx.scene.input.KeyCode;
 public class TextEditor extends XTextField {
 
     // Flag to note whether blank text is allowed or not.
-    private final boolean        _blankTextAllowed;
+    private final boolean _blankTextAllowed;
 
     // Cache the raw string representation of the data value.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
     private final StringProperty value;
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public TextEditor( final boolean applyToolkitCss,
                        final ClientProperties pClientProperties ) {
         this( "", null, applyToolkitCss, true, pClientProperties );
-    }
-
-    public TextEditor( final String initialText,
-                       final boolean applyToolkitCss, 
-                       final ClientProperties pClientProperties ) {
-        this( initialText, null, applyToolkitCss, pClientProperties );
-    }
-
-    public TextEditor( final String initialText,
-                       final String tooltipText,
-                       final boolean applyToolkitCss,
-                       final ClientProperties pClientProperties ) {
-        this( initialText, 
-              tooltipText, 
-              applyToolkitCss, 
-              false, 
-              pClientProperties );
-    }
-
-    public TextEditor( final String initialText,
-                       final boolean applyToolkitCss,
-                       final boolean pBlankTextAllowed,
-                       final ClientProperties pClientProperties ) {
-        this( initialText, 
-              null, 
-              applyToolkitCss, 
-              pBlankTextAllowed, 
-              pClientProperties );
     }
 
     public TextEditor( final String pInitialText,
@@ -103,42 +76,6 @@ public class TextEditor extends XTextField {
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
-    }
-
-    public final void adjustValue() {
-        // Potentially adjust the current edits from the Text Field.
-        final String adjustedValue = getAdjustedValue();
-
-        // Update the cached property from the adjusted, edited value.
-        setValue( adjustedValue );
-    }
-
-    public final String getAdjustedValue() {
-        // Get the current input in its most recent edited state.
-        final String savedText = getText();
-
-        // If the text was left blank, and blank text is allowed, return an
-        // empty string; otherwise return with the current cached value.
-        if ( ( savedText == null ) || savedText.trim().isEmpty() ) {
-            return _blankTextAllowed ? "" : getValue(); //$NON-NLS-1$
-        }
-
-        // Potentially adjust the current edits from the Text Field.
-        final String adjustedValue = getAdjustedValue( savedText );
-
-        return adjustedValue;
-    }
-
-    public String getAdjustedValue( final String text ) {
-        // If blank text is allowed, return the input unadjusted; otherwise trim
-        // the edited value to make it legal, and to avoid confusing the user.
-        final String adjustedValue = _blankTextAllowed ? text : text.trim();
-
-        return adjustedValue;
-    }
-
-    public final String getValue() {
-        return value.get();
     }
 
     private final void initEditor() {
@@ -169,7 +106,8 @@ public class TextEditor extends XTextField {
         } );
 
         // When focus is lost, commit the changes; otherwise update the text.
-        focusedProperty().addListener( ( observableValue, wasFocused, isNowFocused ) -> {
+        focusedProperty().addListener( ( observableValue, wasFocused,
+                                         isNowFocused ) -> {
             if ( isNowFocused ) {
                 // Update the displayed text to match the cached value.
                 updateText();
@@ -201,32 +139,38 @@ public class TextEditor extends XTextField {
         setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
-            case ENTER:
-                // NOTE: Nothing to do, as ENTER is best handled via onAction.
-                break;
-            case ESCAPE:
-                // Revert to the most recent committed value.
-                cancelEdit();
+                case ENTER:
+                    // NOTE: Nothing to do, as ENTER is best handled via
+                    // onAction.
+                    break;
+                case ESCAPE:
+                    // Revert to the most recent committed value.
+                    cancelEdit();
 
-                // Post-process after caching the reverted value, due to order
-                // dependency of the text adjustments in various callbacks.
-                Platform.runLater( () -> {
-                    // Update the displayed text to match the reverted value.
-                    updateText();
+                    // Post-process after caching the reverted value, due to
+                    // order
+                    // dependency of the text adjustments in various callbacks.
+                    Platform.runLater( () -> {
+                        // Update the displayed text to match the reverted
+                        // value.
+                        updateText();
 
-                    // Reselect the reformatted text, to mimic Focus Gained.
-                    selectAll();
-                } );
+                        // Reselect the reformatted text, to mimic Focus Gained.
+                        selectAll();
+                    } );
 
-                break;
-            case TAB:
-                // NOTE: Nothing to do, as Text Input Controls commit edits and
-                // then release focus when the TAB key is pressed, so the Focus
-                // Lost handler is where value restrictions should be applied.
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                    break;
+                case TAB:
+                    // NOTE: Nothing to do, as Text Input Controls commit
+                    // edits and
+                    // then release focus when the TAB key is pressed, so the
+                    // Focus
+                    // Lost handler is where value restrictions should be
+                    // applied.
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
     }
@@ -234,6 +178,46 @@ public class TextEditor extends XTextField {
     public final void saveEdits() {
         // Potentially adjust the current edits from the Text Field.
         adjustValue();
+    }
+
+    public final void adjustValue() {
+        // Potentially adjust the current edits from the Text Field.
+        final String adjustedValue = getAdjustedValue();
+
+        // Update the cached property from the adjusted, edited value.
+        setValue( adjustedValue );
+    }
+
+    public final String getAdjustedValue() {
+        // Get the current input in its most recent edited state.
+        final String savedText = getText();
+
+        // If the text was left blank, and blank text is allowed, return an
+        // empty string; otherwise return with the current cached value.
+        if ( ( savedText == null ) || savedText.trim().isEmpty() ) {
+            return _blankTextAllowed
+                   ? ""
+                   : getValue(); //$NON-NLS-1$
+        }
+
+        // Potentially adjust the current edits from the Text Field.
+        final String adjustedValue = getAdjustedValue( savedText );
+
+        return adjustedValue;
+    }
+
+    public String getAdjustedValue( final String text ) {
+        // If blank text is allowed, return the input unadjusted; otherwise trim
+        // the edited value to make it legal, and to avoid confusing the user.
+        final String adjustedValue = _blankTextAllowed
+                                     ? text
+                                     : text.trim();
+
+        return adjustedValue;
+    }
+
+    public final String getValue() {
+        return value.get();
     }
 
     public final void setValue( final String pValue ) {
@@ -252,4 +236,31 @@ public class TextEditor extends XTextField {
         return value;
     }
 
+    public TextEditor( final String initialText,
+                       final boolean applyToolkitCss,
+                       final ClientProperties pClientProperties ) {
+        this( initialText, null, applyToolkitCss, pClientProperties );
+    }
+
+    public TextEditor( final String initialText,
+                       final String tooltipText,
+                       final boolean applyToolkitCss,
+                       final ClientProperties pClientProperties ) {
+        this( initialText,
+              tooltipText,
+              applyToolkitCss,
+              false,
+              pClientProperties );
+    }
+
+    public TextEditor( final String initialText,
+                       final boolean applyToolkitCss,
+                       final boolean pBlankTextAllowed,
+                       final ClientProperties pClientProperties ) {
+        this( initialText,
+              null,
+              applyToolkitCss,
+              pBlankTextAllowed,
+              pClientProperties );
+    }
 }

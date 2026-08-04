@@ -38,797 +38,684 @@ import java.util.Collection;
 
 public class LabeledActionFactory {
 
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private LabeledActionFactory() {}
-
     // NOTE: We must substitute "." for resource directory tree delimiters.
     public static final String BUNDLE_NAME = "properties.ActionLabels";
 
-    public static XActionGroup getFileActionGroup(
-            final ClientProperties pClientProperties,
-            final FileActions fileActions,
-            final boolean vectorGraphicsSupported,
-            final boolean renderedGraphicsSupported ) {
-        final Collection< Action > fileActionCollection = fileActions
-                .getFileActionCollection( pClientProperties,
-                        vectorGraphicsSupported,
-                        renderedGraphicsSupported );
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private LabeledActionFactory() {
+    }
+
+    public static XActionGroup getFileActionGroup( final ClientProperties pClientProperties,
+                                                   final FileActions fileActions,
+                                                   final boolean vectorGraphicsSupported,
+                                                   final boolean renderedGraphicsSupported ) {
+        final Collection< Action > fileActionCollection
+                = fileActions.getFileActionCollection( pClientProperties,
+                                                       vectorGraphicsSupported,
+                                                       renderedGraphicsSupported );
 
         // TODO: Review whether this is the correct bundle name to use for this
         //  action group.
-        return ActionFactory.makeActionGroup(
-                pClientProperties,
-                fileActionCollection,
-                LabeledControlFactory.BUNDLE_NAME,
-                "file",
-                null );
+        return ActionFactory.makeActionGroup( pClientProperties,
+                                              fileActionCollection,
+                                              LabeledControlFactory.BUNDLE_NAME,
+                                              "file",
+                                              null );
     }
 
-    public static XAction getFileNewProjectAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "newProject",
-                "/icons/oxygenIcons/FileNew16.png" );
+    public static XAction getFileNewProjectAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "newProject",
+                                         "/icons/oxygenIcons/FileNew16.png" );
     }
 
-    public static XAction getFileOpenProjectAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "openProject",
-                "/icons/insomnia/tango/DocumentOpen16.png" );
+    public static XAction getFileOpenProjectAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "openProject",
+                                         "/icons/insomnia/tango"
+                                         + "/DocumentOpen16.png" );
     }
 
-    public static XAction getCloseWindowAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "closeWindow",
-                "/icons/happyIconStudio/CloseWindowBlack16.png" );
+    public static XAction getCloseWindowAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "closeWindow",
+                                         "/icons/happyIconStudio"
+                                         + "/CloseWindowBlack16.png" );
     }
 
-    public static XAction getFileSaveProjectAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "saveProject",
-                "/icons/everaldo/FileSave16.png" );
+    public static XAction getFileSaveProjectAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "saveProject",
+                                         "/icons/everaldo/FileSave16.png" );
     }
 
-    public static XAction getFileSaveProjectAsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "saveProjectAs",
-                "/icons/everaldo/FileSaveAs16.png" );
+    public static XAction getFileSaveProjectAsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "saveProjectAs",
+                                         "/icons/everaldo/FileSaveAs16.png" );
     }
 
-    public static XAction getFileProjectPropertiesAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "projectProperties",
-                "/icons/everaldo/PackageEditors16.png" );
+    public static XAction getFileProjectPropertiesAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "projectProperties",
+                                         "/icons/everaldo/PackageEditors16"
+                                         + ".png" );
     }
 
     // TODO: Load an icon that is a stylized representation of the MRU number.
-    public static XAction makeFileMruAction(
-            final ClientProperties pClientProperties,
-            final int mruFileNumber ) {
+    public static XAction makeFileMruAction( final ClientProperties pClientProperties,
+                                             final int mruFileNumber ) {
         // Make sure the MRU File items self-hide if empty and disabled.
         final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                fileMruNumber,
-                null,
-                true );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         fileMruNumber,
+                                         null,
+                                         true );
     }
 
-    public static XAction getExitAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "exit",
-                "/icons/damieng/StopRed16.png" );
+    public static XAction getExitAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "exit",
+                                         "/icons/damieng/StopRed16.png" );
     }
 
-    public static XActionGroup getExportActionGroup(
-            final ClientProperties pClientProperties,
-            final ExportActions exportActions,
-            final boolean vectorGraphicsSupported,
-            final boolean renderedGraphicsSupported ) {
-        final Collection< Action > exportActionCollection = exportActions
-                .getExportActionCollection( vectorGraphicsSupported,
-                        renderedGraphicsSupported );
+    public static XActionGroup getExportActionGroup( final ClientProperties pClientProperties,
+                                                     final ExportActions exportActions,
+                                                     final boolean vectorGraphicsSupported,
+                                                     final boolean renderedGraphicsSupported ) {
+        final Collection< Action > exportActionCollection
+                = exportActions.getExportActionCollection(
+                vectorGraphicsSupported,
+                renderedGraphicsSupported );
 
-        return ActionFactory.makeActionGroup(
-                pClientProperties,
-                exportActionCollection,
-                BUNDLE_NAME,
-                "export",
-                "/icons/happyIconStudio/ExportBlack16.png" );
+        return ActionFactory.makeActionGroup( pClientProperties,
+                                              exportActionCollection,
+                                              BUNDLE_NAME,
+                                              "export",
+                                              "/icons/happyIconStudio"
+                                              + "/ExportBlack16.png" );
     }
 
-    public static XAction getExportTableDataAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "export",
-                "tableData",
-                "/icons/led24/DocExcelCsv16.png" );
+    public static XAction getExportTableDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "tableData",
+                                         "/icons/led24/DocExcelCsv16.png" );
     }
 
-    public static XAction getExportSpreadsheetDataAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "export",
-                "spreadsheetData",
-                "/icons/led24/PageWhiteExcel16.png" );
+    public static XAction getExportSpreadsheetDataAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "spreadsheetData",
+                                         "/icons/led24/PageWhiteExcel16.png" );
     }
 
-    public static XAction getExportRasterGraphicsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "export",
-                "rasterGraphics",
-                "/icons/fatCow/FileExtensionJpg16.png" );
+    public static XAction getExportRasterGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "rasterGraphics",
+                                         "/icons/fatCow/FileExtensionJpg16"
+                                         + ".png" );
     }
 
-    public static XAction getExportVectorGraphicsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "export",
-                "vectorGraphics",
-                "/icons/fatCow/FileExtensionPdf16.png" );
+    public static XAction getExportVectorGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "vectorGraphics",
+                                         "/icons/fatCow/FileExtensionPdf16"
+                                         + ".png" );
     }
 
-    public static XAction getExportRenderedGraphicsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "export",
-                "renderedGraphics",
-                "/icons/fatCow/FileExtensionEps16.png" );
+    public static XAction getExportRenderedGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "export",
+                                         "renderedGraphics",
+                                         "/icons/fatCow/FileExtensionEps16"
+                                         + ".png" );
     }
 
-    public static XActionGroup getEditActionGroup(
-            final ClientProperties pClientProperties,
-            final EditActions editActions ) {
-        final Collection< Action > editActionCollection = editActions
-                .getEditActionCollection( pClientProperties );
+    public static XActionGroup getEditActionGroup( final ClientProperties pClientProperties,
+                                                   final EditActions editActions ) {
+        final Collection< Action > editActionCollection
+                = editActions.getEditActionCollection( pClientProperties );
 
-        return ActionFactory.makeActionGroup(
-                pClientProperties,
-                editActionCollection,
-                BUNDLE_NAME,
-                "edit",
-                null );
+        return ActionFactory.makeActionGroup( pClientProperties,
+                                              editActionCollection,
+                                              BUNDLE_NAME,
+                                              "edit",
+                                              null );
     }
 
-    public static XAction getEditUndoAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "undo",
-                "/icons/deviantArt/hbons/discovery/EditUndo16.png" );
+    public static XAction getEditUndoAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "undo",
+                                         "/icons/deviantArt/hbons/discovery"
+                                         + "/EditUndo16.png" );
     }
 
-    public static XAction getEditRedoAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "redo",
-                "/icons/deviantArt/hbons/discovery/EditRedo16.png" );
+    public static XAction getEditRedoAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "redo",
+                                         "/icons/deviantArt/hbons/discovery"
+                                         + "/EditRedo16.png" );
     }
 
-    public static XAction getEditCutAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "cut",
-                "/icons/oxygenIcons/EditCut16.png" );
+    public static XAction getEditCutAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "cut",
+                                         "/icons/oxygenIcons/EditCut16.png" );
     }
 
-    public static XAction getEditCopyAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "copy",
-                "/icons/oxygenIcons/EditCopy16.png" );
+    public static XAction getEditCopyAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "copy",
+                                         "/icons/oxygenIcons/EditCopy16.png" );
     }
 
-    public static XAction getEditPasteAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "paste",
-                "/icons/oxygenIcons/EditPaste16.png" );
+    public static XAction getEditPasteAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "paste",
+                                         "/icons/oxygenIcons/EditPaste16.png" );
     }
 
-    public static XAction getEditCancelPasteAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "cancelPaste",
-                "/icons/ahaSoft/Cancel16.png" );
+    public static XAction getEditCancelPasteAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "cancelPaste",
+                                         "/icons/ahaSoft/Cancel16.png" );
     }
 
-    public static XAction getEditDeleteAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "delete",
-                "/icons/oxygenIcons/EditDelete16.png" );
+    public static XAction getEditDeleteAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "delete",
+                                         "/icons/oxygenIcons/EditDelete16"
+                                         + ".png" );
     }
 
-    public static XAction getEditClearImportedGraphicsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "clearImportedGraphics",
-                "/icons/oxygenIcons/EditClear16.png" );
+    public static XAction getEditClearImportedGraphicsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "clearImportedGraphics",
+                                         "/icons/oxygenIcons/EditClear16.png" );
     }
 
-    public static XAction getSelectAllAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "select",
-                "all",
-                "/icons/deviantArt/hbons/discovery/EditSelectAll16.png" );
+    public static XAction getSelectAllAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "select",
+                                         "all",
+                                         "/icons/deviantArt/hbons/discovery"
+                                         + "/EditSelectAll16.png" );
     }
 
-    public static XAction getEditDeselectAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "deselect",
-                null );
+    public static XAction getEditDeselectAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "deselect",
+                                         null );
     }
 
-    public static XAction getEditReselectAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "reselect",
-                null );
+    public static XAction getEditReselectAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "reselect",
+                                         null );
     }
 
-    public static XAction getEditPropertiesAction(
-            final ClientProperties pClientProperties ) {
+    public static XAction getEditPropertiesAction( final ClientProperties pClientProperties ) {
         // Hide if disabled, as otherwise users will see a generic Edit
         // Properties menu item, which can confuse even if disabled, as
         // generally this action will be modified for specific domain objects.
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "edit",
-                "properties",
-                "/icons/oxygenIcons/Edit16.png",
-                true );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "edit",
+                                         "properties",
+                                         "/icons/oxygenIcons/Edit16.png",
+                                         true );
     }
 
-    public static XAction makeAnimateChartUpdatesCheck(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeCheck(
-                pClientProperties,
-                LabeledActionFactory.BUNDLE_NAME,
-                "view",
-                "animateChartUpdates",
-                null,
-                true );
+    public static XAction makeAnimateChartUpdatesCheck( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeCheck( pClientProperties,
+                                        LabeledActionFactory.BUNDLE_NAME,
+                                        "view",
+                                        "animateChartUpdates",
+                                        null,
+                                        true );
     }
 
-    public static XAction getResetAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                LabeledActionFactory.BUNDLE_NAME,
-                "settings",
-                "reset",
-                null );
+    public static XAction getResetAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         LabeledActionFactory.BUNDLE_NAME,
+                                         "settings",
+                                         "reset",
+                                         null );
     }
 
-    public static XActionGroup getBackgroundColorChoiceGroup(
-            final ClientProperties pClientProperties,
-            final BackgroundColorChoices backgroundColorChoices ) {
+    public static XActionGroup getBackgroundColorChoiceGroup( final ClientProperties pClientProperties,
+                                                              final BackgroundColorChoices backgroundColorChoices ) {
         final Collection< Action > backgroundColorChoiceCollection
                 = backgroundColorChoices.getBackgroundColorChoiceCollection();
 
-        return ActionFactory.makeChoiceGroup(
-                pClientProperties,
-                backgroundColorChoiceCollection,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "/icons/nineteenEightySeven/Colour16.png" );
+        return ActionFactory.makeChoiceGroup( pClientProperties,
+                                              backgroundColorChoiceCollection,
+                                              BUNDLE_NAME,
+                                              "backgroundColor",
+                                              "/icons/nineteenEightySeven"
+                                              + "/Colour16.png" );
     }
 
-    public static XAction getBackgroundColorBlackChoice(
-            final ClientProperties pClientProperties ) {
+    public static XAction getBackgroundColorBlackChoice( final ClientProperties pClientProperties ) {
         return ActionFactory.makeChoice( pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "black",
-                "/icons/mhschmieder/Black16.png" );
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "black",
+                                         "/icons/mhschmieder/Black16.png" );
     }
 
-    public static XAction getBackgroundColorNightChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "night",
-                "/icons/mhschmieder/Night16.png" );
-    }
-
-    public static XAction getBackgroundColorDarkCharcoalChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "darkCharcoal",
-                "/icons/mhschmieder/DarkCharcoal16.png" );
-    }
-
-    public static XAction getBackgroundColorDavysGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "davysGray",
-                "/icons/mhschmieder/DavysGray16.png" );
-    }
-
-    public static XAction getBackgroundColorDimGrayChoice(
-            final ClientProperties pClientProperties ) {
+    public static XAction getBackgroundColorNightChoice( final ClientProperties pClientProperties ) {
         return ActionFactory.makeChoice( pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "dimGray",
-                "/icons/mhschmieder/DimGray16.png" );
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "night",
+                                         "/icons/mhschmieder/Night16.png" );
     }
 
-    public static XAction getBackgroundColorSpanishGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "spanishGray",
-                "/icons/mhschmieder/SpanishGray16.png" );
-    }
-
-    public static XAction getBackgroundColorDarkGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "darkGray",
-                "/icons/mhschmieder/DarkGray16.png" );
-    }
-
-    public static XAction getBackgroundColorMediumGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "mediumGray",
-                "/icons/mhschmieder/MediumGray16.png" );
-    }
-
-    public static XAction getBackgroundColorLightGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "lightGray",
-                "/icons/mhschmieder/LightGray16.png" );
-    }
-
-    public static XAction getBackgroundColorGainsboroChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "gainsboro",
-                "/icons/mhschmieder/Gainsboro16.png" );
-    }
-
-    public static XAction getBackgroundColorDayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "day",
-                "/icons/mhschmieder/Day16.png" );
-    }
-
-    public static XAction getBackgroundColorWhiteSmokeChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "whiteSmoke",
-                "/icons/mhschmieder/WhiteSmoke16.png" );
-    }
-
-    public static XAction getBackgroundColorWhiteChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "white",
-                "/icons/mhschmieder/White16.png" );
-    }
-
-    public static XAction getBackgroundColorDarkBlueGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "darkBlueGray",
-                "/icons/mhschmieder/DarkBlueGray16.png" );
-    }
-
-    public static XAction getBackgroundColorBlueGrayChoice(
-            final ClientProperties pClientProperties ) {
+    public static XAction getBackgroundColorDarkCharcoalChoice( final ClientProperties pClientProperties ) {
         return ActionFactory.makeChoice( pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "blueGray",
-                "/icons/mhschmieder/BlueGray16.png" );
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "darkCharcoal",
+                                         "/icons/mhschmieder/DarkCharcoal16"
+                                         + ".png" );
     }
 
-    public static XAction getBackgroundColorLightBlueGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "lightBlueGray",
-                "/icons/mhschmieder/LightBlueGray16.png" );
-    }
-
-    public static XAction getBackgroundColorDarkSlateGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "darkSlateGray",
-                "/icons/mhschmieder/DarkSlateGray16.png" );
-    }
-
-    public static XAction getBackgroundColorSlateGrayChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "slateGray",
-                "/icons/mhschmieder/SlateGray16.png" );
-    }
-
-    public static XAction getBackgroundColorLightSlateGrayChoice(
-            final ClientProperties pClientProperties ) {
+    public static XAction getBackgroundColorDavysGrayChoice( final ClientProperties pClientProperties ) {
         return ActionFactory.makeChoice( pClientProperties,
-                BUNDLE_NAME,
-                "backgroundColor",
-                "lightSlateGray",
-                "/icons/mhschmieder/LightSlateGray16.png" );
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "davysGray",
+                                         "/icons/mhschmieder/DavysGray16.png" );
     }
 
-    public static XActionGroup makeWindowSizeActionGroup(
-            final ClientProperties pClientProperties,
-            final WindowSizeActions windowSizeActions,
-            final boolean maximumSizeSupported ) {
-        final Collection< Action > windowSizeActionCollection = windowSizeActions
-                .getWindowSizeActionCollection( maximumSizeSupported );
-
-        return ActionFactory.makeActionGroup(
-                pClientProperties,
-                windowSizeActionCollection,
-                BUNDLE_NAME,
-                "windowSize",
-                "/icons/deviantArt/shlyapnikova/toolbar2/FullScreen16.png" );
+    public static XAction getBackgroundColorDimGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "dimGray",
+                                         "/icons/mhschmieder/DimGray16.png" );
     }
 
-    public static XAction makeWindowSizePreferredSizeAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "windowSize",
-                "preferredSize",
-                "/icons/yusukeKamiyamane/fugue/ApplicationResize16.png" );
+    public static XAction getBackgroundColorSpanishGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "spanishGray",
+                                         "/icons/mhschmieder/SpanishGray16"
+                                         + ".png" );
     }
 
-    public static XAction makeWindowSizeDefaultSizeAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "windowSize",
-                "defaultSize",
-                "/icons/yusukeKamiyamane/fugue/ApplicationResizeActual16.png" );
+    public static XAction getBackgroundColorDarkGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "darkGray",
+                                         "/icons/mhschmieder/DarkGray16.png" );
     }
 
-    public static XAction makeWindowSizeMaximumSizeAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "windowSize",
-                "maximumSize",
-                "/icons/yusukeKamiyamane/fugue/ApplicationResizeFull16.png" );
+    public static XAction getBackgroundColorMediumGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "mediumGray",
+                                         "/icons/mhschmieder/MediumGray16"
+                                         + ".png" );
     }
 
-    public static XActionGroup makeScrollingSensitivityChoiceGroup(
-            final ClientProperties pClientProperties,
-            final ScrollingSensitivityChoices scrollingSensitivityChoices ) {
-        final Collection< Action > scrollingSensitivityChoiceCollection =
-                scrollingSensitivityChoices
-                        .getScrollingSensitivityChoiceCollection();
-
-        return ActionFactory.makeChoiceGroup(
-                pClientProperties,
-                scrollingSensitivityChoiceCollection,
-                BUNDLE_NAME,
-                "scrollingSensitivity",
-                "/icons/fatCow/MouseSelectScroll16.png" );
+    public static XAction getBackgroundColorLightGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "lightGray",
+                                         "/icons/mhschmieder/LightGray16.png" );
     }
 
-    public static XAction makeScrollingOffChoice(
-            final ClientProperties sessionContext ) {
-        return ActionFactory.makeChoice(
-                sessionContext,
-                BUNDLE_NAME,
-                "scrollingSensitivity",
-                "off",
-                null );
+    public static XAction getBackgroundColorGainsboroChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "gainsboro",
+                                         "/icons/mhschmieder/Gainsboro16.png" );
     }
 
-    public static XAction makeScrollingCoarseChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "scrollingSensitivity",
-                "coarse",
-                null );
+    public static XAction getBackgroundColorDayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "day",
+                                         "/icons/mhschmieder/Day16.png" );
     }
 
-    public static XAction makeScrollingMediumChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "scrollingSensitivity",
-                "medium",
-                null );
+    public static XAction getBackgroundColorWhiteSmokeChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "whiteSmoke",
+                                         "/icons/mhschmieder/WhiteSmoke16"
+                                         + ".png" );
     }
 
-    public static XAction makeScrollingFineChoice(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "scrollingSensitivity",
-                "fine",
-                null );
+    public static XAction getBackgroundColorWhiteChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "white",
+                                         "/icons/mhschmieder/White16.png" );
     }
 
-    public static XAction getPredictAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                LabeledActionFactory.BUNDLE_NAME,
-                "simulation",
-                "predict",
-                "/icons/glyphish/Calculator16.png" );
+    public static XAction getBackgroundColorDarkBlueGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "darkBlueGray",
+                                         "/icons/mhschmieder/DarkBlueGray16"
+                                         + ".png" );
     }
 
-    public static XAction getClearAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                LabeledActionFactory.BUNDLE_NAME,
-                "simulation",
-                "clear",
-                "/icons/ahaSoft/Clear16.png" );
+    public static XAction getBackgroundColorBlueGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "blueGray",
+                                         "/icons/mhschmieder/BlueGray16.png" );
     }
 
-    public static XAction getCsvViewerAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "tools",
-                "csvViewer",
-                "/icons/led24/DocExcelCsv16.png" );
+    public static XAction getBackgroundColorLightBlueGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "lightBlueGray",
+                                         "/icons/mhschmieder/LightBlueGray16"
+                                         + ".png" );
     }
 
-    public static XActionGroup getHelpActionGroup(
-            final ClientProperties pClientProperties,
-            final HelpActions helpActions ) {
-        final Collection< Action > helpActionCollection = helpActions.getHelpActionCollection();
-
-        return ActionFactory.makeActionGroup(
-                pClientProperties,
-                helpActionCollection,
-                BUNDLE_NAME,
-                "help",
-                null );
+    public static XAction getBackgroundColorDarkSlateGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "darkSlateGray",
+                                         "/icons/mhschmieder/DarkSlateGray16"
+                                         + ".png" );
     }
 
-    public static XAction getHelpHelpAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "help",
-                "/icons/icojam/blueberry/Help16.png" );
+    public static XAction getBackgroundColorSlateGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "slateGray",
+                                         "/icons/mhschmieder/SlateGray16.png" );
     }
 
-    public static XAction getKnowledgeBaseAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "knowledgeBase",
-                "/icons/oxygenIcons/HelpBook16.png" );
+    public static XAction getBackgroundColorLightSlateGrayChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "backgroundColor",
+                                         "lightSlateGray",
+                                         "/icons/mhschmieder/LightSlateGray16"
+                                         + ".png" );
     }
 
-    public static XAction getReleaseNotesAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "releaseNotes",
-                "/icons/fatCow/DocumentNotes16.png" );
+    public static XActionGroup makeWindowSizeActionGroup( final ClientProperties pClientProperties,
+                                                          final WindowSizeActions windowSizeActions,
+                                                          final boolean maximumSizeSupported ) {
+        final Collection< Action > windowSizeActionCollection
+                = windowSizeActions.getWindowSizeActionCollection(
+                maximumSizeSupported );
+
+        return ActionFactory.makeActionGroup( pClientProperties,
+                                              windowSizeActionCollection,
+                                              BUNDLE_NAME,
+                                              "windowSize",
+                                              "/icons/deviantArt/shlyapnikova"
+                                              + "/toolbar2/FullScreen16.png" );
     }
 
-    public static XAction getIssueTrackingAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "issueTracking",
-                "/icons/pc/berlin/Issue16.png" );
+    public static XAction makeWindowSizePreferredSizeAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "windowSize",
+                                         "preferredSize",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/ApplicationResize16.png" );
     }
 
-    public static XAction getReportIssueAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "reportIssue",
-                "/icons/led24/Bug16.png" );
+    public static XAction makeWindowSizeDefaultSizeAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "windowSize",
+                                         "defaultSize",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/ApplicationResizeActual16.png" );
     }
 
-    public static XAction getHelpSessionLogAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "sessionLog",
-                "/icons/everaldo/EasyMobLog16.png" );
+    public static XAction makeWindowSizeMaximumSizeAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "windowSize",
+                                         "maximumSize",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/ApplicationResizeFull16.png" );
     }
 
-    public static XAction getHelpAccountManagementAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "accountManagement",
-                "/icons/pc/hamburg/MyAccount16.png" );
+    public static XActionGroup makeScrollingSensitivityChoiceGroup( final ClientProperties pClientProperties,
+                                                                    final ScrollingSensitivityChoices scrollingSensitivityChoices ) {
+        final Collection< Action > scrollingSensitivityChoiceCollection
+                =
+                scrollingSensitivityChoices.getScrollingSensitivityChoiceCollection();
+
+        return ActionFactory.makeChoiceGroup( pClientProperties,
+                                              scrollingSensitivityChoiceCollection,
+                                              BUNDLE_NAME,
+                                              "scrollingSensitivity",
+                                              "/icons/fatCow"
+                                              + "/MouseSelectScroll16.png" );
     }
 
-    public static XAction getHelpCheckForUpdatesAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "checkForUpdates",
-                "/icons/ahaSoft/Update16.png" );
+    public static XAction makeScrollingOffChoice( final ClientProperties sessionContext ) {
+        return ActionFactory.makeChoice( sessionContext,
+                                         BUNDLE_NAME,
+                                         "scrollingSensitivity",
+                                         "off",
+                                         null );
     }
 
-    public static XAction getHelpTeamMembersAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "teamMembers",
-                "/icons/ahaSoft/People16.png" );
+    public static XAction makeScrollingCoarseChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "scrollingSensitivity",
+                                         "coarse",
+                                         null );
     }
 
-    public static XAction getHelpThirdPartyLibrariesAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "thirdPartyLibraries",
-                "/icons/pc/essen/Library16.png" );
+    public static XAction makeScrollingMediumChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "scrollingSensitivity",
+                                         "medium",
+                                         null );
     }
 
-    public static XAction getHelpAboutAction(
-            final ClientProperties pClientProperties,
-            final String applicationName ) {
-        final XAction helpAction = ActionFactory
-                .makeAction( pClientProperties,
-                        BUNDLE_NAME,
-                        "help",
-                        "about",
-                        "/icons/ahaSoft/Info16.png" );
+    public static XAction makeScrollingFineChoice( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "scrollingSensitivity",
+                                         "fine",
+                                         null );
+    }
+
+    public static XAction getPredictAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         LabeledActionFactory.BUNDLE_NAME,
+                                         "simulation",
+                                         "predict",
+                                         "/icons/glyphish/Calculator16.png" );
+    }
+
+    public static XAction getClearAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         LabeledActionFactory.BUNDLE_NAME,
+                                         "simulation",
+                                         "clear",
+                                         "/icons/ahaSoft/Clear16.png" );
+    }
+
+    public static XAction getCsvViewerAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "tools",
+                                         "csvViewer",
+                                         "/icons/led24/DocExcelCsv16.png" );
+    }
+
+    public static XActionGroup getHelpActionGroup( final ClientProperties pClientProperties,
+                                                   final HelpActions helpActions ) {
+        final Collection< Action > helpActionCollection
+                = helpActions.getHelpActionCollection();
+
+        return ActionFactory.makeActionGroup( pClientProperties,
+                                              helpActionCollection,
+                                              BUNDLE_NAME,
+                                              "help",
+                                              null );
+    }
+
+    public static XAction getHelpHelpAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "help",
+                                         "/icons/icojam/blueberry/Help16.png" );
+    }
+
+    public static XAction getKnowledgeBaseAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "knowledgeBase",
+                                         "/icons/oxygenIcons/HelpBook16.png" );
+    }
+
+    public static XAction getReleaseNotesAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "releaseNotes",
+                                         "/icons/fatCow/DocumentNotes16.png" );
+    }
+
+    public static XAction getIssueTrackingAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "issueTracking",
+                                         "/icons/pc/berlin/Issue16.png" );
+    }
+
+    public static XAction getReportIssueAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "reportIssue",
+                                         "/icons/led24/Bug16.png" );
+    }
+
+    public static XAction getHelpSessionLogAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "sessionLog",
+                                         "/icons/everaldo/EasyMobLog16.png" );
+    }
+
+    public static XAction getHelpAccountManagementAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "accountManagement",
+                                         "/icons/pc/hamburg/MyAccount16.png" );
+    }
+
+    public static XAction getHelpCheckForUpdatesAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "checkForUpdates",
+                                         "/icons/ahaSoft/Update16.png" );
+    }
+
+    public static XAction getHelpTeamMembersAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "teamMembers",
+                                         "/icons/ahaSoft/People16.png" );
+    }
+
+    public static XAction getHelpThirdPartyLibrariesAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "thirdPartyLibraries",
+                                         "/icons/pc/essen/Library16.png" );
+    }
+
+    public static XAction getHelpAboutAction( final ClientProperties pClientProperties,
+                                              final String applicationName ) {
+        final XAction helpAction = ActionFactory.makeAction( pClientProperties,
+                                                             BUNDLE_NAME,
+                                                             "help",
+                                                             "about",
+                                                             "/icons/ahaSoft"
+                                                             + "/Info16.png" );
 
         // Modify the Menu Label to tag the Application Name.
         final String actionText = helpAction.getText();
@@ -838,551 +725,550 @@ public class LabeledActionFactory {
         return helpAction;
     }
 
-    public static XAction getHelpEulaAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "eula",
-                "/icons/fatCow/LicenseManagement16.png" );
+    public static XAction getHelpEulaAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "eula",
+                                         "/icons/fatCow/LicenseManagement16"
+                                         + ".png" );
     }
 
-    public static XAction getViewInformationAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "help",
-                "viewInformation",
-                "/icons/mhschmieder/Info16.png" );
+    public static XAction getViewInformationAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "help",
+                                         "viewInformation",
+                                         "/icons/mhschmieder/Info16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XActionGroup getImportActionGroup( final ClientProperties clientProperties,
                                                      final ImportActions importActions,
                                                      final boolean imageGraphicsSupported,
                                                      final boolean vectorGraphicsSupported,
                                                      final boolean cadGraphicsSupported ) {
-        final Collection< Action > importActionCollection = importActions
-                .getImportActionCollection( imageGraphicsSupported,
-                        vectorGraphicsSupported,
-                        cadGraphicsSupported );
+        final Collection< Action > importActionCollection
+                = importActions.getImportActionCollection(
+                imageGraphicsSupported,
+                vectorGraphicsSupported,
+                cadGraphicsSupported );
 
-        final XActionGroup importActionGroup = ActionFactory
-                .makeActionGroup( clientProperties,
-                        importActionCollection,
-                        LabeledActionFactory.BUNDLE_NAME,
-                        "import",
-                        "/icons/happyIconStudio/ImportBlack16.png" );
+        final XActionGroup importActionGroup = ActionFactory.makeActionGroup(
+                clientProperties,
+                importActionCollection,
+                LabeledActionFactory.BUNDLE_NAME,
+                "import",
+                "/icons/happyIconStudio/ImportBlack16.png" );
 
         return importActionGroup;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getImportCadGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "cadGraphics",
-                "/icons/fatCow/FileExtensionDwg16.png" );
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "cadGraphics",
+                                         "/icons/fatCow/FileExtensionDwg16"
+                                         + ".png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getImportRasterGraphicsAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "rasterGraphics",
-                "/icons/fatCow/FileExtensionJpg16.png" );
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "rasterGraphics",
+                                         "/icons/fatCow/FileExtensionJpg16"
+                                         + ".png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getImportSpreadsheetDataAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "spreadsheetData",
-                "/icons/led24/PageWhiteExcel16.png" );
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "spreadsheetData",
+                                         "/icons/led24/PageWhiteExcel16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getImportTableDataAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "tableData",
-                "/icons/led24/DocExcelCsv16.png" );
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "tableData",
+                                         "/icons/led24/DocExcelCsv16.png" );
     }
 
     public static XAction getImportVectorGraphicsAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "vectorGraphics",
-                "/icons/oxygenIcons/SvgMimeType16.png" );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "import",
+                                         "vectorGraphics",
+                                         "/icons/oxygenIcons/SvgMimeType16"
+                                         + ".png" );
     }
 
-    public static XAction getLayerManagerAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "layerManager",
-                "/icons/ahaSoft/Layers16.png" );
+    public static XAction getLayerManagerAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "settings",
+                                         "layerManager",
+                                         "/icons/ahaSoft/Layers16.png" );
     }
 
     public static XActionGroup getLoadActionGroup( final ClientProperties clientProperties,
                                                    final LoadActions loadActions ) {
-        final Collection< Action > loadActionCollection = loadActions
-                .getLoadActionCollection();
+        final Collection< Action > loadActionCollection
+                = loadActions.getLoadActionCollection();
 
-        return ActionFactory.makeActionGroup(
-                clientProperties,
-                loadActionCollection,
-                LabeledActionFactory.BUNDLE_NAME,
-                "load",
-                "/icons/everaldo/FileImport16.png" );
+        return ActionFactory.makeActionGroup( clientProperties,
+                                              loadActionCollection,
+                                              LabeledActionFactory.BUNDLE_NAME,
+                                              "load",
+                                              "/icons/everaldo/FileImport16"
+                                              + ".png" );
     }
 
-    public static XAction getLoadProjectSettingsAction(
-            final ClientProperties clientProperties ) {
-        return ActionFactory.makeAction(
-                clientProperties,
-                BUNDLE_NAME,
-                "load",
-                "projectSettings",
-                "/icons/fatCow/Cog16.png" );
+    public static XAction getLoadProjectSettingsAction( final ClientProperties clientProperties ) {
+        return ActionFactory.makeAction( clientProperties,
+                                         BUNDLE_NAME,
+                                         "load",
+                                         "projectSettings",
+                                         "/icons/fatCow/Cog16.png" );
     }
 
     public static XAction getMeasurementUnitsAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "measurementUnits",
-                "/icons/led24/RulerCorner16.png" );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "settings",
+                                         "measurementUnits",
+                                         "/icons/led24/RulerCorner16.png" );
+    }
+
+    public static XAction getPanToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "panTool",
+                                   "/icons/happyIconStudio"
+                                   + "/CursorDragArrowBlack16.png" );
     }
 
     public static XAction getMouseToolChoice( final ClientProperties pClientProperties,
                                               final String itemName,
                                               final String jarRelativeIconFilename ) {
-        return ActionFactory.makeChoice(
-                pClientProperties,
-                BUNDLE_NAME,
-                "mouseTools",
-                itemName,
-                jarRelativeIconFilename );
+        return ActionFactory.makeChoice( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "mouseTools",
+                                         itemName,
+                                         jarRelativeIconFilename );
     }
 
-    public static XAction getPanToolChoice( final ClientProperties pClientProperties ) {
-        return getMouseToolChoice(
-                pClientProperties,
-                "panTool",
-                "/icons/happyIconStudio/CursorDragArrowBlack16.png" );
+    public static XAction getSelectToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "selectTool",
+                                   "/icons/happyIconStudio/CursorArrowBlack16"
+                                   + ".png" );
     }
 
-    public static XAction getSelectToolChoice(
-            final ClientProperties pClientProperties ) {
-        return getMouseToolChoice(
-                pClientProperties,
-                "selectTool",
-                "/icons/happyIconStudio/CursorArrowBlack16.png" );
+    public static XAction getRotateToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "rotateTool",
+                                   "/icons/everaldo/RotateCWLight16.png" );
     }
 
-    public static XAction getRotateToolChoice(
-            final ClientProperties pClientProperties ) {
-        return getMouseToolChoice(
-                pClientProperties,
-                "rotateTool",
-                "/icons/everaldo/RotateCWLight16.png" );
+    public static XAction getZoomToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "zoomTool",
+                                   "/icons/mhschmieder/ZoomTool16.png" );
     }
 
-    public static XAction getZoomToolChoice(
-            final ClientProperties pClientProperties ) {
-        return getMouseToolChoice(
-                pClientProperties,
-                "zoomTool",
-                "/icons/mhschmieder/ZoomTool16.png" );
+    public static XAction getLineToolChoice( final ClientProperties pClientProperties ) {
+        return getMouseToolChoice( pClientProperties,
+                                   "lineTool",
+                                   "/icons/yusukeKamiyamane/fugue"
+                                   + "/LayerShapeLine16.png" );
     }
 
-    public static XAction getLineToolChoice(
-            final ClientProperties pClientProperties ) {
-        return getMouseToolChoice(
-                pClientProperties,
-                "lineTool",
-                "/icons/yusukeKamiyamane/fugue/LayerShapeLine16.png" );
+    public static XAction getPageSetupAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "pageSetup",
+                                         "/icons/yusukeKamiyamane/diagone"
+                                         + "/Setup16.png" );
     }
 
-    public static XAction getPageSetupAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "pageSetup",
-                "/icons/yusukeKamiyamane/diagone/Setup16.png" );
-    }
-
-    public static XAction getPrintAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "file",
-                "print",
-                "/icons/everaldo/FilePrint16.png" );
+    public static XAction getPrintAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "file",
+                                         "print",
+                                         "/icons/everaldo/FilePrint16.png" );
     }
 
     public static XAction getProjectReportAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "tools",
-                "projectReport",
-                "/icons/ahaSoft/Report16.png" );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "tools",
+                                         "projectReport",
+                                         "/icons/ahaSoft/Report16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XActionGroup getSettingsActionGroup( final ClientProperties pClientProperties,
                                                        final SettingsActions settingsActions,
                                                        final boolean maximumSizeSupported ) {
-        final Collection< Action > settingsActionCollection = settingsActions
-                .getSettingsActionCollection( pClientProperties, maximumSizeSupported );
+        final Collection< Action > settingsActionCollection
+                =
+                settingsActions.getSettingsActionCollection( pClientProperties,
+                                                               maximumSizeSupported );
 
-        final XActionGroup settingsActionGroup = ActionFactory
-                .makeActionGroup( pClientProperties,
-                        settingsActionCollection,
-                        BUNDLE_NAME,
-                        "settings",
-                        null );
+        final XActionGroup settingsActionGroup = ActionFactory.makeActionGroup(
+                pClientProperties,
+                settingsActionCollection,
+                BUNDLE_NAME,
+                "settings",
+                null );
 
         return settingsActionGroup;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getSettingsGesturesCheck( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeCheck( pClientProperties, BUNDLE_NAME, "settings", "gestures", null );
+        return ActionFactory.makeCheck( pClientProperties,
+                                        BUNDLE_NAME,
+                                        "settings",
+                                        "gestures",
+                                        null );
     }
 
-    @SuppressWarnings("nls")
-    public static XActionGroup getSimulationActionGroup(
-            final ClientProperties pClientProperties,
-            final SimulationActions simulationActions ) {
-        final Collection< Action > simulationActionCollection = simulationActions
-                .getSimulationActionCollection( pClientProperties );
+    @SuppressWarnings( "nls" )
+    public static XActionGroup getSimulationActionGroup( final ClientProperties pClientProperties,
+                                                         final SimulationActions simulationActions ) {
+        final Collection< Action > simulationActionCollection
+                = simulationActions.getSimulationActionCollection(
+                pClientProperties );
 
-        final XActionGroup simulationActionGroup = ActionFactory
-                .makeActionGroup( pClientProperties,
-                        simulationActionCollection,
-                        BUNDLE_NAME,
-                        "simulation",
-                        null );
+        final XActionGroup simulationActionGroup
+                = ActionFactory.makeActionGroup( pClientProperties,
+                                                 simulationActionCollection,
+                                                 BUNDLE_NAME,
+                                                 "simulation",
+                                                 null );
 
         return simulationActionGroup;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getTestClearPreferencesAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "test",
-                "clearPreferences",
-                "/icons/oxygenIcons/EditClearList16.png" );
+                                         BUNDLE_NAME,
+                                         "test",
+                                         "clearPreferences",
+                                         "/icons/oxygenIcons/EditClearList16"
+                                         + ".png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getTestGraphicsImportLoggingCheck( final ClientProperties pClientProperties ) {
         return ActionFactory.makeCheck( pClientProperties,
-                BUNDLE_NAME,
-                "test",
-                "graphicsImportLogging",
-                "/icons/fatCow/FileExtensionLog16.png" );
+                                        BUNDLE_NAME,
+                                        "test",
+                                        "graphicsImportLogging",
+                                        "/icons/fatCow/FileExtensionLog16"
+                                        + ".png" );
     }
 
-    public static XAction getTestSaveServerRequestAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "test",
-                "saveServerRequest",
-                null );
-    }
-
-    public static XAction getTestSaveServerResponseAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "test",
-                "saveServerResponse",
-                null );
-    }
-
-    public static XAction getTestSvgViewerAction(
-            final ClientProperties pClientProperties ) {
+    public static XAction getTestSaveServerRequestAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "test",
-                "svgViewer",
-                "/icons/oxygenIcons/SvgMimeType16.png" );
+                                         BUNDLE_NAME,
+                                         "test",
+                                         "saveServerRequest",
+                                         null );
     }
 
-    public static XActionGroup getToolsActionGroup(
-            final ClientProperties pClientProperties,
-            final ToolsActions toolsActions ) {
-        final Collection< Action > toolsActionCollection = toolsActions
-                .getToolsActionCollection( pClientProperties );
+    public static XAction getTestSaveServerResponseAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "test",
+                                         "saveServerResponse",
+                                         null );
+    }
+
+    public static XAction getTestSvgViewerAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "test",
+                                         "svgViewer",
+                                         "/icons/oxygenIcons/SvgMimeType16"
+                                         + ".png" );
+    }
+
+    public static XActionGroup getToolsActionGroup( final ClientProperties pClientProperties,
+                                                    final ToolsActions toolsActions ) {
+        final Collection< Action > toolsActionCollection
+                = toolsActions.getToolsActionCollection( pClientProperties );
 
         return ActionFactory.makeActionGroup( pClientProperties,
-                toolsActionCollection,
-                BUNDLE_NAME,
-                "tools",
-                null );
+                                              toolsActionCollection,
+                                              BUNDLE_NAME,
+                                              "tools",
+                                              null );
     }
 
-    public static XAction getTooltipOptionsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeToggle(
-                pClientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "tooltipOptions",
-                "/icons/yusukeKamiyamane/fugue/TooltipArrow16.png" );
+    public static XAction getTooltipOptionsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeToggle( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "settings",
+                                         "tooltipOptions",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/TooltipArrow16.png" );
     }
 
     public static XAction getViewImportedGraphicsOpacityAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "importedGraphicsOpacity",
-                "/icons/ahaSoft/TransparentColor16.png" );
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "importedGraphicsOpacity",
+                                         "/icons/ahaSoft/TransparentColor16"
+                                         + ".png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getViewRefreshAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "refresh",
-                "/icons/deviantArt/dAKirby309/windows8MetroInvert/PowerRestartInvert16.png" );
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "refresh",
+                                         "/icons/deviantArt/dAKirby309"
+                                         + "/windows8MetroInvert"
+                                         + "/PowerRestartInvert16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getViewResetAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "reset",
-                "/icons/nineteenEightySeven/FormReset16.png" );
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "reset",
+                                         "/icons/nineteenEightySeven"
+                                         + "/FormReset16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getViewShowAxisZeroLinesCheck( final ClientProperties pClientProperties ) {
         return ActionFactory.makeCheck( pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "showAxisZeroLines",
-                "/icons/yusukeKamiyamane/fugue/BorderInside16.png" );
+                                        BUNDLE_NAME,
+                                        "view",
+                                        "showAxisZeroLines",
+                                        "/icons/yusukeKamiyamane/fugue"
+                                        + "/BorderInside16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getViewShowCursorCoordinatesCheck( final ClientProperties pClientProperties ) {
         return ActionFactory.makeCheck( pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "showCursorCoordinates",
-                "/icons/damieng/MapCursor16.png" );
+                                        BUNDLE_NAME,
+                                        "view",
+                                        "showCursorCoordinates",
+                                        "/icons/damieng/MapCursor16.png" );
     }
 
     public static XAction getViewShowImportedGraphicsCheck( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeCheck(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "showImportedGraphics",
-                "/icons/deviantArt/shlyapnikova/blueprint/Blueprint16.png" );
+        return ActionFactory.makeCheck( pClientProperties,
+                                        BUNDLE_NAME,
+                                        "view",
+                                        "showImportedGraphics",
+                                        "/icons/deviantArt/shlyapnikova"
+                                        + "/blueprint/Blueprint16.png" );
     }
 
     public static XAction getViewZoomInAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "zoomIn",
-                "/icons/mhschmieder/ZoomInSmall16.png" );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "zoomIn",
+                                         "/icons/mhschmieder/ZoomInSmall16"
+                                         + ".png" );
     }
 
     public static XAction getViewZoomOutAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "zoomOut",
-                "/icons/mhschmieder/ZoomOutSmall16.png" );
-    }
-
-    public static XAction getStopPlaybackAction(
-            final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "simulation",
-                "stopPlayback",
-                "/icons/mhschmieder/Stop16.png" );
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "zoomOut",
+                                         "/icons/mhschmieder/ZoomOutSmall16"
+                                         + ".png" );
     }
 
-    public static XAction getPlaySimulationAction(
-            final ClientProperties pClientProperties ) {
+    public static XAction getStopPlaybackAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                BUNDLE_NAME,
-                "simulation",
-                "playSimulation",
-                "/icons/mhschmieder/Play16.png" );
+                                         BUNDLE_NAME,
+                                         "simulation",
+                                         "stopPlayback",
+                                         "/icons/mhschmieder/Stop16.png" );
     }
 
-    public static XAction getClearAllOverlaysAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "overlays",
-                "clearOverlays",
-                "/icons/ahaSoft/Clear16.png" );
+    public static XAction getPlaySimulationAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "simulation",
+                                         "playSimulation",
+                                         "/icons/mhschmieder/Play16.png" );
     }
 
-    public static XAction getSaveImageAsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "saveImageAs",
-                "/icons/glyphish/Camera16.png" );
+    public static XAction getClearAllOverlaysAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "overlays",
+                                         "clearOverlays",
+                                         "/icons/ahaSoft/Clear16.png" );
     }
 
-    public static XAction getBatchRunAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "simulation",
-                "batchRun",
-                "/icons/yusukeKamiyamane/fugue/ArrowRepeat16.png" );
+    public static XAction getSaveImageAsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "saveImageAs",
+                                         "/icons/glyphish/Camera16.png" );
     }
 
-    public static XAction getViewDrawingLimitsAction(
-            final ClientProperties clientProperties ) {
+    public static XAction getBatchRunAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "simulation",
+                                         "batchRun",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/ArrowRepeat16.png" );
+    }
+
+    public static XAction getViewDrawingLimitsAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeAction( clientProperties,
-                BUNDLE_NAME,
-                "view",
-                "drawingLimits",
-                "/icons/led24/RulerCrop16.png" );
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "drawingLimits",
+                                         "/icons/led24/RulerCrop16.png" );
     }
 
-    public static XAction getViewZoomToDrawingLimitsAction(
-            final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "zoomToDrawingLimits",
-                "/icons/everaldo/ViewMagFit16.png" );
+    public static XAction getViewZoomToDrawingLimitsAction( final ClientProperties pClientProperties ) {
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "zoomToDrawingLimits",
+                                         "/icons/everaldo/ViewMagFit16.png" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XAction getViewZoomToReferencePlaneAction( final ClientProperties pClientProperties ) {
-        return ActionFactory.makeAction(
-                pClientProperties,
-                BUNDLE_NAME,
-                "view",
-                "zoomToReferencePlane",
-                "/icons/everaldo/ViewMagToReference16.png" );
+        return ActionFactory.makeAction( pClientProperties,
+                                         BUNDLE_NAME,
+                                         "view",
+                                         "zoomToReferencePlane",
+                                         "/icons/everaldo"
+                                         + "/ViewMagToReference16.png" );
     }
 
     public static XAction getShowAWeightedSplValuesCheck( final ClientProperties clientProperties ) {
         return ActionFactory.makeCheck( clientProperties,
-                BUNDLE_NAME,
-                "view",
-                "showAWeightedSplValues",
-                null,
-                true );
+                                        BUNDLE_NAME,
+                                        "view",
+                                        "showAWeightedSplValues",
+                                        null,
+                                        true );
     }
 
     public static XActionGroup getSplPaletteChoiceGroup( final ClientProperties clientProperties,
                                                          final SplPaletteChoices splPaletteChoices ) {
-        final Collection< Action > splPaletteChoiceCollection = splPaletteChoices
-                .getSplPaletteChoiceCollection();
+        final Collection< Action > splPaletteChoiceCollection
+                = splPaletteChoices.getSplPaletteChoiceCollection();
 
-        final XActionGroup splPaletteChoiceGroup = ActionFactory
-                .makeChoiceGroup( clientProperties,
-                        splPaletteChoiceCollection,
-                        BUNDLE_NAME,
-                        "splPalette",
-                        "/icons/led24/Palette16.png" );
+        final XActionGroup splPaletteChoiceGroup
+                = ActionFactory.makeChoiceGroup( clientProperties,
+                                                 splPaletteChoiceCollection,
+                                                 BUNDLE_NAME,
+                                                 "splPalette",
+                                                 "/icons/led24/Palette16.png" );
 
         return splPaletteChoiceGroup;
     }
 
     public static XAction getSplPaletteColor1dbChoice( final ClientProperties clientProperties ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "splPalette", "color1db", null, true );
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "splPalette",
+                                         "color1db",
+                                         null,
+                                         true );
     }
 
     public static XAction getSplPaletteColor2dbChoice( final ClientProperties clientProperties ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "splPalette", "color2db", null, true );
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "splPalette",
+                                         "color2db",
+                                         null,
+                                         true );
     }
 
     public static XAction getSplPaletteColor3dbChoice( final ClientProperties clientProperties ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "splPalette", "color3db", null, true );
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "splPalette",
+                                         "color3db",
+                                         null,
+                                         true );
     }
 
     public static XAction getSplPaletteColors256Choice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "splPalette",
-                "colors256",
-                "/icons/ahaSoft/256Colors16.png",
-                true );
+                                         BUNDLE_NAME,
+                                         "splPalette",
+                                         "colors256",
+                                         "/icons/ahaSoft/256Colors16.png",
+                                         true );
     }
 
     public static XAction getSplPaletteColors64Choice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "splPalette",
-                "colors64",
-                "/icons/ahaSoft/16Colors16.png",
-                true );
+                                         BUNDLE_NAME,
+                                         "splPalette",
+                                         "colors64",
+                                         "/icons/ahaSoft/16Colors16.png",
+                                         true );
     }
 
     public static XAction getSettingsSplRangeAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeAction( clientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "splRange",
-                "/icons/mhschmieder/JetPalette16.png" );
+                                         BUNDLE_NAME,
+                                         "settings",
+                                         "splRange",
+                                         "/icons/mhschmieder/JetPalette16"
+                                         + ".png" );
     }
 
     public static XAction getTestDitheringAmountAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeAction( clientProperties,
-                BUNDLE_NAME,
-                "test",
-                "ditheringAmount",
-                "/icons/yusukeKamiyamane/fugue/ImageBlur16.png" );
-    }
-
-    public static XAction getSmoothingChoice( final ClientProperties clientProperties,
-                                              final String itemName ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "smoothing", itemName, null, true );
+                                         BUNDLE_NAME,
+                                         "test",
+                                         "ditheringAmount",
+                                         "/icons/yusukeKamiyamane/fugue"
+                                         + "/ImageBlur16.png" );
     }
 
     public static XAction getSmoothingNarrowChoice( final ClientProperties clientProperties ) {
         return getSmoothingChoice( clientProperties, "narrow" );
+    }
+
+    public static XAction getSmoothingChoice( final ClientProperties clientProperties,
+                                              final String itemName ) {
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "smoothing",
+                                         itemName,
+                                         null,
+                                         true );
     }
 
     public static XAction getSmoothingSixthOctaveChoice( final ClientProperties clientProperties ) {
@@ -1395,6 +1281,16 @@ public class LabeledActionFactory {
 
     public static XAction getDiv1DbChoice( final ClientProperties clientProperties ) {
         return getDivChoice( clientProperties, "div1db" );
+    }
+
+    public static XAction getDivChoice( final ClientProperties clientProperties,
+                                        final String itemName ) {
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "verticalZoom",
+                                         itemName,
+                                         null,
+                                         true );
     }
 
     public static XAction getDiv2DbChoice( final ClientProperties clientProperties ) {
@@ -1429,14 +1325,18 @@ public class LabeledActionFactory {
         return getDivChoice( clientProperties, "div30db" );
     }
 
-    public static XAction getDivChoice( final ClientProperties clientProperties,
-                                        final String itemName ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "verticalZoom", itemName, null, true );
-    }
-
     public static XAction getHorizontalZoom7msChoice( final ClientProperties clientProperties ) {
         return getHorizontalZoomChoice( clientProperties, "7ms" );
+    }
+
+    public static XAction getHorizontalZoomChoice( final ClientProperties clientProperties,
+                                                   final String itemName ) {
+        return ActionFactory.makeChoice( clientProperties,
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         itemName,
+                                         null,
+                                         true );
     }
 
     public static XAction getHorizontalZoom14msChoice( final ClientProperties clientProperties ) {
@@ -1475,87 +1375,84 @@ public class LabeledActionFactory {
         return getHorizontalZoomChoice( clientProperties, "1120ms" );
     }
 
-    public static XAction getHorizontalZoomChoice( final ClientProperties clientProperties,
-                                                   final String itemName ) {
-        return ActionFactory
-                .makeChoice( clientProperties, BUNDLE_NAME, "horizontalZoom", itemName, null, true );
-    }
-
     public static XAction getZoomFullFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "fullFrequencyRange",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "fullFrequencyRange",
+                                         null,
+                                         true );
     }
 
     public static XAction getZoomLowFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "lowFrequency",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "lowFrequency",
+                                         null,
+                                         true );
     }
 
     public static XAction getZoomLowMidFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "lowMidFrequency",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "lowMidFrequency",
+                                         null,
+                                         true );
     }
 
     public static XAction getZoomMidFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "midFrequency",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "midFrequency",
+                                         null,
+                                         true );
     }
 
     public static XAction getZoomMidHighFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "midHighFrequency",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "midHighFrequency",
+                                         null,
+                                         true );
     }
 
     public static XAction getZoomHighFrequencyRangeChoice( final ClientProperties clientProperties ) {
         return ActionFactory.makeChoice( clientProperties,
-                BUNDLE_NAME,
-                "horizontalZoom",
-                "highFrequency",
-                null,
-                true );
+                                         BUNDLE_NAME,
+                                         "horizontalZoom",
+                                         "highFrequency",
+                                         null,
+                                         true );
     }
+
     public static XAction getNaturalEnvironmentAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeAction( clientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "naturalEnvironment",
-                "/icons/mhschmieder/TemperatureCelsius16.png" );
+                                         BUNDLE_NAME,
+                                         "settings",
+                                         "naturalEnvironment",
+                                         "/icons/mhschmieder"
+                                         + "/TemperatureCelsius16.png" );
     }
 
     public static XAction getUseAirAttenuationAction( final ClientProperties clientProperties ) {
         return ActionFactory.makeCheck( clientProperties,
-                BUNDLE_NAME,
-                "settings",
-                "useAirAttenuation",
-                null );
+                                        BUNDLE_NAME,
+                                        "settings",
+                                        "useAirAttenuation",
+                                        null );
     }
 
     public static XAction getProcessorInvertedCheck( final ClientProperties clientProperties ) {
         return ActionFactory.makeCheck( clientProperties,
-                BUNDLE_NAME,
-                "view",
-                "processorInverted",
-                "/icons/yusukeKamiyamane/Function16.png",
-                true );
+                                        BUNDLE_NAME,
+                                        "view",
+                                        "processorInverted",
+                                        "/icons/yusukeKamiyamane/Function16"
+                                        + ".png",
+                                        true );
     }
 }

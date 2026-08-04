@@ -43,7 +43,7 @@ public class TableControlToolBar extends ToolBar {
 
     // Default constructor
     public TableControlToolBar( final String type,
-    final Orientation orientation ) {
+                                final Orientation orientation ) {
         // Always call the superclass constructor first!
         super();
 
@@ -56,7 +56,7 @@ public class TableControlToolBar extends ToolBar {
     }
 
     private void initToolBar( final String type,
-        final Orientation orientation ) {
+                              final Orientation orientation ) {
         // Make the Nodes for the Tool Bar.
         tableActionButtons = new TableActionButtons( type, orientation );
 
@@ -65,9 +65,8 @@ public class TableControlToolBar extends ToolBar {
 
         // Add all the Nodes to the Tool Bar.
         final ObservableList< Node > nodes = getItems();
-        nodes.addAll(
-            tableActionButtons.addButton,
-            tableActionButtons.removeButton );
+        nodes.addAll( tableActionButtons.addButton,
+                      tableActionButtons.removeButton );
 
         // NOTE: This is a hack until the tool bar's parent node sets its
         //  background and CSS is called to set the custom button colors.

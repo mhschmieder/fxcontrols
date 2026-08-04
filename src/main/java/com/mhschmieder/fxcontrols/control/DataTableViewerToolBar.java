@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Region;
 
@@ -68,9 +69,9 @@ public final class DataTableViewerToolBar extends ToolBar {
         getItems().addAll( _fileActionButtons._fileImportTableDataButton,
                            _fileActionButtons._filePageSetupButton,
                            _fileActionButtons._filePrintButton,
-                           // spacer1,
-                           // _navigationButtons._backButton,
-                           // _navigationButtons._forwardButton );
+                // spacer1,
+                // _navigationButtons._backButton,
+                // _navigationButtons._forwardButton );
                            spacer1 );
     }
 }

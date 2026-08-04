@@ -43,55 +43,62 @@ import java.util.Collection;
 public final class FrequencyRangeHorizontalZoomChoices {
 
     // TODO: Convert these to an enumeration "FrequencyRange".
-    public static final int ZOOM_FULL_RANGE    = 0;
-    public static final int ZOOM_LOW_FREQ      = ZOOM_FULL_RANGE + 1;
-    public static final int ZOOM_LOW_MID_FREQ  = ZOOM_LOW_FREQ + 1;
-    public static final int ZOOM_MID_FREQ      = ZOOM_LOW_MID_FREQ + 1;
+    public static final int ZOOM_FULL_RANGE = 0;
+    public static final int ZOOM_LOW_FREQ = ZOOM_FULL_RANGE + 1;
+    public static final int ZOOM_LOW_MID_FREQ = ZOOM_LOW_FREQ + 1;
+    public static final int ZOOM_MID_FREQ = ZOOM_LOW_MID_FREQ + 1;
     public static final int ZOOM_MID_HIGH_FREQ = ZOOM_MID_FREQ + 1;
-    public static final int ZOOM_HIGH_FREQ     = ZOOM_MID_HIGH_FREQ + 1;
+    public static final int ZOOM_HIGH_FREQ = ZOOM_MID_HIGH_FREQ + 1;
 
     // Declare all of the Frequency Range Horizontal Zoom choices.
-    public XAction          _zoomFullRangeChoice;
-    public XAction          _zoomLowFreqChoice;
-    public XAction          _zoomLowMidFreqChoice;
-    public XAction          _zoomMidFreqChoice;
-    public XAction          _zoomMidHighFreqChoice;
-    public XAction          _zoomHighFreqChoice;
+    public XAction _zoomFullRangeChoice;
+    public XAction _zoomLowFreqChoice;
+    public XAction _zoomLowMidFreqChoice;
+    public XAction _zoomMidFreqChoice;
+    public XAction _zoomMidHighFreqChoice;
+    public XAction _zoomHighFreqChoice;
 
     // Cache the associated choice group, for ease of overall enablement.
-    public XActionGroup     _frequencyRangeHorizontalZoomChoiceGroup;
+    public XActionGroup _frequencyRangeHorizontalZoomChoiceGroup;
 
     // Default constructor
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public FrequencyRangeHorizontalZoomChoices( final ClientProperties clientProperties ) {
-        _zoomFullRangeChoice = LabeledActionFactory
-                .getZoomFullFrequencyRangeChoice( clientProperties );
-        _zoomLowFreqChoice = LabeledActionFactory
-                .getZoomLowFrequencyRangeChoice( clientProperties );
-        _zoomLowMidFreqChoice = LabeledActionFactory
-                .getZoomLowMidFrequencyRangeChoice( clientProperties );
-        _zoomMidFreqChoice = LabeledActionFactory
-                .getZoomMidFrequencyRangeChoice( clientProperties );
-        _zoomMidHighFreqChoice = LabeledActionFactory
-                .getZoomMidHighFrequencyRangeChoice( clientProperties );
-        _zoomHighFreqChoice = LabeledActionFactory
-                .getZoomHighFrequencyRangeChoice( clientProperties );
+        _zoomFullRangeChoice
+                = LabeledActionFactory.getZoomFullFrequencyRangeChoice(
+                clientProperties );
+        _zoomLowFreqChoice
+                = LabeledActionFactory.getZoomLowFrequencyRangeChoice(
+                clientProperties );
+        _zoomLowMidFreqChoice
+                = LabeledActionFactory.getZoomLowMidFrequencyRangeChoice(
+                clientProperties );
+        _zoomMidFreqChoice
+                = LabeledActionFactory.getZoomMidFrequencyRangeChoice(
+                clientProperties );
+        _zoomMidHighFreqChoice
+                = LabeledActionFactory.getZoomMidHighFrequencyRangeChoice(
+                clientProperties );
+        _zoomHighFreqChoice
+                = LabeledActionFactory.getZoomHighFrequencyRangeChoice(
+                clientProperties );
 
-        final Collection< Action > frequencyRangeHorizontalZoomChoiceCollection = Arrays
-                .asList( _zoomFullRangeChoice,
-                         _zoomLowFreqChoice,
-                         _zoomLowMidFreqChoice,
-                         _zoomMidFreqChoice,
-                         _zoomMidHighFreqChoice,
-                         _zoomHighFreqChoice );
+        final Collection< Action > frequencyRangeHorizontalZoomChoiceCollection
+                = Arrays.asList( _zoomFullRangeChoice,
+                                 _zoomLowFreqChoice,
+                                 _zoomLowMidFreqChoice,
+                                 _zoomMidFreqChoice,
+                                 _zoomMidHighFreqChoice,
+                                 _zoomHighFreqChoice );
 
-        _frequencyRangeHorizontalZoomChoiceGroup = ActionFactory
-                .makeChoiceGroup( clientProperties,
-                                 frequencyRangeHorizontalZoomChoiceCollection,
-                                 LabeledActionFactory.BUNDLE_NAME,
-                                 "horizontalZoom",
-                                 "/icons/ahaSoft/LeftRight16.png",
-                                 true );
+        _frequencyRangeHorizontalZoomChoiceGroup
+                = ActionFactory.makeChoiceGroup( clientProperties,
+                                                 frequencyRangeHorizontalZoomChoiceCollection,
+                                                 LabeledActionFactory.BUNDLE_NAME,
+                                                 "horizontalZoom",
+                                                 "/icons/ahaSoft/LeftRight16"
+                                                 + ".png",
+                                                 true );
     }
 
     public XActionGroup getFrequencyRangeHorizontalZoomChoiceGroup() {
@@ -123,34 +130,34 @@ public final class FrequencyRangeHorizontalZoomChoices {
         }
     }
 
-    public void setDisabled( final boolean disabled ) {
-        _frequencyRangeHorizontalZoomChoiceGroup.setDisabled( disabled );
-    }
-
     // Sync up the Horizontal Zoom choice with the current Frequency Range
     // Horizontal Zoom index.
     public void setFrequencyRangeHorizontalZoomIndex( final int frequencyRangeHorizontalZoomIndex ) {
         switch ( frequencyRangeHorizontalZoomIndex ) {
-        case ZOOM_FULL_RANGE:
-            _zoomFullRangeChoice.setSelected( true );
-            break;
-        case ZOOM_LOW_FREQ:
-            _zoomLowFreqChoice.setSelected( true );
-            break;
-        case ZOOM_LOW_MID_FREQ:
-            _zoomLowMidFreqChoice.setSelected( true );
-            break;
-        case ZOOM_MID_FREQ:
-            _zoomMidFreqChoice.setSelected( true );
-            break;
-        case ZOOM_MID_HIGH_FREQ:
-            _zoomMidHighFreqChoice.setSelected( true );
-            break;
-        case ZOOM_HIGH_FREQ:
-            _zoomHighFreqChoice.setSelected( true );
-            break;
-        default:
-            break;
+            case ZOOM_FULL_RANGE:
+                _zoomFullRangeChoice.setSelected( true );
+                break;
+            case ZOOM_LOW_FREQ:
+                _zoomLowFreqChoice.setSelected( true );
+                break;
+            case ZOOM_LOW_MID_FREQ:
+                _zoomLowMidFreqChoice.setSelected( true );
+                break;
+            case ZOOM_MID_FREQ:
+                _zoomMidFreqChoice.setSelected( true );
+                break;
+            case ZOOM_MID_HIGH_FREQ:
+                _zoomMidHighFreqChoice.setSelected( true );
+                break;
+            case ZOOM_HIGH_FREQ:
+                _zoomHighFreqChoice.setSelected( true );
+                break;
+            default:
+                break;
         }
+    }
+
+    public void setDisabled( final boolean disabled ) {
+        _frequencyRangeHorizontalZoomChoiceGroup.setDisabled( disabled );
     }
 }

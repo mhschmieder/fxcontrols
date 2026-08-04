@@ -39,7 +39,8 @@ public class WeightEditor extends DoubleEditor {
     // Store the Weight Unit so we'll know when we need to convert.
     private WeightUnit _weightUnit;
 
-    // //////////////////////////////////////////////////////////////////////////
+    //
+    // ////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
     public WeightEditor( final ClientProperties pClientProperties,
                          final String initialText,
@@ -47,14 +48,7 @@ public class WeightEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal place of precision for displaying
         // weight, and ten decimal places for parsing weight.
-        super( pClientProperties, 
-               initialText, 
-               tooltipText, 
-               true,
-               0, 
-               2, 
-               0, 
-               10 );
+        super( pClientProperties, initialText, tooltipText, true, 0, 2, 0, 10 );
 
         _weightUnit = WeightUnit.defaultValue();
 
@@ -66,33 +60,9 @@ public class WeightEditor extends DoubleEditor {
         }
     }
 
-    // Convert current weight value from display units to kilograms.
-    // NOTE: This method is unused currently, but is provided in case we
-    // change our mind about having the related slider be the data master.
-    public final double getWeightKg() {
-        return UnitConversion.convertWeight( getValue(), _weightUnit, WeightUnit.KILOGRAMS );
-    }
-
     private final void initEditor() {
         // Update the Weight Unit and related resolutions and ranges.
         updateWeightUnit( _weightUnit );
-    }
-
-    // Convert maximum Weight value from kilograms to display units.
-    public final void setMaximumWeightKg( final double maximumWeightKg ) {
-        setMaximumValue( UnitConversion
-                .convertWeight( maximumWeightKg, WeightUnit.KILOGRAMS, _weightUnit ) );
-    }
-
-    // Convert minimum Weight value from kilograms to display units.
-    public final void setMinimumWeightKg( final double minimumWeightKg ) {
-        setMinimumValue( UnitConversion
-                .convertWeight( minimumWeightKg, WeightUnit.KILOGRAMS, _weightUnit ) );
-    }
-
-    // Convert new wWight value from kilograms to display units.
-    public final void setWeightKg( final double weightKg ) {
-        setValue( UnitConversion.convertWeight( weightKg, WeightUnit.KILOGRAMS, _weightUnit ) );
     }
 
     public final void updateWeightUnit( final WeightUnit weightUnit ) {
@@ -101,28 +71,29 @@ public class WeightEditor extends DoubleEditor {
 
         // Set the level of precision based on the granularity of the unit.
         switch ( _weightUnit ) {
-        case KILOGRAMS:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        case GRAMS:
-            _numberFormat.setMaximumFractionDigits( 0 );
-            break;
-        case METRIC_TONS:
-            _numberFormat.setMaximumFractionDigits( 5 );
-            break;
-        case POUNDS:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        case OUNCES:
-            _numberFormat.setMaximumFractionDigits( 1 );
-            break;
-        default:
-            break;
+            case KILOGRAMS:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            case GRAMS:
+                _numberFormat.setMaximumFractionDigits( 0 );
+                break;
+            case METRIC_TONS:
+                _numberFormat.setMaximumFractionDigits( 5 );
+                break;
+            case POUNDS:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            case OUNCES:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            default:
+                break;
         }
 
         // Convert the current weight from previous units to new units.
-        final double weightCurrent = UnitConversion
-                .convertWeight( getValue(), _weightUnit, weightUnit );
+        final double weightCurrent = UnitConversion.convertWeight( getValue(),
+                                                                   _weightUnit,
+                                                                   weightUnit );
 
         // NOTE: Text Editors must set their adjusted range before setting the
         // adjusted current value, as we manage value legality within callbacks
@@ -143,5 +114,35 @@ public class WeightEditor extends DoubleEditor {
 
         // Set the embedded unit label in the generic number textField.
         setMeasurementUnitString( _weightUnit.abbreviation() );
+    }
+
+    // Convert maximum Weight value from kilograms to display units.
+    public final void setMaximumWeightKg( final double maximumWeightKg ) {
+        setMaximumValue( UnitConversion.convertWeight( maximumWeightKg,
+                                                       WeightUnit.KILOGRAMS,
+                                                       _weightUnit ) );
+    }
+
+    // Convert minimum Weight value from kilograms to display units.
+    public final void setMinimumWeightKg( final double minimumWeightKg ) {
+        setMinimumValue( UnitConversion.convertWeight( minimumWeightKg,
+                                                       WeightUnit.KILOGRAMS,
+                                                       _weightUnit ) );
+    }
+
+    // Convert current weight value from display units to kilograms.
+    // NOTE: This method is unused currently, but is provided in case we
+    // change our mind about having the related slider be the data master.
+    public final double getWeightKg() {
+        return UnitConversion.convertWeight( getValue(),
+                                             _weightUnit,
+                                             WeightUnit.KILOGRAMS );
+    }
+
+    // Convert new wWight value from kilograms to display units.
+    public final void setWeightKg( final double weightKg ) {
+        setValue( UnitConversion.convertWeight( weightKg,
+                                                WeightUnit.KILOGRAMS,
+                                                _weightUnit ) );
     }
 }

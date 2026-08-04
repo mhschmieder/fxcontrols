@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,16 +44,15 @@ import javafx.scene.text.TextAlignment;
  * {@code XToggleButton} is an enhancement to {@link ToggleButton} that takes
  * care of some of its anomalies.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class XToggleButton extends ToggleButton {
 
-    protected String    _selectedText;
-    protected String    _deselectedText;
+    protected String _selectedText;
+    protected String _deselectedText;
 
-    protected boolean   _hasGraphics;
+    protected boolean _hasGraphics;
     protected ImageView _selectedIcon;
     protected ImageView _deselectedIcon;
 
@@ -64,26 +64,12 @@ public class XToggleButton extends ToggleButton {
                           final String cssStyleClass,
                           final boolean wrapText,
                           final boolean selected ) {
-        this( null, null, tooltipText, cssStyleClass, true, 1.0d, wrapText, selected );
-    }
-
-    // This is the constructor for cases where the displayed text is not state
-    // dependent (only an icon), and where background color applies a simple
-    // darkening formula to the provided selected color, and foreground colors
-    // are matched automatically by CSS.
-    public XToggleButton( final String selectedText,
-                          final String tooltipText,
-                          final String cssStyleClass,
-                          final boolean applyAspectRatio,
-                          final double aspectRatio,
-                          final boolean wrapText,
-                          final boolean selected ) {
-        this( selectedText,
-              selectedText,
+        this( null,
+              null,
               tooltipText,
               cssStyleClass,
-              applyAspectRatio,
-              aspectRatio,
+              true,
+              1.0d,
               wrapText,
               selected );
     }
@@ -121,14 +107,6 @@ public class XToggleButton extends ToggleButton {
         }
     }
 
-    public final String getDeselectedText() {
-        return _deselectedText;
-    }
-
-    public final String getSelectedText() {
-        return _selectedText;
-    }
-
     private final void initToggleButton( final String tooltipText,
                                          final String cssStyleClass,
                                          final boolean applyAspectRatio,
@@ -161,7 +139,8 @@ public class XToggleButton extends ToggleButton {
         // Use the toggle selected property to modify the background color and
         // the displayed text to match the toggle state, as there are no direct
         // methods in the ToggleButton API to accomplish this.
-        selectedProperty().addListener( ( observableValue, oldValue, newValue ) -> {
+        selectedProperty().addListener( ( observableValue, oldValue,
+                                          newValue ) -> {
             // Set the button label according to state. CSS does the rest.
             Platform.runLater( () -> setToggleAttributes( newValue ) );
         } );
@@ -171,32 +150,68 @@ public class XToggleButton extends ToggleButton {
         setSelected( selected );
     }
 
+    public final void setToggleAttributes( final boolean selected ) {
+        // Set the label according to selection toggle state.
+        final String text = selected
+                            ? _selectedText
+                            : _deselectedText;
+        setText( text );
+
+        // If we are also using graphics, set the appropriate icon.
+        if ( _hasGraphics ) {
+            final ImageView icon = selected
+                                   ? _selectedIcon
+                                   : _deselectedIcon;
+            setGraphic( icon );
+        }
+    }
+
+    // This is the constructor for cases where the displayed text is not state
+    // dependent (only an icon), and where background color applies a simple
+    // darkening formula to the provided selected color, and foreground colors
+    // are matched automatically by CSS.
+    public XToggleButton( final String selectedText,
+                          final String tooltipText,
+                          final String cssStyleClass,
+                          final boolean applyAspectRatio,
+                          final double aspectRatio,
+                          final boolean wrapText,
+                          final boolean selected ) {
+        this( selectedText,
+              selectedText,
+              tooltipText,
+              cssStyleClass,
+              applyAspectRatio,
+              aspectRatio,
+              wrapText,
+              selected );
+    }
+
+    public final String getDeselectedText() {
+        return _deselectedText;
+    }
+
     public final void setDeselectedText( final String deselectedText ) {
         _deselectedText = deselectedText;
     }
 
-    // In some contexts, it helps to have graphics for each state.
-    public final void setIcons( final String selectedJarRelativeImageFilename,
-                                final String deselectedJarRelativeImageFilename ) {
-        _selectedIcon = ImageUtilities.getImageView( selectedJarRelativeImageFilename, true );
-        _deselectedIcon = ImageUtilities.getImageView( deselectedJarRelativeImageFilename, true );
-        _hasGraphics = true;
+    public final String getSelectedText() {
+        return _selectedText;
     }
 
     public final void setSelectedText( final String selectedText ) {
         _selectedText = selectedText;
     }
 
-    public final void setToggleAttributes( final boolean selected ) {
-        // Set the label according to selection toggle state.
-        final String text = selected ? _selectedText : _deselectedText;
-        setText( text );
-
-        // If we are also using graphics, set the appropriate icon.
-        if ( _hasGraphics ) {
-            final ImageView icon = selected ? _selectedIcon : _deselectedIcon;
-            setGraphic( icon );
-        }
+    // In some contexts, it helps to have graphics for each state.
+    public final void setIcons( final String selectedJarRelativeImageFilename,
+                                final String deselectedJarRelativeImageFilename ) {
+        _selectedIcon = ImageUtilities.getImageView(
+                selectedJarRelativeImageFilename,
+                true );
+        _deselectedIcon = ImageUtilities.getImageView(
+                deselectedJarRelativeImageFilename,
+                true );
+        _hasGraphics = true;
     }
-
 }

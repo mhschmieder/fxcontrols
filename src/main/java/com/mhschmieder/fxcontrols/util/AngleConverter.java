@@ -44,7 +44,11 @@ public class AngleConverter extends DoubleConverter {
                            final double minimumValue,
                            final double maximumValue ) {
         // Always call the superclass constructor first!
-        super( measurementUnit, numberFormat, defaultValue, minimumValue, maximumValue );
+        super( measurementUnit,
+               numberFormat,
+               defaultValue,
+               minimumValue,
+               maximumValue );
     }
 
     @Override
@@ -52,7 +56,8 @@ public class AngleConverter extends DoubleConverter {
         try {
             // Make sure to strip the Measurement Unit label before converting
             // to a number.
-            final double editedValue = _numberFormat.parse( string ).doubleValue();
+            final double editedValue = _numberFormat.parse( string )
+                                                    .doubleValue();
 
             // Unwrap the angle based on period, using the established minimum
             // and maximum so that we don't accidentally clamp, but still clamp

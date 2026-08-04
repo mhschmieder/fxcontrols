@@ -32,15 +32,40 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.text.NumberFormatUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.collections.FXCollections;
-import javafx.scene.input.KeyEvent;
 import org.apache.commons.math3.util.FastMath;
 
+import javafx.collections.FXCollections;
+import javafx.scene.input.KeyEvent;
+
 /**
- * This class formalizes aspects of list selection that are specific to
- * long value sets.
+ * This class formalizes aspects of list selection that are specific to long
+ * value sets.
  */
 public class LongSelector extends NumberSelector {
+
+    public LongSelector( final ClientProperties clientProperties,
+                         final boolean useLocale,
+                         final String tooltipText,
+                         final boolean applyToolkitCss,
+                         final boolean editable,
+                         final boolean searchable,
+                         final long minimumValue,
+                         final long maximumValue,
+                         final long increment ) {
+        this( clientProperties,
+              useLocale,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable );
+
+        try {
+            initComboBox( minimumValue, maximumValue, increment );
+        }
+        catch ( final Exception ex ) {
+            ex.printStackTrace();
+        }
+    }
 
     public LongSelector( final ClientProperties clientProperties,
                          final boolean useLocale,
@@ -61,44 +86,21 @@ public class LongSelector extends NumberSelector {
                searchable );
     }
 
-    public LongSelector( final ClientProperties clientProperties,
-                         final boolean useLocale,
-                         final String tooltipText,
-                         final boolean applyToolkitCss,
-                         final boolean editable,
-                         final boolean searchable,
-                         final long minimumValue,
-                         final long maximumValue,
-                         final long increment ) {
-        this( clientProperties, 
-              useLocale, 
-              tooltipText, 
-              applyToolkitCss, 
-              editable, 
-              searchable );
-
-        try {
-            initComboBox( minimumValue, maximumValue, increment );
-        }
-        catch ( final Exception ex ) {
-            ex.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     private final void initComboBox( final long minimumValue,
                                      final long maximumValue,
                                      final long increment ) {
         // Put together the monotonically increasing list of choices.
         // NOTE: Static arrays can't be allocated with sizes that fit in long
         //  vs. int, so we use int here, but we should switch to a collection.
-        final int numberOfChoices = ( int ) FastMath
-                .floor( ( ( maximumValue - minimumValue ) + 1 ) / increment );
+        final int numberOfChoices = ( int ) FastMath.floor(
+                ( ( maximumValue - minimumValue ) + 1 ) / increment );
         final String[] longValues = new String[ numberOfChoices ];
 
         long longValue = minimumValue;
         for ( int i = 0; i < numberOfChoices; i++ ) {
-            longValues[ i ] = NumberFormatUtilities.formatLong( longValue, _numberFormat );
+            longValues[ i ] = NumberFormatUtilities.formatLong( longValue,
+                                                                _numberFormat );
             longValue += increment;
         }
 
@@ -111,8 +113,12 @@ public class LongSelector extends NumberSelector {
 
         // Restrict keyboard input to numerals, sign, and delimiters.
         final String allowedCharacters = ( minimumValue < 0 )
-            ? ( maximumValue > 0 ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( maximumValue > 0 ) ? "[0-9.,+]" : "[0-9.,]";
+                                         ? ( maximumValue > 0 )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( maximumValue > 0 )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
         addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
             if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
                 keyEvent.consume();
@@ -122,14 +128,15 @@ public class LongSelector extends NumberSelector {
 
     public final long getLongValue() {
         final String formattedValue = getValue();
-        final long longValue = NumberFormatUtilities.parseLong( formattedValue, _numberFormat );
+        final long longValue = NumberFormatUtilities.parseLong( formattedValue,
+                                                                _numberFormat );
         return longValue;
     }
 
     public final void setLongValue( final long longValue ) {
-        final String formattedValue = NumberFormatUtilities.formatLong( longValue,
-                                                                        _numberFormat );
+        final String formattedValue = NumberFormatUtilities.formatLong(
+                longValue,
+                _numberFormat );
         setValue( formattedValue );
     }
-
 }

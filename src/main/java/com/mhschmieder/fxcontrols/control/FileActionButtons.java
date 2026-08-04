@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 
 public class FileActionButtons {
@@ -47,15 +48,22 @@ public class FileActionButtons {
     // Default constructor
     public FileActionButtons( final ClientProperties pClientProperties ) {
         // Make the image-based buttons.
-        _fileOpenButton = LabeledControlFactory.getOpenButton( pClientProperties );
-        _fileSaveAsButton = LabeledControlFactory.getSaveAsButton( pClientProperties );
-        _fileImportTableDataButton = LabeledControlFactory
-                .getImportTableDataButton( pClientProperties );
-        _fileImportVectorGraphicsButton = LabeledControlFactory
-                .getImportVectorGraphicsButton( pClientProperties );
-        _fileExportSessionLogButton = LabeledControlFactory
-                .getExportSessionLogButton( pClientProperties );
-        _filePageSetupButton = LabeledControlFactory.getPageSetupButton( pClientProperties );
-        _filePrintButton = LabeledControlFactory.getPrintButton( pClientProperties );
+        _fileOpenButton
+                = LabeledControlFactory.getOpenButton( pClientProperties );
+        _fileSaveAsButton = LabeledControlFactory.getSaveAsButton(
+                pClientProperties );
+        _fileImportTableDataButton
+                = LabeledControlFactory.getImportTableDataButton(
+                pClientProperties );
+        _fileImportVectorGraphicsButton
+                = LabeledControlFactory.getImportVectorGraphicsButton(
+                pClientProperties );
+        _fileExportSessionLogButton
+                = LabeledControlFactory.getExportSessionLogButton(
+                pClientProperties );
+        _filePageSetupButton = LabeledControlFactory.getPageSetupButton(
+                pClientProperties );
+        _filePrintButton = LabeledControlFactory.getPrintButton(
+                pClientProperties );
     }
 }

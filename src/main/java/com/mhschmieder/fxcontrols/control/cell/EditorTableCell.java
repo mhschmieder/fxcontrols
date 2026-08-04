@@ -31,14 +31,15 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.application.Platform;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.application.Platform;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
@@ -49,7 +50,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     // Flag to note whether blank text is allowed or not.
     protected boolean blankTextAllowed;
-    
+
     // Cache the Client Properties as they may be needed after initialization.
     protected ClientProperties clientProperties;
 
@@ -65,7 +66,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
         // Make a custom Text Field control to be used for actual editing.
         textField = makeTextField();
-        
+
         // Initialize the Text Field for editing.
         initTextField();
     }
@@ -101,27 +102,32 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         //  thrown out by the JavaFX core methods. There doesn't appear to be a
         //  workaround, but strangely this doesn't happen if moving focus within
         //  the same row.
-        textField.focusedProperty().addListener( 
-                ( observableValue, wasFocused, isNowFocused ) -> {
-            if ( isNowFocused ) {
-                // Update the displayed text to match the last cached value.
-                updateText();
-            }
-            else {
-                // Commit the current selection as-is, without giving up focus.
-                textField.commitValue();
+        textField.focusedProperty()
+                 .addListener( ( observableValue, wasFocused, isNowFocused ) -> {
+                     if ( isNowFocused ) {
+                         // Update the displayed text to match the last
+                         // cached value.
+                         updateText();
+                     }
+                     else {
+                         // Commit the current selection as-is, without
+                         // giving up focus.
+                         textField.commitValue();
 
-                // Save edits from the Text Field to the property bean.
-                saveEdits();
+                         // Save edits from the Text Field to the property bean.
+                         saveEdits();
 
-                // Post-process after caching the new value, due to order
-                // dependency of the text adjustments in various callbacks.
-                Platform.runLater( () -> {
-                    // Update the displayed text to match the last cached value.
-                    updateText();
-                } );
-            }
-        } );
+                         // Post-process after caching the new value, due to
+                         // order
+                         // dependency of the text adjustments in various
+                         // callbacks.
+                         Platform.runLater( () -> {
+                             // Update the displayed text to match the last
+                             // cached value.
+                             updateText();
+                         } );
+                     }
+                 } );
 
         // NOTE: We must manually handle the ENTER key in order to save edits
         //  and release editing focus, but the ESCAPE key seems to be handled
@@ -129,35 +135,41 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         textField.setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
-            case ENTER:
-                // NOTE: Nothing to do, as ENTER is best handled via onAction.
-                break;
-            case ESCAPE:
-                // Revert to the most recent committed value.
-                textField.cancelEdit();
+                case ENTER:
+                    // NOTE: Nothing to do, as ENTER is best handled via
+                    // onAction.
+                    break;
+                case ESCAPE:
+                    // Revert to the most recent committed value.
+                    textField.cancelEdit();
 
-                // Post-process after caching the reverted value, due to order
-                // dependency of the text adjustments in various callbacks.
-                Platform.runLater( () -> {
-                    // Update the displayed text to match the reverted value.
-                    updateText();
+                    // Post-process after caching the reverted value, due to
+                    // order
+                    // dependency of the text adjustments in various callbacks.
+                    Platform.runLater( () -> {
+                        // Update the displayed text to match the reverted
+                        // value.
+                        updateText();
 
-                    // Reselect the updated text, to mimic Focus Gained.
-                    textField.selectAll();
-                } );
+                        // Reselect the updated text, to mimic Focus Gained.
+                        textField.selectAll();
+                    } );
 
-                break;
-            case TAB:
-                // NOTE: Nothing to do, as Text Input Controls commit edits and
-                //  then release focus when the TAB key is pressed, so the Focus
-                //  Lost handler is where value restrictions should be applied.
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                    break;
+                case TAB:
+                    // NOTE: Nothing to do, as Text Input Controls commit
+                    // edits and
+                    //  then release focus when the TAB key is pressed, so
+                    //  the Focus
+                    //  Lost handler is where value restrictions should be
+                    //  applied.
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
-        
+
         // Make sure the item property is clamped to allowed values, then
         // update the text field to be in sync with the adjusted value.
         itemProperty().addListener( ( observableValue, oldValue, newValue ) -> {
@@ -170,10 +182,12 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             }
         } );
     }
-    
-    protected TextField makeTextField() {
-        // Default implementation in case of no downstream override.
-        return new TextField();
+
+    // NOTE: The execution order below is the only one that works dependably
+    //  for all contexts (focus via mouse, TAB, ENTER).
+    private final void saveEdits() {
+        // Potentially adjust the current edits from the Text Field.
+        adjustValue();
     }
 
     public final void adjustValue() {
@@ -184,41 +198,6 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         setValue( adjustedValue );
     }
 
-    @Override
-    public void cancelEdit() {
-        super.cancelEdit();
-
-        // Return to a state of displaying values vs. editing text.
-        endEdits();
-        
-        //setContentDisplay( ContentDisplay.TEXT_ONLY );
-    }
-
-    // NOTE: This should be overridden by derived classes, as only those can
-    // know the context-specific business logic of when to allow empty fields.
-    @Override
-    public void commitEdit( final VT newValue ) {
-        // Deal with the default behavior before our specialized handling.
-        super.commitEdit( newValue );
-
-        // Return to a state of displaying values vs. editing text.
-        endEdits();
-    }
-
-    private final void endEdits() {
-        // Get the last cached item value as text.
-        final String textValue = getTextValue();
-
-        // Make sure the cached text value matches the cached item value.
-        setText( textValue );
-
-        // Do not show the Text Field when committing or canceling edits, or
-        // when updating cached items from edit actions, as it is only needed
-        // during active editing vs. when displaying committed or reverted
-        // item values.
-        setGraphic( null );
-    }
-
     public final VT getAdjustedValue() {
         // Get the current displayed value of the Text Editor.
         final VT editorValue = getEditorValue();
@@ -226,7 +205,9 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         // If the text was left blank, and blank text is allowed, return a null
         // type; otherwise return with the current cached value.
         if ( ( editorValue == null ) ) {
-            return blankTextAllowed ? null : getItem();
+            return blankTextAllowed
+                   ? null
+                   : getItem();
         }
 
         // Potentially adjust the current edits from the Text Field.
@@ -243,8 +224,20 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     protected abstract VT getEditorValue();
 
+    public final void updateText() {
+        // Get the most recently committed value.
+        final String currentValue = getString();
+
+        // Always check for invalid, incomplete, null, or empty values.
+        if ( ( currentValue != null ) && ( !currentValue.trim().isEmpty()
+                                           || blankTextAllowed ) ) {
+            // Update the text textField to match the last valid cached value.
+            textField.setText( currentValue );
+        }
+    }
+
     // TODO: Replace this with a JavaFX StringConverter initialization.
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     protected String getString() {
         final VT storedValue = getItem();
         if ( storedValue == null ) {
@@ -256,13 +249,9 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         return stringValue;
     }
 
-    protected abstract String getTextValue();
-
-    // NOTE: The execution order below is the only one that works dependably
-    //  for all contexts (focus via mouse, TAB, ENTER).
-    private final void saveEdits() {
-        // Potentially adjust the current edits from the Text Field.
-        adjustValue();
+    protected TextField makeTextField() {
+        // Default implementation in case of no downstream override.
+        return new TextField();
     }
 
     @Override
@@ -287,11 +276,48 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
             // Select the updated text, to make it obvious we started editing.
             //Platform.runLater( () -> {
-                //textField.requestFocus();
-                textField.selectAll();
+            //textField.requestFocus();
+            textField.selectAll();
             //} );
         }
     }
+
+    // NOTE: This should be overridden by derived classes, as only those can
+    // know the context-specific business logic of when to allow empty fields.
+    @Override
+    public void commitEdit( final VT newValue ) {
+        // Deal with the default behavior before our specialized handling.
+        super.commitEdit( newValue );
+
+        // Return to a state of displaying values vs. editing text.
+        endEdits();
+    }
+
+    @Override
+    public void cancelEdit() {
+        super.cancelEdit();
+
+        // Return to a state of displaying values vs. editing text.
+        endEdits();
+
+        //setContentDisplay( ContentDisplay.TEXT_ONLY );
+    }
+
+    private final void endEdits() {
+        // Get the last cached item value as text.
+        final String textValue = getTextValue();
+
+        // Make sure the cached text value matches the cached item value.
+        setText( textValue );
+
+        // Do not show the Text Field when committing or canceling edits, or
+        // when updating cached items from edit actions, as it is only needed
+        // during active editing vs. when displaying committed or reverted
+        // item values.
+        setGraphic( null );
+    }
+
+    protected abstract String getTextValue();
 
     private final void updateEdits() {
         // When we start or update editing, we need the Text Field to match and
@@ -305,7 +331,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
     }
 
     @Override
-    public void updateItem( final VT item, final boolean empty ) {
+    public void updateItem( final VT item,
+                            final boolean empty ) {
         // Make sure the table cell knows the current selected item.
         // NOTE: We have to override the value of "empty" to overcome flaws in
         //  inaccessible private methods of the JavaFX base class that prevents
@@ -336,19 +363,6 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         }
     }
 
-    public final void updateText() {
-        // Get the most recently committed value.
-        final String currentValue = getString();
-
-        // Always check for invalid, incomplete, null, or empty values.
-        if ( ( currentValue != null ) 
-                && ( !currentValue.trim().isEmpty() 
-                        || blankTextAllowed ) ) {
-            // Update the text textField to match the last valid cached value.
-            textField.setText( currentValue );
-        }
-    }
-
     private TableColumn< RT, ? > getNextColumn( final boolean forward ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
         for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
@@ -367,7 +381,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             if ( nextIndex > columns.size() - 1 ) {
                 nextIndex = 0;
             }
-        } else {
+        }
+        else {
             nextIndex--;
             if ( nextIndex < 0 ) {
                 nextIndex = columns.size() - 1;
@@ -384,35 +399,36 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         int newRow = currentRow;
         int newColumn = 0;
 
-        List< TableColumn< RT, ?>> columns = new ArrayList<>();
+        List< TableColumn< RT, ? > > columns = new ArrayList<>();
         for ( TableColumn< RT, ? > column : getTableView().getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
-        
+
         int currentColumn = columns.indexOf( getTableColumn() );
         newColumn = currentColumn;
 
         if ( currentColumn == 0 && currentRow == 0 && !forward ) {
-            System.out.println("not moving : cant go backward");
+            System.out.println( "not moving : cant go backward" );
             return null;
         }
 
-        if ( currentColumn == columnCount-1 && currentRow == rowCount-1 && forward ) {
-            System.out.println("not moving : cant go forward");
+        if ( currentColumn == columnCount - 1 && currentRow == rowCount - 1
+             && forward ) {
+            System.out.println( "not moving : cant go forward" );
             return null;
         }
 
         if ( forward ) {
-            if ( currentColumn == columnCount-1 ) {
+            if ( currentColumn == columnCount - 1 ) {
                 newColumn = 0;
-                newRow ++;
+                newRow++;
             }
             else {
                 newColumn++;
             }
         }
         else {
-            if  (currentColumn == 0 ) {
+            if ( currentColumn == 0 ) {
                 newRow--;
                 newColumn = columnCount - 1;
             }
@@ -421,13 +437,15 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             }
         }
 
-        System.out.println("from "+currentColumn+","+currentRow+" to "+newColumn+","+newRow+"");
+        System.out.println(
+                "from " + currentColumn + "," + currentRow + " to " + newColumn
+                + "," + newRow + "" );
 
-        return new Point( newColumn,newRow );
+        return new Point( newColumn, newRow );
     }
 
-    private List< TableColumn< RT, ? > > getLeaves(
-            final TableColumn< RT, ? > root ) {
+    private List< TableColumn< RT, ? > > getLeaves( final TableColumn< RT,
+            ? > root ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
         if ( root.getColumns().isEmpty() ) {
             // We only want the leaves that are editable, for tab traversal.
@@ -436,11 +454,11 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
             }
             return columns;
         }
-        
+
         for ( TableColumn< RT, ? > column : root.getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
-        
+
         return columns;
     }
 }

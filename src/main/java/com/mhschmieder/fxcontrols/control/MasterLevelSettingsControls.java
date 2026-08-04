@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 
@@ -39,11 +40,11 @@ public final class MasterLevelSettingsControls {
     public static final double GAIN_MINIMUM_DB = Double.NEGATIVE_INFINITY;
     public static final double GAIN_MAXIMUM_DB = 0.0d;
 
-    public ToggleButton        _polarityToggleButton;
-    public GainEditor          _gainEditor;
-    public ToggleButton        _muteToggleButton;
+    public ToggleButton _polarityToggleButton;
+    public GainEditor _gainEditor;
+    public ToggleButton _muteToggleButton;
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public MasterLevelSettingsControls( final ClientProperties clientProperties,
                                         final boolean defaultToNegativeGain,
                                         final boolean channelStripContext ) {
@@ -51,18 +52,18 @@ public final class MasterLevelSettingsControls {
         super();
 
         _polarityToggleButton = LabeledControlFactory.getPolarityToggleButton(
-                true, false );
+                true,
+                false );
 
-        _gainEditor = ControlFactory.getGainEditor(
-                clientProperties,
-                " dB",
-                GAIN_MINIMUM_DB,
-                GAIN_MAXIMUM_DB,
-                0.0d,
-                defaultToNegativeGain );
+        _gainEditor = ControlFactory.getGainEditor( clientProperties,
+                                                    " dB",
+                                                    GAIN_MINIMUM_DB,
+                                                    GAIN_MAXIMUM_DB,
+                                                    0.0d,
+                                                    defaultToNegativeGain );
 
-        _muteToggleButton = LabeledControlFactory.getMuteToggleButton(
-                true, false );
+        _muteToggleButton = LabeledControlFactory.getMuteToggleButton( true,
+                                                                       false );
 
         // Try to get the buttons to be as tall as possible.
         GridPane.setFillHeight( _polarityToggleButton, true );
@@ -78,8 +79,10 @@ public final class MasterLevelSettingsControls {
         // Make sure all the buttons stretch to match the height of the first
         // button in layout order (forward references do not apply the match).
         if ( channelStripContext ) {
-            _gainEditor.prefHeightProperty().bind( _polarityToggleButton.heightProperty() );
-            _muteToggleButton.prefHeightProperty().bind( _polarityToggleButton.heightProperty() );
+            _gainEditor.prefHeightProperty()
+                       .bind( _polarityToggleButton.heightProperty() );
+            _muteToggleButton.prefHeightProperty()
+                             .bind( _polarityToggleButton.heightProperty() );
         }
     }
 }

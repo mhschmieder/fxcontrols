@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.LayerManagerActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ToolBar;
@@ -42,7 +43,7 @@ import javafx.scene.layout.Region;
 public final class LayerManagerToolBar extends ToolBar {
 
     // Declare all of the Tool Bar Nodes.
-    public PredictButtons     _predictButtons;
+    public PredictButtons _predictButtons;
     public LayerActionButtons _layerActionButtons;
 
     // Default constructor
@@ -52,7 +53,7 @@ public final class LayerManagerToolBar extends ToolBar {
         super();
 
         try {
-            initToolBar( pClientProperties, layerManagerActions);
+            initToolBar( pClientProperties, layerManagerActions );
         }
         catch ( final Exception ex ) {
             ex.printStackTrace();
@@ -62,9 +63,8 @@ public final class LayerManagerToolBar extends ToolBar {
     private void initToolBar( final ClientProperties pClientProperties,
                               final LayerManagerActions layerManagerActions ) {
         // Make the Nodes for the Tool Bar.
-        _predictButtons = new PredictButtons(
-                pClientProperties,
-                layerManagerActions.simulationActions );
+        _predictButtons = new PredictButtons( pClientProperties,
+                                              layerManagerActions.simulationActions );
         _layerActionButtons = new LayerActionButtons();
 
         // Add some spacers to separate logical groupings.
@@ -86,5 +86,4 @@ public final class LayerManagerToolBar extends ToolBar {
         // Forward this method to the Layer Control Button Group.
         _layerActionButtons.setLayerDeleteEnabled( layerDeleteEnabled );
     }
-
 }

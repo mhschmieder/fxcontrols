@@ -32,7 +32,7 @@
 /*
  * Style sheet for default fonts, specific to macOS.
  */
- 
+
 /*******************************************************************************
  *                                                                             *
  * The .root section provides the overall default fonts used by the rest of    *
@@ -46,7 +46,7 @@
  */
 .root {
     -fx-font-family: 'sans-serif';
-    -fx-font-size: 0.833333em; 
+    -fx-font-size: 0.833333em;
 }
 
 /*******************************************************************************
@@ -70,5 +70,5 @@
 .chart-title {
     -fx-font-family: 'sans-serif';
     -fx-font-size: 1.166666em;
-	-fx-font-weight: bold;
+    -fx-font-weight: bold;
 }

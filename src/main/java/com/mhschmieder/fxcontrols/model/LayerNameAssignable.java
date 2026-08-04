@@ -39,5 +39,4 @@ public interface LayerNameAssignable {
     String getLayerName();
 
     void setLayerName( final String pLayerName );
-
 }

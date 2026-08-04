@@ -48,16 +48,15 @@ public class ToolsActions {
     public XAction csvViewerAction;
 
     public ToolsActions( final ClientProperties pClientProperties ) {
-        projectReportAction = LabeledActionFactory.getProjectReportAction( 
+        projectReportAction = LabeledActionFactory.getProjectReportAction(
                 pClientProperties );
-        csvViewerAction = LabeledActionFactory.getCsvViewerAction( 
+        csvViewerAction = LabeledActionFactory.getCsvViewerAction(
                 pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
     //  additions.
-    public Collection< Action > getToolsActionCollection( 
-            final ClientProperties pClientProperties ) {
+    public Collection< Action > getToolsActionCollection( final ClientProperties pClientProperties ) {
         final Collection< Action > toolsActionCollection = new ArrayList<>();
 
         toolsActionCollection.add( projectReportAction );

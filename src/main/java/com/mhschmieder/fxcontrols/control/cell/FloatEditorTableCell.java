@@ -32,13 +32,15 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.FloatEditor;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.List;
+
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.scene.control.TextField;
 
-import java.util.List;
-
-public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Float > {
+public class FloatEditorTableCell< RT, VT >
+        extends NumberEditorTableCell< RT, Float > {
 
     // Cache the raw Float representation of the data cachedValue.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
@@ -63,22 +65,16 @@ public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, F
         _numberFormat.setParseIntegerOnly( false );
     }
 
-   
-    @Override
-    protected TextField makeTextField() {
-        return new FloatEditor(
-            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4);
-    }
-
     @Override
     protected Float getEditorValue() {
         final String textValue = textField.getText();
         if ( textValue == null ) {
             return null;
         }
-        
-        final float floatValue = ( ( FloatEditor ) textField ).fromString( textValue );
-        
+
+        final float floatValue = ( ( FloatEditor ) textField ).fromString(
+                textValue );
+
         return Float.valueOf( floatValue );
     }
 
@@ -88,13 +84,25 @@ public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, F
         if ( floatValue == null ) {
             return "";
         }
-        
+
         // This text goes to the editor, so we don't want to clutter the user's
         // editing session with measurement units, but do need localization.
-        final String stringValue 
-            = ( ( FloatEditor ) textField ).toFormattedString( floatValue );
-        
+        final String stringValue
+                = ( ( FloatEditor ) textField ).toFormattedString( floatValue );
+
         return stringValue;
+    }
+
+    @Override
+    protected TextField makeTextField() {
+        return new FloatEditor( clientProperties,
+                                "0",
+                                "",
+                                blankTextAllowed,
+                                0,
+                                2,
+                                0,
+                                4 );
     }
 
     @Override
@@ -103,9 +111,10 @@ public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, F
         if ( floatValue == null ) {
             return "";
         }
-        
-        final String textValue = ( ( FloatEditor ) textField ).toString( floatValue );
-        
+
+        final String textValue = ( ( FloatEditor ) textField ).toString(
+                floatValue );
+
         return textValue;
     }
 
@@ -125,7 +134,7 @@ public class FloatEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, F
     public final float getCachedValue() {
         return cachedValue.get();
     }
-    
+
     public final void setCachedValue( final float pCachedValue ) {
         // Locally cache the new cachedValue, separately from the textField.
         cachedValue.set( pCachedValue );

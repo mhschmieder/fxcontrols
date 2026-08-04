@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxgraphics.canvas.ResizableCanvas;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
@@ -38,13 +39,13 @@ public class ColorTableCell< C > extends XTableCell< C, Color > {
 
     private Canvas canvas;
 
-    public ColorTableCell(final double width,
-                          final double height ) {
+    public ColorTableCell( final double width,
+                           final double height ) {
         // Always call the superclass constructor first!
         super();
 
-        this.setWidth(width);
-        this.setHeight(height);
+        this.setWidth( width );
+        this.setHeight( height );
 
         canvas = new ResizableCanvas();
     }
@@ -59,12 +60,11 @@ public class ColorTableCell< C > extends XTableCell< C, Color > {
         }
 
         // TODO: Make a utility for this, as it likely is usable elsewhere too.
-        canvas.getGraphicsContext2D().clearRect(
-                0, 0, getWidth(), getHeight() );
+        canvas.getGraphicsContext2D()
+              .clearRect( 0, 0, getWidth(), getHeight() );
         canvas.resize( getWidth(), getHeight() );
         canvas.getGraphicsContext2D().setFill( item );
-        canvas.getGraphicsContext2D().fillRect(
-                0, 0, getWidth(), getHeight() );
+        canvas.getGraphicsContext2D().fillRect( 0, 0, getWidth(), getHeight() );
         setGraphic( canvas );
     }
 }

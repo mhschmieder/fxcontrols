@@ -35,47 +35,47 @@ import com.mhschmieder.fxcontrols.action.NaturalEnvironmentActions;
 import com.mhschmieder.fxcontrols.action.Region2DActions;
 import com.mhschmieder.fxcontrols.action.XActionUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.control.MenuBar;
 import org.controlsfx.control.action.Action;
 
 import java.util.Collection;
+
+import javafx.scene.control.MenuBar;
 
 /**
  * This is a factory class for generating Menus for CAD.
  */
 public final class MenuFactory {
 
-    public static MenuBar getLayerManagerMenuBar(
-            final ClientProperties pClientProperties,
-            final LayerManagerActions layerManagerActions ) {
+    public static MenuBar getLayerManagerMenuBar( final ClientProperties pClientProperties,
+                                                  final LayerManagerActions layerManagerActions ) {
         final Collection< Action > layerManagerMenuBarActionCollection
-                = layerManagerActions
-                .getLayerManagerMenuBarActionCollection( pClientProperties );
+                = layerManagerActions.getLayerManagerMenuBarActionCollection(
+                pClientProperties );
         return XActionUtilities.createMenuBar(
                 layerManagerMenuBarActionCollection );
     }
 
-    public static MenuBar getRegion2DMenuBar(
-            final ClientProperties pClientProperties,
-            final Region2DActions region2DActions,
-            final boolean vectorGraphicsSupported ) {
+    public static MenuBar getRegion2DMenuBar( final ClientProperties pClientProperties,
+                                              final Region2DActions region2DActions,
+                                              final boolean vectorGraphicsSupported ) {
         final Collection< Action > region2DMenuBarActionCollection
                 = region2DActions.getRegion2DMenuBarActionCollection(
-                        pClientProperties,  vectorGraphicsSupported );
-        final MenuBar region2DMenuBar = XActionUtilities
-                .createMenuBar( region2DMenuBarActionCollection );
+                pClientProperties,
+                vectorGraphicsSupported );
+        final MenuBar region2DMenuBar = XActionUtilities.createMenuBar(
+                region2DMenuBarActionCollection );
         return region2DMenuBar;
     }
 
-    public static MenuBar getNaturalEnvironmentMenuBar(
-            final ClientProperties pClientProperties,
-            final NaturalEnvironmentActions naturalEnvironmentActions ) {
+    public static MenuBar getNaturalEnvironmentMenuBar( final ClientProperties pClientProperties,
+                                                        final NaturalEnvironmentActions naturalEnvironmentActions ) {
         final Collection< Action > naturalEnvironmentMenuBarActionCollection
-                = naturalEnvironmentActions
-                .getNaturalEnvironmentMenuBarActionCollection(
-                        pClientProperties );
-        final MenuBar naturalEnvironmentMenuBar = XActionUtilities
-                .createMenuBar( naturalEnvironmentMenuBarActionCollection );
+                =
+                naturalEnvironmentActions.getNaturalEnvironmentMenuBarActionCollection(
+                pClientProperties );
+        final MenuBar naturalEnvironmentMenuBar
+                = XActionUtilities.createMenuBar(
+                naturalEnvironmentMenuBarActionCollection );
         return naturalEnvironmentMenuBar;
     }
 }

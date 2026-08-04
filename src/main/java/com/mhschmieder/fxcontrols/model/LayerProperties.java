@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.jcommons.lang.LabeledObject;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -46,8 +47,8 @@ import javafx.scene.paint.Color;
  * binding to related GUI controls purposes; there is a non-observable Layer
  * class in the graphics library for Layer Management, for most other purposes.
  */
-public final class LayerProperties implements Comparable< LayerProperties >,
-    LabeledObject {
+public final class LayerProperties
+        implements Comparable< LayerProperties >, LabeledObject {
 
     private final StringProperty layerName;
     private final ObjectProperty< Color > layerColor;
@@ -85,16 +86,16 @@ public final class LayerProperties implements Comparable< LayerProperties >,
         return thisLayerName.compareTo( otherLayerName );
     }
 
-    public StringProperty layerNameProperty() {
-        return layerName;
-    }
-
     public String getLayerName() {
         return layerName.get();
     }
 
     public void setLayerName( final String pLayerName ) {
         layerName.set( pLayerName );
+    }
+
+    public StringProperty layerNameProperty() {
+        return layerName;
     }
 
     public ObjectProperty< Color > layerColorProperty() {

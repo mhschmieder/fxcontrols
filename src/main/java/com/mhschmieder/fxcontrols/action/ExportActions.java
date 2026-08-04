@@ -50,16 +50,20 @@ public class ExportActions {
     public XAction _exportRenderedGraphicsAction;
 
     public ExportActions( final ClientProperties pClientProperties ) {
-        _exportTableDataAction = LabeledActionFactory
-                .getExportTableDataAction( pClientProperties );
-        _exportSpreadsheetDataAction = LabeledActionFactory
-                .getExportSpreadsheetDataAction( pClientProperties );
-        _exportRasterGraphicsAction = LabeledActionFactory
-                .getExportRasterGraphicsAction( pClientProperties );
-        _exportVectorGraphicsAction = LabeledActionFactory
-                .getExportVectorGraphicsAction( pClientProperties );
-        _exportRenderedGraphicsAction = LabeledActionFactory
-                .getExportRenderedGraphicsAction( pClientProperties );
+        _exportTableDataAction = LabeledActionFactory.getExportTableDataAction(
+                pClientProperties );
+        _exportSpreadsheetDataAction
+                = LabeledActionFactory.getExportSpreadsheetDataAction(
+                pClientProperties );
+        _exportRasterGraphicsAction
+                = LabeledActionFactory.getExportRasterGraphicsAction(
+                pClientProperties );
+        _exportVectorGraphicsAction
+                = LabeledActionFactory.getExportVectorGraphicsAction(
+                pClientProperties );
+        _exportRenderedGraphicsAction
+                = LabeledActionFactory.getExportRenderedGraphicsAction(
+                pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
@@ -71,8 +75,9 @@ public class ExportActions {
         // TODO: Pass in flags to conditionally add table and spreadsheet data.
         exportActionCollection.add( _exportTableDataAction );
         exportActionCollection.add( _exportSpreadsheetDataAction );
-        
-        // Raster Graphics generally correspond to a JavaFX-generated screenshot.
+
+        // Raster Graphics generally correspond to a JavaFX-generated
+        // screenshot.
         exportActionCollection.add( _exportRasterGraphicsAction );
 
         if ( vectorGraphicsSupported ) {
@@ -82,7 +87,7 @@ public class ExportActions {
         if ( renderedGraphicsSupported ) {
             exportActionCollection.add( _exportRenderedGraphicsAction );
         }
-        
+
         // TODO: Pass a flag so it doesn't get added at all unless needed.
         _exportTableDataAction.setDisabled( true );
         _exportSpreadsheetDataAction.setDisabled( true );

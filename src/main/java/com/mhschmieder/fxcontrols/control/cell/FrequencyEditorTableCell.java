@@ -34,25 +34,27 @@ import com.mhschmieder.fxcontrols.control.ControlFactory;
 import com.mhschmieder.fxcontrols.control.FrequencyEditor;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jmath.MathUtilities;
-import javafx.scene.control.TextField;
 import org.apache.commons.math3.util.FastMath;
 
 import java.util.List;
 
+import javafx.scene.control.TextField;
+
 public class FrequencyEditorTableCell< RT, VT >
         extends DoubleEditorTableCell< RT, Double > {
-    
+
     // Declare default value for precision cutoff frequency.
     public static final double PRECISION_CUTOFF_FREQUENCY_DEFAULT_HZ = 100.0d;
-    
-    // Declare default value for number of decimal places precision (when active).
+
+    // Declare default value for number of decimal places precision (when
+    // active).
     public static final int NUMBER_OF_DECIMAL_PLACES_DEFAULT = 1;
-    
+
     /**
      * Precision cutoff frequency for using integers vs. decimal places.
      */
     protected double precisionCutoffFrequencyHz;
-    
+
     /**
      * The number of decimal places to use for display purposes, when active.
      */
@@ -66,8 +68,8 @@ public class FrequencyEditorTableCell< RT, VT >
     public FrequencyEditorTableCell( final List< Integer > pUneditableRows,
                                      final boolean pAllowedToBeBlank,
                                      final ClientProperties pClientProperties ) {
-        this( pUneditableRows, 
-              pAllowedToBeBlank, 
+        this( pUneditableRows,
+              pAllowedToBeBlank,
               PRECISION_CUTOFF_FREQUENCY_DEFAULT_HZ,
               NUMBER_OF_DECIMAL_PLACES_DEFAULT,
               pClientProperties );
@@ -79,20 +81,19 @@ public class FrequencyEditorTableCell< RT, VT >
                                      final int pNumberOfDecimalPlaces,
                                      final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows, 
-               pAllowedToBeBlank, 
-               pClientProperties );
-        
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
+
         precisionCutoffFrequencyHz = pPrecisionCutoffFrequencyHz;
         numberOfDecimalPlaces = pNumberOfDecimalPlaces;
-        
+
         // NOTE: As the superclass constructor calls makeTextField() before we
         //  have had a chance to set class-specific variables, we must forward
         //  those values to the associated TextField instance now.
-        final FrequencyEditor frequencyEditor = ( FrequencyEditor) textField;
-        frequencyEditor.setPrecisionCutoffFrequencyHz( pPrecisionCutoffFrequencyHz );
+        final FrequencyEditor frequencyEditor = ( FrequencyEditor ) textField;
+        frequencyEditor.setPrecisionCutoffFrequencyHz(
+                pPrecisionCutoffFrequencyHz );
         frequencyEditor.setNumberOfDecimalPlaces( pNumberOfDecimalPlaces );
-        
+
         // NOTE: For now, we don't support conversion to and from kHz.
         setMeasurementUnit( " Hz" );
     }
@@ -101,37 +102,39 @@ public class FrequencyEditorTableCell< RT, VT >
      * Returns a FrequencyEditor to do the actual editing for this table cell.
      * <p>
      * NOTE: As this is called by the superclass constructor before all local
-     *  fields are initialized, we must reset the extra fields on the TextField
-     *  instance in this class's constructor after the super-constructor call.
-     * 
-     * @return a FrequencyEditor instance that matches the table cell's settings
+     * fields are initialized, we must reset the extra fields on the TextField
+     * instance in this class's constructor after the super-constructor call.
+     *
+     * @return a FrequencyEditor instance that matches the table cell's
+     *         settings
      */
     @Override
     protected TextField makeTextField() {
-        final FrequencyEditor frequencyEditor = ControlFactory
-                .getFrequencyEditor(
-            clientProperties, 
-            "", 
-            " Hz", 
-            0.0d, 
-            200000.0d, 
-            0.0d,
-            precisionCutoffFrequencyHz,
-            numberOfDecimalPlaces );
+        final FrequencyEditor frequencyEditor
+                = ControlFactory.getFrequencyEditor( clientProperties,
+                                                     "",
+                                                     " Hz",
+                                                     0.0d,
+                                                     200000.0d,
+                                                     0.0d,
+                                                     precisionCutoffFrequencyHz,
+                                                     numberOfDecimalPlaces );
 
         // In the table cell context, as each row may have different
         // restrictions, it is best to say "N/A" if NaN is encountered or other
         // cues that this cell should be uneditable and maybe disabled as well.
         frequencyEditor.setErrorText( "N/A" );
-        
+
         return frequencyEditor;
     }
 
     public double adjustPrecision( final double doubleValue ) {
-        final double precisionAdjustedValue 
-            = ( doubleValue >= precisionCutoffFrequencyHz )
-            ? FastMath.round( doubleValue )
-            : MathUtilities.roundDecimal( doubleValue, numberOfDecimalPlaces );
+        final double precisionAdjustedValue = ( doubleValue
+                                                >= precisionCutoffFrequencyHz )
+                                              ? FastMath.round( doubleValue )
+                                              : MathUtilities.roundDecimal(
+                                                      doubleValue,
+                                                      numberOfDecimalPlaces );
         return precisionAdjustedValue;
     }
 }

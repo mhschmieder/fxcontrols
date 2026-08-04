@@ -49,13 +49,13 @@ public final class ProjectPropertiesActions {
 
         // The tool tip for "Reset" is unique per context so isn't in the
         // locale-sensitive resources for the generic action lookup.
-        final String tooltipText 
-                = "Reset " + pProjectCategory + " Properties to Blank Fields";
+        final String tooltipText = "Reset " + pProjectCategory
+                                   + " Properties to Blank Fields";
         resetAction.setLongText( tooltipText );
     }
 
     public Collection< Action > getProjectPropertiesActionCollection() {
-        final Collection< Action > projectPropertiesActionCollection 
+        final Collection< Action > projectPropertiesActionCollection
                 = Arrays.asList( resetAction );
 
         return projectPropertiesActionCollection;

@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 
 /**
@@ -46,9 +47,10 @@ public class SessionLogNewUpdateButtons {
     // Default constructor
     public SessionLogNewUpdateButtons( final ClientProperties pClientProperties ) {
         // Make the JavaFX image buttons.
-        _newSessionLogButton = LabeledControlFactory.getSessionLogNewButton( pClientProperties );
-        _updateSessionLogButton = LabeledControlFactory
-                .getSessionLogUpdateButton( pClientProperties );
+        _newSessionLogButton = LabeledControlFactory.getSessionLogNewButton(
+                pClientProperties );
+        _updateSessionLogButton
+                = LabeledControlFactory.getSessionLogUpdateButton(
+                pClientProperties );
     }
-
 }

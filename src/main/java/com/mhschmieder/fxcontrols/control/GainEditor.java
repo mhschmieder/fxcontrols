@@ -39,7 +39,7 @@ public final class GainEditor extends DoubleEditor {
     public static final double VALUE_INCREMENT_DEFAULT_DB = 0.1d;
 
     // Cache the preference for defaulting to negative gain.
-    protected boolean          _defaultToNegativeGain;
+    protected boolean _defaultToNegativeGain;
 
     public GainEditor( final ClientProperties pClientProperties,
                        final String initialText,
@@ -68,7 +68,8 @@ public final class GainEditor extends DoubleEditor {
     }
 
     @Override
-    public String getDecoratedText( final double savedValue, final String savedText ) {
+    public String getDecoratedText( final double savedValue,
+                                    final String savedText ) {
         // By default, Java does not allow the positive sign to be typed, but
         // many users may be in the habit of typing it in, so we allow it in our
         // key filter and re-add it here so that numbers get parsed correctly
@@ -77,9 +78,10 @@ public final class GainEditor extends DoubleEditor {
         //  positive sign (if not present) if a non-negative number is detected.
         // TODO: Find a way to exempt zero values from prepending the "+" sign?
         // TODO: Test to see if the new condition on value > 0 fixes this.
-        final String decoratedText = _defaultToNegativeGain && ( savedValue > 0.0d )
-            ? StringUtilities.attachPositiveSign( savedText )
-            : savedText;
+        final String decoratedText =
+                _defaultToNegativeGain && ( savedValue > 0.0d )
+                ? StringUtilities.attachPositiveSign( savedText )
+                : savedText;
 
         return decoratedText;
     }
@@ -93,8 +95,11 @@ public final class GainEditor extends DoubleEditor {
         // NOTE: If defaulting to negative numbers, we must also add the
         //  negative sign when the positive sign is not explicitly typed.
         final String undecoratedText = _defaultToNegativeGain
-            ? StringUtilities.defaultToNegativeNumber( savedText )
-            : StringUtilities.stripPositiveSign( savedText );
+                                       ?
+                                       StringUtilities.defaultToNegativeNumber(
+                savedText )
+                                       : StringUtilities.stripPositiveSign(
+                                               savedText );
 
         return undecoratedText;
     }

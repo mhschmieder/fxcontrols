@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.SimulationActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.ToolBar;
 
 public class PredictToolBar extends ToolBar {
@@ -57,11 +58,11 @@ public class PredictToolBar extends ToolBar {
     private final void initToolBar( final ClientProperties pClientProperties,
                                     final SimulationActions simulationActions ) {
         // Make the JavaFX Nodes for the Tool Bar.
-        predictButtons = new PredictButtons( pClientProperties, 
+        predictButtons = new PredictButtons( pClientProperties,
                                              simulationActions );
 
         // Add all the Nodes to the Tool Bar.
-        getItems().addAll( predictButtons.predictButton, 
+        getItems().addAll( predictButtons.predictButton,
                            predictButtons.clearButton );
     }
 }

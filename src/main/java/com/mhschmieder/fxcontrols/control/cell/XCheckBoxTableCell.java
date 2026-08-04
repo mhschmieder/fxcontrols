@@ -34,8 +34,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
-public abstract class XCheckBoxTableCell< RT, VT >  
-    extends CheckBoxTableCell< RT, Boolean > implements CellValidator< RT > {
+public abstract class XCheckBoxTableCell< RT, VT >
+        extends CheckBoxTableCell< RT, Boolean >
+        implements CellValidator< RT > {
 
     private final void setValue() {
         // Save edits from the table cell's controller to the property bean.
@@ -43,8 +44,8 @@ public abstract class XCheckBoxTableCell< RT, VT >
         final TableRow< RT > tableRow = getTableRow();
         validateCellValue( tableView, tableRow );
     }
-    
-    @Override 
+
+    @Override
     public void setBeanProperty( final RT selectedRecord ) {
         // NOTE: Generic check boxes may not need to validate selected values,
         //  so a default no-op implementation is provided in this base class.

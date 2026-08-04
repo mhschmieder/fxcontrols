@@ -30,17 +30,19 @@
  */
 package com.mhschmieder.fxcontrols.control;
 
+import java.util.List;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-
-import java.util.List;
 
 public class TabManagement {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private TabManagement() {}
+    private TabManagement() {
+    }
 
     public static void showTab( final TabPane tabPane,
                                 final Tab tab,

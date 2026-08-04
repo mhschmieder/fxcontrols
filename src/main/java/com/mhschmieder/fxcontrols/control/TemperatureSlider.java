@@ -34,27 +34,28 @@ import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.PhysicsConstants;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
 import com.mhschmieder.jphysics.measure.UnitConversion;
+
 import javafx.geometry.Orientation;
 
 public class TemperatureSlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial Temperature.
-    public static final double  MINIMUM_TEMPERATURE_KELVIN_DEFAULT =
-                                                                   PhysicsConstants.TEMPERATURE_MINIMUM_K;
-    public static final double  MAXIMUM_TEMPERATURE_KELVIN_DEFAULT =
-                                                                   PhysicsConstants.TEMPERATURE_MAXIMUM_K;
-    public static final double  INITIAL_TEMPERATURE_KELVIN_DEFAULT =
-                                                                   PhysicsConstants.ROOM_TEMPERATURE_K;
+    public static final double MINIMUM_TEMPERATURE_KELVIN_DEFAULT
+            = PhysicsConstants.TEMPERATURE_MINIMUM_K;
+    public static final double MAXIMUM_TEMPERATURE_KELVIN_DEFAULT
+            = PhysicsConstants.TEMPERATURE_MAXIMUM_K;
+    public static final double INITIAL_TEMPERATURE_KELVIN_DEFAULT
+            = PhysicsConstants.ROOM_TEMPERATURE_K;
 
     // Default tick spacing in degrees Kelvin.
-    private static final double MAJOR_TICK_SPACING_KELVIN          = 10.0d;
-    private static final double MINOR_TICK_SPACING_KELVIN          = 2.0d;
+    private static final double MAJOR_TICK_SPACING_KELVIN = 10.0d;
+    private static final double MINOR_TICK_SPACING_KELVIN = 2.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
-    private static final double BLOCK_INCREMENT_KELVIN             = 0.5d;
+    private static final double BLOCK_INCREMENT_KELVIN = 0.5d;
 
     // Store the Temperature Unit so we'll know when we need to convert.
-    private TemperatureUnit     _temperatureUnit;
+    private TemperatureUnit _temperatureUnit;
 
     public TemperatureSlider( final ClientProperties clientProperties ) {
         this( clientProperties,
@@ -93,12 +94,6 @@ public class TemperatureSlider extends NumberSlider {
         }
     }
 
-    // Convert current temperature value from display units to Kelvin.
-    public final double getTemperatureK() {
-        return UnitConversion
-                .convertTemperature( getValue(), _temperatureUnit, TemperatureUnit.KELVIN );
-    }
-
     private final void initSlider() {
         // In lieu of gauges, vertical bars are best for Temperature sliders.
         setOrientation( Orientation.VERTICAL );
@@ -114,30 +109,12 @@ public class TemperatureSlider extends NumberSlider {
         updateTemperatureUnit( _temperatureUnit );
     }
 
-    // Convert maximum Temperature value from Kelvin to display units.
-    public final void setMaximumTemperatureK( final double maximumTemperatureK ) {
-        setMax( UnitConversion.convertTemperature( maximumTemperatureK,
-                                                   TemperatureUnit.KELVIN,
-                                                   _temperatureUnit ) );
-    }
-
-    // Convert minimum Temperature value from Kelvin to display units.
-    public final void setMinimumTemperatureK( final double minimumTemperatureK ) {
-        setMin( UnitConversion.convertTemperature( minimumTemperatureK,
-                                                   TemperatureUnit.KELVIN,
-                                                   _temperatureUnit ) );
-    }
-
-    // Convert new Temperature value from Kelvin to display units.
-    public final void setTemperatureK( final double temperatureK ) {
-        setValue( UnitConversion
-                .convertTemperature( temperatureK, TemperatureUnit.KELVIN, _temperatureUnit ) );
-    }
-
     public final void updateTemperatureUnit( final TemperatureUnit temperatureUnit ) {
         // Convert the current Temperature from previous units to new units.
-        final double temperatureCurrent = UnitConversion
-                .convertTemperature( getValue(), _temperatureUnit, temperatureUnit );
+        final double temperatureCurrent = UnitConversion.convertTemperature(
+                getValue(),
+                _temperatureUnit,
+                temperatureUnit );
 
         // Store the new Temperature Unit to provide context for next change.
         _temperatureUnit = temperatureUnit;
@@ -156,21 +133,48 @@ public class TemperatureSlider extends NumberSlider {
 
         // Set the tick resolution based on the granularity of the unit.
         switch ( _temperatureUnit ) {
-        case KELVIN:
-            setTickResolution( 10.0d, 2.0d );
-            setBlockIncrement( 0.5d );
-            break;
-        case CELSIUS:
-            setTickResolution( 10.0d, 2.0d );
-            setBlockIncrement( 0.5d );
-            break;
-        case FAHRENHEIT:
-            setTickResolution( 20.0d, 5.0d );
-            setBlockIncrement( 1.0d );
-            break;
-        default:
-            break;
+            case KELVIN:
+                setTickResolution( 10.0d, 2.0d );
+                setBlockIncrement( 0.5d );
+                break;
+            case CELSIUS:
+                setTickResolution( 10.0d, 2.0d );
+                setBlockIncrement( 0.5d );
+                break;
+            case FAHRENHEIT:
+                setTickResolution( 20.0d, 5.0d );
+                setBlockIncrement( 1.0d );
+                break;
+            default:
+                break;
         }
     }
 
+    // Convert maximum Temperature value from Kelvin to display units.
+    public final void setMaximumTemperatureK( final double maximumTemperatureK ) {
+        setMax( UnitConversion.convertTemperature( maximumTemperatureK,
+                                                   TemperatureUnit.KELVIN,
+                                                   _temperatureUnit ) );
+    }
+
+    // Convert minimum Temperature value from Kelvin to display units.
+    public final void setMinimumTemperatureK( final double minimumTemperatureK ) {
+        setMin( UnitConversion.convertTemperature( minimumTemperatureK,
+                                                   TemperatureUnit.KELVIN,
+                                                   _temperatureUnit ) );
+    }
+
+    // Convert current temperature value from display units to Kelvin.
+    public final double getTemperatureK() {
+        return UnitConversion.convertTemperature( getValue(),
+                                                  _temperatureUnit,
+                                                  TemperatureUnit.KELVIN );
+    }
+
+    // Convert new Temperature value from Kelvin to display units.
+    public final void setTemperatureK( final double temperatureK ) {
+        setValue( UnitConversion.convertTemperature( temperatureK,
+                                                     TemperatureUnit.KELVIN,
+                                                     _temperatureUnit ) );
+    }
 }

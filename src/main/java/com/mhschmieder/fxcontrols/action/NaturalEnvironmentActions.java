@@ -31,42 +31,43 @@
 package com.mhschmieder.fxcontrols.action;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.paint.Color;
 import org.controlsfx.control.action.Action;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import javafx.scene.paint.Color;
 
 /**
  * This is a struct-like container for actions used by Natural Environment.
  */
 public final class NaturalEnvironmentActions {
 
+    protected final boolean vectorGraphicsSupported;
     public FileActions fileActions;
     public SettingsActions settingsActions;
     public SimulationActions simulationActions;
-
     public XAction useAirAttenuationAction;
     public XAction resetAction;
-    
-    protected final boolean vectorGraphicsSupported;
 
     public NaturalEnvironmentActions( final ClientProperties pClientProperties,
                                       final boolean pVectorGraphicsSupported ) {
         vectorGraphicsSupported = pVectorGraphicsSupported;
-        
+
         fileActions = new FileActions( pClientProperties );
         settingsActions = new SettingsActions( pClientProperties );
         simulationActions = new SimulationActions( pClientProperties );
 
-        useAirAttenuationAction = LabeledActionFactory
-                .getUseAirAttenuationAction( pClientProperties );
+        useAirAttenuationAction
+                = LabeledActionFactory.getUseAirAttenuationAction(
+                pClientProperties );
 
         resetAction = LabeledActionFactory.getResetAction( pClientProperties );
 
         // The tool tip for "Reset" is unique per context so isn't in the
         // locale-sensitive resources for the generic action lookup.
-        resetAction.setLongText( "Reset Natural Environment to Default Values" );
+        resetAction.setLongText( "Reset Natural Environment to Default "
+                                 + "Values" );
     }
 
     public Collection< Action > getBackgroundColorChoiceCollection() {
@@ -79,35 +80,37 @@ public final class NaturalEnvironmentActions {
         return fileActions.getExportActionCollection( true, false );
     }
 
-    public Collection< Action > getFileActionCollection( 
-            final ClientProperties pClientProperties ) {
+    public Collection< Action > getFileActionCollection( final ClientProperties pClientProperties ) {
         // Forward this method to the File actions container.
         // TODO: Enable standard Vector Graphics Export for XT.
-        return fileActions
-                .getFileActionCollection( pClientProperties, 
-                                          vectorGraphicsSupported, 
-                                          false );
+        return fileActions.getFileActionCollection( pClientProperties,
+                                                    vectorGraphicsSupported,
+                                                    false );
     }
 
-    public Collection< Action > getNaturalEnvironmentMenuBarActionCollection( 
-            final ClientProperties pClientProperties ) {
+    public Collection< Action > getNaturalEnvironmentMenuBarActionCollection( final ClientProperties pClientProperties ) {
         // TODO: Enable standard Vector Graphics Export for XT.
-        final XActionGroup fileActionGroup = LabeledActionFactory
-                .getFileActionGroup( pClientProperties, 
-                                     fileActions, 
-                                     vectorGraphicsSupported, 
-                                     false );
+        final XActionGroup fileActionGroup
+                = LabeledActionFactory.getFileActionGroup( pClientProperties,
+                                                           fileActions,
+                                                           vectorGraphicsSupported,
+                                                           false );
 
-        final XActionGroup settingsActionGroup = LabeledActionFactory
-                .getSettingsActionGroup( pClientProperties, settingsActions, true );
+        final XActionGroup settingsActionGroup
+                =
+                LabeledActionFactory.getSettingsActionGroup( pClientProperties,
+                                                               settingsActions,
+                                                               true );
 
-        final XActionGroup simulationActionGroup = LabeledActionFactory
-                .getSimulationActionGroup( pClientProperties, simulationActions );
+        final XActionGroup simulationActionGroup
+                = LabeledActionFactory.getSimulationActionGroup(
+                pClientProperties,
+                simulationActions );
 
-        final Collection< Action > naturalEnvironmentMenuBarActionCollection = Arrays
-                .asList( fileActionGroup, 
-                         settingsActionGroup, 
-                         simulationActionGroup );
+        final Collection< Action > naturalEnvironmentMenuBarActionCollection
+                = Arrays.asList( fileActionGroup,
+                                 settingsActionGroup,
+                                 simulationActionGroup );
 
         return naturalEnvironmentMenuBarActionCollection;
     }
@@ -117,16 +120,16 @@ public final class NaturalEnvironmentActions {
         return settingsActions.getSelectedBackgroundColorName();
     }
 
-    public Collection< Action > getSettingsActionCollection( 
-            final ClientProperties pClientProperties ) {
+    public Collection< Action > getSettingsActionCollection( final ClientProperties pClientProperties ) {
         // Forward this method to the File actions container.
-        return settingsActions.getSettingsActionCollection( pClientProperties, true );
+        return settingsActions.getSettingsActionCollection( pClientProperties,
+                                                            true );
     }
 
-    public Collection< Action > getSimulationActionCollection( 
-            final ClientProperties pClientProperties ) {
+    public Collection< Action > getSimulationActionCollection( final ClientProperties pClientProperties ) {
         // Forward this method to the Simulation actions container.
-        return simulationActions.getSimulationActionCollection( pClientProperties );
+        return simulationActions.getSimulationActionCollection(
+                pClientProperties );
     }
 
     public Collection< Action > getWindowSizeActionCollection() {
@@ -138,12 +141,12 @@ public final class NaturalEnvironmentActions {
         return useAirAttenuationAction.isSelected();
     }
 
+    public void setUseAirAttenuation( final boolean useAirAttenuation ) {
+        useAirAttenuationAction.setSelected( useAirAttenuation );
+    }
+
     public Color selectBackgroundColor( final String backgroundColorName ) {
         // Forward this method to the Settings actions container.
         return settingsActions.selectBackgroundColor( backgroundColorName );
-    }
-
-    public void setUseAirAttenuation( final boolean useAirAttenuation ) {
-        useAirAttenuationAction.setSelected( useAirAttenuation );
     }
 }

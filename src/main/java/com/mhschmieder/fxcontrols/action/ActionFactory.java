@@ -36,13 +36,14 @@ import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcommons.util.SystemType;
 import com.mhschmieder.jcontrols.control.ButtonUtilities;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionGroup;
 
 import java.util.Collection;
 import java.util.ResourceBundle;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCombination;
 
 /**
  * This is a utility class for dealing with common attributes of actions.
@@ -50,104 +51,23 @@ import java.util.ResourceBundle;
 public final class ActionFactory {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private ActionFactory() {}
-
-    public static void applyActionAttributes( final ClientProperties clientProperties,
-                                              final Action action,
-                                              final String bundleName,
-                                              final String groupName,
-                                              final String itemName ) {
-        // Get the action's label from the resource bundle, if applicable.
-        final String menuItemLabel = ControlUtilities
-                .getLabeledControlLabel( clientProperties, bundleName, groupName, itemName, true );
-
-        if ( ( menuItemLabel != null ) && !menuItemLabel.trim().isEmpty() ) {
-            // Set the standard action label, with the adjusted mnemonic.
-            action.setText( menuItemLabel );
-
-            // Set the action's accelerator, if it exists.
-            setActionAccelerator( clientProperties, action, groupName, itemName, bundleName );
-
-            // Set the action's long text (used as tool tip), if it exists.
-            setActionLongText( clientProperties, action, groupName, itemName, bundleName );
-        }
+    private ActionFactory() {
     }
 
-    public static void applyActionAttributes( final ClientProperties clientProperties,
-                                              final Action action,
-                                              final String bundleName,
-                                              final String groupName,
-                                              final String itemName,
-                                              final String jarRelativeIconFilename ) {
-        // Apply the common action attributes first.
-        applyActionAttributes( clientProperties, action, bundleName, groupName, itemName );
-
-        // Set the action's associated graphic, with or without an icon
-        // reference, using direct loading as we trust the icon dimensions.
-        if ( ( jarRelativeIconFilename != null ) && !jarRelativeIconFilename.trim().isEmpty() ) {
-            final ImageView actionGraphic = ImageUtilities.createIcon( jarRelativeIconFilename );
-            action.setGraphic( actionGraphic );
-        }
-    }
-
-    public static void applyActionGroupAttributes( final ClientProperties clientProperties,
-                                                   final ActionGroup actionGroup,
-                                                   final String bundleName,
-                                                   final String groupName,
-                                                   final String jarRelativeIconFilename ) {
-        applyActionAttributes( clientProperties,
-                               actionGroup,
-                               bundleName,
-                               groupName,
-                               null,
-                               jarRelativeIconFilename );
-    }
-
-    // If an accelerator is assigned, get it from a resource bundle.
-    @SuppressWarnings("nls")
-    public static KeyCombination makeAcceleratorKeyCombination( final ClientProperties clientProperties,
-                                                                final String groupName,
-                                                                final String itemName,
-                                                                final ResourceBundle resourceBundle ) {
-        // There must always be both a group name and an item name for each
-        // action, in order to find its accelerator from the resource bundle.
-        if ( ( groupName == null ) || groupName.isEmpty() || ( itemName == null )
-                || itemName.isEmpty() ) {
-            return null;
-        }
-
-        // Composite the action name from the group and item names.
-        final String actionName = groupName + "." + itemName;
-
-        // Generate the resource lookup key for the action accelerator.
-        final String resourceKey = actionName + ".accelerator"
-                + ( SystemType.MACOS.equals( clientProperties.systemType ) ? ".mac" : "" );
-
-        try {
-            // NOTE: Not all actions have Accelerators, so we have to check
-            // first to see if one is present, to avoid unnecessary exceptions.
-            if ( !resourceBundle.containsKey( resourceKey ) ) {
-                return null;
-            }
-
-            String acceleratorText = resourceBundle.getString( resourceKey );
-            acceleratorText = acceleratorText.replace( "alt", "Alt" );
-            acceleratorText = acceleratorText.replace( "control", "Ctrl" );
-            acceleratorText = acceleratorText.replace( "meta", "Meta" );
-            acceleratorText = acceleratorText.replace( "shift", "Shift" );
-            acceleratorText = acceleratorText.replace( " ", "+" );
-
-            return KeyCombination.keyCombination( acceleratorText );
-        }
-        catch ( final Exception e ) {
-            // NOTE: It is OK to be missing an Accelerator, but as we first
-            // check for a key entry, this exception indicates a structural
-            // problem that shouldn't be allowed to confuse the end users, but
-            // which might benefit the developers or indicate file corruption.
-            return null;
-        }
+    public static XAction makeAction( final ClientProperties clientProperties,
+                                      final String bundleName,
+                                      final String groupName,
+                                      final String itemName,
+                                      final String jarRelativeIconFilename ) {
+        return makeAction( clientProperties,
+                           ActionVerb.DO,
+                           bundleName,
+                           groupName,
+                           itemName,
+                           jarRelativeIconFilename );
     }
 
     private static XAction makeAction( final ClientProperties clientProperties,
@@ -188,17 +108,160 @@ public final class ActionFactory {
         return action;
     }
 
-    public static XAction makeAction( final ClientProperties clientProperties,
-                                      final String bundleName,
-                                      final String groupName,
-                                      final String itemName,
-                                      final String jarRelativeIconFilename ) {
-        return makeAction( clientProperties,
-                           ActionVerb.DO,
-                           bundleName,
-                           groupName,
-                           itemName,
-                           jarRelativeIconFilename );
+    public static void applyActionAttributes( final ClientProperties clientProperties,
+                                              final Action action,
+                                              final String bundleName,
+                                              final String groupName,
+                                              final String itemName,
+                                              final String jarRelativeIconFilename ) {
+        // Apply the common action attributes first.
+        applyActionAttributes( clientProperties,
+                               action,
+                               bundleName,
+                               groupName,
+                               itemName );
+
+        // Set the action's associated graphic, with or without an icon
+        // reference, using direct loading as we trust the icon dimensions.
+        if ( ( jarRelativeIconFilename != null )
+             && !jarRelativeIconFilename.trim().isEmpty() ) {
+            final ImageView actionGraphic = ImageUtilities.createIcon(
+                    jarRelativeIconFilename );
+            action.setGraphic( actionGraphic );
+        }
+    }
+
+    public static void applyActionAttributes( final ClientProperties clientProperties,
+                                              final Action action,
+                                              final String bundleName,
+                                              final String groupName,
+                                              final String itemName ) {
+        // Get the action's label from the resource bundle, if applicable.
+        final String menuItemLabel = ControlUtilities.getLabeledControlLabel(
+                clientProperties,
+                bundleName,
+                groupName,
+                itemName,
+                true );
+
+        if ( ( menuItemLabel != null ) && !menuItemLabel.trim().isEmpty() ) {
+            // Set the standard action label, with the adjusted mnemonic.
+            action.setText( menuItemLabel );
+
+            // Set the action's accelerator, if it exists.
+            setActionAccelerator( clientProperties,
+                                  action,
+                                  groupName,
+                                  itemName,
+                                  bundleName );
+
+            // Set the action's long text (used as tool tip), if it exists.
+            setActionLongText( clientProperties,
+                               action,
+                               groupName,
+                               itemName,
+                               bundleName );
+        }
+    }
+
+    // If an accelerator is assigned, set it by platform.
+    public static void setActionAccelerator( final ClientProperties clientProperties,
+                                             final Action action,
+                                             final String groupName,
+                                             final String itemName,
+                                             final String bundleName ) {
+        // Fail-safe check to avoid unnecessary null pointer exceptions.
+        if ( action == null ) {
+            return;
+        }
+
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                clientProperties,
+                bundleName,
+                false );
+
+        // If an accelerator is assigned, get it from a resource bundle.
+        final KeyCombination acceleratorKeyCombination
+                = makeAcceleratorKeyCombination( clientProperties,
+                                                 groupName,
+                                                 itemName,
+                                                 resourceBundle );
+        if ( acceleratorKeyCombination != null ) {
+            action.setAccelerator( acceleratorKeyCombination );
+        }
+    }
+
+    // If an accelerator is assigned, get it from a resource bundle.
+    @SuppressWarnings( "nls" )
+    public static KeyCombination makeAcceleratorKeyCombination( final ClientProperties clientProperties,
+                                                                final String groupName,
+                                                                final String itemName,
+                                                                final ResourceBundle resourceBundle ) {
+        // There must always be both a group name and an item name for each
+        // action, in order to find its accelerator from the resource bundle.
+        if ( ( groupName == null ) || groupName.isEmpty() || ( itemName
+                                                               == null )
+             || itemName.isEmpty() ) {
+            return null;
+        }
+
+        // Composite the action name from the group and item names.
+        final String actionName = groupName + "." + itemName;
+
+        // Generate the resource lookup key for the action accelerator.
+        final String resourceKey = actionName + ".accelerator"
+                                   + ( SystemType.MACOS.equals( clientProperties.systemType )
+                                       ? ".mac"
+                                       : "" );
+
+        try {
+            // NOTE: Not all actions have Accelerators, so we have to check
+            // first to see if one is present, to avoid unnecessary exceptions.
+            if ( !resourceBundle.containsKey( resourceKey ) ) {
+                return null;
+            }
+
+            String acceleratorText = resourceBundle.getString( resourceKey );
+            acceleratorText = acceleratorText.replace( "alt", "Alt" );
+            acceleratorText = acceleratorText.replace( "control", "Ctrl" );
+            acceleratorText = acceleratorText.replace( "meta", "Meta" );
+            acceleratorText = acceleratorText.replace( "shift", "Shift" );
+            acceleratorText = acceleratorText.replace( " ", "+" );
+
+            return KeyCombination.keyCombination( acceleratorText );
+        }
+        catch ( final Exception e ) {
+            // NOTE: It is OK to be missing an Accelerator, but as we first
+            // check for a key entry, this exception indicates a structural
+            // problem that shouldn't be allowed to confuse the end users, but
+            // which might benefit the developers or indicate file corruption.
+            return null;
+        }
+    }
+
+    // If long text (used as tool tip) is assigned, set it.
+    public static void setActionLongText( final ClientProperties clientProperties,
+                                          final Action action,
+                                          final String groupName,
+                                          final String itemName,
+                                          final String bundleName ) {
+        // Fail-safe check to avoid unnecessary null pointer exceptions.
+        if ( action == null ) {
+            return;
+        }
+
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                clientProperties,
+                bundleName,
+                false );
+
+        // If long text is assigned, get it from a resource bundle.
+        final String longText = ButtonUtilities.getButtonToolTipText( groupName,
+                                                                      itemName,
+                                                                      resourceBundle );
+        if ( ( longText != null ) && !longText.trim().isEmpty() ) {
+            action.setLongText( longText );
+        }
     }
 
     public static XAction makeAction( final ClientProperties clientProperties,
@@ -214,44 +277,6 @@ public final class ActionFactory {
                            itemName,
                            jarRelativeIconFilename,
                            hideIfDisabled );
-    }
-
-    private static XActionGroup makeActionGroup( final ClientProperties clientProperties,
-                                                 final Collection< Action > actions,
-                                                 final boolean choiceGroup,
-                                                 final String bundleName,
-                                                 final String groupName,
-                                                 final String jarRelativeIconFilename ) {
-        return makeActionGroup( clientProperties,
-                                actions,
-                                choiceGroup,
-                                bundleName,
-                                groupName,
-                                jarRelativeIconFilename,
-                                false );
-    }
-
-    @SuppressWarnings("nls")
-    private static XActionGroup makeActionGroup( final ClientProperties clientProperties,
-                                                 final Collection< Action > actions,
-                                                 final boolean choiceGroup,
-                                                 final String bundleName,
-                                                 final String groupName,
-                                                 final String jarRelativeIconFilename,
-                                                 final boolean hideIfDisabled ) {
-        final XActionGroup actionGroup = new XActionGroup( "", actions, choiceGroup );
-
-        // Set the menu attributes from the resource bundle.
-        applyActionGroupAttributes( clientProperties,
-                                    actionGroup,
-                                    bundleName,
-                                    groupName,
-                                    jarRelativeIconFilename );
-
-        // To simplify constructors, for now we set this later if non-default.
-        actionGroup.setHideIfDisabled( hideIfDisabled );
-
-        return actionGroup;
     }
 
     public static XActionGroup makeActionGroup( final ClientProperties clientProperties,
@@ -280,6 +305,44 @@ public final class ActionFactory {
                                 groupName,
                                 jarRelativeIconFilename,
                                 hideIfDisabled );
+    }
+
+    @SuppressWarnings( "nls" )
+    private static XActionGroup makeActionGroup( final ClientProperties clientProperties,
+                                                 final Collection< Action > actions,
+                                                 final boolean choiceGroup,
+                                                 final String bundleName,
+                                                 final String groupName,
+                                                 final String jarRelativeIconFilename,
+                                                 final boolean hideIfDisabled ) {
+        final XActionGroup actionGroup = new XActionGroup( "",
+                                                           actions,
+                                                           choiceGroup );
+
+        // Set the menu attributes from the resource bundle.
+        applyActionGroupAttributes( clientProperties,
+                                    actionGroup,
+                                    bundleName,
+                                    groupName,
+                                    jarRelativeIconFilename );
+
+        // To simplify constructors, for now we set this later if non-default.
+        actionGroup.setHideIfDisabled( hideIfDisabled );
+
+        return actionGroup;
+    }
+
+    public static void applyActionGroupAttributes( final ClientProperties clientProperties,
+                                                   final ActionGroup actionGroup,
+                                                   final String bundleName,
+                                                   final String groupName,
+                                                   final String jarRelativeIconFilename ) {
+        applyActionAttributes( clientProperties,
+                               actionGroup,
+                               bundleName,
+                               groupName,
+                               null,
+                               jarRelativeIconFilename );
     }
 
     public static XAction makeCheck( final ClientProperties clientProperties,
@@ -355,6 +418,21 @@ public final class ActionFactory {
                                 jarRelativeIconFilename );
     }
 
+    private static XActionGroup makeActionGroup( final ClientProperties clientProperties,
+                                                 final Collection< Action > actions,
+                                                 final boolean choiceGroup,
+                                                 final String bundleName,
+                                                 final String groupName,
+                                                 final String jarRelativeIconFilename ) {
+        return makeActionGroup( clientProperties,
+                                actions,
+                                choiceGroup,
+                                bundleName,
+                                groupName,
+                                jarRelativeIconFilename,
+                                false );
+    }
+
     public static XActionGroup makeChoiceGroup( final ClientProperties clientProperties,
                                                 final Collection< Action > choices,
                                                 final String bundleName,
@@ -381,52 +459,5 @@ public final class ActionFactory {
                            groupName,
                            itemName,
                            jarRelativeIconFilename );
-    }
-
-    // If an accelerator is assigned, set it by platform.
-    public static void setActionAccelerator( final ClientProperties clientProperties,
-                                             final Action action,
-                                             final String groupName,
-                                             final String itemName,
-                                             final String bundleName ) {
-        // Fail-safe check to avoid unnecessary null pointer exceptions.
-        if ( action == null ) {
-            return;
-        }
-
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, false );
-
-        // If an accelerator is assigned, get it from a resource bundle.
-        final KeyCombination acceleratorKeyCombination =
-                                                       makeAcceleratorKeyCombination( clientProperties,
-                                                                                      groupName,
-                                                                                      itemName,
-                                                                                      resourceBundle );
-        if ( acceleratorKeyCombination != null ) {
-            action.setAccelerator( acceleratorKeyCombination );
-        }
-    }
-
-    // If long text (used as tool tip) is assigned, set it.
-    public static void setActionLongText( final ClientProperties clientProperties,
-                                          final Action action,
-                                          final String groupName,
-                                          final String itemName,
-                                          final String bundleName ) {
-        // Fail-safe check to avoid unnecessary null pointer exceptions.
-        if ( action == null ) {
-            return;
-        }
-
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( clientProperties, bundleName, false );
-
-        // If long text is assigned, get it from a resource bundle.
-        final String longText = ButtonUtilities
-                .getButtonToolTipText( groupName, itemName, resourceBundle );
-        if ( ( longText != null ) && !longText.trim().isEmpty() ) {
-            action.setLongText( longText );
-        }
     }
 }

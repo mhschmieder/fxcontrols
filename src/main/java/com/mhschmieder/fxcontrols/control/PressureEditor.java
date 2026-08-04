@@ -43,9 +43,10 @@ public class PressureEditor extends DoubleEditor {
     public static final double VALUE_INCREMENT_PA = 10.0d;
 
     // Store the Pressure Unit so we'll know when we need to convert.
-    private PressureUnit       _pressureUnit;
+    private PressureUnit _pressureUnit;
 
-    // //////////////////////////////////////////////////////////////////////////
+    //
+    // ////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
     public PressureEditor( final ClientProperties pClientProperties,
                            final String initialText,
@@ -79,36 +80,9 @@ public class PressureEditor extends DoubleEditor {
         }
     }
 
-    // Convert current Pressure value from display units to pascals.
-    // NOTE: This method is unused currently, but is provided in case we
-    // change our mind about having the related slider be the data master.
-    public final double getPressurePa() {
-        return UnitConversion.convertPressure( getValue(), _pressureUnit, PressureUnit.PASCALS );
-    }
-
     private final void initEditor() {
         // Update the Pressure Unit and related resolutions and ranges.
         updatePressureUnit( _pressureUnit );
-    }
-
-    // Convert maximum Pressure value from pascals to display units.
-    public final void setMaximumPressurePa( final double maximumPressurePa ) {
-        setMaximumValue( UnitConversion
-                .convertPressure( maximumPressurePa, PressureUnit.PASCALS, _pressureUnit ) );
-    }
-
-    // Convert minimum Pressure value from pascals to display units.
-    public final void setMinimumPressurePa( final double minimumPressurePa ) {
-        setMinimumValue( UnitConversion
-                .convertPressure( minimumPressurePa, PressureUnit.PASCALS, _pressureUnit ) );
-    }
-
-    // Convert new Pressure value from pascals to display units.
-    // NOTE: This method is unused currently, but is provided in case we
-    // change our mind about having the related slider be the data master.
-    public final void setPressurePa( final double pressurePa ) {
-        setValue( UnitConversion
-                .convertPressure( pressurePa, PressureUnit.PASCALS, _pressureUnit ) );
     }
 
     public final void updatePressureUnit( final PressureUnit pressureUnit ) {
@@ -117,20 +91,20 @@ public class PressureEditor extends DoubleEditor {
 
         // Set the level of precision based on the granularity of the unit.
         switch ( _pressureUnit ) {
-        case KILOPASCALS:
-            _numberFormat.setMaximumFractionDigits( 4 );
-            break;
-        case PASCALS:
-            _numberFormat.setMaximumFractionDigits( 1 );
-            break;
-        case MILLIBARS:
-            _numberFormat.setMaximumFractionDigits( 3 );
-            break;
-        case ATMOSPHERES:
-            _numberFormat.setMaximumFractionDigits( 5 );
-            break;
-        default:
-            break;
+            case KILOPASCALS:
+                _numberFormat.setMaximumFractionDigits( 4 );
+                break;
+            case PASCALS:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            case MILLIBARS:
+                _numberFormat.setMaximumFractionDigits( 3 );
+                break;
+            case ATMOSPHERES:
+                _numberFormat.setMaximumFractionDigits( 5 );
+                break;
+            default:
+                break;
         }
 
         // NOTE: Text Editors must set their adjusted range before setting the
@@ -152,4 +126,35 @@ public class PressureEditor extends DoubleEditor {
         setMeasurementUnitString( _pressureUnit.label() );
     }
 
+    // Convert maximum Pressure value from pascals to display units.
+    public final void setMaximumPressurePa( final double maximumPressurePa ) {
+        setMaximumValue( UnitConversion.convertPressure( maximumPressurePa,
+                                                         PressureUnit.PASCALS,
+                                                         _pressureUnit ) );
+    }
+
+    // Convert minimum Pressure value from pascals to display units.
+    public final void setMinimumPressurePa( final double minimumPressurePa ) {
+        setMinimumValue( UnitConversion.convertPressure( minimumPressurePa,
+                                                         PressureUnit.PASCALS,
+                                                         _pressureUnit ) );
+    }
+
+    // Convert current Pressure value from display units to pascals.
+    // NOTE: This method is unused currently, but is provided in case we
+    // change our mind about having the related slider be the data master.
+    public final double getPressurePa() {
+        return UnitConversion.convertPressure( getValue(),
+                                               _pressureUnit,
+                                               PressureUnit.PASCALS );
+    }
+
+    // Convert new Pressure value from pascals to display units.
+    // NOTE: This method is unused currently, but is provided in case we
+    // change our mind about having the related slider be the data master.
+    public final void setPressurePa( final double pressurePa ) {
+        setValue( UnitConversion.convertPressure( pressurePa,
+                                                  PressureUnit.PASCALS,
+                                                  _pressureUnit ) );
+    }
 }

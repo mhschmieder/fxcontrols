@@ -30,10 +30,11 @@
  */
 package com.mhschmieder.fxcontrols.util;
 
-import javafx.util.StringConverter;
 import org.apache.commons.math3.util.FastMath;
 
 import java.text.NumberFormat;
+
+import javafx.util.StringConverter;
 
 /**
  * For some reason, the Core JavaFX API doesn't include basic type-specific
@@ -42,24 +43,25 @@ import java.text.NumberFormat;
  * These can be especially useful with FX Charts when setting converters for
  * axis tick labels and the like -- especially if needing integers vs. doubles.
  * <p>
- * Other uses are more typical of JavaFX Controls contexts, for textField syncing.
+ * Other uses are more typical of JavaFX Controls contexts, for textField
+ * syncing.
  */
 public class IntegerConverter extends StringConverter< Number > {
 
     // Maintain a reference to the Measurement Unit label (can be blank).
-    protected String       _measurementUnit;
+    protected String _measurementUnit;
 
     // Number format cache used for locale-specific number formatting.
     protected NumberFormat _numberFormat;
 
     // Cache the default data value for when there is no valid input.
-    protected int          _defaultValue;
+    protected int _defaultValue;
 
     // Cache the minimum allowed data value (negative).
-    protected int          _minimumValue;
+    protected int _minimumValue;
 
     // Cache the maximum allowed data value (positive).
-    protected int          _maximumValue;
+    protected int _maximumValue;
 
     public IntegerConverter( final String measurementUnit,
                              final NumberFormat numberFormat,
@@ -81,7 +83,8 @@ public class IntegerConverter extends StringConverter< Number > {
         String presentationValue = number.toString();
 
         try {
-            presentationValue = _numberFormat.format( number ) + _measurementUnit;
+            presentationValue = _numberFormat.format( number )
+                                + _measurementUnit;
         }
         catch ( final Exception e ) {
             e.printStackTrace();
@@ -116,36 +119,36 @@ public class IntegerConverter extends StringConverter< Number > {
         return _defaultValue;
     }
 
-    public int getMinimumValue() {
-        return _minimumValue;
-    }
-
-    public int getMaximumValue() {
-        return _maximumValue;
-    }
-
-    public String getMeasurementUnit() {
-        return _measurementUnit;
-    }
-
-    public NumberFormat getNumberFormat() {
-        return _numberFormat;
-    }
-
     public void setDefaultValue( final int defaultValue ) {
         _defaultValue = defaultValue;
+    }
+
+    public int getMinimumValue() {
+        return _minimumValue;
     }
 
     public void setMinimumValue( final int minimumValue ) {
         _minimumValue = minimumValue;
     }
 
+    public int getMaximumValue() {
+        return _maximumValue;
+    }
+
     public void setMaximumValue( final int maximumValue ) {
         _maximumValue = maximumValue;
     }
 
+    public String getMeasurementUnit() {
+        return _measurementUnit;
+    }
+
     public void setMeasurementUnit( final String measurementUnit ) {
         _measurementUnit = measurementUnit;
+    }
+
+    public NumberFormat getNumberFormat() {
+        return _numberFormat;
     }
 
     public void setNumberFormat( final NumberFormat numberFormat ) {

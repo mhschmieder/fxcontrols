@@ -34,16 +34,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.SelectionMode;
 
 /**
- * {@code DynamicXTableView} is a further abstraction of {@link XTableView}
- * that sets up the functionality that is likely to be shared by all multi-row
- * tables that support dynamically adding and deleting rows after creation.
+ * {@code DynamicXTableView} is a further abstraction of {@link XTableView} that
+ * sets up the functionality that is likely to be shared by all multi-row tables
+ * that support dynamically adding and deleting rows after creation.
  *
- * @param <TD>
- *            The data type for the table
- *
- * @version 1.0
- *
+ * @param <TD> The data type for the table
  * @author Mark Schmieder
+ * @version 1.0
  */
 public abstract class DynamicXTableView< TD > extends XTableView< TD > {
 
@@ -68,10 +65,9 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * This is an abstract base class, so its purpose is to avoid copy/paste
      * code in the derived classes; it is unable to function on its own.
      *
-     * @param autoSelectionIsEnabled
-     *            {@code true} if auto-selection is enabled when nothing is
-     *            manually or programmatically selected
-     *
+     * @param autoSelectionIsEnabled {@code true} if auto-selection is enabled
+     *                               when nothing is manually or
+     *                               programmatically selected
      * @since 1.0
      */
     public DynamicXTableView( final boolean autoSelectionIsEnabled ) {
@@ -87,36 +83,33 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
     /**
      * Returns {@code true} if a row can be inserted at the specified index.
      *
-     * @param insertIndex
-     *            The selected index for inserting a new row
-     * @param minimumInsertIndex
-     *            The minimum allowed index for inserting a new row
-     * @param maximumInsertIndex
-     *            The maximum allowed index for inserting a new row
-     * @param maximumLastRowIndex
-     *            The maximum index that is ever allowed for this table
+     * @param insertIndex         The selected index for inserting a new row
+     * @param minimumInsertIndex  The minimum allowed index for inserting a new
+     *                            row
+     * @param maximumInsertIndex  The maximum allowed index for inserting a new
+     *                            row
+     * @param maximumLastRowIndex The maximum index that is ever allowed for
+     *                            this table
      * @return {@code true} if a row can be inserted at the specified index
-     *
      * @since 1.0
      */
-    @SuppressWarnings("static-method")
+    @SuppressWarnings( "static-method" )
     protected boolean canInsertTableRowAt( final int insertIndex,
                                            final int minimumInsertIndex,
                                            final int maximumInsertIndex,
                                            final int maximumLastRowIndex ) {
         // If the index is out of bounds, or the table size has already reached
         // the maximum number of rows allowed, ignore the insertion request.
-        return ( ( insertIndex >= minimumInsertIndex ) 
-                && ( insertIndex <= maximumInsertIndex )
-                && ( maximumInsertIndex >= minimumInsertIndex )
-                && ( maximumInsertIndex <= maximumLastRowIndex ) );
+        return ( ( insertIndex >= minimumInsertIndex ) && ( insertIndex
+                                                            <= maximumInsertIndex )
+                 && ( maximumInsertIndex >= minimumInsertIndex ) && (
+                         maximumInsertIndex <= maximumLastRowIndex ) );
     }
 
     /**
      * Returns {@code true} if row deletion is legal, regardless of context.
      *
      * @return {@code true} if row deletion is legal, regardless of context
-     *
      * @since 1.0
      */
     public boolean canDeleteTableRows() {
@@ -128,7 +121,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
         // Maybe provide or override the preferred auto-select row index?
         boolean canDeleteRows = true;
         final int[] selectedRowIndices = getSelectedRows();
-        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length > 0 ) ) {
+        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length
+                                                 > 0 ) ) {
             for ( final int selectedRowIndex : selectedRowIndices ) {
                 if ( !canDeleteTableRowAt( selectedRowIndex ) ) {
                     canDeleteRows = false;
@@ -156,10 +150,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
     /**
      * Returns {@code true} if a row can be deleted at the specified index
      *
-     * @param deleteIndex
-     *            The selected index for deleting an existing row
+     * @param deleteIndex The selected index for deleting an existing row
      * @return {@code true} if a row can be deleted at the specified index
-     *
      * @since 1.0
      */
     public boolean canDeleteTableRowAt( final int deleteIndex ) {
@@ -175,29 +167,28 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
     /**
      * Returns {@code true} if a row can be deleted at the specified index
      *
-     * @param deleteIndex
-     *            The selected index for deleting an existing row
-     * @param minimumDeleteIndex
-     *            The minimum allowed index for deleting an existing row
-     * @param maximumDeleteIndex
-     *            The maximum allowed index for deleting an existing row
-     * @param minimumLastRowIndex
-     *            The minimum index that is ever allowed for this table
+     * @param deleteIndex         The selected index for deleting an existing
+     *                            row
+     * @param minimumDeleteIndex  The minimum allowed index for deleting an
+     *                            existing row
+     * @param maximumDeleteIndex  The maximum allowed index for deleting an
+     *                            existing row
+     * @param minimumLastRowIndex The minimum index that is ever allowed for
+     *                            this table
      * @return {@code true} if a row can be deleted at the specified index
-     *
      * @since 1.0
      */
-    @SuppressWarnings("static-method")
+    @SuppressWarnings( "static-method" )
     protected boolean canDeleteTableRowAt( final int deleteIndex,
                                            final int minimumDeleteIndex,
                                            final int maximumDeleteIndex,
                                            final int minimumLastRowIndex ) {
         // If the index is out of bounds, or the table size has already reached
         // the minimum number of rows required, ignore the deletion request.
-        return ( ( deleteIndex >= minimumDeleteIndex ) 
-                && ( deleteIndex <= maximumDeleteIndex )
-                && ( maximumDeleteIndex >= minimumDeleteIndex )
-                && ( maximumDeleteIndex > minimumLastRowIndex ) );
+        return ( ( deleteIndex >= minimumDeleteIndex ) && ( deleteIndex
+                                                            <= maximumDeleteIndex )
+                 && ( maximumDeleteIndex >= minimumDeleteIndex ) && (
+                         maximumDeleteIndex > minimumLastRowIndex ) );
     }
 
     /**
@@ -208,7 +199,6 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * were selected), and inserts an initially similar row right after it.
      *
      * @return The row index for the newly inserted row (if valid)
-     *
      * @since 1.0
      */
     public int insertTableRow() {
@@ -226,17 +216,17 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * This method finds the lower-most row selected (or the last row if none
      * were selected), and inserts an initially similar row right after it.
      *
-     * @param minimumInsertIndex
-     *            The minimum allowed index for inserting a new row
+     * @param minimumInsertIndex The minimum allowed index for inserting a new
+     *                           row
      * @return The row index for the newly inserted row (if valid)
-     *
      * @since 1.0
      */
     public int insertTableRow( final int minimumInsertIndex ) {
         final int maximumRowCountIndex = Integer.MAX_VALUE;
 
         // Insert a new table row set to the currently selected row.
-        final int referenceIndex = insertTableRow( minimumInsertIndex, maximumRowCountIndex );
+        final int referenceIndex = insertTableRow( minimumInsertIndex,
+                                                   maximumRowCountIndex );
 
         return referenceIndex;
     }
@@ -248,12 +238,11 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * This method finds the lower-most row selected (or the last row if none
      * were selected), and inserts an initially similar row right after it.
      *
-     * @param minimumInsertIndex
-     *            The minimum allowed index for inserting a new row
-     * @param maximumLastRowIndex
-     *            The maximum index that is ever allowed for this table
+     * @param minimumInsertIndex  The minimum allowed index for inserting a new
+     *                            row
+     * @param maximumLastRowIndex The maximum index that is ever allowed for
+     *                            this table
      * @return The row index for the newly inserted row (if valid)
-     *
      * @since 1.0
      */
     protected final int insertTableRow( final int minimumInsertIndex,
@@ -279,16 +268,14 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * data model for each derived class will be needed for making a data object
      * associated with the row's contents.
      *
-     * @param insertIndex
-     *            The selected index for inserting a new row
-     * @param minimumInsertIndex
-     *            The minimum allowed index for inserting a new row
-     * @param maximumInsertIndex
-     *            The maximum allowed index for inserting a new row
-     * @param maximumLastRowIndex
-     *            The maximum index that is ever allowed for this table
+     * @param insertIndex         The selected index for inserting a new row
+     * @param minimumInsertIndex  The minimum allowed index for inserting a new
+     *                            row
+     * @param maximumInsertIndex  The maximum allowed index for inserting a new
+     *                            row
+     * @param maximumLastRowIndex The maximum index that is ever allowed for
+     *                            this table
      * @return The row index for the newly inserted row (if valid)
-     *
      * @since 1.0
      */
     protected abstract int addItemAt( final int insertIndex,
@@ -304,7 +291,6 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * were selected), and inserts an initially similar row right after it.
      *
      * @return The row index for the final deleted row (if valid)
-     *
      * @since 1.0
      */
     public int deleteTableRows() {
@@ -317,9 +303,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
         final int minimumLastRowIndex = -1;
 
         // Delete the selected table row(s).
-        final int referenceIndex = deleteTableRows( 
-                minimumDeleteIndex, 
-                minimumLastRowIndex );
+        final int referenceIndex = deleteTableRows( minimumDeleteIndex,
+                                                    minimumLastRowIndex );
 
         return referenceIndex;
     }
@@ -331,12 +316,11 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * This method finds the lower-most row selected (or the last row if none
      * were selected), and inserts an initially similar row right after it.
      *
-     * @param minimumDeleteIndex
-     *            The minimum allowed index for deleting an existing row
-     * @param minimumLastRowIndex
-     *            The minimum index that is ever allowed for this table
+     * @param minimumDeleteIndex  The minimum allowed index for deleting an
+     *                            existing row
+     * @param minimumLastRowIndex The minimum index that is ever allowed for
+     *                            this table
      * @return The row index for the final deleted row (if valid)
-     *
      * @since 1.0
      */
     protected final int deleteTableRows( final int minimumDeleteIndex,
@@ -346,7 +330,8 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
         // A comparator is used, to get the selected rows into reverse order.
         int referenceIndex = -1;
         final int[] selectedRowIndices = getSelectedRows();
-        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length > 0 ) ) {
+        if ( ( selectedRowIndices != null ) && ( selectedRowIndices.length
+                                                 > 0 ) ) {
             int correctedIndex = -1;
             for ( final int deleteIndex : selectedRowIndices ) {
                 // As the table changes size inside this loop, we have to
@@ -394,16 +379,15 @@ public abstract class DynamicXTableView< TD > extends XTableView< TD > {
      * This method removes the item from its collection at the specified index.
      * The table then syncs up automatically.
      *
-     * @param deleteIndex
-     *            The selected index for deleting an existing row
-     * @param minimumDeleteIndex
-     *            The minimum allowed index for deleting an existing row
-     * @param maximumDeleteIndex
-     *            The maximum allowed index for deleting an existing row
-     * @param minimumLastRowIndex
-     *            The minimum index that is ever allowed for this table
+     * @param deleteIndex         The selected index for deleting an existing
+     *                            row
+     * @param minimumDeleteIndex  The minimum allowed index for deleting an
+     *                            existing row
+     * @param maximumDeleteIndex  The maximum allowed index for deleting an
+     *                            existing row
+     * @param minimumLastRowIndex The minimum index that is ever allowed for
+     *                            this table
      * @return The row index for the deleted row (if the row was deleted)
-     *
      * @since 1.0
      */
     protected final int removeItemAt( final int deleteIndex,

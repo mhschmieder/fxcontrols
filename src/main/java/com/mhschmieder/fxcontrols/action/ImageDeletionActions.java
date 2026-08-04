@@ -51,13 +51,17 @@ public class ImageDeletionActions {
     public XAction deleteAllImagesAction;
 
     public ImageDeletionActions() {
-        deleteThisImageAction = new XAction( ActionVerb.DO, "Delete This Image" );
-        deleteOtherImagesAction = new XAction( ActionVerb.DO, "Delete Other Images" );
-        deleteAllImagesAction = new XAction( ActionVerb.DO, "Delete All Images" );
+        deleteThisImageAction = new XAction( ActionVerb.DO,
+                                             "Delete This Image" );
+        deleteOtherImagesAction = new XAction( ActionVerb.DO,
+                                               "Delete Other Images" );
+        deleteAllImagesAction = new XAction( ActionVerb.DO,
+                                             "Delete All Images" );
     }
 
     public Collection< XAction > getImageDeletionActionCollection() {
-        final Collection< XAction > imageDeletionActionCollection = new ArrayList<>();
+        final Collection< XAction > imageDeletionActionCollection
+                = new ArrayList<>();
 
         imageDeletionActionCollection.add( deleteThisImageAction );
         imageDeletionActionCollection.add( deleteOtherImagesAction );
@@ -65,5 +69,4 @@ public class ImageDeletionActions {
 
         return imageDeletionActionCollection;
     }
-
 }

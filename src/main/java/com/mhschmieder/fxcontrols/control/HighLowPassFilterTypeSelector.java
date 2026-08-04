@@ -33,25 +33,24 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jsigproc.filter.ElectronicFilterType;
 import com.mhschmieder.jsigproc.filter.HighLowPassFilterType;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public final class HighLowPassFilterTypeSelector extends TextSelector {
 
     // Default High/Low Pass filter type, for best "out of box" experience.
-    public static final String         HIGH_LOW_PASS_FILTER_TYPE_DEFAULT =
-                                                                         HighLowPassFilterType.LOW_PASS
-                                                                                 .toPresentationString();
+    public static final String HIGH_LOW_PASS_FILTER_TYPE_DEFAULT
+            = HighLowPassFilterType.LOW_PASS.toPresentationString();
 
     // Default High Pass filter type, for best "out of box" experience.
-    public static final String         HIGH_PASS_FILTER_TYPE_DEFAULT     =
-                                                                     HighLowPassFilterType.SECOND_ORDER_HIGH_PASS
-                                                                             .toPresentationString();
+    public static final String HIGH_PASS_FILTER_TYPE_DEFAULT
+            =
+            HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString();
 
     // Default Low Pass filter type, for best "out of box" experience.
-    public static final String         LOW_PASS_FILTER_TYPE_DEFAULT      =
-                                                                    HighLowPassFilterType.LOW_PASS
-                                                                            .toPresentationString();
+    public static final String LOW_PASS_FILTER_TYPE_DEFAULT
+            = HighLowPassFilterType.LOW_PASS.toPresentationString();
 
     // Cache the type of Electronic Filter this selector is being used for.
     private final ElectronicFilterType _filterType;
@@ -62,7 +61,12 @@ public final class HighLowPassFilterTypeSelector extends TextSelector {
                                           final ElectronicFilterType filterType,
                                           final boolean showHighOrderFilters ) {
         // Always call the superclass constructor first!
-        super( clientProperties, tooltipText, applyToolkitCss, false, false, 16 );
+        super( clientProperties,
+               tooltipText,
+               applyToolkitCss,
+               false,
+               false,
+               16 );
 
         _filterType = filterType;
 
@@ -73,95 +77,80 @@ public final class HighLowPassFilterTypeSelector extends TextSelector {
     // Update the non-editable drop-list of filter types.
     public void updateFilterTypes( final boolean showHighOrderFilters ) {
         // Re-populate the drop-list with all filter types.
-        final ObservableList< String > filterTypes = FXCollections.observableArrayList();
+        final ObservableList< String > filterTypes
+                = FXCollections.observableArrayList();
 
         switch ( _filterType ) {
-        case ElectronicFilterType.HIGH_LOW_PASS:
-            filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
-            break;
-        case ElectronicFilterType.HIGH_PASS:
-            filterTypes
-                    .add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
-            filterTypes.add( HighLowPassFilterType.BUTTERWORTH_1_HIGH_PASS
-                    .toPresentationString() );
-            filterTypes.add( HighLowPassFilterType.BUTTERWORTH_2_HIGH_PASS
-                    .toPresentationString() );
-            filterTypes.add( HighLowPassFilterType.BUTTERWORTH_3_HIGH_PASS
-                    .toPresentationString() );
-            filterTypes.add( HighLowPassFilterType.BUTTERWORTH_4_HIGH_PASS
-                    .toPresentationString() );
-            if ( showHighOrderFilters ) {
-                // NOTE: Of the higher order filters, only the highest order seems useful.
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_5_HIGH_PASS
-                // .toPresentationString() );
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_6_HIGH_PASS
-                // .toPresentationString() );
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_7_HIGH_PASS
-                // .toPresentationString() );
-                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_8_HIGH_PASS
-                        .toPresentationString() );
-            }
-            filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_2_HIGH_PASS
-                             .toPresentationString() );
-                     filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_4_HIGH_PASS
-                             .toPresentationString() );
-            break;
-        case ElectronicFilterType.LOW_PASS:
-            filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.BUTTERWORTH_1_LOW_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.BUTTERWORTH_2_LOW_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.BUTTERWORTH_3_LOW_PASS.toPresentationString() );
-            filterTypes
-                    .add( HighLowPassFilterType.BUTTERWORTH_4_LOW_PASS.toPresentationString() );
-            if ( showHighOrderFilters ) {
-                // NOTE: Of the higher order filters, only the highest order seems useful.
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_5_LOW_PASS
-                // .toPresentationString() );
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_6_LOW_PASS
-                // .toPresentationString() );
-                // filterTypes.add(
-                // HighLowPassFilterType.BUTTERWORTH_7_LOW_PASS
-                // .toPresentationString() );
-                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_8_LOW_PASS
-                        .toPresentationString() );
-            }
-            filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_2_LOW_PASS
-                    .toPresentationString() );
-            filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_4_LOW_PASS
-                    .toPresentationString() );
-            break;
-        default:
-            break;
+            case ElectronicFilterType.HIGH_LOW_PASS:
+                filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
+                break;
+            case ElectronicFilterType.HIGH_PASS:
+                filterTypes.add( HighLowPassFilterType.SECOND_ORDER_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.ELLIPTICAL_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_1_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_2_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_3_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_4_HIGH_PASS.toPresentationString() );
+                if ( showHighOrderFilters ) {
+                    // NOTE: Of the higher order filters, only the highest
+                    // order seems useful.
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_5_HIGH_PASS
+                    // .toPresentationString() );
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_6_HIGH_PASS
+                    // .toPresentationString() );
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_7_HIGH_PASS
+                    // .toPresentationString() );
+                    filterTypes.add( HighLowPassFilterType.BUTTERWORTH_8_HIGH_PASS.toPresentationString() );
+                }
+                filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_2_HIGH_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_4_HIGH_PASS.toPresentationString() );
+                break;
+            case ElectronicFilterType.LOW_PASS:
+                filterTypes.add( HighLowPassFilterType.LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_1_LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_2_LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_3_LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.BUTTERWORTH_4_LOW_PASS.toPresentationString() );
+                if ( showHighOrderFilters ) {
+                    // NOTE: Of the higher order filters, only the highest
+                    // order seems useful.
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_5_LOW_PASS
+                    // .toPresentationString() );
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_6_LOW_PASS
+                    // .toPresentationString() );
+                    // filterTypes.add(
+                    // HighLowPassFilterType.BUTTERWORTH_7_LOW_PASS
+                    // .toPresentationString() );
+                    filterTypes.add( HighLowPassFilterType.BUTTERWORTH_8_LOW_PASS.toPresentationString() );
+                }
+                filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_2_LOW_PASS.toPresentationString() );
+                filterTypes.add( HighLowPassFilterType.LINKWITZ_RILEY_4_LOW_PASS.toPresentationString() );
+                break;
+            default:
+                break;
         }
 
         // Determine the initial default High/Low Pass Filter Type.
         String defaultFilterType = null;
         switch ( _filterType ) {
-        case ElectronicFilterType.HIGH_LOW_PASS:
-            defaultFilterType = HIGH_LOW_PASS_FILTER_TYPE_DEFAULT;
-            break;
-        case ElectronicFilterType.HIGH_PASS:
-            defaultFilterType = HIGH_PASS_FILTER_TYPE_DEFAULT;
-            break;
-        case ElectronicFilterType.LOW_PASS:
-            defaultFilterType = LOW_PASS_FILTER_TYPE_DEFAULT;
-            break;
-        default:
-            break;
+            case ElectronicFilterType.HIGH_LOW_PASS:
+                defaultFilterType = HIGH_LOW_PASS_FILTER_TYPE_DEFAULT;
+                break;
+            case ElectronicFilterType.HIGH_PASS:
+                defaultFilterType = HIGH_PASS_FILTER_TYPE_DEFAULT;
+                break;
+            case ElectronicFilterType.LOW_PASS:
+                defaultFilterType = LOW_PASS_FILTER_TYPE_DEFAULT;
+                break;
+            default:
+                break;
         }
 
         // Replace the entire list, and re-assert the current selection.

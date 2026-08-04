@@ -42,7 +42,7 @@ public class DistanceEditor extends DoubleEditor {
     public static final double VALUE_INCREMENT_M = 0.5d;
 
     // Store the Distance Unit so we'll know when we need to convert.
-    private DistanceUnit       _distanceUnit;
+    private DistanceUnit _distanceUnit;
 
     public DistanceEditor( final ClientProperties pClientProperties,
                            final String initialText,
@@ -50,14 +50,7 @@ public class DistanceEditor extends DoubleEditor {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal place of precision for displaying
         // distance, and ten decimal places for parsing Distance.
-        super( pClientProperties, 
-               initialText, 
-               tooltipText, 
-               true,
-               0, 
-               2, 
-               0, 
-               10 );
+        super( pClientProperties, initialText, tooltipText, true, 0, 2, 0, 10 );
 
         _distanceUnit = DistanceUnit.METERS;
 
@@ -69,11 +62,6 @@ public class DistanceEditor extends DoubleEditor {
         }
     }
 
-    // Convert current distance value from display units to Meters.
-    public final double getDistanceMeters() {
-        return UnitConversion.convertDistance( getValue(), _distanceUnit, DistanceUnit.METERS );
-    }
-
     private final void initEditor() {
         // Default the Distance Unit to Meters.
         _distanceUnit = DistanceUnit.METERS;
@@ -82,63 +70,79 @@ public class DistanceEditor extends DoubleEditor {
         setValueIncrement( VALUE_INCREMENT_M );
     }
 
+    // Convert current distance value from display units to Meters.
+    public final double getDistanceMeters() {
+        return UnitConversion.convertDistance( getValue(),
+                                               _distanceUnit,
+                                               DistanceUnit.METERS );
+    }
+
     // Convert new Distance value from Meters to display units.
     public final void setDistanceMeters( final double distanceMeters ) {
-        setValue( UnitConversion
-                .convertDistance( distanceMeters, DistanceUnit.METERS, _distanceUnit ) );
+        setValue( UnitConversion.convertDistance( distanceMeters,
+                                                  DistanceUnit.METERS,
+                                                  _distanceUnit ) );
     }
 
     // Convert maximum Distance value from Meters to display units.
     public final void setMaximumDistanceMeters( final double maximumDistanceMeters ) {
-        setMaximumValue( UnitConversion
-                .convertDistance( maximumDistanceMeters, DistanceUnit.METERS, _distanceUnit ) );
+        setMaximumValue( UnitConversion.convertDistance( maximumDistanceMeters,
+                                                         DistanceUnit.METERS,
+                                                         _distanceUnit ) );
     }
 
     // Convert minimum Distance value from Meters to display units.
     public final void setMinimumDistanceMeters( final double minimumDistanceMeters ) {
-        setMinimumValue( UnitConversion
-                .convertDistance( minimumDistanceMeters, DistanceUnit.METERS, _distanceUnit ) );
+        setMinimumValue( UnitConversion.convertDistance( minimumDistanceMeters,
+                                                         DistanceUnit.METERS,
+                                                         _distanceUnit ) );
     }
 
     public final void updateDistanceUnit( final DistanceUnit distanceUnitNew ) {
         // Convert Distance range from old units to new units.
-        final double minimumDistance = UnitConversion
-                .convertDistance( _minimumValue, _distanceUnit, distanceUnitNew );
-        final double maximumDistance = UnitConversion
-                .convertDistance( _maximumValue, _distanceUnit, distanceUnitNew );
+        final double minimumDistance = UnitConversion.convertDistance(
+                _minimumValue,
+                _distanceUnit,
+                distanceUnitNew );
+        final double maximumDistance = UnitConversion.convertDistance(
+                _maximumValue,
+                _distanceUnit,
+                distanceUnitNew );
 
         // Convert the current Distance from previous units to new units.
-        final double distanceCurrent = UnitConversion
-                .convertDistance( getValue(), _distanceUnit, distanceUnitNew );
+        final double distanceCurrent
+                = UnitConversion.convertDistance( getValue(),
+                                                  _distanceUnit,
+                                                  distanceUnitNew );
 
         // Cache the new Distance Unit to provide context for next change.
         _distanceUnit = distanceUnitNew;
 
         // Modify the resolution to be appropriate for the new scale.
         switch ( _distanceUnit ) {
-        case METERS:
-            _numberFormat.setMaximumFractionDigits( 3 );
-            break;
-        case CENTIMETERS:
-            _numberFormat.setMaximumFractionDigits( 1 );
-            break;
-        case MILLIMETERS:
-            _numberFormat.setMaximumFractionDigits( 0 );
-            break;
-        case YARDS:
-            _numberFormat.setMaximumFractionDigits( 3 );
-            break;
-        case FEET:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        case INCHES:
-            _numberFormat.setMaximumFractionDigits( 1 );
-            break;
-        case UNITLESS:
-            _numberFormat.setMaximumFractionDigits( 2 );
-            break;
-        default:
-            break;
+            case METERS:
+                _numberFormat.setMaximumFractionDigits( 3 );
+                break;
+            case CENTIMETERS:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            case MILLIMETERS:
+                _numberFormat.setMaximumFractionDigits( 0 );
+                break;
+            case YARDS:
+                _numberFormat.setMaximumFractionDigits( 3 );
+                break;
+            case FEET:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            case INCHES:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            case UNITLESS:
+                _numberFormat.setMaximumFractionDigits( 2 );
+                break;
+            default:
+                break;
         }
 
         // NOTE: Text Editors must set their adjusted range before setting the

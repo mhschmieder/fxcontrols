@@ -32,13 +32,15 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.DoubleEditor;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.List;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.TextField;
 
-import java.util.List;
-
-public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Double > {
+public class DoubleEditorTableCell< RT, VT >
+        extends NumberEditorTableCell< RT, Double > {
 
     // Cache the raw Double representation of the data cachedValue.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
@@ -62,12 +64,6 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         _numberFormat.setMaximumFractionDigits( 2 );
         _numberFormat.setParseIntegerOnly( false );
     }
-    
-    @Override
-    protected TextField makeTextField() {
-        return new DoubleEditor(
-            clientProperties, "0", "", blankTextAllowed, 0, 2, 0, 4 );
-    }
 
     @Override
     protected Double getEditorValue() {
@@ -75,9 +71,10 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         if ( textValue == null ) {
             return null;
         }
-        
-        final double doubleValue = ( ( DoubleEditor ) textField ).fromString( textValue );
-        
+
+        final double doubleValue = ( ( DoubleEditor ) textField ).fromString(
+                textValue );
+
         return Double.valueOf( doubleValue );
     }
 
@@ -87,13 +84,26 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         if ( doubleValue == null ) {
             return "";
         }
-        
+
         // This text goes to the editor, so we don't want to clutter the user's
         // editing session with measurement units, but do need localization.
-        final String stringValue 
-            = ( ( DoubleEditor ) textField ).toFormattedString( doubleValue );
-        
+        final String stringValue
+                =
+                ( ( DoubleEditor ) textField ).toFormattedString( doubleValue );
+
         return stringValue;
+    }
+
+    @Override
+    protected TextField makeTextField() {
+        return new DoubleEditor( clientProperties,
+                                 "0",
+                                 "",
+                                 blankTextAllowed,
+                                 0,
+                                 2,
+                                 0,
+                                 4 );
     }
 
     @Override
@@ -102,9 +112,10 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
         if ( doubleValue == null ) {
             return "";
         }
-        
-        final String textValue = ( ( DoubleEditor ) textField ).toString( doubleValue );
-        
+
+        final String textValue = ( ( DoubleEditor ) textField ).toString(
+                doubleValue );
+
         return textValue;
     }
 
@@ -124,7 +135,7 @@ public class DoubleEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, 
     public final double getCachedValue() {
         return cachedValue.get();
     }
-    
+
     public final void setCachedValue( final double pCachedValue ) {
         // Locally cache the new cachedValue, separately from the textField.
         cachedValue.set( pCachedValue );

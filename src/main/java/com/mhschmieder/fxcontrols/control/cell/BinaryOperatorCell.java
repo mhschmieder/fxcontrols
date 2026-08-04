@@ -34,13 +34,14 @@ import com.mhschmieder.fxcontrols.control.ListViewUtilities;
 import com.mhschmieder.fxcontrols.control.XComboBox;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jmath.logic.BinaryConditionalOperator;
+
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.StringConverter;
 
 public class BinaryOperatorCell< T >
-        extends XTableCell< T, BinaryConditionalOperator> {
+        extends XTableCell< T, BinaryConditionalOperator > {
 
     // TODO: Move beyond Java 8 so that we can use the modern Logger API.
     /*
@@ -50,20 +51,18 @@ public class BinaryOperatorCell< T >
 
     private XComboBox< BinaryConditionalOperator > comboBox;
 
-    public BinaryOperatorCell(
-            final TableColumn< T, BinaryConditionalOperator > column,
-            final String tooltipText,
-            final ClientProperties clientProperties ) {
+    public BinaryOperatorCell( final TableColumn< T,
+                                       BinaryConditionalOperator > column,
+                               final String tooltipText,
+                               final ClientProperties clientProperties ) {
         super();
 
         try {
-            initTableCell(
-                    column,
-                    tooltipText,
-                    clientProperties);
+            initTableCell( column, tooltipText, clientProperties );
         }
         catch ( final Exception e ) {
-            // TODO: Move beyond Java 8 so that we can use the modern Logger API.
+            // TODO: Move beyond Java 8 so that we can use the modern Logger
+            //  API.
             /*
             LOGGER.log( Level.ERROR, e.getMessage(), e );
             */
@@ -71,41 +70,43 @@ public class BinaryOperatorCell< T >
         }
     }
 
-    private void initTableCell(
-            final TableColumn< T, BinaryConditionalOperator > column,
-            final String tooltipText,
-            final ClientProperties clientProperties ) {
-        comboBox = ListViewUtilities.makeLabeledSelector(
-                clientProperties,
-                BinaryConditionalOperator.values(),
-                tooltipText,
-                BinaryConditionalOperator.defaultValue() );
+    private void initTableCell( final TableColumn< T,
+                                        BinaryConditionalOperator > column,
+                                final String tooltipText,
+                                final ClientProperties clientProperties ) {
+        comboBox = ListViewUtilities.makeLabeledSelector( clientProperties,
+                                                          BinaryConditionalOperator.values(),
+                                                          tooltipText,
+                                                          BinaryConditionalOperator.defaultValue() );
 
         comboBox.setEditable( false );
         comboBox.setOnShowing( event -> {
             final TableView< T > tableView = getTableView();
-            final TableView.TableViewSelectionModel< T >
-                    selectionModel = tableView.getSelectionModel();
+            final TableView.TableViewSelectionModel< T > selectionModel
+                    = tableView.getSelectionModel();
             final int selectedIndex = getTableRow().getIndex();
             selectionModel.select( selectedIndex );
-            final int selectedIndexCorrected = selectionModel.getSelectedIndex();
+            final int selectedIndexCorrected
+                    = selectionModel.getSelectedIndex();
             tableView.edit( selectedIndexCorrected, column );
         } );
 
         // NOTE: We are including a string converter due to errors occurring
         //  during runtime that are thrown when setting the new value during
         //  edit commits. This syntax must change once moving beyond Java 8.
-        comboBox.setConverter(
-                new StringConverter< BinaryConditionalOperator >() {
+        comboBox.setConverter( new StringConverter< BinaryConditionalOperator >() {
             @Override
             public String toString( final BinaryConditionalOperator operator ) {
-                return operator == null ? "" : operator.label();
+                return operator == null
+                       ? ""
+                       : operator.label();
             }
+
             @Override
-            public BinaryConditionalOperator fromString(String string) {
+            public BinaryConditionalOperator fromString( String string ) {
                 // Find the enum whose label matches.
-                for ( final BinaryConditionalOperator operator
-                        : BinaryConditionalOperator.values() ) {
+                for ( final BinaryConditionalOperator operator :
+                        BinaryConditionalOperator.values() ) {
                     if ( operator.label().equals( string ) ) {
                         return operator;
                     }
@@ -135,8 +136,7 @@ public class BinaryOperatorCell< T >
 
         comboBox.setMaxWidth( Double.MAX_VALUE );
 
-        comboBox.minWidthProperty().bind( widthProperty().subtract(
-                8.0d ) );
+        comboBox.minWidthProperty().bind( widthProperty().subtract( 8.0d ) );
         comboBox.prefWidthProperty().bind( widthProperty() );
 
         comboBox.editableProperty().bind( column.editableProperty() );

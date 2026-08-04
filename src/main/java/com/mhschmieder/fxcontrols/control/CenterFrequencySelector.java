@@ -35,14 +35,15 @@ import com.mhschmieder.jphysics.acoustics.CenterFrequencies;
 import com.mhschmieder.jphysics.acoustics.FrequencyRange;
 import com.mhschmieder.jphysics.acoustics.FrequencySignalUtilities;
 import com.mhschmieder.jphysics.acoustics.RelativeBandwidth;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.commons.math3.util.FastMath;
 
 import java.util.TreeSet;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public final class CenterFrequencySelector extends DoubleSelector {
-    
+
     private final int _startIndexForOneOctave;
     private final int _startIndexForThirdOctave;
 
@@ -61,7 +62,7 @@ public final class CenterFrequencySelector extends DoubleSelector {
                applyToolkitCss,
                false,
                false );
-        
+
         _startIndexForOneOctave = startIndexForOneOctave;
         _startIndexForThirdOctave = startIndexForThirdOctave;
 
@@ -71,10 +72,6 @@ public final class CenterFrequencySelector extends DoubleSelector {
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
-    }
-
-    public String getCenterFrequency() {
-        return getValue();
     }
 
     private void initComboBox() throws Exception {
@@ -96,31 +93,15 @@ public final class CenterFrequencySelector extends DoubleSelector {
 
         // Set the non-editable drop-list of Full Octave Band Center
         // Frequencies, selected at 4 kHz.
-        updateCenterFrequencyForBandwidthAndOctave(
-                RelativeBandwidth.defaultValue(),
-                OctaveRangeSelector.OCTAVE_RANGE_WIDE_DEFAULT,
-                4000.0d,
-                false );
-    }
-
-    public void setCenterFrequency( final String sOctaveRange,
-                                    final String sCenterFrequency ) {
-        final ObservableList< String > items = getItems();
-        if ( ( sCenterFrequency != null ) && items.contains( sCenterFrequency ) ) {
-            setValue( sCenterFrequency );
-        }
-        else {
-            final double centerFrequencyDefault = FrequencyRange
-                    .getNominalCenterFrequencyDefaultForOctaveRange( sOctaveRange, true );
-            final String sCenterFrequencyDefault = FrequencySignalUtilities
-                    .getFormattedFrequency( centerFrequencyDefault, _numberFormat );
-            setValue( sCenterFrequencyDefault );
-        }
+        updateCenterFrequencyForBandwidthAndOctave( RelativeBandwidth.defaultValue(),
+                                                    OctaveRangeSelector.OCTAVE_RANGE_WIDE_DEFAULT,
+                                                    4000.0d,
+                                                    false );
     }
 
     // Set the drop-list of Center Frequencies based on Relative Bandwidth.
     // TODO: Remember to narrow the range of which frequencies are shown!
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public void updateCenterFrequencyForBandwidthAndOctave( final RelativeBandwidth relativeBandwidth,
                                                             final String sOctaveRange,
                                                             final double centerFrequency,
@@ -136,65 +117,75 @@ public final class CenterFrequencySelector extends DoubleSelector {
         int stopIndex;
         boolean narrowBand = false;
         switch ( relativeBandwidth ) {
-        case RelativeBandwidth.ONE_OCTAVE:
-            // Update the list of Center Frequencies to match full octave
-            // bandwidth, displaying only the valid operating range.
-            startIndex = _startIndexForOneOctave;
-            stopIndex = 15;
-            for ( int i = startIndex; i < stopIndex; i++ ) {
-                final double wideBandCenterFrequency = CenterFrequencies
-                        .NOMINAL_FULL_OCTAVE_CENTER_FREQUENCIES[ i ];
-                centerFrequencies.add( wideBandCenterFrequency );
-            }
-            break;
-        case RelativeBandwidth.THIRD_OCTAVE:
-            // Update the list of Center Frequencies to match third octave
-            // bandwidth, displaying only the valid operating range.
-            startIndex = _startIndexForThirdOctave;
-            stopIndex = 43;
-            for ( int i = startIndex; i < stopIndex; i++ ) {
-                final double wideBandCenterFrequency = CenterFrequencies
-                        .NOMINAL_THIRD_OCTAVE_CENTER_FREQUENCIES[ i ];
-                centerFrequencies.add( wideBandCenterFrequency );
-            }
-            break;
-        case RelativeBandwidth.SIXTH_OCTAVE:
-        case RelativeBandwidth.TWELFTH_OCTAVE:
-        case RelativeBandwidth.TWENTY_FOURTH_OCTAVE:
-        case RelativeBandwidth.FORTY_EIGHTH_OCTAVE:
-            narrowBand = true;
+            case RelativeBandwidth.ONE_OCTAVE:
+                // Update the list of Center Frequencies to match full octave
+                // bandwidth, displaying only the valid operating range.
+                startIndex = _startIndexForOneOctave;
+                stopIndex = 15;
+                for ( int i = startIndex; i < stopIndex; i++ ) {
+                    final double wideBandCenterFrequency
+                            =
+                            CenterFrequencies.NOMINAL_FULL_OCTAVE_CENTER_FREQUENCIES[ i ];
+                    centerFrequencies.add( wideBandCenterFrequency );
+                }
+                break;
+            case RelativeBandwidth.THIRD_OCTAVE:
+                // Update the list of Center Frequencies to match third octave
+                // bandwidth, displaying only the valid operating range.
+                startIndex = _startIndexForThirdOctave;
+                stopIndex = 43;
+                for ( int i = startIndex; i < stopIndex; i++ ) {
+                    final double wideBandCenterFrequency
+                            =
+                            CenterFrequencies.NOMINAL_THIRD_OCTAVE_CENTER_FREQUENCIES[ i ];
+                    centerFrequencies.add( wideBandCenterFrequency );
+                }
+                break;
+            case RelativeBandwidth.SIXTH_OCTAVE:
+            case RelativeBandwidth.TWELFTH_OCTAVE:
+            case RelativeBandwidth.TWENTY_FOURTH_OCTAVE:
+            case RelativeBandwidth.FORTY_EIGHTH_OCTAVE:
+                narrowBand = true;
 
-            final int octaveDivider = relativeBandwidth.toOctaveDivider();
-            final int startIndexAt10Hz = 10 * ( int ) FastMath.ceil( octaveDivider / 3.0d );
+                final int octaveDivider = relativeBandwidth.toOctaveDivider();
+                final int startIndexAt10Hz = 10 * ( int ) FastMath.ceil(
+                        octaveDivider / 3.0d );
 
-            final int octaveOffsetFrom10Hz = FrequencySignalUtilities
-                    .getOctaveOffsetFrom10Hz( sOctaveRange );
+                final int octaveOffsetFrom10Hz
+                        = FrequencySignalUtilities.getOctaveOffsetFrom10Hz(
+                        sOctaveRange );
 
-            startIndex = startIndexAt10Hz + ( octaveOffsetFrom10Hz * octaveDivider );
-            stopIndex = startIndex + octaveDivider;
+                startIndex = startIndexAt10Hz + ( octaveOffsetFrom10Hz
+                                                  * octaveDivider );
+                stopIndex = startIndex + octaveDivider;
 
-            // Update the list of Center Frequencies to match relative
-            // bandwidth, displaying only the valid operating range.
-            for ( int i = startIndex; i < stopIndex; i++ ) {
-                final double narrowBandCenterFrequency = FrequencySignalUtilities
-                        .getCenterFrequencyByBandNumber( i, octaveDivider );
-                centerFrequencies.add( narrowBandCenterFrequency );
-            }
-            if ( "10 kHz to 20 kHz".equals( sOctaveRange ) ) {
-                // Insert the specific 1 kHz frequencies between 10 kHz and
-                // 20 kHz in the midst of the algorithmically generated ones.
-                // In order to get the numbers in order and avoid possible
-                // duplicates between integer values and algorithmically
-                // generated values, we use a TreeSet of Double objects.
-                for ( int j = 0; j <= 10; j++ ) {
-                    final double narrowBandCenterFrequency = 10000d + ( j * 1000d );
+                // Update the list of Center Frequencies to match relative
+                // bandwidth, displaying only the valid operating range.
+                for ( int i = startIndex; i < stopIndex; i++ ) {
+                    final double narrowBandCenterFrequency
+                            =
+                            FrequencySignalUtilities.getCenterFrequencyByBandNumber(
+                            i,
+                            octaveDivider );
                     centerFrequencies.add( narrowBandCenterFrequency );
                 }
-            }
+                if ( "10 kHz to 20 kHz".equals( sOctaveRange ) ) {
+                    // Insert the specific 1 kHz frequencies between 10 kHz and
+                    // 20 kHz in the midst of the algorithmically generated
+                    // ones.
+                    // In order to get the numbers in order and avoid possible
+                    // duplicates between integer values and algorithmically
+                    // generated values, we use a TreeSet of Double objects.
+                    for ( int j = 0; j <= 10; j++ ) {
+                        final double narrowBandCenterFrequency = 10000d + ( j
+                                                                            * 1000d );
+                        centerFrequencies.add( narrowBandCenterFrequency );
+                    }
+                }
 
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
 
         // Make sure the list displays all items without scrolling.
@@ -212,40 +203,78 @@ public final class CenterFrequencySelector extends DoubleSelector {
         }
         else {
             // Make sure it's in range, so we know to look for closest match.
-            centerFrequencyInRange = FrequencyRange
-                    .isCenterFrequencyInOctaveRange( sOctaveRange, centerFrequency );
+            centerFrequencyInRange
+                    = FrequencyRange.isCenterFrequencyInOctaveRange(
+                    sOctaveRange,
+                    centerFrequency );
         }
 
         // Convert the numbers to formatted strings, and search for the closest
         // match to the previous Center Frequency while doing that.
         // TODO: Use Functional Programming and Streams API to find best match?
-        final ObservableList< String > centerFrequenciesFormatted = FXCollections
-                .observableArrayList();
+        final ObservableList< String > centerFrequenciesFormatted
+                = FXCollections.observableArrayList();
         double previousFrequencyDifference = Double.MAX_VALUE;
         double currentFrequencyDifference = Double.MAX_VALUE;
         for ( final Double nominalCenterFrequency : centerFrequencies ) {
             if ( centerFrequencyInRange ) {
-                currentFrequencyDifference = FastMath.abs( nominalCenterFrequency - centerFrequency );
-                if ( currentFrequencyDifference < previousFrequencyDifference ) {
+                currentFrequencyDifference = FastMath.abs(
+                        nominalCenterFrequency - centerFrequency );
+                if ( currentFrequencyDifference
+                     < previousFrequencyDifference ) {
                     centerFrequencyDefault = nominalCenterFrequency;
                 }
                 previousFrequencyDifference = currentFrequencyDifference;
             }
 
-            final String centerFrequencyFormatted = FrequencySignalUtilities
-                    .getFormattedFrequency( nominalCenterFrequency, _numberFormat );
+            final String centerFrequencyFormatted
+                    = FrequencySignalUtilities.getFormattedFrequency(
+                    nominalCenterFrequency,
+                    _numberFormat );
             centerFrequenciesFormatted.add( centerFrequencyFormatted );
         }
 
         // If the Center Frequency is no longer in range, choose a new default.
         if ( !centerFrequencyInRange ) {
-            centerFrequencyDefault = FrequencyRange
-                    .getNominalCenterFrequencyDefaultForOctaveRange( sOctaveRange, narrowBand );
+            centerFrequencyDefault
+                    =
+                    FrequencyRange.getNominalCenterFrequencyDefaultForOctaveRange(
+                    sOctaveRange,
+                    narrowBand );
         }
 
         // Replace the entire list, and re-assert the current selection.
-        final String sCenterFrequencyDefault = FrequencySignalUtilities
-                .getFormattedFrequency( centerFrequencyDefault, _numberFormat );
-        updateValues( centerFrequenciesFormatted, sCenterFrequencyDefault, preserveSelection );
+        final String sCenterFrequencyDefault
+                = FrequencySignalUtilities.getFormattedFrequency(
+                centerFrequencyDefault,
+                _numberFormat );
+        updateValues( centerFrequenciesFormatted,
+                      sCenterFrequencyDefault,
+                      preserveSelection );
+    }
+
+    public String getCenterFrequency() {
+        return getValue();
+    }
+
+    public void setCenterFrequency( final String sOctaveRange,
+                                    final String sCenterFrequency ) {
+        final ObservableList< String > items = getItems();
+        if ( ( sCenterFrequency != null )
+             && items.contains( sCenterFrequency ) ) {
+            setValue( sCenterFrequency );
+        }
+        else {
+            final double centerFrequencyDefault
+                    =
+                    FrequencyRange.getNominalCenterFrequencyDefaultForOctaveRange(
+                    sOctaveRange,
+                    true );
+            final String sCenterFrequencyDefault
+                    = FrequencySignalUtilities.getFormattedFrequency(
+                    centerFrequencyDefault,
+                    _numberFormat );
+            setValue( sCenterFrequencyDefault );
+        }
     }
 }

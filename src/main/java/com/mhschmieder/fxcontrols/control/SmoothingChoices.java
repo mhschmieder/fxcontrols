@@ -49,35 +49,49 @@ import java.util.Collection;
 public final class SmoothingChoices {
 
     // Declare all of the Smoothing choices.
-    public XAction      _smoothingNarrowChoice;
-    public XAction      _smoothingSixthOctaveChoice;
-    public XAction      _smoothingThirdOctaveChoice;
+    public XAction _smoothingNarrowChoice;
+    public XAction _smoothingSixthOctaveChoice;
+    public XAction _smoothingThirdOctaveChoice;
 
     // Cache the associated choice group, for ease of overall enablement.
     public XActionGroup _smoothingChoiceGroup;
 
     // Default constructor
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public SmoothingChoices( final ClientProperties clientProperties ) {
-        _smoothingNarrowChoice = LabeledActionFactory
-                .getSmoothingNarrowChoice( clientProperties );
-        _smoothingSixthOctaveChoice = LabeledActionFactory
-                .getSmoothingSixthOctaveChoice( clientProperties );
-        _smoothingThirdOctaveChoice = LabeledActionFactory
-                .getSmoothingThirdOctaveChoice( clientProperties );
+        _smoothingNarrowChoice = LabeledActionFactory.getSmoothingNarrowChoice(
+                clientProperties );
+        _smoothingSixthOctaveChoice
+                = LabeledActionFactory.getSmoothingSixthOctaveChoice(
+                clientProperties );
+        _smoothingThirdOctaveChoice
+                = LabeledActionFactory.getSmoothingThirdOctaveChoice(
+                clientProperties );
 
-        final Collection< Action > smoothingChoiceCollection = Arrays
-                .asList( _smoothingNarrowChoice,
-                         _smoothingSixthOctaveChoice,
-                         _smoothingThirdOctaveChoice );
+        final Collection< Action > smoothingChoiceCollection = Arrays.asList(
+                _smoothingNarrowChoice,
+                _smoothingSixthOctaveChoice,
+                _smoothingThirdOctaveChoice );
 
-        _smoothingChoiceGroup = ActionFactory
-                .makeChoiceGroup( clientProperties,
-                                  smoothingChoiceCollection,
-                                  LabeledActionFactory.BUNDLE_NAME,
-                                  "smoothing",
-                                  "/icons/ahaSoft/Smooth16.png",
-                                  true );
+        _smoothingChoiceGroup = ActionFactory.makeChoiceGroup( clientProperties,
+                                                               smoothingChoiceCollection,
+                                                               LabeledActionFactory.BUNDLE_NAME,
+                                                               "smoothing",
+                                                               "/icons"
+                                                               + "/ahaSoft"
+                                                               + "/Smooth16"
+                                                               + ".png",
+                                                               true );
+    }
+
+    public XActionGroup getSmoothingChoiceGroup() {
+        return _smoothingChoiceGroup;
+    }
+
+    public int getSmoothingOctaveDivider() {
+        final Smoothing smoothing = getSmoothing();
+        final int smoothingOctaveDivider = smoothing.toOctaveDivider();
+        return smoothingOctaveDivider;
     }
 
     public Smoothing getSmoothing() {
@@ -95,42 +109,32 @@ public final class SmoothingChoices {
         }
     }
 
-    public XActionGroup getSmoothingChoiceGroup() {
-        return _smoothingChoiceGroup;
-    }
-
-    public int getSmoothingOctaveDivider() {
-        final Smoothing smoothing = getSmoothing();
-        final int smoothingOctaveDivider = smoothing.toOctaveDivider();
-        return smoothingOctaveDivider;
-    }
-
-    public void setDisabled( final boolean disabled ) {
-        _smoothingChoiceGroup.setDisabled( disabled );
-    }
-
     public void setSmoothing( final Smoothing smoothing ) {
         // Sync up the choices with the current Smoothing value.
         switch ( smoothing ) {
-        case Smoothing.NARROW_BAND:
-            _smoothingNarrowChoice.setSelected( true );
-            break;
-        case Smoothing.SIXTH_OCTAVE_BAND:
-            _smoothingSixthOctaveChoice.setSelected( true );
-            break;
-        case Smoothing.THIRD_OCTAVE_BAND:
-            _smoothingThirdOctaveChoice.setSelected( true );
-            break;
-        default:
-            // NOTE: Theoretically impossible case.
-            break;
+            case Smoothing.NARROW_BAND:
+                _smoothingNarrowChoice.setSelected( true );
+                break;
+            case Smoothing.SIXTH_OCTAVE_BAND:
+                _smoothingSixthOctaveChoice.setSelected( true );
+                break;
+            case Smoothing.THIRD_OCTAVE_BAND:
+                _smoothingThirdOctaveChoice.setSelected( true );
+                break;
+            default:
+                // NOTE: Theoretically impossible case.
+                break;
         }
     }
 
     public void setSmoothingOctaveDivider( final int octaveDivider ) {
         // Sync up the radio button menu items with the current Smoothing value.
-        final Smoothing smoothing = Smoothing.fromOctaveDivider( octaveDivider );
+        final Smoothing smoothing
+                = Smoothing.fromOctaveDivider( octaveDivider );
         setSmoothing( smoothing );
     }
 
+    public void setDisabled( final boolean disabled ) {
+        _smoothingChoiceGroup.setDisabled( disabled );
+    }
 }

@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.SystemType;
+
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -43,9 +44,8 @@ import javafx.scene.input.KeyCode;
  * <p>
  * In particular, this class properly handles ESC and ENTER keys consistently.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class XTextField extends TextField {
 
@@ -78,7 +78,9 @@ public class XTextField extends TextField {
             setTooltip( new Tooltip( tooltipText ) );
         }
         else {
-            setTooltip( new Tooltip( "Use ENTER or TAB Key to Commit Edits, and ESC to Cancel Edits" ) ); //$NON-NLS-1$
+            setTooltip( new Tooltip(
+                    "Use ENTER or TAB Key to Commit Edits, and ESC to Cancel "
+                    + "Edits" ) ); //$NON-NLS-1$
         }
 
         if ( applyToolkitCss ) {
@@ -93,32 +95,40 @@ public class XTextField extends TextField {
         // Try to make sure the text field uses enough height so that commas
         // don't look like periods. More height is required on the Mac for these
         // and other characters involving descenders, to avoid clipping.
-        setPrefHeight( SystemType.MACOS.equals( clientProperties.systemType ) ? 24d : 22d );
-        setMinHeight( SystemType.MACOS.equals( clientProperties.systemType ) ? 24d : 22d );
+        setPrefHeight( SystemType.MACOS.equals( clientProperties.systemType )
+                       ? 24d
+                       : 22d );
+        setMinHeight( SystemType.MACOS.equals( clientProperties.systemType )
+                      ? 24d
+                      : 22d );
 
         // Just in case we use or derive this class without overriding special
         // key handling, add some rudimentary behavior that minimizes surprises.
         setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
-            case ENTER:
-                // Commit the current selection as-is, without giving up focus.
-                commitValue();
+                case ENTER:
+                    // Commit the current selection as-is, without giving up
+                    // focus.
+                    commitValue();
 
-                break;
-            case ESCAPE:
-                // Revert to the most recent committed value.
-                cancelEdit();
+                    break;
+                case ESCAPE:
+                    // Revert to the most recent committed value.
+                    cancelEdit();
 
-                break;
-            case TAB:
-                // NOTE: Nothing to do, as Text Input Controls commit edits and
-                // then release focus when the TAB key is pressed, so the Focus
-                // Lost handler is where value restrictions should be applied.
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                    break;
+                case TAB:
+                    // NOTE: Nothing to do, as Text Input Controls commit
+                    // edits and
+                    // then release focus when the TAB key is pressed, so the
+                    // Focus
+                    // Lost handler is where value restrictions should be
+                    // applied.
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
     }

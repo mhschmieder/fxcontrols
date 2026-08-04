@@ -36,8 +36,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * This class formalizes aspects of list selection that are specific to
- * number value sets.
+ * This class formalizes aspects of list selection that are specific to number
+ * value sets.
  * <p>
  * TODO: Review whether it is better to derive from TextSelector, or even
  *  to specify the template type as Number, and use NumberConverters in
@@ -62,10 +62,10 @@ public abstract class NumberSelector extends XComboBox< String > {
                            final boolean editable,
                            final boolean searchable ) {
         // Always call the superclass constructor first!
-        super( clientProperties, 
-               tooltipText, 
-               applyToolkitCss, 
-               editable, 
+        super( clientProperties,
+               tooltipText,
+               applyToolkitCss,
+               editable,
                searchable );
 
         try {
@@ -80,7 +80,7 @@ public abstract class NumberSelector extends XComboBox< String > {
         }
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     private final void initComboBox( final int minFractionDigitsFormat,
                                      final int maxFractionDigitsFormat,
                                      final int minFractionDigitsParse,
@@ -92,8 +92,8 @@ public abstract class NumberSelector extends XComboBox< String > {
         // formatting that is locked to the usage domain; hence the flag. In
         // such cases we are safest with US-English (vs. just "English").
         final Locale numberLocale = useLocale
-            ? clientProperties.locale
-            : Locale.forLanguageTag( "en-US" );
+                                    ? clientProperties.locale
+                                    : Locale.forLanguageTag( "en-US" );
         _numberFormat = NumberFormat.getNumberInstance( numberLocale );
         _numberParse = ( NumberFormat ) _numberFormat.clone();
 

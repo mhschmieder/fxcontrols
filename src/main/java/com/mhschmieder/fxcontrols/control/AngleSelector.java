@@ -33,6 +33,7 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.measure.AngleUnit;
 import com.mhschmieder.jphysics.util.AngleFormatUtilities;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SingleSelectionModel;
@@ -51,13 +52,22 @@ public final class AngleSelector extends DoubleSelector {
     public static final int LIMIT_ANGLE_DEFAULT = 0;
 
     // Maintain a reference to the Angle Unit.
-    protected AngleUnit     _angleUnit;
+    protected AngleUnit _angleUnit;
 
     public AngleSelector( final ClientProperties clientProperties,
                           final String tooltipText,
                           final boolean applyToolkitCss ) {
         // Always call the superclass constructor first!
-        super( clientProperties, 0, 1, 0, 1, true, tooltipText, applyToolkitCss, false, false );
+        super( clientProperties,
+               0,
+               1,
+               0,
+               1,
+               true,
+               tooltipText,
+               applyToolkitCss,
+               false,
+               false );
 
         _angleUnit = AngleUnit.defaultValue();
 
@@ -67,15 +77,6 @@ public final class AngleSelector extends DoubleSelector {
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
-    }
-
-    public double getAngle() {
-        final double angle = AngleFormatUtilities.parseAngle( getValue(), _numberFormat, _angleUnit );
-        return angle;
-    }
-
-    public int getNumberOfAllowedAngles() {
-        return getItems().size();
     }
 
     private void initComboBox() {
@@ -90,24 +91,18 @@ public final class AngleSelector extends DoubleSelector {
         // setVisibleRowCount( 20 );
     }
 
-    /**
-     * This method selects either the first or the last angle. This is a
-     * convenience method as this logic may be used in many places;
-     * particularly when pairing angle selectors that must be guaranteed to not
-     * invert angle order from one Combo Box to another.
-     *
-     * @param defaultToLastAngle
-     *            Flag for whether to default to last angle or first angle
-     */
-    public void selectDefaultAngle( final boolean defaultToLastAngle ) {
-        // Select the first or last angle in the list of allowed angles.
-        final SingleSelectionModel< String > selectionModel = getSelectionModel();
-        if ( defaultToLastAngle ) {
-            selectionModel.selectLast();
-        }
-        else {
-            selectionModel.selectFirst();
-        }
+    public double getAngle() {
+        final double angle = AngleFormatUtilities.parseAngle( getValue(),
+                                                              _numberFormat,
+                                                              _angleUnit );
+        return angle;
+    }
+
+    public void setAngle( final double angle ) {
+        final String angleFormatted = AngleFormatUtilities.formatAngle( angle,
+                                                                        _numberFormat,
+                                                                        _angleUnit );
+        setValue( angleFormatted );
     }
 
     /**
@@ -115,22 +110,19 @@ public final class AngleSelector extends DoubleSelector {
      * applies mutually exclusive logic for either preserving the selected value
      * (if present in the new list) or the selected index (which may have a new
      * value and/or may be beyond the range of the new list).
-     *
+     * <p>
      * There are two variants on preserving the selected index, to account for
      * cases where we want to leave it alone unless out of range (in which case
      * we select the last index), or adjust based on list changes (unless now
      * out of range, in which case we select the first index).
      *
-     * @param allowedAngles
-     *            The new list of angles to be formatted and presented
-     * @param preserveSelectedValue
-     *            Flag for preserving current selected value
-     * @param preserveSelectedIndex
-     *            Flag for preserving current selected index
-     * @param adjustSelectedIndex
-     *            Flag for adjusting current selected index
-     * @param defaultToLastAngle
-     *            Flag for whether to default to last angle or first angle
+     * @param allowedAngles         The new list of angles to be formatted and
+     *                              presented
+     * @param preserveSelectedValue Flag for preserving current selected value
+     * @param preserveSelectedIndex Flag for preserving current selected index
+     * @param adjustSelectedIndex   Flag for adjusting current selected index
+     * @param defaultToLastAngle    Flag for whether to default to last angle or
+     *                              first angle
      */
     public void setAllowedAngles( final double[] allowedAngles,
                                   final boolean preserveSelectedValue,
@@ -141,7 +133,8 @@ public final class AngleSelector extends DoubleSelector {
         final String angleCurrent = getValue();
 
         // Save the selected index to reinstate after replacing the drop-list.
-        final SingleSelectionModel< String > selectionModel = getSelectionModel();
+        final SingleSelectionModel< String > selectionModel
+                = getSelectionModel();
         final int selectedIndex = selectionModel.getSelectedIndex();
         final int oldNumberOfAllowedAngles = getNumberOfAllowedAngles();
 
@@ -149,10 +142,13 @@ public final class AngleSelector extends DoubleSelector {
         // list. Be careful if restoring the current selection, as there are
         // many edge cases that either do the wrong thing, result in a blank
         // selection field, or do not generate a callback.
-        final ObservableList< String > allowedAnglesFormatted = FXCollections.observableArrayList();
+        final ObservableList< String > allowedAnglesFormatted
+                = FXCollections.observableArrayList();
         for ( final double allowedAngle : allowedAngles ) {
-            final String allowedAngleFormatted = AngleFormatUtilities
-                    .formatAngle( allowedAngle, _numberFormat, _angleUnit );
+            final String allowedAngleFormatted
+                    = AngleFormatUtilities.formatAngle( allowedAngle,
+                                                        _numberFormat,
+                                                        _angleUnit );
             allowedAnglesFormatted.add( allowedAngleFormatted );
         }
 
@@ -177,7 +173,8 @@ public final class AngleSelector extends DoubleSelector {
             }
             else if ( angleCurrent != null ) {
                 // If no match found, select the angle by default lookup index.
-                final String angleDefault = allowedAnglesFormatted.get( LIMIT_ANGLE_DEFAULT );
+                final String angleDefault = allowedAnglesFormatted.get(
+                        LIMIT_ANGLE_DEFAULT );
                 setValue( angleDefault );
             }
             else {
@@ -201,8 +198,9 @@ public final class AngleSelector extends DoubleSelector {
             // simply select the first angle in the list instead.
             final int newNumberOfAllowedAngles = getNumberOfAllowedAngles();
             final int numberOfAllowedAnglesDifference = newNumberOfAllowedAngles
-                    - oldNumberOfAllowedAngles;
-            final int adjustedIndex = selectedIndex + numberOfAllowedAnglesDifference;
+                                                        - oldNumberOfAllowedAngles;
+            final int adjustedIndex = selectedIndex
+                                      + numberOfAllowedAnglesDifference;
             if ( adjustedIndex > 0 ) {
                 selectionModel.select( adjustedIndex );
             }
@@ -212,14 +210,32 @@ public final class AngleSelector extends DoubleSelector {
         }
     }
 
-    public void setAngle( final double angle ) {
-        final String angleFormatted = AngleFormatUtilities
-                .formatAngle( angle, _numberFormat, _angleUnit );
-        setValue( angleFormatted );
+    public int getNumberOfAllowedAngles() {
+        return getItems().size();
+    }
+
+    /**
+     * This method selects either the first or the last angle. This is a
+     * convenience method as this logic may be used in many places; particularly
+     * when pairing angle selectors that must be guaranteed to not invert angle
+     * order from one Combo Box to another.
+     *
+     * @param defaultToLastAngle Flag for whether to default to last angle or
+     *                           first angle
+     */
+    public void selectDefaultAngle( final boolean defaultToLastAngle ) {
+        // Select the first or last angle in the list of allowed angles.
+        final SingleSelectionModel< String > selectionModel
+                = getSelectionModel();
+        if ( defaultToLastAngle ) {
+            selectionModel.selectLast();
+        }
+        else {
+            selectionModel.selectFirst();
+        }
     }
 
     public void updateAngleUnit( final AngleUnit angleUnit ) {
         _angleUnit = angleUnit;
     }
-
 }

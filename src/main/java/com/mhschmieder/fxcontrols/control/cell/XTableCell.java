@@ -34,8 +34,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
-public abstract class XTableCell< RT, VT > extends TableCell< RT, VT > 
-    implements CellValidator< RT > {
+public abstract class XTableCell< RT, VT > extends TableCell< RT, VT >
+        implements CellValidator< RT > {
 
     public void setValue( final VT editorValue ) {
         // Commit the edited text to the table cell itself.
@@ -46,8 +46,8 @@ public abstract class XTableCell< RT, VT > extends TableCell< RT, VT >
         final TableRow< RT > tableRow = getTableRow();
         validateCellValue( tableView, tableRow );
     }
-    
-    @Override 
+
+    @Override
     public void setBeanProperty( final RT selectedRecord ) {
         // NOTE: Generic cell editors may not need to validate edited values,
         //  so a default no-op implementation is provided in this base class.

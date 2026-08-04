@@ -31,13 +31,14 @@
 package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.fxgraphics.beans.BeanFactory;
+
+import java.time.LocalDate;
+
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import java.time.LocalDate;
 
 /**
  * Observable data model for GUI elements associated with Project Properties.
@@ -61,23 +62,16 @@ public class ProjectProperties {
      * default values, initializing anything that requires memory allocation.
      */
     public ProjectProperties() {
-        this(
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_NAME,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_TYPE,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_LOCATION,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_AUTHOR,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_DATE,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_NOTES );
+        this( com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_NAME,
+              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_TYPE,
+              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_LOCATION,
+              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_AUTHOR,
+              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_DATE,
+              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_NOTES );
     }
 
     /*
-     * This is the fully qualified constructor. 
+     * This is the fully qualified constructor.
      */
     public ProjectProperties( final String pProjectName,
                               final String pProjectType,
@@ -96,12 +90,36 @@ public class ProjectProperties {
         // NOTE: This is done during initialization, as it is best to make
         //  singleton objects and just update their values vs. reconstructing.
         projectPropertiesChanged = BeanFactory.makeBooleanBinding(
-               projectNameProperty(),
-               projectTypeProperty(),
-               projectLocationProperty(),
-               projectAuthorProperty(),
-               projectDateProperty(),
-               projectNotesProperty());
+                projectNameProperty(),
+                projectTypeProperty(),
+                projectLocationProperty(),
+                projectAuthorProperty(),
+                projectDateProperty(),
+                projectNotesProperty() );
+    }
+
+    public StringProperty projectNameProperty() {
+        return projectName;
+    }
+
+    public StringProperty projectTypeProperty() {
+        return projectType;
+    }
+
+    public StringProperty projectLocationProperty() {
+        return projectLocation;
+    }
+
+    public StringProperty projectAuthorProperty() {
+        return projectAuthor;
+    }
+
+    public ObjectProperty< LocalDate > projectDateProperty() {
+        return projectDate;
+    }
+
+    public StringProperty projectNotesProperty() {
+        return projectNotes;
     }
 
     /**
@@ -111,17 +129,63 @@ public class ProjectProperties {
      * guarantee that the source object is never modified by the new target
      * object created here.
      *
-     * @param pProjectProperties
-     *            The Project Properties reference for the copy
+     * @param pProjectProperties The Project Properties reference for the copy
      */
     public ProjectProperties( final ProjectProperties pProjectProperties ) {
-        this(
-                pProjectProperties.getProjectName(),
-                pProjectProperties.getProjectType(),
-                pProjectProperties.getProjectLocation(),
-                pProjectProperties.getProjectAuthor(),
-                pProjectProperties.getProjectDate(),
-                pProjectProperties.getProjectNotes() );
+        this( pProjectProperties.getProjectName(),
+              pProjectProperties.getProjectType(),
+              pProjectProperties.getProjectLocation(),
+              pProjectProperties.getProjectAuthor(),
+              pProjectProperties.getProjectDate(),
+              pProjectProperties.getProjectNotes() );
+    }
+
+    public String getProjectName() {
+        return projectName.get();
+    }
+
+    public void setProjectName( final String pProjectName ) {
+        projectName.set( pProjectName );
+    }
+
+    public String getProjectType() {
+        return projectType.get();
+    }
+
+    public void setProjectType( final String pProjectType ) {
+        projectType.set( pProjectType );
+    }
+
+    public String getProjectLocation() {
+        return projectLocation.get();
+    }
+
+    public void setProjectLocation( final String pProjectLocation ) {
+        projectLocation.set( pProjectLocation );
+    }
+
+    public String getProjectAuthor() {
+        return projectAuthor.get();
+    }
+
+    public void setProjectAuthor( final String pProjectAuthor ) {
+        projectAuthor.set( pProjectAuthor );
+    }
+
+    public LocalDate getProjectDate() {
+        return projectDate.get();
+    }
+
+    public void setProjectDate( final LocalDate pProjectDate ) {
+        projectDate.set( pProjectDate );
+    }
+
+    public String getProjectNotes() {
+        return projectNotes.get();
+    }
+
+    public void setProjectNotes( final String pProjectNotes ) {
+        projectNotes.set( pProjectNotes );
     }
 
     // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
@@ -134,26 +198,19 @@ public class ProjectProperties {
     /**
      * Resets all fields to their default values, which are blank.
      * <p>
-     * Serves as a default pseudo-constructor. 
+     * Serves as a default pseudo-constructor.
      */
     public void reset() {
-        setProjectProperties(
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_NAME,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_TYPE,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_LOCATION,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_AUTHOR,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_DATE,
-                com.mhschmieder.jcommons.util.ProjectProperties
-                        .DEFAULT_PROJECT_NOTES );
+        setProjectProperties( com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_NAME,
+                              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_TYPE,
+                              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_LOCATION,
+                              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_AUTHOR,
+                              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_DATE,
+                              com.mhschmieder.jcommons.util.ProjectProperties.DEFAULT_PROJECT_NOTES );
     }
 
     /*
-     * Fully qualified pseudo-constructor. 
+     * Fully qualified pseudo-constructor.
      */
     public void setProjectProperties( final String pProjectName,
                                       final String pProjectType,
@@ -175,98 +232,23 @@ public class ProjectProperties {
     /**
      * Sets all fields to match the values in the referenced instance.
      * <p>
-     * This serves as a copy pseudo-constructor. 
+     * This serves as a copy pseudo-constructor.
      *
-     * @param pProjectProperties
-     *            The Project Properties reference for the copy
+     * @param pProjectProperties The Project Properties reference for the copy
      */
-    public void setProjectProperties(
-            final ProjectProperties pProjectProperties ) {
-        setProjectProperties(
-                pProjectProperties.getProjectName(),
-                pProjectProperties.getProjectType(),
-                pProjectProperties.getProjectLocation(),
-                pProjectProperties.getProjectAuthor(),
-                pProjectProperties.getProjectDate(),
-                pProjectProperties.getProjectNotes() );
+    public void setProjectProperties( final ProjectProperties pProjectProperties ) {
+        setProjectProperties( pProjectProperties.getProjectName(),
+                              pProjectProperties.getProjectType(),
+                              pProjectProperties.getProjectLocation(),
+                              pProjectProperties.getProjectAuthor(),
+                              pProjectProperties.getProjectDate(),
+                              pProjectProperties.getProjectNotes() );
     }
 
-    public StringProperty projectNameProperty() {
-        return projectName;
-    }
-
-    public String getProjectName() {
-        return projectName.get();
-    }
-
-    public void setProjectName( final String pProjectName ) {
-        projectName.set( pProjectName );
-    }
-
-    public StringProperty projectTypeProperty() {
-        return projectType;
-    }
-
-    public String getProjectType() {
-        return projectType.get();
-    }
-
-    public void setProjectType( final String pProjectType ) {
-        projectType.set( pProjectType );
-    }
-
-    public StringProperty projectLocationProperty() {
-        return projectLocation;
-    }
-
-    public String getProjectLocation() {
-        return projectLocation.get();
-    }
-
-    public void setProjectLocation( final String pProjectLocation ) {
-        projectLocation.set( pProjectLocation );
-    }
-
-    public StringProperty projectAuthorProperty() {
-        return projectAuthor;
-    }
-
-    public String getProjectAuthor() {
-        return projectAuthor.get();
-    }
-
-    public void setProjectAuthor( final String pProjectAuthor ) {
-        projectAuthor.set( pProjectAuthor );
-    }
-
-    public ObjectProperty< LocalDate > projectDateProperty() {
-        return projectDate;
-    }
-
-    public LocalDate getProjectDate() {
-        return projectDate.get();
-    }
-
-    public void setProjectDate( final LocalDate pProjectDate ) {
-        projectDate.set( pProjectDate );
-    }
-
-    public StringProperty projectNotesProperty() {
-        return projectNotes;
-    }
-
-    public String getProjectNotes() {
-        return projectNotes.get();
-    }
-
-    public void setProjectNotes( final String pProjectNotes ) {
-        projectNotes.set( pProjectNotes );
-    }
-    
     public BooleanBinding projectPropertiesChangedProperty() {
         return projectPropertiesChanged;
     }
-    
+
     public boolean isProjectPropertiesChanged() {
         return projectPropertiesChanged.get();
     }

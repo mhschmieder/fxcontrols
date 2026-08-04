@@ -32,21 +32,22 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.measure.HumidityUnit;
+
 import javafx.geometry.Orientation;
 
 public final class HumiditySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial humidity for { 0, 100 }.
-    public static final double  MINIMUM_RELATIVE_HUMIDITY_DEFAULT = 0.0d;
-    public static final double  MAXIMUM_RELATIVE_HUMIDITY_DEFAULT = 100d;
-    public static final double  INITIAL_RELATIVE_HUMIDITY_DEFAULT = 50d;
+    public static final double MINIMUM_RELATIVE_HUMIDITY_DEFAULT = 0.0d;
+    public static final double MAXIMUM_RELATIVE_HUMIDITY_DEFAULT = 100d;
+    public static final double INITIAL_RELATIVE_HUMIDITY_DEFAULT = 50d;
 
     // Default tick spacing in percentiles.
-    private static final double MAJOR_TICK_SPACING_PERCENT        = 10.0d;
-    private static final double MINOR_TICK_SPACING_PERCENT        = 2.0d;
+    private static final double MAJOR_TICK_SPACING_PERCENT = 10.0d;
+    private static final double MINOR_TICK_SPACING_PERCENT = 2.0d;
 
     // Declare block increment/decrement amount for left and right arrows.
-    private static final double BLOCK_INCREMENT_PERCENT           = 0.5d;
+    private static final double BLOCK_INCREMENT_PERCENT = 0.5d;
 
     public HumiditySlider( final ClientProperties clientProperties ) {
         this( clientProperties,

@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.XColorPicker;
+
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,9 +41,8 @@ import javafx.scene.paint.Color;
 /**
  * This is a wrapper for the logic that is specific to Color Pickers.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public abstract class ColorPickerTableCell< RT >
         extends XTableCell< RT, Color > {
@@ -78,19 +78,18 @@ public abstract class ColorPickerTableCell< RT >
         // Try to make the Color Picker fill the entire Table Cell.
         // NOTE: We have to account for insets and margins though.
         // NOTE: Setting height causes incremental growth per click!
-        _colorPicker.minWidthProperty().bind( widthProperty().subtract(
-                8.0d ) );
+        _colorPicker.minWidthProperty()
+                    .bind( widthProperty().subtract( 8.0d ) );
         _colorPicker.prefWidthProperty().bind( widthProperty() );
 
         _colorPicker.editableProperty().bind( column.editableProperty() );
-        _colorPicker.disableProperty().bind(
-                column.editableProperty().not() );
+        _colorPicker.disableProperty().bind( column.editableProperty().not() );
 
         // It is safer to manually show the Color Picker and put it into editing
         // mode, than to deal with the complexities of the base class
         // implementation, as the Color Picker has a very different workflow and
         // event model from a standard supported control like a Text Field.
-        _colorPicker.setOnShowing(evt -> {
+        _colorPicker.setOnShowing( evt -> {
             // Bring up the Color Picker to edit the Color value.
             final TableView< RT > tableView = getTableView();
             final TableViewSelectionModel< RT > selectionModel

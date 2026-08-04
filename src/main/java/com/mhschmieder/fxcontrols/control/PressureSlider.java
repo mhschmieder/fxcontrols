@@ -34,27 +34,28 @@ import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.PhysicsConstants;
 import com.mhschmieder.jphysics.measure.PressureUnit;
 import com.mhschmieder.jphysics.measure.UnitConversion;
+
 import javafx.geometry.Orientation;
 
 public class PressureSlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial Pressure.
-    public static final double  MINIMUM_PRESSURE_PASCALS_DEFAULT =
-                                                                 PhysicsConstants.PRESSURE_MINIMUM_PA;
-    public static final double  MAXIMUM_PRESSURE_PASCALS_DEFAULT =
-                                                                 PhysicsConstants.PRESSURE_MAXIMUM_PA;
-    public static final double  INITIAL_PRESSURE_PASCALS_DEFAULT =
-                                                                 PhysicsConstants.PRESSURE_REFERENCE_PA;
+    public static final double MINIMUM_PRESSURE_PASCALS_DEFAULT
+            = PhysicsConstants.PRESSURE_MINIMUM_PA;
+    public static final double MAXIMUM_PRESSURE_PASCALS_DEFAULT
+            = PhysicsConstants.PRESSURE_MAXIMUM_PA;
+    public static final double INITIAL_PRESSURE_PASCALS_DEFAULT
+            = PhysicsConstants.PRESSURE_REFERENCE_PA;
 
     // Default tick spacing in pascals.
-    private static final double MAJOR_TICK_SPACING_PASCALS       = 10000d;
-    private static final double MINOR_TICK_SPACING_PASCALS       = 2000d;
+    private static final double MAJOR_TICK_SPACING_PASCALS = 10000d;
+    private static final double MINOR_TICK_SPACING_PASCALS = 2000d;
 
     // Declare block increment/decrement amount for left and right arrows.
-    private static final double BLOCK_INCREMENT_PASCALS          = 1000d;
+    private static final double BLOCK_INCREMENT_PASCALS = 1000d;
 
     // Store the Pressure Unit so we'll know when we need to convert.
-    private PressureUnit        _pressureUnit;
+    private PressureUnit _pressureUnit;
 
     public PressureSlider( final ClientProperties clientProperties ) {
         this( clientProperties,
@@ -93,11 +94,6 @@ public class PressureSlider extends NumberSlider {
         }
     }
 
-    // Convert current Pressure value from display units to pascals.
-    public final double getPressurePa() {
-        return UnitConversion.convertPressure( getValue(), _pressureUnit, PressureUnit.PASCALS );
-    }
-
     private final void initSlider() {
         // In lieu of gauges, vertical bars are best for Pressure sliders.
         setOrientation( Orientation.VERTICAL );
@@ -113,28 +109,12 @@ public class PressureSlider extends NumberSlider {
         updatePressureUnit( _pressureUnit );
     }
 
-    // Convert maximum Pressure value from pascals to display units.
-    public final void setMaximumPressurePa( final double maximumPressurePa ) {
-        setMax( UnitConversion
-                .convertPressure( maximumPressurePa, PressureUnit.PASCALS, _pressureUnit ) );
-    }
-
-    // Convert minimum Pressure value from pascals to display units.
-    public final void setMinimumPressurePa( final double minimumPressurePa ) {
-        setMin( UnitConversion
-                .convertPressure( minimumPressurePa, PressureUnit.PASCALS, _pressureUnit ) );
-    }
-
-    // Convert new Pressure value from pascals to display units.
-    public final void setPressurePa( final double pressurePa ) {
-        setValue( UnitConversion
-                .convertPressure( pressurePa, PressureUnit.PASCALS, _pressureUnit ) );
-    }
-
     public final void updatePressureUnit( final PressureUnit pressureUnit ) {
         // Convert the current Pressure from previous units to new units.
-        final double pressureCurrent = UnitConversion
-                .convertPressure( getValue(), _pressureUnit, pressureUnit );
+        final double pressureCurrent
+                = UnitConversion.convertPressure( getValue(),
+                                                  _pressureUnit,
+                                                  pressureUnit );
 
         // Store the new Pressure Unit to provide context for next change.
         _pressureUnit = pressureUnit;
@@ -153,25 +133,52 @@ public class PressureSlider extends NumberSlider {
 
         // Set the tick resolution based on the granularity of the unit.
         switch ( _pressureUnit ) {
-        case KILOPASCALS:
-            setTickResolution( 10.0d, 2.0d );
-            setBlockIncrement( 1.0d );
-            break;
-        case PASCALS:
-            setTickResolution( 10000d, 2000d );
-            setBlockIncrement( 1000d );
-            break;
-        case MILLIBARS:
-            setTickResolution( 100d, 20.0d );
-            setBlockIncrement( 10.0d );
-            break;
-        case ATMOSPHERES:
-            setTickResolution( 1.0d, 0.25d );
-            setBlockIncrement( 0.1d );
-            break;
-        default:
-            break;
+            case KILOPASCALS:
+                setTickResolution( 10.0d, 2.0d );
+                setBlockIncrement( 1.0d );
+                break;
+            case PASCALS:
+                setTickResolution( 10000d, 2000d );
+                setBlockIncrement( 1000d );
+                break;
+            case MILLIBARS:
+                setTickResolution( 100d, 20.0d );
+                setBlockIncrement( 10.0d );
+                break;
+            case ATMOSPHERES:
+                setTickResolution( 1.0d, 0.25d );
+                setBlockIncrement( 0.1d );
+                break;
+            default:
+                break;
         }
     }
 
+    // Convert maximum Pressure value from pascals to display units.
+    public final void setMaximumPressurePa( final double maximumPressurePa ) {
+        setMax( UnitConversion.convertPressure( maximumPressurePa,
+                                                PressureUnit.PASCALS,
+                                                _pressureUnit ) );
+    }
+
+    // Convert minimum Pressure value from pascals to display units.
+    public final void setMinimumPressurePa( final double minimumPressurePa ) {
+        setMin( UnitConversion.convertPressure( minimumPressurePa,
+                                                PressureUnit.PASCALS,
+                                                _pressureUnit ) );
+    }
+
+    // Convert current Pressure value from display units to pascals.
+    public final double getPressurePa() {
+        return UnitConversion.convertPressure( getValue(),
+                                               _pressureUnit,
+                                               PressureUnit.PASCALS );
+    }
+
+    // Convert new Pressure value from pascals to display units.
+    public final void setPressurePa( final double pressurePa ) {
+        setValue( UnitConversion.convertPressure( pressurePa,
+                                                  PressureUnit.PASCALS,
+                                                  _pressureUnit ) );
+    }
 }

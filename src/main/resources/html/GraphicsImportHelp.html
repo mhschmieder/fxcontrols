@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta name="generator" content=
-    "HTML-Kit Tools HTML Tidy plugin">
+<head>
+    <meta content=
+            "HTML-Kit Tools HTML Tidy plugin" name="generator">
     <style type="text/css">
-body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
+        body {
+            padding-left: 0pt;
+            width: 576pt
+        }
+
+        p {
+            margin-top: 0pt;
+            margin-bottom: 0pt
+        }
     </style>
     <title></title>
-  </head>
-  <body>
-    <p>
+</head>
+<body>
+<p>
       <span style=
-      "font-weight:bold;font-size:14pt;color:#7483bd;font-family:&#39;Helvetica&#39;, sans-serif;">
+                    "font-weight:bold;font-size:14pt;color:#7483bd;font-family:&#39;Helvetica&#39;, sans-serif;">
       GRAPHICS IMPORT HELP&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">The
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">The
       Graphics Import function currently supports AutoCAD DXF files.
       Details on supported DXF entities were once posted on the web
       but disappeared during the pandemic, so we will try to recreate
@@ -28,13 +36,13 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       note that many of the notes below describe a larger context where
       many more facilities of our JavaFX based toolkits are in use, in
       a desktop application that supports some level of CAD. &nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">
       The main point of interest here is that older DXF files do
       not contain Measurement Units, so the user must either
       communicate by word of mouth or make guesses. Therefore, to
@@ -44,38 +52,38 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       coordinates. It is our hope that this will make it easier to
       select the correct Distance Unit for interpreting the scale
       factor of the DXF entities. &nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">
       Newer DXF files usually contain a Distance Unit, which we
       auto-select when present. Otherwise, the Distance Unit
       selector will be set to &quot;Choose One&quot;, and you will
       not be able to import the graphics into the main GUI until
       you make a choice (the Import Graphics button will be
       disabled in this case). &nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">It
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">It
       is important to be aware that the Distance Unit in the DXF file
       may be incorrect, for a variety of reasons. Sometimes it is user
       error, or the user may not have bothered to set it, and thus it
       got defaulted by AutoCAD. Use your best judgment, based on your
       knowledge of the venue being modeled, and axis range. &nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">There
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">There
       is a visual indicator (painted atop the graphics preview as a
       magenta dashed-line box) of the currently selected Drawing
       Limits Source, which initially matches the values in the
@@ -85,13 +93,13 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       edits in the corner coordinate editors. The Reset Button
       returns the corner coordinate editors to the original values
       for the currently selected Drawing Limits Source.&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Please
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Please
       note that many DXF files do not contain pre-computed Drawing
       Limits, and many others have arbitrary or unusable values,
       which becomes obvious when looking at the corner coordinates
@@ -102,52 +110,52 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       default, because it is usually the best choice, and in our
       experience most DXF files do not have trustworthy Drawing
       Limits (when present).&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">The
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">The
       Graphics Import Preview window is modal, to avoid confusion
       if someone opened a project or ZIP file containing another DXF 
       and then re-saved the project with the newly imported Graphics
       File overwriting the DXF in that ZIP file, risking the danger
       of permanently losing their original DXF from the newly opened
       project or ZIP file.&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">We
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">We
       recommend, when practical, that you set your Distance Unit in
       the main GUI in advance, to temporarily match the one that you
       expect to select for the DXF file, as this makes it easier to
       judge whether you want to alter the computed DXF bounds;
       either to round the numbers or to clip to just a section of
       the original drawing.&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Please
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Please
       note that the application adjusts its Prediction Plane (when
       relevant and present) and Drawing Limits (likewise) to match 
       whatever you select for the bounds of the Graphics Import action. 
       If you Cancel the Import, your Prediction Plane and Drawing Limits 
       (when relevant and present) are left in the state they were in 
       before the DXF file was loaded.&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Due
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">Due
       to the large amount of memory consumed by DXF parsing and by
       the resulting graphical objects in the Sound Field, the Java
       Virtual Machine may perform a memory cleanup after you click
@@ -155,13 +163,13 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       &quot;Import Graphics&quot; button, so do not be alarmed if
       the application becomes unresponsive for a few seconds (or
       more) afterwards, based on file size.&nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-    <p>
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
       <span style=
-      "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">There
+                    "font-size:9pt;font-family:&#39;Helvetica&#39;, sans-serif;">There
       is also a new menu item to &quot;Clear Imported
       Graphics&quot; in the Edit Menu, so that you can clear
       imported DXF entities from the main GUI even if you don&#39;t
@@ -170,9 +178,9 @@ body {padding-left:0pt;width:576pt} p {margin-top:0pt;margin-bottom:0pt}
       Note that this action may briefly halt the application while 
       restoring the memory for reuse.
       &nbsp;</span>
-    </p>
-    <p>
-      &nbsp;
-    </p>
-  </body>
+</p>
+<p>
+    &nbsp;
+</p>
+</body>
 </html>

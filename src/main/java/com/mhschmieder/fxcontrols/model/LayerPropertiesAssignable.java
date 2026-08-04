@@ -32,12 +32,14 @@ package com.mhschmieder.fxcontrols.model;
 
 public interface LayerPropertiesAssignable {
 
+    default String getLayerName() {
+        final LayerProperties layerProperties = getLayerProperties();
+        return ( layerProperties == null )
+               ? ""
+               : layerProperties.getLayerName();
+    }
+
     LayerProperties getLayerProperties();
 
     void setLayerProperties( final LayerProperties layerProperties );
-
-    default String getLayerName() {
-        final LayerProperties layerProperties = getLayerProperties();
-        return ( layerProperties == null ) ? "" : layerProperties.getLayerName();
-    }
 }

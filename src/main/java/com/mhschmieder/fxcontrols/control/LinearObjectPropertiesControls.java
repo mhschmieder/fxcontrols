@@ -34,38 +34,47 @@ import com.mhschmieder.fxgraphics.collections.GraphicalObjectCollection;
 import com.mhschmieder.fxgraphics.geometry.LinearObject;
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.control.CheckBox;
-import javafx.scene.layout.GridPane;
 
 import java.util.List;
+
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.GridPane;
 
 public final class LinearObjectPropertiesControls {
 
     public GraphicalObjectLabelEditor _linearObjectLabelEditor;
-    public LayerSelector              _layerSelector;
-    public CheckBox                   _useAsProjectorCheckBox;
-    public IntegerSelector            _projectionZonesSelector;
+    public LayerSelector _layerSelector;
+    public CheckBox _useAsProjectorCheckBox;
+    public IntegerSelector _projectionZonesSelector;
 
     // Default constructor
     public LinearObjectPropertiesControls( final ClientProperties pClientProperties,
-                                        final boolean applyToolkitCss,
-                                        final String linearObjectLabelDefault,
-                                        final GraphicalObjectCollection< ? extends LinearObject > linearObjectCollection,
-                                        final String projectorType,
-                                        final String projectionZonesType,
-                                        final String projectionZonesUsageContext ) {
+                                           final boolean applyToolkitCss,
+                                           final String linearObjectLabelDefault,
+                                           final GraphicalObjectCollection< ?
+                                                   extends LinearObject > linearObjectCollection,
+                                           final String projectorType,
+                                           final String projectionZonesType,
+                                           final String projectionZonesUsageContext ) {
         // Make the Linear Object Properties controls.
-        _linearObjectLabelEditor = new GraphicalObjectLabelEditor( pClientProperties,
-                                                                   linearObjectLabelDefault,
-                                                                   linearObjectCollection );
+        _linearObjectLabelEditor = new GraphicalObjectLabelEditor(
+                pClientProperties,
+                linearObjectLabelDefault,
+                linearObjectCollection );
 
-        _layerSelector = new LayerSelector( pClientProperties, applyToolkitCss, false );
+        _layerSelector = new LayerSelector( pClientProperties,
+                                            applyToolkitCss,
+                                            false );
 
         final String useAsProjectorLabel = "Use as " + projectorType;
-        _useAsProjectorCheckBox = ControlUtilities.getCheckBox( useAsProjectorLabel, false );
-        
-        final StringBuilder projectionZonesTooltipText = new StringBuilder( projectionZonesType );
-        if ( ( projectionZonesUsageContext != null ) && !projectionZonesUsageContext.isEmpty() ) {
+        _useAsProjectorCheckBox = ControlUtilities.getCheckBox(
+                useAsProjectorLabel,
+                false );
+
+        final StringBuilder projectionZonesTooltipText = new StringBuilder(
+                projectionZonesType );
+        if ( ( projectionZonesUsageContext != null )
+             && !projectionZonesUsageContext.isEmpty() ) {
             projectionZonesTooltipText.append( " for " );
             projectionZonesTooltipText.append( projectionZonesUsageContext );
         }
@@ -81,10 +90,8 @@ public final class LinearObjectPropertiesControls {
         GridPane.setFillHeight( _projectionZonesSelector, true );
 
         // Try to force sufficient width for custom label editing.
-        _linearObjectLabelEditor.setMinWidth(
-                LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
-        _linearObjectLabelEditor.setPrefWidth(
-                LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
+        _linearObjectLabelEditor.setMinWidth( LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
+        _linearObjectLabelEditor.setPrefWidth( LabeledControlFactory.LABEL_EDITOR_WIDTH_DEFAULT );
 
         // Try to force minimum width on Use as Projector Check Box to
         // avoid clipping.
@@ -92,7 +99,8 @@ public final class LinearObjectPropertiesControls {
 
         // Bind Projection Zones Pane enablement to the Projector Check Box.
         _projectionZonesSelector.disableProperty()
-                .bind( _useAsProjectorCheckBox.selectedProperty().not() );
+                                .bind( _useAsProjectorCheckBox.selectedProperty()
+                                                              .not() );
     }
 
     public String getLayerName() {
@@ -110,9 +118,15 @@ public final class LinearObjectPropertiesControls {
         return _projectionZonesSelector.getIntegerValue();
     }
 
+    public void setNumberOfProjectionZones( final int numberOfProjectionZones ) {
+        // Forward this method to the Projection Zones Selector.
+        _projectionZonesSelector.setIntegerValue( numberOfProjectionZones );
+    }
+
     public String getUniqueLinearObjectLabel( final String linearObjectLabelCandidate ) {
         // Forward this method to the Linear Object Label Editor.
-        return _linearObjectLabelEditor.getUniqueGraphicalObjectLabel( linearObjectLabelCandidate );
+        return _linearObjectLabelEditor.getUniqueGraphicalObjectLabel(
+                linearObjectLabelCandidate );
     }
 
     public boolean isUseAsProjector() {
@@ -120,12 +134,18 @@ public final class LinearObjectPropertiesControls {
         return _useAsProjectorCheckBox.isSelected();
     }
 
-    public boolean isLinearObjectLabelUnique( final String linearObjectLabelCandidate ) {
-        // Forward this method to the Linear Object Label Editor.
-        return _linearObjectLabelEditor.isGraphicalObjectLabelUnique( linearObjectLabelCandidate );
+    public void setUseAsProjector( final boolean useAsProjector ) {
+        // Forward this method to the Use As Projector Check Box.
+        _useAsProjectorCheckBox.setSelected( useAsProjector );
     }
 
-    public void setLayerCollection( final List<Layer> layerCollection ) {
+    public boolean isLinearObjectLabelUnique( final String linearObjectLabelCandidate ) {
+        // Forward this method to the Linear Object Label Editor.
+        return _linearObjectLabelEditor.isGraphicalObjectLabelUnique(
+                linearObjectLabelCandidate );
+    }
+
+    public void setLayerCollection( final List< Layer > layerCollection ) {
         // Forward this method to the Layer Selector.
         _layerSelector.setLayerCollection( layerCollection );
     }
@@ -134,16 +154,5 @@ public final class LinearObjectPropertiesControls {
         // Forward this method to the Layer Selector.
         _layerSelector.setLayerNameIfChanged( layerNameCurrent );
     }
-
-    public void setNumberOfProjectionZones( final int numberOfProjectionZones ) {
-        // Forward this method to the Projection Zones Selector.
-        _projectionZonesSelector.setIntegerValue( numberOfProjectionZones );
-    }
-
-    public void setUseAsProjector( final boolean useAsProjector ) {
-        // Forward this method to the Use As Projector Check Box.
-        _useAsProjectorCheckBox.setSelected( useAsProjector );
-    }
-
 }
 

@@ -44,15 +44,20 @@ public final class MeasurementUnitsActions {
     public XAction _resetAction;
 
     public MeasurementUnitsActions( final ClientProperties pClientProperties ) {
-        _resetAction = com.mhschmieder.fxcontrols.action.LabeledActionFactory.getResetAction( pClientProperties );
+        _resetAction
+                =
+                com.mhschmieder.fxcontrols.action.LabeledActionFactory.getResetAction(
+                pClientProperties );
 
         // The tool tip for "Reset" is unique per context so isn't in the
         // locale-sensitive resources for the generic action lookup.
-        _resetAction.setLongText( "Reset to Default Scientific Units" ); //$NON-NLS-1$
+        _resetAction.setLongText( "Reset to Default Scientific Units" );
+        //$NON-NLS-1$
     }
 
     public Collection< Action > getMeasurementUnitsActionCollection() {
-        final Collection< Action > measurementUnitsActionCollection = Arrays.asList( _resetAction );
+        final Collection< Action > measurementUnitsActionCollection
+                = Arrays.asList( _resetAction );
 
         return measurementUnitsActionCollection;
     }

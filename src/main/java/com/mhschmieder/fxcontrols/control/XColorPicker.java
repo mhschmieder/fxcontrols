@@ -41,15 +41,15 @@ import javafx.scene.paint.Color;
  * {@code XColorPicker} is an enhancement to {@link ColorPicker} that takes care
  * of some of its anomalies.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class XColorPicker extends ColorPicker {
 
     /**
-     * Creates a default XColorPicker instance with a selected color set to white.
-     * 
+     * Creates a default XColorPicker instance with a selected color set to
+     * white.
+     *
      * @param tooltipText Optional tooltip to pass to the Color Picker control
      */
     public XColorPicker( final String tooltipText ) {
@@ -57,9 +57,11 @@ public class XColorPicker extends ColorPicker {
     }
 
     /**
-     * Creates a XColorPicker instance and sets the selected color to the given color.
+     * Creates a XColorPicker instance and sets the selected color to the given
+     * color.
      *
-     * @param color to be set as the currently selected color of the ColorPicker.
+     * @param color       to be set as the currently selected color of the
+     *                    ColorPicker.
      * @param tooltipText Optional tooltip to pass to the Color Picker control
      */
     public XColorPicker( final Color color,

@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.Region2DActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
@@ -42,7 +43,7 @@ public final class Region2DToolBar extends ToolBar {
 
     // Declare tool bar buttons for shortcuts, etc.
     public PredictButtons _predictButtons;
-    public Button         _resetButton;
+    public Button _resetButton;
 
     // Default constructor
     public Region2DToolBar( final ClientProperties pClientProperties,
@@ -61,7 +62,8 @@ public final class Region2DToolBar extends ToolBar {
     private void initToolBar( final ClientProperties pClientProperties,
                               final Region2DActions region2DActions ) {
         // Make the Nodes for the Tool Bar.
-        _predictButtons = new PredictButtons( pClientProperties, region2DActions.simulationActions );
+        _predictButtons = new PredictButtons( pClientProperties,
+                                              region2DActions.simulationActions );
         _resetButton = LabeledControlFactory.getResetButton( pClientProperties,
                                                              region2DActions.resetAction );
 
@@ -77,5 +79,4 @@ public final class Region2DToolBar extends ToolBar {
                            spacer1,
                            _resetButton );
     }
-
 }

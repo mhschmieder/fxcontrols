@@ -51,16 +51,16 @@ public class AngleEditor extends DoubleEditor {
                         final double maximumValue,
                         final double initialValue ) {
         this( pClientProperties,
-               initialText,
-               tooltipText,
-               minFractionDigitsFormat,
-               maxFractionDigitsFormat,
-               minFractionDigitsParse,
-               maxFractionDigitsParse,
-               minimumValue,
-               maximumValue,
-               initialValue,
-               VALUE_INCREMENT_DEGREES );
+              initialText,
+              tooltipText,
+              minFractionDigitsFormat,
+              maxFractionDigitsFormat,
+              minFractionDigitsParse,
+              maxFractionDigitsParse,
+              minimumValue,
+              maximumValue,
+              initialValue,
+              VALUE_INCREMENT_DEGREES );
     }
 
     public AngleEditor( final ClientProperties pClientProperties,
@@ -93,9 +93,10 @@ public class AngleEditor extends DoubleEditor {
     public double getClampedValue( final double unclampedValue ) {
         // If the allowed angle range is a full period or more (360+ degrees),
         // then unwrap the angle. Otherwise, apply standard min/max clamping.
-        final double clampedValue = ( FastMath.abs( _maximumValue - _minimumValue ) >= 360.0d )
-            ? getUnwrappedAngleDegrees( unclampedValue )
-            : super.getClampedValue( unclampedValue );
+        final double clampedValue = ( FastMath.abs(
+                _maximumValue - _minimumValue ) >= 360.0d )
+                                    ? getUnwrappedAngleDegrees( unclampedValue )
+                                    : super.getClampedValue( unclampedValue );
 
         return clampedValue;
     }
@@ -105,8 +106,10 @@ public class AngleEditor extends DoubleEditor {
         // maximum so that we don't accidentally clamp, but still clamp if the
         // allowed range itself is less than a full period.
         double unwrappedAngleDegrees = MathUtilities.unwrapAngleRangeDegrees(
-            unclampedValue, _minimumValue, _maximumValue );
-        
+                unclampedValue,
+                _minimumValue,
+                _maximumValue );
+
         return unwrappedAngleDegrees;
     }
 }

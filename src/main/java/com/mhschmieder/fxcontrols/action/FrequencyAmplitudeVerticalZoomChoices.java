@@ -43,50 +43,60 @@ import java.util.Collection;
 public final class FrequencyAmplitudeVerticalZoomChoices {
 
     // Declare all of the Vertical Zoom choices.
-    public XAction      _div1dbChoice;
-    public XAction      _div2dbChoice;
-    public XAction      _div3dbChoice;
-    public XAction      _div6dbChoice;
-    public XAction      _div10dbChoice;
-    public XAction      _div12dbChoice;
-    public XAction      _div15dbChoice;
-    public XAction      _div20dbChoice;
-    public XAction      _div30dbChoice;
+    public XAction _div1dbChoice;
+    public XAction _div2dbChoice;
+    public XAction _div3dbChoice;
+    public XAction _div6dbChoice;
+    public XAction _div10dbChoice;
+    public XAction _div12dbChoice;
+    public XAction _div15dbChoice;
+    public XAction _div20dbChoice;
+    public XAction _div30dbChoice;
 
     // Cache the associated choice group, for ease of overall enablement.
     public XActionGroup _frequencyAmplitudeVerticalZoomChoiceGroup;
 
     // Default constructor
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public FrequencyAmplitudeVerticalZoomChoices( final ClientProperties clientProperties ) {
-        _div1dbChoice = LabeledActionFactory.getDiv1DbChoice( clientProperties );
-        _div2dbChoice = LabeledActionFactory.getDiv2DbChoice( clientProperties );
-        _div3dbChoice = LabeledActionFactory.getDiv3DbChoice( clientProperties );
-        _div6dbChoice = LabeledActionFactory.getDiv6DbChoice( clientProperties );
-        _div10dbChoice = LabeledActionFactory.getDiv10DbChoice( clientProperties );
-        _div12dbChoice = LabeledActionFactory.getDiv12DbChoice( clientProperties );
-        _div15dbChoice = LabeledActionFactory.getDiv15DbChoice( clientProperties );
-        _div20dbChoice = LabeledActionFactory.getDiv20DbChoice( clientProperties );
-        _div30dbChoice = LabeledActionFactory.getDiv30DbChoice( clientProperties );
+        _div1dbChoice
+                = LabeledActionFactory.getDiv1DbChoice( clientProperties );
+        _div2dbChoice
+                = LabeledActionFactory.getDiv2DbChoice( clientProperties );
+        _div3dbChoice
+                = LabeledActionFactory.getDiv3DbChoice( clientProperties );
+        _div6dbChoice
+                = LabeledActionFactory.getDiv6DbChoice( clientProperties );
+        _div10dbChoice
+                = LabeledActionFactory.getDiv10DbChoice( clientProperties );
+        _div12dbChoice
+                = LabeledActionFactory.getDiv12DbChoice( clientProperties );
+        _div15dbChoice
+                = LabeledActionFactory.getDiv15DbChoice( clientProperties );
+        _div20dbChoice
+                = LabeledActionFactory.getDiv20DbChoice( clientProperties );
+        _div30dbChoice
+                = LabeledActionFactory.getDiv30DbChoice( clientProperties );
 
-        final Collection< Action > frequencyAmplitudeVerticalZoomChoiceCollection = Arrays
-                .asList( _div1dbChoice,
-                         _div2dbChoice,
-                         _div3dbChoice,
-                         _div6dbChoice,
-                         _div10dbChoice,
-                         _div12dbChoice,
-                         _div15dbChoice,
-                         _div20dbChoice,
-                         _div30dbChoice );
+        final Collection< Action >
+                frequencyAmplitudeVerticalZoomChoiceCollection = Arrays.asList(
+                _div1dbChoice,
+                _div2dbChoice,
+                _div3dbChoice,
+                _div6dbChoice,
+                _div10dbChoice,
+                _div12dbChoice,
+                _div15dbChoice,
+                _div20dbChoice,
+                _div30dbChoice );
 
-        _frequencyAmplitudeVerticalZoomChoiceGroup = ActionFactory
-                .makeChoiceGroup( clientProperties,
-                                 frequencyAmplitudeVerticalZoomChoiceCollection,
-                                 LabeledActionFactory.BUNDLE_NAME,
-                                 "verticalZoom",
-                                 "/icons/ahaSoft/UpDown16.png",
-                                 true );
+        _frequencyAmplitudeVerticalZoomChoiceGroup
+                = ActionFactory.makeChoiceGroup( clientProperties,
+                                                 frequencyAmplitudeVerticalZoomChoiceCollection,
+                                                 LabeledActionFactory.BUNDLE_NAME,
+                                                 "verticalZoom",
+                                                 "/icons/ahaSoft/UpDown16.png",
+                                                 true );
     }
 
     public XActionGroup getFrequencyAmplitudeVerticalZoomChoiceGroup() {
@@ -128,44 +138,44 @@ public final class FrequencyAmplitudeVerticalZoomChoices {
         }
     }
 
-    public void setDisabled( final boolean disabled ) {
-        _frequencyAmplitudeVerticalZoomChoiceGroup.setDisabled( disabled );
-    }
-
     // Sync up the Vertical Zoom choice with the current Vertical Grid Spacing
     // value.
     public void setVerticalGridSpacing( final int verticalGridSpacing ) {
         switch ( verticalGridSpacing ) {
-        case 1:
-            _div1dbChoice.setSelected( true );
-            break;
-        case 2:
-            _div2dbChoice.setSelected( true );
-            break;
-        case 3:
-            _div3dbChoice.setSelected( true );
-            break;
-        case 6:
-            _div6dbChoice.setSelected( true );
-            break;
-        case 10:
-            _div10dbChoice.setSelected( true );
-            break;
-        case 12:
-            _div12dbChoice.setSelected( true );
-            break;
-        case 15:
-            _div15dbChoice.setSelected( true );
-            break;
-        case 20:
-            _div20dbChoice.setSelected( true );
-            break;
-        case 30:
-            _div30dbChoice.setSelected( true );
-            break;
-        default:
-            _div10dbChoice.setSelected( true );
-            break;
+            case 1:
+                _div1dbChoice.setSelected( true );
+                break;
+            case 2:
+                _div2dbChoice.setSelected( true );
+                break;
+            case 3:
+                _div3dbChoice.setSelected( true );
+                break;
+            case 6:
+                _div6dbChoice.setSelected( true );
+                break;
+            case 10:
+                _div10dbChoice.setSelected( true );
+                break;
+            case 12:
+                _div12dbChoice.setSelected( true );
+                break;
+            case 15:
+                _div15dbChoice.setSelected( true );
+                break;
+            case 20:
+                _div20dbChoice.setSelected( true );
+                break;
+            case 30:
+                _div30dbChoice.setSelected( true );
+                break;
+            default:
+                _div10dbChoice.setSelected( true );
+                break;
         }
+    }
+
+    public void setDisabled( final boolean disabled ) {
+        _frequencyAmplitudeVerticalZoomChoiceGroup.setDisabled( disabled );
     }
 }

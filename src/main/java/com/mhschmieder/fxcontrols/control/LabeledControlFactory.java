@@ -45,6 +45,10 @@ import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 import com.mhschmieder.jcontrols.control.ButtonUtilities;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.ResourceBundle;
+
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.chart.NumberAxis;
@@ -61,26 +65,32 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import org.apache.commons.math3.util.FastMath;
-
-import java.util.ResourceBundle;
 
 /**
  * {@code LabeledControlFactory} is a factory class for minimizing copy/paste
- * code
- * for shared design patterns regarding controls such as action buttons.
+ * code for shared design patterns regarding controls such as action buttons.
  */
 public final class LabeledControlFactory {
+
+    // NOTE: We must substitute "." for resource directory tree delimiters.
+    public static final String BUNDLE_NAME = "properties.ActionLabels";
+    public static final double LABEL_EDITOR_WIDTH_DEFAULT = 320.0d;
 
     /**
      * The default constructor is disabled, as this is a static factory class.
      */
-    private LabeledControlFactory() {}
+    private LabeledControlFactory() {
+    }
 
-    // NOTE: We must substitute "." for resource directory tree delimiters.
-    public static final String BUNDLE_NAME = "properties.ActionLabels";
+    public static Button getButton( final String label,
+                                    final Font font,
+                                    final double buttonWidth,
+                                    final double buttonHeight ) {
+        final Button button = getButton( label, font, buttonWidth );
+        button.setPrefHeight( buttonHeight );
 
-    public static final double LABEL_EDITOR_WIDTH_DEFAULT = 320.0d;
+        return button;
+    }
 
     public static Button getButton( final String label,
                                     final Font font,
@@ -99,9 +109,24 @@ public final class LabeledControlFactory {
     public static Button getButton( final String label,
                                     final Font font,
                                     final double buttonWidth,
-                                    final double buttonHeight ) {
-        final Button button = getButton( label, font, buttonWidth );
-        button.setPrefHeight( buttonHeight );
+                                    final String backColorCss,
+                                    final String borderColorCss,
+                                    final String borderWidthCss,
+                                    final String iconFilename,
+                                    final double iconWidth,
+                                    final double iconHeight ) {
+        final Button button = getButton( label,
+                                         font,
+                                         buttonWidth,
+                                         backColorCss,
+                                         borderColorCss,
+                                         borderWidthCss );
+
+        final ImageView icon = ImageUtilities.createIcon( iconFilename,
+                                                          iconWidth,
+                                                          iconHeight );
+        button.setGraphic( icon );
+        button.setGraphicTextGap( 8.0d );
 
         return button;
     }
@@ -128,8 +153,8 @@ public final class LabeledControlFactory {
                                     final String borderColorCss,
                                     final String borderWidthCss,
                                     final String borderRadiusCss ) {
-        final Button button = getButton( label, 
-                                         font, 
+        final Button button = getButton( label,
+                                         font,
                                          buttonWidth,
                                          backColorCss,
                                          "white",
@@ -149,7 +174,7 @@ public final class LabeledControlFactory {
                                     final String borderWidthCss,
                                     final String borderRadiusCss ) {
         final Button button = getButton( label,
-                                         font, 
+                                         font,
                                          buttonWidth,
                                          backColorCss,
                                          foreColorCss,
@@ -173,35 +198,12 @@ public final class LabeledControlFactory {
         final Button button = getButton( label, font, buttonWidth );
 
         ControlUtilities.applyLabeledButtonStyle( button,
-                                              backColorCss,
-                                              foreColorCss,
-                                              borderColorCss,
-                                              borderWidthCss,
-                                              borderRadiusCss,
-                                              borderInsetsCss );
-
-        return button;
-    }
-
-   public static Button getButton( final String label,
-                                    final Font font,
-                                    final double buttonWidth,
-                                    final String backColorCss,
-                                    final String borderColorCss,
-                                    final String borderWidthCss,
-                                    final String iconFilename,
-                                    final double iconWidth,
-                                    final double iconHeight ) {
-        final Button button = getButton( label,
-                                         font,
-                                         buttonWidth,
-                                         backColorCss,
-                                         borderColorCss,
-                                         borderWidthCss );
-
-        final ImageView icon = ImageUtilities.createIcon( iconFilename, iconWidth, iconHeight );
-        button.setGraphic( icon );
-        button.setGraphicTextGap( 8.0d );
+                                                  backColorCss,
+                                                  foreColorCss,
+                                                  borderColorCss,
+                                                  borderWidthCss,
+                                                  borderRadiusCss,
+                                                  borderInsetsCss );
 
         return button;
     }
@@ -215,7 +217,8 @@ public final class LabeledControlFactory {
 
         final Button button = new Button();
         button.setShape( buttonIcon );
-        button.setBackground( RegionUtilities.makeRegionBackground( backgroundColor ) );
+        button.setBackground( RegionUtilities.makeRegionBackground(
+                backgroundColor ) );
 
         button.setMinSize( buttonWidth, buttonHeight );
         button.setPrefSize( buttonWidth, buttonHeight );
@@ -244,22 +247,32 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-    public static Label getLabel( final String labelText, final Font font ) {
-        return getLabel( labelText, font, Pos.CENTER );
-    }
-
-    public static Label getLabel( final String labelText, final Font font, final Paint textFill ) {
-        final Label label = getLabel( labelText, font );
-        label.setTextFill( textFill );
-
-        return label;
-    }
-
     public static Label getLabel( final String labelText,
                                   final Font font,
                                   final double prefWidth ) {
         final Label label = getLabel( labelText, font );
         label.setPrefWidth( prefWidth );
+
+        return label;
+    }
+
+    public static Label getLabel( final String labelText,
+                                  final Font font ) {
+        return getLabel( labelText, font, Pos.CENTER );
+    }
+
+    public static Label getLabel( final String labelText,
+                                  final Font font,
+                                  final Pos position ) {
+        final Label label = new Label( labelText );
+        if ( font != null ) {
+            label.setFont( font );
+        }
+        label.setAlignment( position );
+
+        // Text Alignment relates specifically to word wrap alignment.
+        label.setTextAlignment( TextAlignment.CENTER );
+        label.setWrapText( true );
 
         return label;
     }
@@ -274,199 +287,237 @@ public final class LabeledControlFactory {
         return label;
     }
 
-    public static Label getLabel( final String labelText, final Font font, final Pos position ) {
-        final Label label = new Label( labelText );
-        if ( font != null ) {
-            label.setFont( font );
-        }
-        label.setAlignment( position );
-
-        // Text Alignment relates specifically to word wrap alignment.
-        label.setTextAlignment( TextAlignment.CENTER );
-        label.setWrapText( true );
+    public static Label getLabel( final String labelText,
+                                  final Font font,
+                                  final Paint textFill ) {
+        final Label label = getLabel( labelText, font );
+        label.setTextFill( textFill );
 
         return label;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getHelpButton( final boolean needsGraphic ) {
-        final Button helpButton = ControlUtilities.getLabeledButton( "Help", null, "help-button" );
+        final Button helpButton = ControlUtilities.getLabeledButton( "Help",
+                                                                     null,
+                                                                     "help-button" );
 
         if ( needsGraphic ) {
-            final ImageView helpIcon = ImageUtilities.getImageView( "/icons/led24/Help16.png",
-                                                                    true );
+            final ImageView helpIcon = ImageUtilities.getImageView(
+                    "/icons/led24/Help16.png",
+                    true );
             helpButton.setGraphic( helpIcon );
         }
 
         return helpButton;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getPageSetupButton( final ClientProperties pClientProperties ) {
         final Button button = ControlUtilities.getIconButton(
                 "/icons/yusukeKamiyamane/diagone/Setup16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "file",
-                                                  "pageSetup",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "file",
+                                               "pageSetup",
+                                               button,
+                                               null );
 
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getPrintButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities.getIconButton( "/icons/everaldo/FilePrint16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/everaldo/FilePrint16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "file",
-                                                  "print",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "file",
+                                               "print",
+                                               button,
+                                               null );
 
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getOpenButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities.getIconButton( "/icons/led24/PageWhiteZip16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/led24/PageWhiteZip16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "file",
-                                                  "open",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "file",
+                                               "open",
+                                               button,
+                                               null );
 
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getSaveAsButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities.getIconButton( "/icons/everaldo/FileSaveAs16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/everaldo/FileSaveAs16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "file",
-                                                  "saveAs",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "file",
+                                               "saveAs",
+                                               button,
+                                               null );
 
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getApplyButton( final String objectType ) {
         final String buttonLabel = "Apply";
         final String tooltipText = buttonLabel + " Changes to " + objectType;
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "apply-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "apply-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getCancelButton( final String objectType ) {
         final String buttonLabel = "Cancel";
-        final String tooltipText = buttonLabel + " Changes to " + objectType + " and Close Window";
+        final String tooltipText = buttonLabel + " Changes to " + objectType
+                                   + " and Close Window";
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "cancel-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "cancel-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getCancelExportButton() {
-        return ControlUtilities.getLabeledButton( "Cancel Export", null, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Export",
+                                                  null,
+                                                  "cancel-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getCancelImportButton() {
-        return ControlUtilities.getLabeledButton( "Cancel Import", null, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Import",
+                                                  null,
+                                                  "cancel-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getCancelReportButton( final String tooltipText ) {
-        return ControlUtilities.getLabeledButton( "Cancel Report", tooltipText, "cancel-button" );
+        return ControlUtilities.getLabeledButton( "Cancel Report",
+                                                  tooltipText,
+                                                  "cancel-button" );
     }
 
-    @SuppressWarnings("nls")
-    public static Button getDoneButton( final String objectType, final boolean modal ) {
-        final String buttonLabel = modal ? "OK" : "Apply and Close";
-        final String tooltipText = "Apply Changes to " + objectType + " and Close Window";
+    @SuppressWarnings( "nls" )
+    public static Button getDoneButton( final String objectType,
+                                        final boolean modal ) {
+        final String buttonLabel = modal
+                                   ? "OK"
+                                   : "Apply and Close";
+        final String tooltipText = "Apply Changes to " + objectType
+                                   + " and Close Window";
 
-        final String cssStyleId = modal ? "ok-button" : "apply-and-close-button";
+        final String cssStyleId = modal
+                                  ? "ok-button"
+                                  : "apply-and-close-button";
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, cssStyleId );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  cssStyleId );
     }
- 
-    @SuppressWarnings("nls")
+
+    @SuppressWarnings( "nls" )
     public static Button getExportGraphicsButton( final String tooltipText ) {
-        return ControlUtilities.getLabeledButton( "Export Graphics", tooltipText, "export-button" );
+        return ControlUtilities.getLabeledButton( "Export Graphics",
+                                                  tooltipText,
+                                                  "export-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getGenerateReportButton( final String tooltipText ) {
-        return ControlUtilities
-                .getLabeledButton( "Generate Report", tooltipText, "generate-report-button" );
+        return ControlUtilities.getLabeledButton( "Generate Report",
+                                                  tooltipText,
+                                                  "generate-report-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getGraphicsImportButton( final String tooltipText ) {
-        return ControlUtilities.getLabeledButton( "Import Graphics", tooltipText, "import-button" );
+        return ControlUtilities.getLabeledButton( "Import Graphics",
+                                                  tooltipText,
+                                                  "import-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getHelpAlternateButton() {
-        return ControlUtilities.getLabeledButton( "Additional Help", null, "help-alternate-button" );
+        return ControlUtilities.getLabeledButton( "Additional Help",
+                                                  null,
+                                                  "help-alternate-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getInsertButton( final String objectType ) {
         final String buttonLabel = "Insert";
         final String tooltipText = buttonLabel + " New " + objectType;
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "insert-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "insert-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static String getFileMruHeader( final ClientProperties pClientProperties,
                                            final int mruFileNumber ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                pClientProperties,
+                BUNDLE_NAME,
+                false );
         final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
-        final String fileMruHeader = ButtonUtilities
-                .getButtonText( "file", fileMruNumber, resourceBundle );
+        final String fileMruHeader = ButtonUtilities.getButtonText( "file",
+                                                                    fileMruNumber,
+                                                                    resourceBundle );
         return fileMruHeader;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getResetButton( final String propertiesCategory ) {
         final String buttonLabel = "Reset";
         final String tooltipText = "Set Default " + propertiesCategory;
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "reset-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "reset-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getRevertButton( final String objectType ) {
         final String buttonLabel = "Revert";
         final String tooltipText = buttonLabel + " Changes to " + objectType;
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "revert-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "revert-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getSaveButton( final String propertiesCategory ) {
         final String buttonLabel = "Save";
         final String tooltipText = "Save Current " + propertiesCategory;
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "save-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "save-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static ToggleButton getTextWrapToggleButton() {
-        final ToggleButton toggleButton = ControlUtilities
-                .getIconToggleButton( "/icons/everaldo/MultiRow16.png" );
+        final ToggleButton toggleButton = ControlUtilities.getIconToggleButton(
+                "/icons/everaldo/MultiRow16.png" );
 
         final String tooltipText = "Toggle Wrap Text Mode";
         toggleButton.setTooltip( new Tooltip( tooltipText ) );
@@ -474,167 +525,181 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getRefreshButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities.getIconButton( "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "view",
-                                                  "refresh",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "view",
+                                               "refresh",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getResetButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities
-                .getIconButton( "/icons/nineteenEightySeven/FormReset16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/nineteenEightySeven/FormReset16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "view",
-                                                  "reset",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "view",
+                                               "reset",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getResetButton( final ClientProperties pClientProperties,
                                          final XAction resetAction ) {
         return ControlUtilities.getLabeledButton( resetAction, "reset-button" );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static String getEditPropertiesLabel( final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-        final String editPropertiesLabel = ButtonUtilities
-                .getButtonText( "edit", "properties", resourceBundle );
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                pClientProperties,
+                BUNDLE_NAME,
+                false );
+        final String editPropertiesLabel
+                = ButtonUtilities.getButtonText( "edit",
+                                                 "properties",
+                                                 resourceBundle );
         return editPropertiesLabel;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static int getEditPropertiesMnemonicIndex( final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-        final int editPropertiesMnemonicIndex = ControlUtilities
-                .getMnemonicIndex( "edit", "properties", resourceBundle );
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                pClientProperties,
+                BUNDLE_NAME,
+                false );
+        final int editPropertiesMnemonicIndex
+                = ControlUtilities.getMnemonicIndex( "edit",
+                                                     "properties",
+                                                     resourceBundle );
         return editPropertiesMnemonicIndex;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getNavigateBackButton( final ClientProperties pClientProperties ) {
-        final Button button = ControlUtilities.getIconButton( "/icons/ahaSoft/Back16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/ahaSoft/Back16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "navigate",
-                                                  "back",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "navigate",
+                                               "back",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getNavigateForwardButton( final ClientProperties pClientProperties ) {
         final Button button = ControlUtilities.getIconButton(
                 "/icons/ahaSoft/Forward16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "navigate",
-                                                  "forward",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "navigate",
+                                               "forward",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getSessionLogNewButton( final ClientProperties pClientProperties ) {
         final Button button = ControlUtilities.getIconButton(
-                "/icons/deviantArt/dAKirby309/windows8MetroInvert/PowerRestartInvert16.png" );
+                "/icons/deviantArt/dAKirby309/windows8MetroInvert"
+                + "/PowerRestartInvert16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "sessionLog",
-                                                  "new",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "sessionLog",
+                                               "new",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getSessionLogUpdateButton( final ClientProperties pClientProperties ) {
         final Button button = ControlUtilities.getIconButton(
                 "/icons/deviantArt/shlyapnikova/miniIconSet/Update16.png" );
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "sessionLog",
-                                                  "update",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "sessionLog",
+                                               "update",
+                                               button,
+                                               null );
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getExportSessionLogButton( final ClientProperties pClientProperties ) {
         final Button button = ControlUtilities.getIconButton(
                 "/icons/everaldo/Txt2Mimetype16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "export",
-                                                  "sessionLog",
-                                                  button,
-                                                  null );
+                                               BUNDLE_NAME,
+                                               "export",
+                                               "sessionLog",
+                                               button,
+                                               null );
 
         return button;
     }
-    
+
     public static Button getImportTableDataButton( final ClientProperties pClientProperties ) {
-        final Button button =
-                ControlUtilities.getIconButton( "/icons/led24/DocExcelCsv16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/led24/DocExcelCsv16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "import",
-                                                  "tableData",
-                                                  button,
-                                                  null );
-        
+                                               BUNDLE_NAME,
+                                               "import",
+                                               "tableData",
+                                               button,
+                                               null );
+
         return button;
     }
-    
+
     public static Button getImportVectorGraphicsButton( final ClientProperties pClientProperties ) {
-        final Button button =
-                ControlUtilities.getIconButton( "/icons/oxygenIcons/SvgMimeType16.png" );
+        final Button button = ControlUtilities.getIconButton(
+                "/icons/oxygenIcons/SvgMimeType16.png" );
 
         ControlUtilities.setControlProperties( pClientProperties,
-                                                  BUNDLE_NAME,
-                                                  "import",
-                                                  "vectorGraphics",
-                                                  button,
-                                                  null );
-        
+                                               BUNDLE_NAME,
+                                               "import",
+                                               "vectorGraphics",
+                                               button,
+                                               null );
+
         return button;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getEditNotesButton( final String tooltipText ) {
-        final Button editNotesButton = ControlUtilities
-                .getLabeledButton( "Edit Notes", tooltipText, "edit-notes-button" );
-        final ImageView editNotesIcon = ImageUtilities
-                .getImageView( "/icons/visualIdiot/Notes16.png", true );
+        final Button editNotesButton = ControlUtilities.getLabeledButton(
+                "Edit Notes",
+                tooltipText,
+                "edit-notes-button" );
+        final ImageView editNotesIcon = ImageUtilities.getImageView(
+                "/icons/visualIdiot/Notes16.png",
+                true );
         editNotesButton.setGraphic( editNotesIcon );
         return editNotesButton;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XToggleButton getDisplayToggleButton( final String targetName,
                                                         final boolean applyAspectRatio,
                                                         final boolean selected ) {
         final String selectedText = "Visible";
         final String deselectedText = "Hidden";
         final String tooltipText = "Click to Toggle " + targetName
-                + " Display Between Visible and Hidden";
+                                   + " Display Between Visible and Hidden";
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill, but we override.
@@ -650,14 +715,14 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static XToggleButton getIncludeExcludeToggleButton( final String targetName,
                                                                final boolean applyAspectRatio,
                                                                final boolean selected ) {
         final String selectedText = "Include";
         final String deselectedText = "Exclude";
         final String tooltipText = "Click to Toggle " + targetName
-                + " Display Between Include and Exclude";
+                                   + " Display Between Include and Exclude";
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill, but we override.
@@ -673,72 +738,78 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static Button getPredictButton( final ClientProperties pClientProperties ) {
         return ControlUtilities.getLabeledButton( pClientProperties,
-                                                     BUNDLE_NAME,
-                                                     "tools",
-                                                     "predict",
-                                                     ColorConstants.PREDICT_BACKGROUND_COLOR );
+                                                  BUNDLE_NAME,
+                                                  "tools",
+                                                  "predict",
+                                                  ColorConstants.PREDICT_BACKGROUND_COLOR );
     }
 
     public static Button getPredictButton( final ClientProperties pClientProperties,
                                            final XAction predictAction ) {
         return ControlUtilities.getLabeledButton( predictAction,
-                                                     ColorConstants.PREDICT_BACKGROUND_COLOR );
+                                                  ColorConstants.PREDICT_BACKGROUND_COLOR );
     }
 
     public static Button getCancelButton( final ClientProperties pClientProperties ) {
         return ControlUtilities.getLabeledButton( pClientProperties,
-                                                     BUNDLE_NAME,
-                                                     "tools",
-                                                     "cancel",
-                                                     ColorConstants.CANCEL_BACKGROUND_COLOR );
+                                                  BUNDLE_NAME,
+                                                  "tools",
+                                                  "cancel",
+                                                  ColorConstants.CANCEL_BACKGROUND_COLOR );
     }
 
     public static Button getClearButton( final ClientProperties pClientProperties ) {
         return ControlUtilities.getLabeledButton( pClientProperties,
-                                                     BUNDLE_NAME,
-                                                     "tools",
-                                                     "clear",
-                                                     ColorConstants.CLEAR_BACKGROUND_COLOR );
+                                                  BUNDLE_NAME,
+                                                  "tools",
+                                                  "clear",
+                                                  ColorConstants.CLEAR_BACKGROUND_COLOR );
     }
 
     public static Button getClearButton( final ClientProperties pClientProperties,
                                          final XAction clearAction ) {
         return ControlUtilities.getLabeledButton( clearAction,
-                                                     ColorConstants.CLEAR_BACKGROUND_COLOR );
+                                                  ColorConstants.CLEAR_BACKGROUND_COLOR );
     }
 
     public static Menu getWindowSizeMenu( final ClientProperties pClientProperties,
                                           final WindowSizeActions windowSizeActions,
                                           final boolean maximumSizeSupported ) {
-        final XActionGroup windowSizeActionGroup = LabeledActionFactory
-                .makeWindowSizeActionGroup( pClientProperties,
-                                            windowSizeActions,
-                                            maximumSizeSupported );
-        final Menu windowSizeMenu = XActionUtilities.createMenu( windowSizeActionGroup );
+        final XActionGroup windowSizeActionGroup
+                = LabeledActionFactory.makeWindowSizeActionGroup(
+                pClientProperties,
+                windowSizeActions,
+                maximumSizeSupported );
+        final Menu windowSizeMenu = XActionUtilities.createMenu(
+                windowSizeActionGroup );
         return windowSizeMenu;
     }
 
     public static Menu getBackgroundColorMenu( final ClientProperties pClientProperties,
                                                final BackgroundColorChoices backgroundColorChoices ) {
-        final XActionGroup backgroundColorChoiceGroup = LabeledActionFactory
-                .getBackgroundColorChoiceGroup( pClientProperties, backgroundColorChoices );
-        final Menu backgroundColorMenu = XActionUtilities.createMenu( backgroundColorChoiceGroup );
+        final XActionGroup backgroundColorChoiceGroup
+                = LabeledActionFactory.getBackgroundColorChoiceGroup(
+                pClientProperties,
+                backgroundColorChoices );
+        final Menu backgroundColorMenu = XActionUtilities.createMenu(
+                backgroundColorChoiceGroup );
         return backgroundColorMenu;
     }
-    
+
     public static Menu getExportMenu( final ClientProperties pClientProperties,
                                       final ExportActions exportActions,
                                       final boolean vectorGraphicsSupported,
                                       final boolean renderedGraphicsSupported ) {
-        final XActionGroup exportActionGroup = LabeledActionFactory
-                .getExportActionGroup( pClientProperties,
-                                       exportActions,
-                                       vectorGraphicsSupported,
-                                       renderedGraphicsSupported );
-        final Menu exportMenu = XActionUtilities.createMenu( exportActionGroup );
+        final XActionGroup exportActionGroup
+                = LabeledActionFactory.getExportActionGroup( pClientProperties,
+                                                             exportActions,
+                                                             vectorGraphicsSupported,
+                                                             renderedGraphicsSupported );
+        final Menu exportMenu
+                = XActionUtilities.createMenu( exportActionGroup );
         return exportMenu;
     }
 
@@ -746,11 +817,11 @@ public final class LabeledControlFactory {
                                     final FileActions fileActions,
                                     final boolean vectorGraphicsSupported,
                                     final boolean renderedGraphicsSupported ) {
-        final XActionGroup fileActionGroup = LabeledActionFactory
-                .getFileActionGroup( pClientProperties,
-                                     fileActions,
-                                     vectorGraphicsSupported,
-                                     renderedGraphicsSupported );
+        final XActionGroup fileActionGroup
+                = LabeledActionFactory.getFileActionGroup( pClientProperties,
+                                                           fileActions,
+                                                           vectorGraphicsSupported,
+                                                           renderedGraphicsSupported );
         final Menu fileMenu = XActionUtilities.createMenu( fileActionGroup );
         return fileMenu;
     }
@@ -758,24 +829,36 @@ public final class LabeledControlFactory {
     public static Menu getSettingsMenu( final ClientProperties pClientProperties,
                                         final SettingsActions settingsActions,
                                         final boolean maximumSizeSupported ) {
-        final XActionGroup settingsActionGroup = LabeledActionFactory
-                .getSettingsActionGroup( pClientProperties, settingsActions, maximumSizeSupported );
-        final Menu settingsMenu = XActionUtilities.createMenu( settingsActionGroup );
+        final XActionGroup settingsActionGroup
+                =
+                LabeledActionFactory.getSettingsActionGroup( pClientProperties,
+                                                               settingsActions,
+                                                               maximumSizeSupported );
+        final Menu settingsMenu = XActionUtilities.createMenu(
+                settingsActionGroup );
         return settingsMenu;
     }
 
     public static Button getCreateLayerButton() {
         final String buttonLabel = "Create"; //$NON-NLS-1$
-        final String tooltipText = "Create New Layer after Selected Row"; //$NON-NLS-1$
+        final String tooltipText
+                = "Create New Layer after Selected Row"; //$NON-NLS-1$
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "create-button" ); //$NON-NLS-1$
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "create-button" ); //$NON
+        // -NLS-1$
     }
 
     public static Button getDeleteLayerButton() {
         final String buttonLabel = "Delete"; //$NON-NLS-1$
-        final String tooltipText = "Delete Selected Layer(s) from Table"; //$NON-NLS-1$
+        final String tooltipText
+                = "Delete Selected Layer(s) from Table"; //$NON-NLS-1$
 
-        return ControlUtilities.getLabeledButton( buttonLabel, tooltipText, "delete-button" ); //$NON-NLS-1$
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "delete-button" ); //$NON
+        // -NLS-1$
     }
 
     public static XToggleButton getSurfaceBypassedToggleButton( final boolean applyAspectRatio,
@@ -784,18 +867,21 @@ public final class LabeledControlFactory {
                                                                 final boolean selected ) {
         final String selectedText = "Bypassed"; //$NON-NLS-1$
         final String deselectedText = "Enabled"; //$NON-NLS-1$
-        final String tooltipText = "Click to Toggle Surface Status Between Bypassed and Enabled"; //$NON-NLS-1$
+        final String tooltipText
+                = "Click to Toggle Surface Status Between Bypassed and "
+                  + "Enabled"; //$NON-NLS-1$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         //  auto-selects the foreground for text fill, but we override.
         final XToggleButton toggleButton = new XToggleButton( selectedText,
-                deselectedText,
-                tooltipText,
-                "bypass-toggle", //$NON-NLS-1$
-                applyAspectRatio,
-                aspectRatio,
-                wordWrap,
-                selected );
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "bypass-toggle"
+                , //$NON-NLS-1$
+                                                              applyAspectRatio,
+                                                              aspectRatio,
+                                                              wordWrap,
+                                                              selected );
 
         return toggleButton;
     }
@@ -806,41 +892,53 @@ public final class LabeledControlFactory {
     }
 
     public static Label getSplRangeLabel( final ClientProperties clientProperties ) {
-        return ControlUtilities
-                .getLabeledLabel( clientProperties, BUNDLE_NAME, "settings", "splRange" );
+        return ControlUtilities.getLabeledLabel( clientProperties,
+                                                 BUNDLE_NAME,
+                                                 "settings",
+                                                 "splRange" );
     }
 
     public static CheckBox getAutoRangeSplCheckBox( final ClientProperties clientProperties ) {
-        return ControlUtilities
-                .getLabeledCheckBox( clientProperties, BUNDLE_NAME, "settings", "autoRangeSpl" );
+        return ControlUtilities.getLabeledCheckBox( clientProperties,
+                                                    BUNDLE_NAME,
+                                                    "settings",
+                                                    "autoRangeSpl" );
     }
 
     public static Label getDitheringLabel( final ClientProperties clientProperties ) {
-        return ControlUtilities
-                .getLabeledLabel( clientProperties, BUNDLE_NAME, "test", "ditheringAmount" );
+        return ControlUtilities.getLabeledLabel( clientProperties,
+                                                 BUNDLE_NAME,
+                                                 "test",
+                                                 "ditheringAmount" );
     }
 
     public static CheckBox getUseDitheringCheckBox( final ClientProperties clientProperties ) {
-        return ControlUtilities
-                .getLabeledCheckBox( clientProperties, BUNDLE_NAME, "test", "useDithering" );
+        return ControlUtilities.getLabeledCheckBox( clientProperties,
+                                                    BUNDLE_NAME,
+                                                    "test",
+                                                    "useDithering" );
     }
 
     public static XToggleButton getPolarityToggleButton( final boolean applyAspectRatio,
                                                          final boolean selected ) {
         final String selectedText = "Reversed"; //$NON-NLS-1$
         final String deselectedText = "Normal"; //$NON-NLS-1$
-        final String tooltipText = "Click to Toggle Polarity Status Between Normal and Reversed"; //$NON-NLS-1$
+        final String tooltipText
+                = "Click to Toggle Polarity Status Between Normal and "
+                  + "Reversed"; //$NON-NLS-1$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill; we use a custom fill.
         final XToggleButton toggleButton = new XToggleButton( selectedText,
-                deselectedText,
-                tooltipText,
-                "polarity-toggle", //$NON-NLS-1$
-                applyAspectRatio,
-                3.0d,
-                false,
-                selected );
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "polarity"
+                                                              + "-toggle",
+                //$NON-NLS-1$
+                                                              applyAspectRatio,
+                                                              3.0d,
+                                                              false,
+                                                              selected );
 
         return toggleButton;
     }
@@ -849,46 +947,24 @@ public final class LabeledControlFactory {
                                                      final boolean selected ) {
         final String selectedText = "Muted"; //$NON-NLS-1$
         final String deselectedText = "Mute"; //$NON-NLS-1$
-        final String tooltipText = "Click to Toggle Mute Status Between Muted and Unmuted"; //$NON-NLS-1$
+        final String tooltipText
+                = "Click to Toggle Mute Status Between Muted and Unmuted";
+        //$NON-NLS-1$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill; we use a custom fill.
         final XToggleButton toggleButton = new XToggleButton( selectedText,
-                deselectedText,
-                tooltipText,
-                "mute-toggle", //$NON-NLS-1$
-                applyAspectRatio,
-                3.0d,
-                false,
-                selected );
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "mute-toggle",
+                //$NON-NLS-1$
+                                                              applyAspectRatio,
+                                                              3.0d,
+                                                              false,
+                                                              selected );
 
         return toggleButton;
     }
-
-
-    @SuppressWarnings("nls")
-    public static XToggleButton getProcessingToggleButton( final String selectedText,
-                                                           final String deselectedText,
-                                                           final String tooltipText,
-                                                           final boolean applyAspectRatio,
-                                                           final double aspectRatio,
-                                                           final boolean wordWrap,
-                                                           final boolean selected ) {
-        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
-        //  auto-selects the foreground for text fill, but we mimic legacy apps.
-        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
-        final XToggleButton toggleButton = new XToggleButton( selectedText,
-                deselectedText,
-                tooltipText,
-                "bypass-toggle",
-                applyAspectRatio,
-                aspectRatio,
-                wordWrap,
-                selected );
-
-        return toggleButton;
-    }
-
 
     public static ToggleButton getSingleFilterToggleButton( final int filterNumber,
                                                             final boolean applyAspectRatio,
@@ -900,7 +976,8 @@ public final class LabeledControlFactory {
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         //  auto-selects the foreground for text fill, but we mimic legacy apps.
         // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
-        final ToggleButton toggleButton = getProcessingToggleButton( selectedText,
+        final ToggleButton toggleButton = getProcessingToggleButton(
+                selectedText,
                 deselectedText,
                 tooltipText,
                 applyAspectRatio,
@@ -917,59 +994,49 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
-
-    public static XToggleButton getProcessingFilterToggleButton( final String filterName,
-                                                                 final boolean applyAspectRatio,
-                                                                 final boolean selected ) {
-        final XToggleButton toggleButton = getFilterToggleButton( filterName,
-                applyAspectRatio,
-                2.0d,
-                true,
-                selected );
+    @SuppressWarnings( "nls" )
+    public static XToggleButton getProcessingToggleButton( final String selectedText,
+                                                           final String deselectedText,
+                                                           final String tooltipText,
+                                                           final boolean applyAspectRatio,
+                                                           final double aspectRatio,
+                                                           final boolean wordWrap,
+                                                           final boolean selected ) {
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        //  auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final XToggleButton toggleButton = new XToggleButton( selectedText,
+                                                              deselectedText,
+                                                              tooltipText,
+                                                              "bypass-toggle",
+                                                              applyAspectRatio,
+                                                              aspectRatio,
+                                                              wordWrap,
+                                                              selected );
 
         return toggleButton;
     }
 
-
     public static ToggleButton getParametricToggleButton( final boolean applyAspectRatio ) {
-        final ToggleButton toggleButton = getProcessingFilterToggleButton( "Parametric", //$NON-NLS-1$
+        final ToggleButton toggleButton = getProcessingFilterToggleButton(
+                "Parametric", //$NON-NLS-1$
                 applyAspectRatio,
                 false );
 
         return toggleButton;
     }
 
-
-    public static XToggleButton getHighLowPassToggleButton( final String filterName,
-                                                            final boolean applyAspectRatio,
-                                                            final boolean selected ) {
-        final String selectedText = "Bypassed"; //$NON-NLS-1$
-        final String deselectedText = "Enabled"; //$NON-NLS-1$
-        final String tooltipText = "Bypass/Enable " + filterName + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
-
-        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
-        // auto-selects the foreground for text fill, but we mimic legacy apps.
-        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
-        final XToggleButton toggleButton = getProcessingToggleButton( selectedText,
-                deselectedText,
-                tooltipText,
-                applyAspectRatio,
-                4.0d,
-                false,
-                selected );
+    public static XToggleButton getProcessingFilterToggleButton( final String filterName,
+                                                                 final boolean applyAspectRatio,
+                                                                 final boolean selected ) {
+        final XToggleButton toggleButton = getFilterToggleButton( filterName,
+                                                                  applyAspectRatio,
+                                                                  2.0d,
+                                                                  true,
+                                                                  selected );
 
         return toggleButton;
     }
-
-
-    public static ToggleButton getGeneralAllPassToggleButton( final boolean applyAspectRatio ) {
-        final ToggleButton toggleButton = getProcessingFilterToggleButton( "All Pass", //$NON-NLS-1$
-                applyAspectRatio,
-                true );
-
-        return toggleButton;
-    }
-
 
     public static XToggleButton getFilterToggleButton( final String filterName,
                                                        final boolean applyAspectRatio,
@@ -978,12 +1045,14 @@ public final class LabeledControlFactory {
                                                        final boolean selected ) {
         final String selectedText = filterName + " Bypassed"; //$NON-NLS-1$
         final String deselectedText = filterName + " Enabled"; //$NON-NLS-1$
-        final String tooltipText = "Bypass/Enable " + filterName + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
+        final String tooltipText = "Bypass/Enable " + filterName
+                                   + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
 
         // NOTE: JavaFX CSS automatically darkens unselected buttons, and
         // auto-selects the foreground for text fill, but we mimic legacy apps.
         // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
-        final XToggleButton toggleButton = getProcessingToggleButton( selectedText,
+        final XToggleButton toggleButton = getProcessingToggleButton(
+                selectedText,
                 deselectedText,
                 tooltipText,
                 applyAspectRatio,
@@ -994,17 +1063,50 @@ public final class LabeledControlFactory {
         return toggleButton;
     }
 
+    public static XToggleButton getHighLowPassToggleButton( final String filterName,
+                                                            final boolean applyAspectRatio,
+                                                            final boolean selected ) {
+        final String selectedText = "Bypassed"; //$NON-NLS-1$
+        final String deselectedText = "Enabled"; //$NON-NLS-1$
+        final String tooltipText = "Bypass/Enable " + filterName
+                                   + " Filter"; //$NON-NLS-1$ //$NON-NLS-2$
+
+        // NOTE: JavaFX CSS automatically darkens unselected buttons, and
+        // auto-selects the foreground for text fill, but we mimic legacy apps.
+        // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
+        final XToggleButton toggleButton = getProcessingToggleButton(
+                selectedText,
+                deselectedText,
+                tooltipText,
+                applyAspectRatio,
+                4.0d,
+                false,
+                selected );
+
+        return toggleButton;
+    }
+
+    public static ToggleButton getGeneralAllPassToggleButton( final boolean applyAspectRatio ) {
+        final ToggleButton toggleButton = getProcessingFilterToggleButton(
+                "All Pass", //$NON-NLS-1$
+                applyAspectRatio,
+                true );
+
+        return toggleButton;
+    }
 
     public static ToggleButton getEqualizationToggleButton( final boolean applyAspectRatio ) {
         // NOTE: We only have to abbreviate when in the channel strip context.
-        final String filterName = applyAspectRatio ? "Equalization" : "EQ"; //$NON-NLS-1$ //$NON-NLS-2$
-        final ToggleButton toggleButton = getProcessingFilterToggleButton( filterName,
+        final String filterName = applyAspectRatio
+                                  ? "Equalization"
+                                  : "EQ"; //$NON-NLS-1$ //$NON-NLS-2$
+        final ToggleButton toggleButton = getProcessingFilterToggleButton(
+                filterName,
                 applyAspectRatio,
                 false );
 
         return toggleButton;
     }
-
 
     public static ToggleButton getAllFiltersToggleButton( final boolean applyAspectRatio,
                                                           final boolean selected ) {
@@ -1016,48 +1118,44 @@ public final class LabeledControlFactory {
         // auto-selects the foreground for text fill, but we mimic legacy apps.
         // NOTE: "selected" means "bypassed" and "deselected" means "enabled".
 
-        return getProcessingToggleButton(
-                selectedText,
-                deselectedText,
-                tooltipText,
-                applyAspectRatio,
-                4.0d,
-                false,
-                selected );
+        return getProcessingToggleButton( selectedText,
+                                          deselectedText,
+                                          tooltipText,
+                                          applyAspectRatio,
+                                          4.0d,
+                                          false,
+                                          selected );
     }
 
     public static Button getAddRowButton( final String type ) {
         return getAddElementButton( type, "Row" );
     }
 
-    public static Button getAddColumnButton( final String type ) {
-        return getAddElementButton( type, "Column" );
-    }
-
     public static Button getAddElementButton( final String type,
                                               final String rowOrColumn ) {
         final String buttonLabel = "Add " + type;
-        final String tooltipText = "Add New " + type
-                + " after Selected " + rowOrColumn;
+        final String tooltipText = "Add New " + type + " after Selected "
+                                   + rowOrColumn;
 
-        return ControlUtilities.getLabeledButton(
-                buttonLabel,
-                tooltipText,
-                "add-element-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "add-element-button" );
+    }
+
+    public static Button getAddColumnButton( final String type ) {
+        return getAddElementButton( type, "Column" );
     }
 
     public static Button getRemoveElementButton( final String type ) {
         final String buttonLabel = "Remove " + type;
         final String tooltipText = "Remove Selected " + type + "(s) from Table";
 
-        return ControlUtilities.getLabeledButton(
-                buttonLabel,
-                tooltipText,
-                "remove-element-button" );
+        return ControlUtilities.getLabeledButton( buttonLabel,
+                                                  tooltipText,
+                                                  "remove-element-button" );
     }
 
-    public static Button getImportGraphics3dsButton(
-            final ClientProperties pClientProperties ) {
+    public static Button getImportGraphics3dsButton( final ClientProperties pClientProperties ) {
         // Get the label from the localized properties file.
         final String buttonLabel = ControlUtilities.getLabeledControlLabel(
                 pClientProperties,
@@ -1075,13 +1173,12 @@ public final class LabeledControlFactory {
         final Button button = new Button( buttonLabel, icon );
 
         // Set the tool tip, drop-shadow effect, etc.
-        ControlUtilities.setControlProperties(
-                pClientProperties,
-                BUNDLE_NAME,
-                "import",
-                "graphics3ds",
-                button,
-                null );
+        ControlUtilities.setControlProperties( pClientProperties,
+                                               BUNDLE_NAME,
+                                               "import",
+                                               "graphics3ds",
+                                               button,
+                                               null );
 
         return button;
     }
@@ -1090,29 +1187,29 @@ public final class LabeledControlFactory {
      * Creates and returns a unitless NumberAxis with the given upper and lower
      * bound.
      *
-     * @param pAxisLabel
-     *            The name to display for this axis
-     * @param pLowerBound
-     *            The lower bound for this axis, i.e. min plottable value
-     * @param pUpperBound
-     *            The upper bound for this axis, i.e. max plottable value
-     * @param pTickUnit
-     *            The tick unit, i.e. space between tick marks
-     * @param pAxisSide
-     *            The side of the hose chart to show the axis on
+     * @param pAxisLabel  The name to display for this axis
+     * @param pLowerBound The lower bound for this axis, i.e. min plottable
+     *                    value
+     * @param pUpperBound The upper bound for this axis, i.e. max plottable
+     *                    value
+     * @param pTickUnit   The tick unit, i.e. space between tick marks
+     * @param pAxisSide   The side of the hose chart to show the axis on
      * @return A unitless Number Axis
      */
-    public static NumberAxis getUnitlessAxis(final String pAxisLabel,
-                                             final double pLowerBound,
-                                             final double pUpperBound,
-                                             final double pTickUnit,
-                                             final Side pAxisSide ) {
+    public static NumberAxis getUnitlessAxis( final String pAxisLabel,
+                                              final double pLowerBound,
+                                              final double pUpperBound,
+                                              final double pTickUnit,
+                                              final Side pAxisSide ) {
         // Make sure the outer ticks are whole numbers or else all tick labels
         // get too long to avoid overlap (and also are less usable).
         final double axisMin = FastMath.floor( pLowerBound );
         final double axisMax = FastMath.ceil( pUpperBound );
 
-        final NumberAxis unitlessAxis = new NumberAxis( pAxisLabel, axisMin, axisMax, pTickUnit );
+        final NumberAxis unitlessAxis = new NumberAxis( pAxisLabel,
+                                                        axisMin,
+                                                        axisMax,
+                                                        pTickUnit );
 
         unitlessAxis.setTickMarkVisible( true );
         unitlessAxis.setTickLabelsVisible( true );

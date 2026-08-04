@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 
 public class NavigationButtons {
@@ -42,8 +43,9 @@ public class NavigationButtons {
     // Default constructor
     public NavigationButtons( final ClientProperties pClientProperties ) {
         // Make the JavaFX image buttons.
-        _backButton = LabeledControlFactory.getNavigateBackButton( pClientProperties );
-        _forwardButton = LabeledControlFactory.getNavigateForwardButton( pClientProperties );
+        _backButton = LabeledControlFactory.getNavigateBackButton(
+                pClientProperties );
+        _forwardButton = LabeledControlFactory.getNavigateForwardButton(
+                pClientProperties );
     }
-
 }

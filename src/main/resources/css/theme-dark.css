@@ -39,28 +39,28 @@
     /* General Chart and Axis Color Palette */
     CHART_COLOR_TITLE: white;
     CHART_COLOR_LEGEND: white;
-    CHART_GRID_LINE: derive( gray, -40% ); 
-    CHART_ZERO_LINE: derive( gray, -30% ); 
+    CHART_GRID_LINE: derive(gray, -40%);
+    CHART_ZERO_LINE: derive(gray, -30%);
     AXIS_COLOR_BASIS: COLOR_GRAY75;
     AXIS_COLOR_LABEL: white;
     AXIS_FILL_TICK: null;
     AXIS_FILL_TICK_LABEL: white;
-    
+
     /* Control Color Palette */
     COLOR_BUTTON: COLOR_GRAY50;
     FILL_BUTTON: white;
-    
+
     COLOR_LABEL: COLOR_GRAY10;
     FILL_LABEL: white;
     BORDER_LABEL: COLOR_GRAY20;
-    
+
     COLOR_EDITOR: COLOR_GRAY15;
     FILL_EDITOR: white;
     BORDER_EDITOR: COLOR_GRAY25;
-    
+
     COLOR_SELECTOR: COLOR_GRAY20;
     FILL_SELECTOR: white;
-    
+
     COLOR_SPINNER: COLOR_GRAY20;
     FILL_SPINNER: white;
 
@@ -70,80 +70,80 @@
     /* Control Color Palette */
     COLOR_TAB: COLOR_GRAY20;
     FILL_TAB: white;
-    
+
     /* Toggle Action Color Palette */
     COLOR_TOOL_BAR_TOGGLE_OFF: #747584; /* #6e7f80 = AuroMetalSaurus */
     FILL_TOOL_BAR_TOGGLE_OFF: black;
     COLOR_TOOL_BAR_TOGGLE_ON: #a4a6a8; /* #a9a9a9 = dark gray */
     FILL_TOOL_BAR_TOGGLE_ON: black;
-    
+
     COLOR_POLARITY_NORMAL: COLOR_GRAY20;
     FILL_POLARITY_NORMAL: white;
     COLOR_POLARITY_REVERSED: COLOR_GRAY80;
     FILL_POLARITY_REVERSED: black;
-    
-    COLOR_UNMUTED: derive( #621818, -15% ); /* #701c1c = Persian Plum */
+
+    COLOR_UNMUTED: derive(#621818, -15%); /* #701c1c = Persian Plum */
     FILL_UNMUTED: white;
-    COLOR_MUTED: derive( #ff0000, -15% ); /* red */
+    COLOR_MUTED: derive(#ff0000, -15%); /* red */
     FILL_MUTED: black;
-    
-    COLOR_UNSOLOED: derive( #8b4513, -15% ); /* saddle brown */
+
+    COLOR_UNSOLOED: derive(#8b4513, -15%); /* saddle brown */
     FILL_UNSOLOED: white;
-    COLOR_SOLOED: derive( #ffa500, -15% ); /* orange */
+    COLOR_SOLOED: derive(#ffa500, -15%); /* orange */
     FILL_SOLOED: white;
-    
-    COLOR_UNSELECTED: derive( #006400, -15% ); /* #006600 = Pakistan Green */
+
+    COLOR_UNSELECTED: derive(#006400, -15%); /* #006600 = Pakistan Green */
     FILL_UNSELECTED: white;
-    COLOR_SELECTED: derive( #adff2f, -15% ); /* green-yellow */
+    COLOR_SELECTED: derive(#adff2f, -15%); /* green-yellow */
     FILL_SELECTED: black;
-    
-    COLOR_HIDDEN: derive( #0000ff, -15% ); /* blue */
+
+    COLOR_HIDDEN: derive(#0000ff, -15%); /* blue */
     FILL_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
-    COLOR_VISIBLE: derive( #ffff0a, -15% ); /* #ffff33 = Electric Yellow */
+    COLOR_VISIBLE: derive(#ffff0a, -15%); /* #ffff33 = Electric Yellow */
     FILL_VISIBLE: #0000ff; /* blue */
-    
-    COLOR_ENABLED: derive( #808000, -15% ); /* olive */
+
+    COLOR_ENABLED: derive(#808000, -15%); /* olive */
     FILL_ENABLED: white;
-    COLOR_BYPASSED: derive( #ffff0a, -15% ); /* #ffff33 = Electric Yellow */
+    COLOR_BYPASSED: derive(#ffff0a, -15%); /* #ffff33 = Electric Yellow */
     FILL_BYPASSED: black;
-    
-    COLOR_INACTIVE: derive( #08b8b3, -15% ); /* #0abab5 = Tiffany Blue */
+
+    COLOR_INACTIVE: derive(#08b8b3, -15%); /* #0abab5 = Tiffany Blue */
     FILL_INACTIVE: black;
-    COLOR_ACTIVE: derive( #00ffff, -15% ); /* aqua (aka cyan) */
+    COLOR_ACTIVE: derive(#00ffff, -15%); /* aqua (aka cyan) */
     FILL_ACTIVE: black;
-     
+
     COLOR_IGNORED: COLOR_GRAY30;
     FILL_IGNORED: white;
     COLOR_INCLUDED: aqua;
     FILL_INCLUDED: black;
-    
+
     COLOR_LAYER_INACTIVE: COLOR_GRAY30;
     FILL_LAYER_INACTIVE: white;
     COLOR_LAYER_ACTIVE: #0aff0a; /* bright green */
     FILL_LAYER_ACTIVE: #0000ff; /* blue */
-    
+
     COLOR_LAYER_HIDDEN: #0000ff; /* blue */
     FILL_LAYER_HIDDEN: #ffff0a; /* #ffff33 = Electric Yellow */
     COLOR_LAYER_VISIBLE: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_LAYER_VISIBLE: #0000ff; /* blue */
-        
+
     COLOR_LAYER_UNLOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
     FILL_LAYER_UNLOCKED: #0aff0a; /* bright green */
     COLOR_LAYER_LOCKED: #ff0a0a; /* bright red */
     FILL_LAYER_LOCKED: #ffff0a; /* #ffff33 = Electric Yellow */
-    
+
     /* Action Color Palette */
-    COLOR_SAVE: derive( #20b2aa, -15% ); /* light sea green */
-    COLOR_LOAD: derive( #ba55d3, -15% ); /* medium orchid */
-    COLOR_RESET: derive( #8b0000, -15% ); /* dark red */
-    COLOR_RECALL: derive( #ffa500, -15% ); /* orange */
+    COLOR_SAVE: derive(#20b2aa, -15%); /* light sea green */
+    COLOR_LOAD: derive(#ba55d3, -15%); /* medium orchid */
+    COLOR_RESET: derive(#8b0000, -15%); /* dark red */
+    COLOR_RECALL: derive(#ffa500, -15%); /* orange */
     COLOR_PASTE: COLOR_RECALL;
-    COLOR_CREATE: derive( #1157e1, -15% ); /* #273be2 = Palatinate Blue */
+    COLOR_CREATE: derive(#1157e1, -15%); /* #273be2 = Palatinate Blue */
     COLOR_STORE: COLOR_CREATE;
     COLOR_COPY: COLOR_CREATE;
-    COLOR_DELETE: derive( #dc143c, -15% ); /* crimson */
-    COLOR_REVERT: derive( #00a321, -15% ); /* #059033 = North Texas Green */
-    
+    COLOR_DELETE: derive(#dc143c, -15%); /* crimson */
+    COLOR_REVERT: derive(#00a321, -15%); /* #059033 = North Texas Green */
+
     COLOR_HELP: COLOR_GRAY50;
     COLOR_HELP_ALTERNATE: COLOR_GRAY41;
     COLOR_INSERT: COLOR_CREATE;
@@ -153,7 +153,7 @@
     COLOR_CANCEL: COLOR_DELETE;
     COLOR_IMPORT: COLOR_LOAD;
     COLOR_EXPORT: COLOR_SAVE;
-    COLOR_EDIT_NOTES: derive( #fffaf0, -15% ); /* floral white */
+    COLOR_EDIT_NOTES: derive(#fffaf0, -15%); /* floral white */
     COLOR_GENERATE_REPORT: COLOR_SAVE;
     COLOR_ADD_ELEMENT: COLOR_CREATE;
     COLOR_REMOVE_ELEMENT: COLOR_DELETE;
@@ -170,7 +170,7 @@
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, derive( COLOR_TAB, 40% );
+    -fx-background-color: -fx-outer-border, -fx-inner-border, derive(COLOR_TAB, 40%);
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
@@ -202,8 +202,8 @@
 
 /* Set light chart title against all dark backgrounds, vs. default derivation. */
 .chart-title {
-    -fx-text-background-color: CHART_COLOR_TITLE; 
- }
+    -fx-text-background-color: CHART_COLOR_TITLE;
+}
 
 /* Set light chart legend against all dark backgrounds, vs. default derivation. */
 .chart-legend {
@@ -226,12 +226,15 @@
 .axis:top {
     -fx-border-color: transparent transparent AXIS_COLOR transparent;
 }
+
 .axis:right {
     -fx-border-color: transparent transparent transparent AXIS_COLOR;
 }
+
 .axis:bottom {
     -fx-border-color: AXIS_COLOR transparent transparent transparent;
 }
+
 .axis:left {
     -fx-border-color: transparent AXIS_COLOR transparent transparent;
 }
@@ -242,7 +245,7 @@
 .axis:left > .axis-label,
 .axis:bottom > .axis-label,
 .axis:right > .axis-label {
-    -fx-text-background-color: AXIS_COLOR_LABEL; 
+    -fx-text-background-color: AXIS_COLOR_LABEL;
 }
 
 .axis-tick-mark,
@@ -297,9 +300,8 @@
 .fxguitoolkit-text-input {
     -fx-control-inner-background: COLOR_EDITOR;
     -fx-text-box-border: BORDER_EDITOR;
-    -fx-background-color:
-        linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-inner-color: FILL_EDITOR;
@@ -338,7 +340,7 @@
 }
 
 .fxguitoolkit-spinner > .text-field {
-     -fx-text-fill: FILL_SPINNER;
+    -fx-text-fill: FILL_SPINNER;
 }
 
 .fxguitoolkit-spinner .increment-arrow-button {
@@ -359,11 +361,10 @@
 
 /* Match the "Night Mode" color for Tool Bar Buttons. */
 .tool-bar-button {
-    -fx-background-color: 
-        -fx-shadow-highlight-color, 
-        -fx-outer-border, 
-        -fx-inner-border, 
-        derive( COLOR_TOOL_BAR_BUTTON, 0% );
+    -fx-background-color: -fx-shadow-highlight-color,
+    -fx-outer-border,
+    -fx-inner-border,
+    derive(COLOR_TOOL_BAR_BUTTON, 0%);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_BUTTON;
@@ -484,11 +485,10 @@
 
 /* Match the "Night Mode" color for Tool Bar Toggle Buttons. */
 .tool-bar-toggle {
-    -fx-background-color: 
-        -fx-shadow-highlight-color, 
-        -fx-outer-border, 
-        -fx-inner-border, 
-        derive( COLOR_TOOL_BAR_TOGGLE_OFF, 0% );
+    -fx-background-color: -fx-shadow-highlight-color,
+    -fx-outer-border,
+    -fx-inner-border,
+    derive(COLOR_TOOL_BAR_TOGGLE_OFF, 0%);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_OFF;
@@ -497,10 +497,9 @@
 /* TODO: Find a way to get the inner border back. Every attempt to
     have four values feeding into the background color got errors */
 .tool-bar-toggle:selected {
-    -fx-background-color:
-        -fx-shadow-highlight-color,
-        linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
-        linear-gradient(to bottom, derive( COLOR_TOOL_BAR_TOGGLE_ON, 0% ), COLOR_TOOL_BAR_TOGGLE_ON);
+    -fx-background-color: -fx-shadow-highlight-color,
+    linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
+    linear-gradient(to bottom, derive(COLOR_TOOL_BAR_TOGGLE_ON, 0%), COLOR_TOOL_BAR_TOGGLE_ON);
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-background-radius: 3px, 3px, 2px, 1px;
     -fx-text-fill: FILL_TOOL_BAR_TOGGLE_ON;

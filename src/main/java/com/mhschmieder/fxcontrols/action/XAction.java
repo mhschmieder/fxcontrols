@@ -30,11 +30,12 @@
  */
 package com.mhschmieder.fxcontrols.action;
 
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import org.controlsfx.control.action.Action;
 
 import java.util.function.Consumer;
+
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 
 /**
  * This is effectively a copy of ControlsFX sample code for DummyAction and
@@ -49,22 +50,25 @@ public class XAction extends Action {
     private final ActionVerb actionVerb;
 
     // Keep track of whether we want disabled actions to be hidden or not.
-    private boolean          hideIfDisabled;
+    private boolean hideIfDisabled;
 
     public XAction() {
         this( ActionVerb.defaultValue() );
     }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public XAction( final ActionVerb pActionVerb ) {
         this( pActionVerb, "" );
     }
 
-    public XAction( final ActionVerb pActionVerb, final String pName ) {
+    public XAction( final ActionVerb pActionVerb,
+                    final String pName ) {
         this( pActionVerb, pName, null );
     }
 
-    public XAction( final ActionVerb pActionVerb, final String pName, final Node image ) {
+    public XAction( final ActionVerb pActionVerb,
+                    final String pName,
+                    final Node image ) {
         this( pActionVerb, pName, image, null );
     }
 
@@ -87,6 +91,11 @@ public class XAction extends Action {
         if ( eventHandler != null ) {
             setEventHandler( eventHandler );
         }
+    }
+
+    @Override
+    public void setEventHandler( final Consumer< ActionEvent > eventHandler ) {
+        super.setEventHandler( eventHandler );
     }
 
     public final ActionVerb getActionVerb() {
@@ -117,6 +126,10 @@ public class XAction extends Action {
         return hideIfDisabled;
     }
 
+    public final void setHideIfDisabled( final boolean hideIfDisabled ) {
+        this.hideIfDisabled = hideIfDisabled;
+    }
+
     public final boolean isSelect() {
         return ActionVerb.SELECT.equals( actionVerb );
     }
@@ -130,17 +143,7 @@ public class XAction extends Action {
     }
 
     @Override
-    public void setEventHandler( final Consumer< ActionEvent > eventHandler ) {
-        super.setEventHandler( eventHandler );
-    }
-
-    public final void setHideIfDisabled( final boolean hideIfDisabled ) {
-        this.hideIfDisabled = hideIfDisabled;
-    }
-
-    @Override
     public String toString() {
         return getText();
     }
-
 }

@@ -44,7 +44,8 @@ public final class LayerLockTableCell
                ColorConstants.UNLOCKED_BACKGROUND_COLOR,
                ColorConstants.LOCKED_FOREGROUND_COLOR,
                ColorConstants.UNLOCKED_FOREGROUND_COLOR,
-               "Click to Toggle Layer Lock Between Locked and Unlocked" ); //$NON-NLS-1$
+               "Click to Toggle Layer Lock Between Locked and Unlocked" );
+        //$NON-NLS-1$
     }
 
     @Override

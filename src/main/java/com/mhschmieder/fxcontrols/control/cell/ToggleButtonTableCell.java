@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.ControlUtilities;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableRow;
@@ -42,22 +43,22 @@ import javafx.scene.paint.Color;
 
 // NOTE: This needs to be a CheckBoxTableCell derivative in order to inherit
 //  all the correct table cell height, width, gaps, and other rendering details.
-public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell< RT, Boolean > {
+public abstract class ToggleButtonTableCell< RT, VT >
+        extends XCheckBoxTableCell< RT, Boolean > {
 
+    // Cache text and colors for selected and unselected states.
+    private final String _selectedText;
+    private final String _deselectedText;
+    private final Color _selectedBackgroundColor;
+    private final Color _deselectedBackgroundColor;
+    private final Color _selectedTextFillColor;
+    private final Color _deselectedTextFillColor;
     // This is a custom cell so we declare our own Toggle Button to handle it.
     // NOTE: Custom XToggleButton backed out, as CSS based implementations
     //  don't give the opportunity to veto state changes and "lie" about state.
     //  Unfortunately, we have to do this sometimes due to inadequacies of the
     //  TableView API in terms of momentary blocking of table cell editing.
     protected ToggleButton _toggleButton;
-
-    // Cache text and colors for selected and unselected states.
-    private final String   _selectedText;
-    private final String   _deselectedText;
-    private final Color    _selectedBackgroundColor;
-    private final Color    _deselectedBackgroundColor;
-    private final Color    _selectedTextFillColor;
-    private final Color    _deselectedTextFillColor;
 
     public ToggleButtonTableCell( final String selectedText,
                                   final String deselectedText,
@@ -82,50 +83,6 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
         catch ( final Exception ex ) {
             ex.printStackTrace();
         }
-    }
-
-    private final Color getBackgroundColor() {
-        final Boolean storedValue = getItem();
-        if ( storedValue == null ) {
-            return Color.BLACK;
-        }
-
-        final boolean evaluatedValue = storedValue.booleanValue();
-
-        final Color backgroundColor = evaluatedValue
-            ? _selectedBackgroundColor
-            : _deselectedBackgroundColor;
-
-        return backgroundColor;
-    }
-
-    @SuppressWarnings("nls")
-    private final String getString() {
-        final Boolean storedValue = getItem();
-        if ( storedValue == null ) {
-            return "";
-        }
-
-        final boolean evaluatedValue = storedValue.booleanValue();
-
-        final String stringValue = evaluatedValue ? _selectedText : _deselectedText;
-
-        return stringValue;
-    }
-
-    private final Color getTextFillColor() {
-        final Boolean storedValue = getItem();
-        if ( storedValue == null ) {
-            return Color.WHITE;
-        }
-
-        final boolean evaluatedValue = storedValue.booleanValue();
-
-        final Color textFillColor = evaluatedValue
-            ? _selectedTextFillColor
-            : _deselectedTextFillColor;
-
-        return textFillColor;
     }
 
     private final void initTableCell( final String tooltipText ) {
@@ -165,7 +122,8 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
         if ( tableRow != null ) {
             final int selectedIndex = tableRow.getIndex();
             final ObservableList< RT > items = tableView.getItems();
-            if ( !items.isEmpty() && ( selectedIndex >= 0 ) && ( selectedIndex < items.size() ) ) {
+            if ( !items.isEmpty() && ( selectedIndex >= 0 ) && ( selectedIndex
+                                                                 < items.size() ) ) {
                 final RT selectedRecord = items.get( selectedIndex );
                 setBeanProperty( selectedRecord );
             }
@@ -173,7 +131,8 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
     }
 
     @Override
-    public void updateItem( final Boolean item, final boolean empty ) {
+    public void updateItem( final Boolean item,
+                            final boolean empty ) {
         // Make sure the table cell knows the current toggle state.
         super.updateItem( item, empty );
 
@@ -200,5 +159,51 @@ public abstract class ToggleButtonTableCell< RT, VT > extends XCheckBoxTableCell
             setText( null );
             setGraphic( _toggleButton );
         }
+    }
+
+    private final Color getBackgroundColor() {
+        final Boolean storedValue = getItem();
+        if ( storedValue == null ) {
+            return Color.BLACK;
+        }
+
+        final boolean evaluatedValue = storedValue.booleanValue();
+
+        final Color backgroundColor = evaluatedValue
+                                      ? _selectedBackgroundColor
+                                      : _deselectedBackgroundColor;
+
+        return backgroundColor;
+    }
+
+    @SuppressWarnings( "nls" )
+    private final String getString() {
+        final Boolean storedValue = getItem();
+        if ( storedValue == null ) {
+            return "";
+        }
+
+        final boolean evaluatedValue = storedValue.booleanValue();
+
+        final String stringValue = evaluatedValue
+                                   ? _selectedText
+                                   : _deselectedText;
+
+        return stringValue;
+    }
+
+    private final Color getTextFillColor() {
+        final Boolean storedValue = getItem();
+        if ( storedValue == null ) {
+            return Color.WHITE;
+        }
+
+        final boolean evaluatedValue = storedValue.booleanValue();
+
+        final Color textFillColor = evaluatedValue
+                                    ? _selectedTextFillColor
+                                    : _deselectedTextFillColor;
+
+        return textFillColor;
     }
 }

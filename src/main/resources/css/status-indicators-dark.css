@@ -32,7 +32,7 @@
 /*
  * Style sheet for status indicators/decorators, for dark background.
  */
- 
+
 /* Match the "Night Mode" color for Status-Sensitive Labels. */
 .status-valid-label {
     -fx-background-color: COLOR_GRAY10;
@@ -40,12 +40,12 @@
 }
 
 .status-warning-label {
-    -fx-background-color: derive( #808000, -20% ); /* olive */
+    -fx-background-color: derive(#808000, -20%); /* olive */
     -fx-text-fill: white;
 }
 
 .status-error-label {
-    -fx-background-color: derive( #621818, -20% ); /* #701c1c = Persian Plum */
+    -fx-background-color: derive(#621818, -20%); /* #701c1c = Persian Plum */
     -fx-text-fill: white;
 }
 
@@ -54,27 +54,27 @@
     -fx-control-inner-background: COLOR_GRAY20;
     -fx-text-box-border: COLOR_GRAY10;
     -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-fill: white;
 }
 
 .status-warning-text-input {
-    -fx-control-inner-background: derive( #fefe1d, -20% ); /* #ffff66 = Laser Lemon */
-    -fx-text-box-border: derive( #e1e100, -20% ); /* #e6e200 = Peridot */
+    -fx-control-inner-background: derive(#fefe1d, -20%); /* #ffff66 = Laser Lemon */
+    -fx-text-box-border: derive(#e1e100, -20%); /* #e6e200 = Peridot */
     -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-fill: white;
 }
 
 .status-error-text-input {
-    -fx-control-inner-background: derive( #e19797, -20% ); /* #e18e96 = Ruddy Pink */
-    -fx-text-box-border: derive( #ad6363, -20% ); /* #996666 = Copper Rose */
+    -fx-control-inner-background: derive(#e19797, -20%); /* #e18e96 = Ruddy Pink */
+    -fx-text-box-border: derive(#ad6363, -20%); /* #996666 = Copper Rose */
     -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
     -fx-text-fill: white;
@@ -88,14 +88,13 @@
 
 .status-valid-combo-box .combo-box-popup > .list-view {
     -fx-control-inner-background: -fx-color;
-    -fx-background-color:
-        linear-gradient(to bottom,
-            derive(-fx-color, -17%),
-            derive(-fx-color, -30%)
-        ),
-        -fx-control-inner-background;
+    -fx-background-color: linear-gradient(to bottom,
+    derive(-fx-color, -17%),
+    derive(-fx-color, -30%)
+    ),
+    -fx-control-inner-background;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 12, 0.0 , 0 , 8 );
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0.0, 0, 8);
 }
 
 .status-valid-combo-box > .cell:selected {
@@ -103,7 +102,7 @@
 }
 
 .status-valid-combo-box > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-valid-combo-box > .arrow-button {
@@ -115,20 +114,18 @@
 }
 
 .status-warning-combo-box {
-    -fx-background-color: derive( #9a9a1a, -20% ); /* #b78727 = University of California Gold */
+    -fx-background-color: derive(#9a9a1a, -20%); /* #b78727 = University of California Gold */
     -fx-text-fill: white;
 }
 
 .status-warning-combo-box .combo-box-popup > .list-view {
-    -fx-control-inner-background: derive( #4a4a04, -20% ); /* #4b5320 = Army Green */
-    -fx-background-color:
-        linear-gradient(to bottom,
-            derive(derive( #4a4a04, -20% ), -17%), /* #4b5320 = Army Green */
-            derive(derive( #4a4a04, -20% ), -30%) /* #4b5320 = Army Green */
-        ),
-        -fx-control-inner-background;
+    -fx-control-inner-background: derive(#4a4a04, -20%); /* #4b5320 = Army Green */
+    -fx-background-color: linear-gradient(to bottom,
+    derive(derive(#4a4a04, -20%), -17%), /* #4b5320 = Army Green */ derive(derive(#4a4a04, -20%), -30%) /* #4b5320 = Army Green */
+    ),
+    -fx-control-inner-background;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 12, 0.0 , 0 , 8 );
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0.0, 0, 8);
 }
 
 .status-warning-combo-box > .cell:selected {
@@ -136,11 +133,11 @@
 }
 
 .status-warning-combo-box > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-warning-combo-box > .arrow-button {
-    -fx-background-color: derive( #9a9a1a, -20% ); /* #b78727 = University of California Gold */
+    -fx-background-color: derive(#9a9a1a, -20%); /* #b78727 = University of California Gold */
 }
 
 .status-warning-combo-box > .arrow-button > .arrow {
@@ -148,20 +145,18 @@
 }
 
 .status-error-combo-box {
-    -fx-background-color: derive( #7e3333, -20% ); /* #722f37 = Wine */
+    -fx-background-color: derive(#7e3333, -20%); /* #722f37 = Wine */
     -fx-text-fill: white;
 }
 
 .status-error-combo-box .combo-box-popup > .list-view {
-    -fx-control-inner-background: derive( #2e0a0a, -20% ); /* #2c1608 = Zinnwaldite Brown */
-    -fx-background-color:
-        linear-gradient(to bottom,
-            derive(derive( #2e0a0a, -20% ), -17%), /* #2c1608 = Zinnwaldite Brown */
-            derive(derive( #2e0a0a, -20% ), -30%) /* #2c1608 = Zinnwaldite Brown */
-        ),
-        -fx-control-inner-background;
+    -fx-control-inner-background: derive(#2e0a0a, -20%); /* #2c1608 = Zinnwaldite Brown */
+    -fx-background-color: linear-gradient(to bottom,
+    derive(derive(#2e0a0a, -20%), -17%), /* #2c1608 = Zinnwaldite Brown */ derive(derive(#2e0a0a, -20%), -30%) /* #2c1608 = Zinnwaldite Brown */
+    ),
+    -fx-control-inner-background;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 12, 0.0 , 0 , 8 );
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0.0, 0, 8);
 }
 
 .status-error-combo-box > .cell:selected {
@@ -169,11 +164,11 @@
 }
 
 .status-error-combo-box > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-error-combo-box > .arrow-button {
-    -fx-background-color: derive( #7e3333, -20% ); /* #722f37 = Wine */
+    -fx-background-color: derive(#7e3333, -20%); /* #722f37 = Wine */
 }
 
 .status-error-combo-box > .arrow-button > .arrow {
@@ -187,7 +182,7 @@
 }
 
 .status-valid-spinner > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-valid-spinner .increment-arrow-button {
@@ -207,16 +202,16 @@
 }
 
 .status-warning-spinner {
-    -fx-background-color: derive( #9a9a1a, -20% ); /* #b78727 = University of California Gold */
+    -fx-background-color: derive(#9a9a1a, -20%); /* #b78727 = University of California Gold */
     -fx-text-fill: white;
 }
 
 .status-warning-spinner > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-warning-spinner .increment-arrow-button {
-    -fx-background-color: derive( #9a9a1a, -20% ); /* #b78727 = University of California Gold */
+    -fx-background-color: derive(#9a9a1a, -20%); /* #b78727 = University of California Gold */
 }
 
 .status-warning-spinner .increment-arrow-button .increment-arrow {
@@ -224,7 +219,7 @@
 }
 
 .status-warning-spinner .decrement-arrow-button {
-    -fx-background-color: derive( #9a9a1a, -20% ); /* #b78727 = University of California Gold */
+    -fx-background-color: derive(#9a9a1a, -20%); /* #b78727 = University of California Gold */
 }
 
 .status-warning-spinner .decrement-arrow-button .decrement-arrow {
@@ -232,16 +227,16 @@
 }
 
 .status-error-spinner {
-    -fx-background-color: derive( #7e3333, -20% ); /* #722f37 = Wine */
+    -fx-background-color: derive(#7e3333, -20%); /* #722f37 = Wine */
     -fx-text-fill: white;
 }
 
 .status-error-spinner > .text-field {
-     -fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .status-error-spinner .increment-arrow-button {
-    -fx-background-color: derive( #7e3333, -20% ); /* #722f37 = Wine */
+    -fx-background-color: derive(#7e3333, -20%); /* #722f37 = Wine */
 }
 
 .status-error-spinner .increment-arrow-button .increment-arrow {
@@ -249,7 +244,7 @@
 }
 
 .status-error-spinner .decrement-arrow-button {
-    -fx-background-color: derive( #7e3333, -20% ); /* #722f37 = Wine */
+    -fx-background-color: derive(#7e3333, -20%); /* #722f37 = Wine */
 }
 
 .status-error-spinner .decrement-arrow-button .decrement-arrow {

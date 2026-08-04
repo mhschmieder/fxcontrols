@@ -29,10 +29,7 @@
  * Project: https://github.com/mhschmieder/fxcontrols
  */
 /**
- * This package contains the fxcontrols Library's enhancements for JavaFX Cells.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
+ * This package contains the fxcontrols Library's enhancements for JavaFX
+ * Cells.
  */
 package com.mhschmieder.fxcontrols.control.cell;

@@ -37,12 +37,12 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 public class MasterLevelSettings {
 
-    private static final boolean  POLARITY_REVERSED_DEFAULT = false;
-    private static final double   GAIN_DB_DEFAULT           = 0.0d;
-    private static final boolean  MUTED_DEFAULT             = false;
+    private static final boolean POLARITY_REVERSED_DEFAULT = false;
+    private static final double GAIN_DB_DEFAULT = 0.0d;
+    private static final boolean MUTED_DEFAULT = false;
 
-    final BooleanProperty         polarityReversed;
-    private final DoubleProperty  gain;
+    final BooleanProperty polarityReversed;
+    private final DoubleProperty gain;
     private final BooleanProperty muted;
 
     public MasterLevelSettings() {
@@ -55,6 +55,38 @@ public class MasterLevelSettings {
         polarityReversed = new SimpleBooleanProperty( pPolarityReversed );
         gain = new SimpleDoubleProperty( pGain );
         muted = new SimpleBooleanProperty( pMuted );
+    }
+
+    public DoubleProperty gainProperty() {
+        return gain;
+    }
+
+    public double getGain() {
+        return gain.get();
+    }
+
+    public void setGain( final double pGain ) {
+        gain.set( pGain );
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = ( prime * result ) + ( ( gain == null )
+                                        ? 0
+                                        : gain.hashCode() );
+        result = ( prime * result ) + ( ( muted == null )
+                                        ? 0
+                                        : muted.hashCode() );
+        result = ( prime * result ) + ( ( polarityReversed == null )
+                                        ? 0
+                                        : polarityReversed.hashCode() );
+        return result;
     }
 
     /*
@@ -100,35 +132,20 @@ public class MasterLevelSettings {
         return true;
     }
 
-    public DoubleProperty gainProperty() {
-        return gain;
-    }
-
-    public double getGain() {
-        return gain.get();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = ( prime * result ) + ( ( gain == null ) ? 0 : gain.hashCode() );
-        result = ( prime * result ) + ( ( muted == null ) ? 0 : muted.hashCode() );
-        result = ( prime * result )
-                + ( ( polarityReversed == null ) ? 0 : polarityReversed.hashCode() );
-        return result;
-    }
-
     public final boolean isMuted() {
         return muted.get();
     }
 
+    public final void setMuted( final boolean pMuted ) {
+        muted.set( pMuted );
+    }
+
     public final boolean isPolarityReversed() {
         return polarityReversed.get();
+    }
+
+    public final void setPolarityReversed( final boolean pPolarityReversed ) {
+        polarityReversed.set( pPolarityReversed );
     }
 
     public final BooleanProperty mutedProperty() {
@@ -137,18 +154,5 @@ public class MasterLevelSettings {
 
     public final BooleanProperty polarityReversedProperty() {
         return polarityReversed;
-    }
-
-    public void setGain( final double pGain ) {
-        gain.set( pGain );
-
-    }
-
-    public final void setMuted( final boolean pMuted ) {
-        muted.set( pMuted );
-    }
-
-    public final void setPolarityReversed( final boolean pPolarityReversed ) {
-        polarityReversed.set( pPolarityReversed );
     }
 }

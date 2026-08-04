@@ -31,9 +31,5 @@
 /**
  * This package extends the Action Framework of ControlsFX, and adds more custom
  * controls that act as boilerplate and best practices enforcement of JavaFX.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxcontrols.action;

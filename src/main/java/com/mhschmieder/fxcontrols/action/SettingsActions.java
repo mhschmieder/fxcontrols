@@ -31,11 +31,12 @@
 package com.mhschmieder.fxcontrols.action;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.scene.paint.Color;
 import org.controlsfx.control.action.Action;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javafx.scene.paint.Color;
 
 /**
  * This is a struct-like container for common Settings actions.
@@ -45,10 +46,11 @@ import java.util.Collection;
 public class SettingsActions {
 
     public BackgroundColorChoices _backgroundColorChoices;
-    public WindowSizeActions      _windowSizeActions;
+    public WindowSizeActions _windowSizeActions;
 
     public SettingsActions( final ClientProperties pClientProperties ) {
-        _backgroundColorChoices = new BackgroundColorChoices( pClientProperties );
+        _backgroundColorChoices
+                = new BackgroundColorChoices( pClientProperties );
         _windowSizeActions = new WindowSizeActions( pClientProperties );
     }
 
@@ -71,13 +73,16 @@ public class SettingsActions {
     //  additions.
     public Collection< Action > getSettingsActionCollection( final ClientProperties pClientProperties,
                                                              final boolean maximumSizeSupported ) {
-        final XActionGroup backgroundColorChoiceGroup = LabeledActionFactory
-                .getBackgroundColorChoiceGroup( pClientProperties, _backgroundColorChoices );
+        final XActionGroup backgroundColorChoiceGroup
+                = LabeledActionFactory.getBackgroundColorChoiceGroup(
+                pClientProperties,
+                _backgroundColorChoices );
 
-        final XActionGroup windowSizeActionGroup = LabeledActionFactory
-                                                         .makeWindowSizeActionGroup( pClientProperties,
-                                                                                     _windowSizeActions,
-                                                                                     maximumSizeSupported );
+        final XActionGroup windowSizeActionGroup
+                = LabeledActionFactory.makeWindowSizeActionGroup(
+                pClientProperties,
+                _windowSizeActions,
+                maximumSizeSupported );
 
         final Collection< Action > settingsActionCollection = new ArrayList<>();
 
@@ -89,11 +94,13 @@ public class SettingsActions {
 
     public final Collection< Action > getWindowSizeActionCollection( final boolean maximumSizeSupported ) {
         // Forward this method to the Window Size actions container.
-        return _windowSizeActions.getWindowSizeActionCollection( maximumSizeSupported );
+        return _windowSizeActions.getWindowSizeActionCollection(
+                maximumSizeSupported );
     }
 
     public final Color selectBackgroundColor( final String backgroundColorName ) {
         // Forward this method to the Background Color choices container.
-        return _backgroundColorChoices.selectBackgroundColor( backgroundColorName );
+        return _backgroundColorChoices.selectBackgroundColor(
+                backgroundColorName );
     }
 }

@@ -32,15 +32,15 @@
 /*
  * Style sheet for Data Table Viewer, to improve tables with many columns.
  */
- 
+
 /*******************************************************************************
  *                                                                             *
  * TableView                                                                   *
  *                                                                             *
  ******************************************************************************/
- .table-view .virtual-flow .scroll-bar:vertical { 
-    -fx-background-color: transparent; 
-    -fx-padding: 0; 
-    -fx-pref-width: 12px; 
-    -fx-translate-x: 
-    -12px; /* Moves the scrollbar to the left */ }
+.table-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-width: 12px;
+    -fx-translate-x: -12px; /* Moves the scrollbar to the left */
+}

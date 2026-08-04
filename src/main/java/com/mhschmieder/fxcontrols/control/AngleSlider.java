@@ -33,8 +33,9 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jmath.MathUtilities;
 import com.mhschmieder.jphysics.measure.AngleUnit;
-import javafx.geometry.Orientation;
 import org.apache.commons.math3.util.FastMath;
+
+import javafx.geometry.Orientation;
 
 public final class AngleSlider extends NumberSlider {
 
@@ -44,15 +45,16 @@ public final class AngleSlider extends NumberSlider {
     public static final double INITIAL_ANGLE_DEGREES_DEFAULT = 0.0d;
 
     // Default tick spacing in degrees.
-    public static final double MAJOR_TICK_SPACING_DEGREES    = 60d;
-    public static final double MINOR_TICK_SPACING_DEGREES    = 10.0d;
+    public static final double MAJOR_TICK_SPACING_DEGREES = 60d;
+    public static final double MINOR_TICK_SPACING_DEGREES = 10.0d;
 
     // Declare block increment/decrement amount for left and right arrow keys.
     // NOTE: We block to 0.5 degrees as this is a common increment value,
     // though we could make the arrow key increments a user preference.
-    public static final double BLOCK_INCREMENT_DEGREES       = 0.5d;
+    public static final double BLOCK_INCREMENT_DEGREES = 0.5d;
 
-    public AngleSlider( final ClientProperties clientProperties, final boolean useContextMenu ) {
+    public AngleSlider( final ClientProperties clientProperties,
+                        final boolean useContextMenu ) {
         this( clientProperties,
               MINIMUM_ANGLE_DEGREES_DEFAULT,
               MAXIMUM_ANGLE_DEGREES_DEFAULT,
@@ -89,22 +91,6 @@ public final class AngleSlider extends NumberSlider {
         }
     }
 
-    public double getClampedValue( final double unclampedValue ) {
-        // If the allowed angle range is a full period or more (360+ degrees),
-        // then unwrap the angle. Otherwise, apply standard min/max clamping.
-        return ( FastMath.abs( getMax() - getMin() ) >= 360d )
-            ? getUnwrappedAngleDegrees( unclampedValue )
-            : Math.clamp( unclampedValue, getMin(), getMax() );
-    }
-
-    public double getUnwrappedAngleDegrees( final double unclampedValue ) {
-        // Unwrap the angle based on period, using the established minimum and
-        // maximum so that we don't accidentally clamp, but still clamp if the
-        // allowed range itself is less than a full period.
-        return MathUtilities.unwrapAngleRangeDegrees(
-             unclampedValue, getMin(), getMax() );
-    }
-
     private void initSlider() {
         // Angles are generally presented as horizontal bar sliders.
         setOrientation( Orientation.HORIZONTAL );
@@ -129,4 +115,20 @@ public final class AngleSlider extends NumberSlider {
         setValue( clampedValue );
     }
 
+    public double getClampedValue( final double unclampedValue ) {
+        // If the allowed angle range is a full period or more (360+ degrees),
+        // then unwrap the angle. Otherwise, apply standard min/max clamping.
+        return ( FastMath.abs( getMax() - getMin() ) >= 360d )
+               ? getUnwrappedAngleDegrees( unclampedValue )
+               : Math.clamp( unclampedValue, getMin(), getMax() );
+    }
+
+    public double getUnwrappedAngleDegrees( final double unclampedValue ) {
+        // Unwrap the angle based on period, using the established minimum and
+        // maximum so that we don't accidentally clamp, but still clamp if the
+        // allowed range itself is less than a full period.
+        return MathUtilities.unwrapAngleRangeDegrees( unclampedValue,
+                                                      getMin(),
+                                                      getMax() );
+    }
 }

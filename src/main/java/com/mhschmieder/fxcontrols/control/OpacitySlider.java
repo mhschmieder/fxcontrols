@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.geometry.Orientation;
 
 /**
@@ -39,18 +40,15 @@ import javafx.geometry.Orientation;
 public final class OpacitySlider extends NumberSlider {
 
     // Declare default minimum, maximum, and initial opacity for { 0, 100 }.
-    public static final double  DEFAULT_MINIMUM_OPACITY_PERCENT = 0.0d;
-    public static final double  DEFAULT_MAXIMUM_OPACITY_PERCENT = 100.0d;
-    public static final double  DEFAULT_INITIAL_OPACITY_PERCENT = 100.0d;
-
+    public static final double DEFAULT_MINIMUM_OPACITY_PERCENT = 0.0d;
+    public static final double DEFAULT_MAXIMUM_OPACITY_PERCENT = 100.0d;
+    public static final double DEFAULT_INITIAL_OPACITY_PERCENT = 100.0d;
+    public static final String PERCENT_MEASUREMENT_UNIT = "%";
     // Default tick spacing in percentiles.
     private static final double MAJOR_TICK_SPACING_PERCENT = 5.0d;
     private static final double MINOR_TICK_SPACING_PERCENT = 1.0d;
-
     // Declare block increment/decrement amount for left and right arrows.
     private static final double BLOCK_INCREMENT_PERCENT = 2.0d;
-    
-    public static final String PERCENT_MEASUREMENT_UNIT = "%";
 
     public OpacitySlider( final ClientProperties pClientProperties ) {
         this( pClientProperties,
@@ -103,5 +101,4 @@ public final class OpacitySlider extends NumberSlider {
         //  for opacity, as opacity is generally only modeled as percent.
         setMeasurementUnitString( PERCENT_MEASUREMENT_UNIT );
     }
-
 }

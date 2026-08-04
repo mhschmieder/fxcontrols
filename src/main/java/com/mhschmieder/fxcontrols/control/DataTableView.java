@@ -31,6 +31,11 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.GlobalUtilities;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,18 +45,16 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * The Data Table View is designed as as read-only table viewer for tabular data
  * that is pulled in from outside via CSV or related file formats that contain a
  * single table of text-based data, likely of mixed data types and hence modeled
- * as String data for each column/cell rather than attempting to intuit units etc.
+ * as String data for each column/cell rather than attempting to intuit units
+ * etc.
  * <p>
  * NOTE: The generic type is an Observable List of Strings as that is what the
- *  Table View's underlying model expects so that it can sync the data to the view.
+ * Table View's underlying model expects so that it can sync the data to the
+ * view.
  */
 public class DataTableView extends XTableView< ObservableList< String > > {
 
@@ -59,7 +62,8 @@ public class DataTableView extends XTableView< ObservableList< String > > {
         // Always call the superclass constructor first!
         super();
 
-        // Make an initially empty table that gets filled later by CSV file data.
+        // Make an initially empty table that gets filled later by CSV file
+        // data.
         initTable();
     }
 
@@ -71,11 +75,10 @@ public class DataTableView extends XTableView< ObservableList< String > > {
         // multiple rows of data plus the header.
         // NOTE: Once we pass in or set a size, leave room for scroll bars.
         // setPrefSize( 760, 340 );
-        setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );     
+        setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
     }
 
-    public void updateTableView( 
-            final Collection< Collection< String > > dataRows ) {
+    public void updateTableView( final Collection< Collection< String > > dataRows ) {
         // Pad the vector of string vectors to the maximum column count.
         final int maxColumn = GlobalUtilities.padStringsToMaxColumn( dataRows );
 
@@ -86,7 +89,7 @@ public class DataTableView extends XTableView< ObservableList< String > > {
         }
 
         // Clear any existing table column headers to prepare for new ones.
-        final ObservableList< TableColumn< ObservableList< String >, ? > > 
+        final ObservableList< TableColumn< ObservableList< String >, ? > >
                 columns = getColumns();
         columns.clear();
 
@@ -107,8 +110,8 @@ public class DataTableView extends XTableView< ObservableList< String > > {
             // false,
             // clientProperties );
 
-            final TableColumn< ObservableList< String >, String > 
-                    tableColumn = new TableColumn<>( headers.get( i ) );
+            final TableColumn< ObservableList< String >, String > tableColumn
+                    = new TableColumn<>( headers.get( i ) );
             tableColumn.setMinWidth( 50 );
             TableUtilities.setTableColumnHeaderProperties( tableColumn );
 
@@ -119,10 +122,12 @@ public class DataTableView extends XTableView< ObservableList< String > > {
 
             // We are using non property style for making a dynamic table.
             final int j = i;
-            final Callback< CellDataFeatures< ObservableList< String >, String >, 
-                    ObservableValue< String > > callback = param -> 
-                            new SimpleStringProperty( 
-                                    param.getValue().get( j ).toString() );
+            final Callback< CellDataFeatures< ObservableList< String >,
+                    String >, ObservableValue< String > >
+                    callback
+                    = param -> new SimpleStringProperty( param.getValue()
+                                                              .get( j )
+                                                              .toString() );
             tableColumn.setCellValueFactory( callback );
 
             TableUtilities.setCellAlignment( tableColumn );
@@ -138,7 +143,8 @@ public class DataTableView extends XTableView< ObservableList< String > > {
         // Replace the current Table View. This will cause automatic updates so
         // should refresh the view on the screen. Iterate by Row, then Column.
         dataRows.forEach( dataRow -> {
-            final ObservableList< String > row = FXCollections.observableArrayList();
+            final ObservableList< String > row
+                    = FXCollections.observableArrayList();
             dataRow.forEach( column -> row.add( column ) );
             data.add( row );
         } );

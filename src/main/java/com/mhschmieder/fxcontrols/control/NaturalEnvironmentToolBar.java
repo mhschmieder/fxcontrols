@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.action.NaturalEnvironmentActions;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToolBar;
@@ -45,8 +46,8 @@ import javafx.scene.layout.Region;
 public final class NaturalEnvironmentToolBar extends ToolBar {
 
     public PredictButtons _predictButtons;
-    public CheckBox       _useAirAttenuationCheckBox;
-    public Button         _resetButton;
+    public CheckBox _useAirAttenuationCheckBox;
+    public Button _resetButton;
 
     // Default constructor
     public NaturalEnvironmentToolBar( final ClientProperties pClientProperties,
@@ -67,11 +68,12 @@ public final class NaturalEnvironmentToolBar extends ToolBar {
         // Make the Nodes for the Tool Bar.
         _predictButtons = new PredictButtons( pClientProperties,
                                               naturalEnvironmentActions.simulationActions );
-        _useAirAttenuationCheckBox = LabeledControlFactory
-                .getUseAirAttenuationCheckBox( pClientProperties,
-                                               naturalEnvironmentActions.useAirAttenuationAction );
-        _resetButton = LabeledControlFactory
-                .getResetButton( pClientProperties, naturalEnvironmentActions.resetAction );
+        _useAirAttenuationCheckBox
+                = LabeledControlFactory.getUseAirAttenuationCheckBox(
+                pClientProperties,
+                naturalEnvironmentActions.useAirAttenuationAction );
+        _resetButton = LabeledControlFactory.getResetButton( pClientProperties,
+                                                             naturalEnvironmentActions.resetAction );
 
         // Add some spacers to separate logical groupings.
         // NOTE: We also force the Reset button to right-justify, and to stay

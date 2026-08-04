@@ -33,10 +33,11 @@ package com.mhschmieder.fxcontrols.control.cell;
 import com.mhschmieder.fxcontrols.model.LayerProperties;
 import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
+
 import javafx.collections.ObservableList;
 
 public final class LayerDisplayTableCell
-        extends ToggleButtonTableCell<LayerProperties, Boolean > {
+        extends ToggleButtonTableCell< LayerProperties, Boolean > {
 
     public LayerDisplayTableCell() {
         // Always call the superclass constructor first!
@@ -46,7 +47,8 @@ public final class LayerDisplayTableCell
                ColorConstants.HIDDEN_BACKGROUND_COLOR,
                ColorConstants.VISIBLE_FOREGROUND_COLOR,
                ColorConstants.HIDDEN_FOREGROUND_COLOR,
-               "Click to Toggle Layer Display Between Visible and Hidden" ); //$NON-NLS-1$
+               "Click to Toggle Layer Display Between Visible and Hidden" );
+        //$NON-NLS-1$
     }
 
     @Override
@@ -55,9 +57,8 @@ public final class LayerDisplayTableCell
         final ObservableList< LayerProperties > layerCollection
                 = getTableView().getItems();
         final String layerName = selectedRecord.getLayerName();
-        LayerPropertiesManagement.enforceHiddenLayerPolicy(
-                layerCollection,
-                layerName,
-                !selectedRecord.isLayerVisible() );
+        LayerPropertiesManagement.enforceHiddenLayerPolicy( layerCollection,
+                                                            layerName,
+                                                            !selectedRecord.isLayerVisible() );
     }
 }

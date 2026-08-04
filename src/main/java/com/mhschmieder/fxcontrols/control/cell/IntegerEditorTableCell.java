@@ -32,13 +32,15 @@ package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.fxcontrols.control.IntegerEditor;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.List;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
 
-import java.util.List;
-
-public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT, Integer > {
+public class IntegerEditorTableCell< RT, VT >
+        extends NumberEditorTableCell< RT, Integer > {
 
     // Cache the raw Integer representation of the data cachedValue.
     // NOTE: This field has to follow JavaFX Property Beans conventions.
@@ -61,12 +63,6 @@ public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT,
         _numberFormat.setMaximumFractionDigits( 0 );
         _numberFormat.setParseIntegerOnly( true );
     }
-    
-    @Override
-    protected TextField makeTextField() {
-        return new IntegerEditor(
-            clientProperties, "0", "", blankTextAllowed );
-    }
 
     @Override
     protected Integer getEditorValue() {
@@ -74,9 +70,10 @@ public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT,
         if ( textValue == null ) {
             return null;
         }
-        
-        final int intValue = ( ( IntegerEditor ) textField ).fromString( textValue );
-        
+
+        final int intValue = ( ( IntegerEditor ) textField ).fromString(
+                textValue );
+
         return Integer.valueOf( intValue );
     }
 
@@ -86,13 +83,18 @@ public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT,
         if ( intValue == null ) {
             return "";
         }
-        
+
         // This text goes to the editor, so we don't want to clutter the user's
         // editing session with measurement units, but do need localization.
-        final String stringValue 
-            = ( ( IntegerEditor ) textField ).toFormattedString( intValue );
-        
+        final String stringValue
+                = ( ( IntegerEditor ) textField ).toFormattedString( intValue );
+
         return stringValue;
+    }
+
+    @Override
+    protected TextField makeTextField() {
+        return new IntegerEditor( clientProperties, "0", "", blankTextAllowed );
     }
 
     @Override
@@ -101,9 +103,10 @@ public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT,
         if ( intValue == null ) {
             return "";
         }
-        
-        final String textValue = ( ( IntegerEditor ) textField ).toString( intValue );
-        
+
+        final String textValue = ( ( IntegerEditor ) textField ).toString(
+                intValue );
+
         return textValue;
     }
 
@@ -123,7 +126,7 @@ public class IntegerEditorTableCell< RT, VT > extends NumberEditorTableCell< RT,
     public final int getCachedValue() {
         return cachedValue.get();
     }
-    
+
     public final void setCachedValue( final int pCachedValue ) {
         // Locally cache the new cachedValue, separately from the textField.
         cachedValue.set( pCachedValue );

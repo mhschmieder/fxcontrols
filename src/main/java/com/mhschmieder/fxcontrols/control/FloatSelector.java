@@ -32,38 +32,16 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.text.NumberFormatUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.collections.FXCollections;
-import javafx.scene.input.KeyEvent;
 import org.apache.commons.math3.util.FastMath;
 
+import javafx.collections.FXCollections;
+import javafx.scene.input.KeyEvent;
+
 /**
- * This class formalizes aspects of list selection that are specific to
- * single precision floating point value sets.
+ * This class formalizes aspects of list selection that are specific to single
+ * precision floating point value sets.
  */
 public class FloatSelector extends NumberSelector {
-
-    public FloatSelector( final ClientProperties clientProperties,
-                          final int minFractionDigitsFormat,
-                          final int maxFractionDigitsFormat,
-                          final int minFractionDigitsParse,
-                          final int maxFractionDigitsParse,
-                          final boolean useLocale,
-                          final String tooltipText,
-                          final boolean applyToolkitCss,
-                          final boolean editable,
-                          final boolean searchable ) {
-        // Always call the superclass constructor first!
-        super( clientProperties,
-               minFractionDigitsFormat,
-               maxFractionDigitsFormat,
-               minFractionDigitsParse,
-               maxFractionDigitsParse,
-               useLocale,
-               tooltipText,
-               applyToolkitCss,
-               editable,
-               searchable );
-    }
 
     public FloatSelector( final ClientProperties clientProperties,
                           final int minFractionDigitsFormat,
@@ -97,18 +75,42 @@ public class FloatSelector extends NumberSelector {
         }
     }
 
-    @SuppressWarnings("nls")
+    public FloatSelector( final ClientProperties clientProperties,
+                          final int minFractionDigitsFormat,
+                          final int maxFractionDigitsFormat,
+                          final int minFractionDigitsParse,
+                          final int maxFractionDigitsParse,
+                          final boolean useLocale,
+                          final String tooltipText,
+                          final boolean applyToolkitCss,
+                          final boolean editable,
+                          final boolean searchable ) {
+        // Always call the superclass constructor first!
+        super( clientProperties,
+               minFractionDigitsFormat,
+               maxFractionDigitsFormat,
+               minFractionDigitsParse,
+               maxFractionDigitsParse,
+               useLocale,
+               tooltipText,
+               applyToolkitCss,
+               editable,
+               searchable );
+    }
+
+    @SuppressWarnings( "nls" )
     private final void initComboBox( final float minimumValue,
                                      final float maximumValue,
                                      final float increment ) {
         // Put together the monotonically increasing list of choices.
-        final int numberOfChoices = ( int ) FastMath
-                .floor( ( ( maximumValue - minimumValue ) + 1 ) / increment );
+        final int numberOfChoices = ( int ) FastMath.floor(
+                ( ( maximumValue - minimumValue ) + 1 ) / increment );
         final String[] floatValues = new String[ numberOfChoices ];
 
         float floatValue = minimumValue;
         for ( int i = 0; i < numberOfChoices; i++ ) {
-            floatValues[ i ] = NumberFormatUtilities.formatFloat( floatValue, _numberFormat );
+            floatValues[ i ] = NumberFormatUtilities.formatFloat( floatValue,
+                                                                  _numberFormat );
             floatValue += increment;
         }
 
@@ -121,8 +123,12 @@ public class FloatSelector extends NumberSelector {
 
         // Restrict keyboard input to numerals, sign, and delimiters.
         final String allowedCharacters = ( minimumValue < 0.0d )
-            ? ( maximumValue > 0.0d ) ? "[0-9.,+-]" : "[0-9.,-]"
-            : ( maximumValue > 0.0d ) ? "[0-9.,+]" : "[0-9.,]";
+                                         ? ( maximumValue > 0.0d )
+                                           ? "[0-9.,+-]"
+                                           : "[0-9.,-]"
+                                         : ( maximumValue > 0.0d )
+                                           ? "[0-9.,+]"
+                                           : "[0-9.,]";
         addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
             if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
                 keyEvent.consume();
@@ -132,14 +138,16 @@ public class FloatSelector extends NumberSelector {
 
     public final double getSingleValue() {
         final String formattedValue = getValue();
-        final float floatValue =
-                                 NumberFormatUtilities.parseFloat( formattedValue, _numberFormat );
+        final float floatValue = NumberFormatUtilities.parseFloat(
+                formattedValue,
+                _numberFormat );
         return floatValue;
     }
 
     public final void setDoubleValue( final float FloatSelector ) {
-        final String formattedValue = NumberFormatUtilities.formatFloat( FloatSelector,
-                                                                         _numberFormat );
+        final String formattedValue = NumberFormatUtilities.formatFloat(
+                FloatSelector,
+                _numberFormat );
         setValue( formattedValue );
     }
 }

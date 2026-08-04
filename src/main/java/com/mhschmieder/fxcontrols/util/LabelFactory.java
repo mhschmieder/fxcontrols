@@ -81,16 +81,16 @@ public class LabelFactory {
         return "Parametric";
     }
 
-    public static String getHighLowPassFilterSlopeTooltip(final ElectronicFilterType filterType) {
+    public static String getHighLowPassFilterSlopeTooltip( final ElectronicFilterType filterType ) {
         switch ( filterType ) {
-        case ElectronicFilterType.HIGH_LOW_PASS:
-            return "High/Low Pass Filter Slope";
-        case ElectronicFilterType.HIGH_PASS:
-            return "High Pass Filter Slope";
-        case ElectronicFilterType.LOW_PASS:
-            return "Low Pass Filter Slope";
-        default:
-            return "";
+            case ElectronicFilterType.HIGH_LOW_PASS:
+                return "High/Low Pass Filter Slope";
+            case ElectronicFilterType.HIGH_PASS:
+                return "High Pass Filter Slope";
+            case ElectronicFilterType.LOW_PASS:
+                return "Low Pass Filter Slope";
+            default:
+                return "";
         }
     }
 

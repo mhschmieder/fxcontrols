@@ -52,51 +52,55 @@ public final class ScrollingSensitivityChoices {
 
     // Default constructor
     public ScrollingSensitivityChoices( final ClientProperties clientProperties ) {
-        _scrollingOffChoice = LabeledActionFactory.makeScrollingOffChoice( clientProperties );
-        _scrollingCoarseChoice = LabeledActionFactory.makeScrollingCoarseChoice( clientProperties );
-        _scrollingMediumChoice = LabeledActionFactory.makeScrollingMediumChoice( clientProperties );
-        _scrollingFineChoice = LabeledActionFactory.makeScrollingFineChoice( clientProperties );
+        _scrollingOffChoice = LabeledActionFactory.makeScrollingOffChoice(
+                clientProperties );
+        _scrollingCoarseChoice = LabeledActionFactory.makeScrollingCoarseChoice(
+                clientProperties );
+        _scrollingMediumChoice = LabeledActionFactory.makeScrollingMediumChoice(
+                clientProperties );
+        _scrollingFineChoice = LabeledActionFactory.makeScrollingFineChoice(
+                clientProperties );
     }
 
     public ScrollingSensitivity getScrollingSensitivity() {
-        final ScrollingSensitivity scrollingSensitivity = _scrollingOffChoice.isSelected()
-            ? ScrollingSensitivity.OFF
-            : _scrollingCoarseChoice.isSelected()
-                ? ScrollingSensitivity.COARSE
-                : _scrollingMediumChoice.isSelected()
-                    ? ScrollingSensitivity.MEDIUM
-                    : _scrollingFineChoice.isSelected()
+        final ScrollingSensitivity scrollingSensitivity
+                = _scrollingOffChoice.isSelected()
+                  ? ScrollingSensitivity.OFF
+                  : _scrollingCoarseChoice.isSelected()
+                    ? ScrollingSensitivity.COARSE
+                    : _scrollingMediumChoice.isSelected()
+                      ? ScrollingSensitivity.MEDIUM
+                      : _scrollingFineChoice.isSelected()
                         ? ScrollingSensitivity.FINE
                         : ScrollingSensitivity.defaultValue();
         return scrollingSensitivity;
     }
 
-    public Collection< Action > getScrollingSensitivityChoiceCollection() {
-        final Collection< Action > scrollingSensitivityChoiceCollection = Arrays
-                .asList( _scrollingOffChoice,
-                         _scrollingCoarseChoice,
-                         _scrollingMediumChoice,
-                         _scrollingFineChoice );
-        return scrollingSensitivityChoiceCollection;
-    }
-
     public void setScrollingSensitivity( final ScrollingSensitivity scrollingSensitivity ) {
         switch ( scrollingSensitivity ) {
-        case OFF:
-            _scrollingOffChoice.setSelected( true );
-            break;
-        case COARSE:
-            _scrollingCoarseChoice.setSelected( true );
-            break;
-        case MEDIUM:
-            _scrollingMediumChoice.setSelected( true );
-            break;
-        case FINE:
-            _scrollingFineChoice.setSelected( true );
-            break;
-        default:
-            break;
+            case OFF:
+                _scrollingOffChoice.setSelected( true );
+                break;
+            case COARSE:
+                _scrollingCoarseChoice.setSelected( true );
+                break;
+            case MEDIUM:
+                _scrollingMediumChoice.setSelected( true );
+                break;
+            case FINE:
+                _scrollingFineChoice.setSelected( true );
+                break;
+            default:
+                break;
         }
     }
 
+    public Collection< Action > getScrollingSensitivityChoiceCollection() {
+        final Collection< Action > scrollingSensitivityChoiceCollection
+                = Arrays.asList( _scrollingOffChoice,
+                                 _scrollingCoarseChoice,
+                                 _scrollingMediumChoice,
+                                 _scrollingFineChoice );
+        return scrollingSensitivityChoiceCollection;
+    }
 }

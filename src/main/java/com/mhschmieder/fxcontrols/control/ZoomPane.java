@@ -38,15 +38,14 @@ import javafx.scene.transform.Scale;
 /**
  * This is a utility layout wrapper for scaled and zoomed scroll panes.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class ZoomPane extends ScrollPane {
 
     final protected Group _zoomGroup;
 
-    final protected Node  _content;
+    final protected Node _content;
 
     final protected Scale _scaleTransform;
 
@@ -65,5 +64,4 @@ public class ZoomPane extends ScrollPane {
 
         _zoomGroup.getTransforms().add( _scaleTransform );
     }
-
 }

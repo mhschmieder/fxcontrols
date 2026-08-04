@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class MruFileActions {
 
-    public XAction[]        _mruFileActions;
+    public XAction[] _mruFileActions;
 
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
@@ -61,8 +61,9 @@ public class MruFileActions {
 
         for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
             final int mruFileNumber = i + 1;
-            final XAction mruAction = LabeledActionFactory.makeFileMruAction( pClientProperties,
-                                                                              mruFileNumber );
+            final XAction mruAction = LabeledActionFactory.makeFileMruAction(
+                    pClientProperties,
+                    mruFileNumber );
             _mruFileActions[ i ] = mruAction;
         }
     }
@@ -102,11 +103,13 @@ public class MruFileActions {
             //  and thus it overlays the next character when displaying menus.
             if ( i <= mruFilenamesLastIndex ) {
                 final String mruFilename = mruFilenames.get( i );
-                if ( ( mruFilename != null ) && !mruFilename.trim().isEmpty() ) {
+                if ( ( mruFilename != null ) && !mruFilename.trim()
+                                                            .isEmpty() ) {
                     final File mruFile = new File( mruFilename );
-                    final String mruLabel = "_" + LabeledControlFactory
-                            .getFileMruHeader( clientProperties, i + 1 ) 
-                            + " " + mruFile.getName();
+                    final String mruLabel = "_"
+                                            + LabeledControlFactory.getFileMruHeader(
+                            clientProperties,
+                            i + 1 ) + " " + mruFile.getName();
 
                     mruFileAction.setText( mruLabel );
                     mruFileAction.setDisabled( false );

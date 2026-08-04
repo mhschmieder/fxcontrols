@@ -32,6 +32,7 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jsigproc.dsp.DigitalFilterUtilities;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,7 +44,12 @@ public final class ButterworthFilterSlopeSelector extends IntegerSelector {
                                            final short[] filterSlopeOrder,
                                            final int defaultFilterSlopeIndex ) {
         // Always call the superclass constructor first!
-        super( pClientProperties, true, tooltipText, applyToolkitCss, false, false );
+        super( pClientProperties,
+               true,
+               tooltipText,
+               applyToolkitCss,
+               false,
+               false );
 
         try {
             initComboBox( filterSlopeOrder, defaultFilterSlopeIndex );
@@ -53,11 +59,8 @@ public final class ButterworthFilterSlopeSelector extends IntegerSelector {
         }
     }
 
-    public String getFilterSlope() {
-        return getValue();
-    }
-
-    private void initComboBox( final short[] filterSlopeOrder, final int defaultFilterSlopeIndex ) {
+    private void initComboBox( final short[] filterSlopeOrder,
+                               final int defaultFilterSlopeIndex ) {
         // NOTE: Groupings are turned off, and we force US locale for now,
         // due to specifics about the implementation of the pattern-matcher.
         // TODO: Alternately, cast to DecimalFormat, query the decimal and
@@ -71,10 +74,6 @@ public final class ButterworthFilterSlopeSelector extends IntegerSelector {
         setFilterSlopes( filterSlopeOrder, defaultFilterSlopeIndex );
     }
 
-    public void setFilterSlope( final String filterSlopeLabel ) {
-        setValue( filterSlopeLabel );
-    }
-
     // Set the drop-list of Filter Slopes.
     // TODO: Format the text for two decimal places at most (maybe one?).
     public void setFilterSlopes( final short[] filterSlopeOrders,
@@ -83,18 +82,29 @@ public final class ButterworthFilterSlopeSelector extends IntegerSelector {
         // list. Be careful if restoring the current selection, as there are
         // many edge cases that either do the wrong thing, result in a blank
         // selection field, or do not generate a callback.
-        final ObservableList< String > filterSlopes = FXCollections.observableArrayList();
+        final ObservableList< String > filterSlopes
+                = FXCollections.observableArrayList();
         for ( final short filterSlopeOrder : filterSlopeOrders ) {
-            final String filterSlopeLabel = DigitalFilterUtilities
-                    .getButterworthFilterSlopeLabel( filterSlopeOrder );
+            final String filterSlopeLabel
+                    = DigitalFilterUtilities.getButterworthFilterSlopeLabel(
+                    filterSlopeOrder );
             filterSlopes.add( filterSlopeLabel );
         }
 
         // Determine the initial default Filter Slope choice, by lookup index.
-        final String defaultFilterSlope = DigitalFilterUtilities
-                .getButterworthFilterSlopeLabel( filterSlopeOrders[ defaultFilterSlopeIndex ] );
+        final String defaultFilterSlope
+                = DigitalFilterUtilities.getButterworthFilterSlopeLabel(
+                filterSlopeOrders[ defaultFilterSlopeIndex ] );
 
         // Replace the entire list, and re-assert the current selection.
         updateValues( filterSlopes, defaultFilterSlope, true );
+    }
+
+    public String getFilterSlope() {
+        return getValue();
+    }
+
+    public void setFilterSlope( final String filterSlopeLabel ) {
+        setValue( filterSlopeLabel );
     }
 }

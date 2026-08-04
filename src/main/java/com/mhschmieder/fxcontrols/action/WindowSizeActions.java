@@ -46,16 +46,20 @@ public final class WindowSizeActions {
     public XAction _windowSizeMaximumSizeAction;
 
     public WindowSizeActions( final ClientProperties pClientProperties ) {
-        _windowSizePreferredSizeAction = LabeledActionFactory
-                .makeWindowSizePreferredSizeAction( pClientProperties );
-        _windowSizeDefaultSizeAction = LabeledActionFactory
-                .makeWindowSizeDefaultSizeAction( pClientProperties );
-        _windowSizeMaximumSizeAction = LabeledActionFactory
-                .makeWindowSizeMaximumSizeAction( pClientProperties );
+        _windowSizePreferredSizeAction
+                = LabeledActionFactory.makeWindowSizePreferredSizeAction(
+                pClientProperties );
+        _windowSizeDefaultSizeAction
+                = LabeledActionFactory.makeWindowSizeDefaultSizeAction(
+                pClientProperties );
+        _windowSizeMaximumSizeAction
+                = LabeledActionFactory.makeWindowSizeMaximumSizeAction(
+                pClientProperties );
     }
 
     public Collection< Action > getWindowSizeActionCollection( final boolean maximumSizeSupported ) {
-        final Collection< Action > windowSizeActionCollection = new ArrayList<>();
+        final Collection< Action > windowSizeActionCollection
+                = new ArrayList<>();
 
         windowSizeActionCollection.add( _windowSizePreferredSizeAction );
         windowSizeActionCollection.add( _windowSizeDefaultSizeAction );
@@ -66,5 +70,4 @@ public final class WindowSizeActions {
 
         return windowSizeActionCollection;
     }
-
 }

@@ -32,22 +32,23 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.lang.StringUtilities;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.text.NumberFormat;
+
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-
-import java.text.NumberFormat;
 
 /**
  * This class formalizes aspects of text editing that are specific to numbers.
  */
 public abstract class NumberEditor extends XTextField {
-    
+
     // Cache the error text value, to display when illegal values are present.
-    protected String             _errorText;
+    protected String _errorText;
 
     // Maintain a reference to the Measurement Unit string (can be blank).
-    protected String       _measurementUnitString;
+    protected String _measurementUnitString;
 
     // Number format cache used for locale-specific number formatting.
     protected NumberFormat _numberFormat;
@@ -56,7 +57,7 @@ public abstract class NumberEditor extends XTextField {
     protected NumberFormat _numberParse;
 
     // This is a functional interface for resetting the control.
-    protected Runnable     _reset;
+    protected Runnable _reset;
 
     public NumberEditor( final ClientProperties clientProperties,
                          final String initialText,
@@ -64,8 +65,9 @@ public abstract class NumberEditor extends XTextField {
                          final boolean applyToolkitCss ) {
         // Always call the superclass constructor first!
         super( initialText, tooltipText, applyToolkitCss, clientProperties );
-        
-        // As this is a new feature, it is better to set later and ignore if empty.
+
+        // As this is a new feature, it is better to set later and ignore if
+        // empty.
         _errorText = "";
 
         // Set the measurement unit string after construction time, once known.
@@ -80,7 +82,8 @@ public abstract class NumberEditor extends XTextField {
     }
 
     private final void initEditor() {
-        _numberFormat = NumberFormat.getNumberInstance( clientProperties.locale );
+        _numberFormat
+                = NumberFormat.getNumberInstance( clientProperties.locale );
         _numberParse = ( NumberFormat ) _numberFormat.clone();
 
         _numberFormat.setGroupingUsed( true );
@@ -118,7 +121,8 @@ public abstract class NumberEditor extends XTextField {
         } );
 
         // When focus is lost, commit the changes; otherwise decorate the text.
-        focusedProperty().addListener( ( observableValue, wasFocused, isNowFocused ) -> {
+        focusedProperty().addListener( ( observableValue, wasFocused,
+                                         isNowFocused ) -> {
             if ( isNowFocused ) {
                 // Update the displayed text to include all of the decorations.
                 decorateText();
@@ -132,14 +136,34 @@ public abstract class NumberEditor extends XTextField {
             }
         } );
     }
-    
+
+    public final void decorateText() {
+        // Get the most recently committed value, restoring decorations etc.
+        final String decoratedText = getDecoratedText();
+
+        // Update the displayed text to include all of the decorations.
+        setText( decoratedText );
+    }
+
+    public abstract String getDecoratedText();
+
+    public final void saveEdits() {
+        // Clamp the committed value to the allowed range.
+        clampValue();
+    }
+
+    public abstract void clampValue();
+
+    public abstract void updateText();
+
     /**
      * Restricts keyboard input to a custom set of allowed characters.
      * <p>
-     * As the allowed characters will be specific to any implementing class, and 
+     * As the allowed characters will be specific to any implementing class, and
      * likely will depend on class-local variables not present on this abstract
-     * base class, this method is not called during this class's own initialization
-     * and should instead be invoked by implementing classes at a safe time.
+     * base class, this method is not called during this class's own
+     * initialization and should instead be invoked by implementing classes at a
+     * safe time.
      */
     public void restrictKeyboardInput() {
         // Restrict keyboard input to numerals, sign, and delimiters.
@@ -150,11 +174,13 @@ public abstract class NumberEditor extends XTextField {
             }
         } );
     }
-    
+
+    public abstract String getAllowedCharacters();
+
     public String getErrorText() {
         return _errorText;
     }
-    
+
     public void setErrorText( final String pErrorText ) {
         _errorText = pErrorText;
     }
@@ -178,25 +204,12 @@ public abstract class NumberEditor extends XTextField {
      * reset invalid input to the supplied default value (zero if not provided).
      * Setting a different callback will overwrite this functionality.
      *
-     * @param reset
-     *            The {@link Runnable} to call upon
-     *            {@link NumberFormatException}
+     * @param reset The {@link Runnable} to call upon
+     *              {@link NumberFormatException}
      */
     public final void setReset( final Runnable reset ) {
         _reset = reset;
     }
-
-    public abstract String getAllowedCharacters();
-
-    public final void decorateText() {
-        // Get the most recently committed value, restoring decorations etc.
-        final String decoratedText = getDecoratedText();
-
-        // Update the displayed text to include all of the decorations.
-        setText( decoratedText );
-    }
-
-    public abstract String getDecoratedText();
 
     public final String getUndecoratedText() {
         final String savedText = getText();
@@ -212,18 +225,9 @@ public abstract class NumberEditor extends XTextField {
         // many users may be in the habit of typing it in, so we allow it in our
         // key filter and then must strip it here so that numbers get parsed
         // correctly vs. throwing exceptions and defaulting to previous values.
-        final String undecoratedText = StringUtilities.stripPositiveSign( savedText );
+        final String undecoratedText = StringUtilities.stripPositiveSign(
+                savedText );
 
         return undecoratedText;
     }
-
-    public final void saveEdits() {
-        // Clamp the committed value to the allowed range.
-        clampValue();
-    }
-
-    public abstract void updateText();
-
-    public abstract void clampValue();
-
 }

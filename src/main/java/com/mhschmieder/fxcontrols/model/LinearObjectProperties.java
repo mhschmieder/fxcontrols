@@ -32,24 +32,29 @@ package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.fxgraphics.LabelAssignable;
 import com.mhschmieder.jcommons.lang.NumberUtilities;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 // TODO: Research why Number of Projections Zones is modeled as a String.
-public class LinearObjectProperties implements LabelAssignable, LayerNameAssignable {
+public class LinearObjectProperties
+        implements LabelAssignable, LayerNameAssignable {
 
-    private final StringProperty  label;
-    private final StringProperty  layerName;
+    private final StringProperty label;
+    private final StringProperty layerName;
     private final BooleanProperty useAsProjector;
-    private final StringProperty  numberOfProjectionZones;
+    private final StringProperty numberOfProjectionZones;
 
     public LinearObjectProperties( final String pLabel,
                                    final String pLayerName,
                                    final boolean pUseAsProjector,
                                    final int pNumberOfProjectionZones ) {
-        this( pLabel, pLayerName, pUseAsProjector, Integer.toString( pNumberOfProjectionZones ) );
+        this( pLabel,
+              pLayerName,
+              pUseAsProjector,
+              Integer.toString( pNumberOfProjectionZones ) );
     }
 
     public LinearObjectProperties( final String pLabel,
@@ -59,7 +64,8 @@ public class LinearObjectProperties implements LabelAssignable, LayerNameAssigna
         label = new SimpleStringProperty( pLabel );
         layerName = new SimpleStringProperty( pLayerName );
         useAsProjector = new SimpleBooleanProperty( pUseAsProjector );
-        numberOfProjectionZones = new SimpleStringProperty( pNumberOfProjectionZones );
+        numberOfProjectionZones = new SimpleStringProperty(
+                pNumberOfProjectionZones );
     }
 
     @Override
@@ -68,13 +74,13 @@ public class LinearObjectProperties implements LabelAssignable, LayerNameAssigna
     }
 
     @Override
-    public final void setLabel( final String pLabel ) {
-        label.set( pLabel );
+    public final String getLabel() {
+        return label.get();
     }
 
     @Override
-    public final String getLabel() {
-        return label.get();
+    public final void setLabel( final String pLabel ) {
+        label.set( pLabel );
     }
 
     @Override
@@ -83,29 +89,33 @@ public class LinearObjectProperties implements LabelAssignable, LayerNameAssigna
     }
 
     @Override
-    public final void setLayerName( final String pLayerName ) {
-        layerName.set( pLayerName );
+    public final String getLayerName() {
+        return layerName.get();
     }
 
     @Override
-    public final String getLayerName() {
-        return layerName.get();
+    public final void setLayerName( final String pLayerName ) {
+        layerName.set( pLayerName );
     }
 
     public final BooleanProperty useAsProjectorProperty() {
         return useAsProjector;
     }
 
-    public final void setUseAsProjector( final boolean pUseAsProjector ) {
-        useAsProjector.set( pUseAsProjector );
-    }
-
     public final boolean isUseAsProjector() {
         return useAsProjector.get();
     }
 
+    public final void setUseAsProjector( final boolean pUseAsProjector ) {
+        useAsProjector.set( pUseAsProjector );
+    }
+
     public final StringProperty numberOfProjectionZonesProperty() {
         return numberOfProjectionZones;
+    }
+
+    public final int getNumberOfProjectionZones() {
+        return NumberUtilities.parseInteger( numberOfProjectionZones.get() );
     }
 
     public final void setNumberOfProjectionZones( final String pNumberOfProjectionZones ) {
@@ -115,9 +125,4 @@ public class LinearObjectProperties implements LabelAssignable, LayerNameAssigna
     public final void setNumberOfProjectionZones( final int pNumberOfProjectionZones ) {
         numberOfProjectionZones.set( Integer.toString( pNumberOfProjectionZones ) );
     }
-
-    public final int getNumberOfProjectionZones() {
-        return NumberUtilities.parseInteger( numberOfProjectionZones.get() );
-    }
-
 }

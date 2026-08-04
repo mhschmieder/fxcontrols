@@ -31,18 +31,21 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxgraphics.image.ImageUtilities;
+
+import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-import java.util.List;
-
 public final class TabUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private TabUtilities() {}
+    private TabUtilities() {
+    }
 
     public static void initTab( final String tabTitle,
                                 final String jarRelativeIconPath,

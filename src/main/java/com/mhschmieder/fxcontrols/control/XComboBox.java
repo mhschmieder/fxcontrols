@@ -31,17 +31,18 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tooltip;
-import org.apache.commons.math3.util.FastMath;
 
 /**
- * {@code XComboBox} is a concrete base class that serves as a specialization
- * of {@link ComboBox}, primarily to augment the core API so that derived
- * classes don't have to write copy/paste code that might diverge over time.
+ * {@code XComboBox} is a concrete base class that serves as a specialization of
+ * {@link ComboBox}, primarily to augment the core API so that derived classes
+ * don't have to write copy/paste code that might diverge over time.
  * <p>
  * In particular, this class properly handles ESC and ENTER keys consistently.
  * <p>
@@ -49,25 +50,21 @@ import org.apache.commons.math3.util.FastMath;
  * inform a consolidation of the two current approaches in this class, and note
  * that that class adds a third approach as well. All are mutually exclusive.
  *
- * @param <T>
- *            The object type for the combo box
- *
- * @version 1.0
- *
+ * @param <T> The object type for the combo box
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class XComboBox< T > extends ComboBox< T > {
-
-    // We need to know at all times whether we are marked as Searchable.
-    protected boolean       _searchable;
-
-    // Cache a backup list to replace after auto-complete.
-    // protected ObservableList< String > _backupList;
 
     /**
      * Cache the Client Properties (System Type, Locale, etc.).
      */
     public ClientProperties clientProperties;
+
+    // Cache a backup list to replace after auto-complete.
+    // protected ObservableList< String > _backupList;
+    // We need to know at all times whether we are marked as Searchable.
+    protected boolean _searchable;
 
     public XComboBox( final ClientProperties pClientProperties,
                       final String tooltipText,
@@ -87,39 +84,27 @@ public class XComboBox< T > extends ComboBox< T > {
                       final boolean applyToolkitCss,
                       final boolean editable,
                       final boolean searchable,
-                      final T[] items) {
+                      final ObservableList< T > items ) {
         this( pClientProperties,
               tooltipText,
               applyToolkitCss,
               editable,
               searchable,
-              FXCollections.< T >observableArrayList( items ) );
-    }
-
-   public XComboBox( final ClientProperties pClientProperties,
-                     final String tooltipText,
-                     final boolean applyToolkitCss,
-                     final boolean editable,
-                     final boolean searchable,
-                     final ObservableList< T > items ) {
-        this( pClientProperties,
-              tooltipText,
-              applyToolkitCss,
-              editable,
-              searchable,
-              items != null ? items.size() : 10,
+              items != null
+              ? items.size()
+              : 10,
               null,
               items );
     }
 
-   public XComboBox( final ClientProperties pClientProperties,
-                     final String tooltipText,
-                     final boolean applyToolkitCss,
-                     final boolean editable,
-                     final boolean searchable,
-                     final int visibleRowCount,
-                     final T defaultValue,
-                     final ObservableList< T > items ) {
+    public XComboBox( final ClientProperties pClientProperties,
+                      final String tooltipText,
+                      final boolean applyToolkitCss,
+                      final boolean editable,
+                      final boolean searchable,
+                      final int visibleRowCount,
+                      final T defaultValue,
+                      final ObservableList< T > items ) {
         // Always call the superclass constructor first!
         super( items );
 
@@ -130,8 +115,8 @@ public class XComboBox< T > extends ComboBox< T > {
         // _backupList = FXCollections.observableArrayList();
 
         try {
-            initComboBox( tooltipText, 
-                          applyToolkitCss, 
+            initComboBox( tooltipText,
+                          applyToolkitCss,
                           editable,
                           visibleRowCount,
                           defaultValue );
@@ -140,17 +125,6 @@ public class XComboBox< T > extends ComboBox< T > {
             ex.printStackTrace();
         }
     }
-
-    // TODO: Re-enable this once we see how to do the SearchableComboBox in
-    //  ControlsFX v11 without using Private API as in v8.
-    /*
-    @Override
-    protected Skin< ? > createDefaultSkin() {
-        return _searchable
-                ? new SearchableComboBoxSkin<>( this )
-                : super.createDefaultSkin();
-    }
-    */
 
     private void initComboBox( final String tooltipText,
                                final boolean applyToolkitCss,
@@ -165,7 +139,7 @@ public class XComboBox< T > extends ComboBox< T > {
 
         // It's best to set editable status before modifying CSS attributes.
         setEditable( editable );
-        
+
         // Ensure that the desired number of rows are visible before scrolling,
         // but also make sure the overall list doesn't get unwieldy.
         setVisibleRowCount( FastMath.min( visibleRowCount, 25 ) );
@@ -294,6 +268,38 @@ public class XComboBox< T > extends ComboBox< T > {
          */
     }
 
+    // TODO: Re-enable this once we see how to do the SearchableComboBox in
+    //  ControlsFX v11 without using Private API as in v8.
+    /*
+    @Override
+    protected Skin< ? > createDefaultSkin() {
+        return _searchable
+                ? new SearchableComboBoxSkin<>( this )
+                : super.createDefaultSkin();
+    }
+    */
+
+    public XComboBox( final ClientProperties pClientProperties,
+                      final String tooltipText,
+                      final boolean applyToolkitCss,
+                      final boolean editable,
+                      final boolean searchable,
+                      final T[] items ) {
+        this( pClientProperties,
+              tooltipText,
+              applyToolkitCss,
+              editable,
+              searchable,
+              FXCollections.< T >observableArrayList( items ) );
+    }
+
+    // Update the drop-list of available values.
+    public final void updateValues( final T[] values,
+                                    final int defaultSelectedIndex ) {
+        updateValues( FXCollections.observableArrayList( values ),
+                      defaultSelectedIndex );
+    }
+
     // Update the drop-list of available values.
     // TODO: Find a way to restore the previous value when it was displayed but
     // not actively selected, and to distinguish the two cases, as currently we
@@ -306,8 +312,8 @@ public class XComboBox< T > extends ComboBox< T > {
         // Save the selection to reinstate after replacing the drop-list.
         final SingleSelectionModel< T > selectionModel = getSelectionModel();
         final int currentSelectedIndex = ( defaultSelectedIndex >= 0 )
-            ? defaultSelectedIndex
-            : selectionModel.getSelectedIndex();
+                                         ? defaultSelectedIndex
+                                         : selectionModel.getSelectedIndex();
 
         // Replace the entire list all at once, to reduce callbacks and interim
         // states. Avoid side effects of replacing an identical list as that can
@@ -320,13 +326,23 @@ public class XComboBox< T > extends ComboBox< T > {
         }
 
         // If the desired selection index is still within bounds, reselect it.
-        if ( ( currentSelectedIndex >= 0 ) && ( currentSelectedIndex < values.size() ) ) {
+        if ( ( currentSelectedIndex >= 0 ) && ( currentSelectedIndex
+                                                < values.size() ) ) {
             selectionModel.select( currentSelectedIndex );
         }
         else {
             // If out of bounds, default to the first item in the display list.
             selectionModel.selectFirst();
         }
+    }
+
+    // Update the drop-list of available values.
+    public final void updateValues( final T[] values,
+                                    final T defaultValue,
+                                    final boolean preserveSelection ) {
+        updateValues( FXCollections.observableArrayList( values ),
+                      defaultValue,
+                      preserveSelection );
     }
 
     // Update the drop-list of available values.
@@ -371,19 +387,4 @@ public class XComboBox< T > extends ComboBox< T > {
             setValue( values.get( 0 ) );
         }
     }
-
-    // Update the drop-list of available values.
-    public final void updateValues( final T[] values, final int defaultSelectedIndex ) {
-        updateValues( FXCollections.observableArrayList( values ), defaultSelectedIndex );
-    }
-
-    // Update the drop-list of available values.
-    public final void updateValues( final T[] values,
-                                    final T defaultValue,
-                                    final boolean preserveSelection ) {
-        updateValues( FXCollections.observableArrayList( values ),
-                      defaultValue,
-                      preserveSelection );
-    }
-
 }

@@ -32,9 +32,10 @@ package com.mhschmieder.fxcontrols.util;
 
 import com.mhschmieder.fxcontrols.model.SurfaceProperties;
 import com.mhschmieder.jcommons.text.TextUtilities;
-import javafx.collections.ObservableList;
 
 import java.text.NumberFormat;
+
+import javafx.collections.ObservableList;
 
 /**
  * This is a manager class for Surface Names, to guarantee their uniqueness.
@@ -45,19 +46,17 @@ public final class SurfacePropertiesNameManager {
         return "Surface " + surfaceNumber;
     }
 
-    public static String getSurfaceNameDefault(
-            final SurfaceProperties surfaceProperties ) {
+    public static String getSurfaceNameDefault( final SurfaceProperties surfaceProperties ) {
         final int surfaceNumber = surfaceProperties.getSurfaceNumber();
         return getSurfaceNameDefault( surfaceNumber );
     }
 
     // Get a unique Surface Name from the candidate name.
-    public static String getUniqueSurfaceName(
-            final ObservableList< SurfaceProperties > surfacePropertiesList,
-            final SurfaceProperties surfacePropertiesToExclude,
-            final String surfaceNameCandidate,
-            final int uniquefierNumber,
-            final NumberFormat uniquefierNumberFormat ) {
+    public static String getUniqueSurfaceName( final ObservableList< SurfaceProperties > surfacePropertiesList,
+                                               final SurfaceProperties surfacePropertiesToExclude,
+                                               final String surfaceNameCandidate,
+                                               final int uniquefierNumber,
+                                               final NumberFormat uniquefierNumberFormat ) {
         // Recursively search for (and enforce) name-uniqueness of the supplied
         // Surface Name candidate and uniquefier number.
         final String uniquefierAppendix = TextUtilities.getUniquefierAppendix(
@@ -69,60 +68,54 @@ public final class SurfacePropertiesNameManager {
                                    uniqueSurfaceName ) ) {
             // Recursively guarantee the appendix-adjusted name is also unique,
             // using a hopefully-unique number as the appendix.
-            uniqueSurfaceName = getUniqueSurfaceName(
-                    surfacePropertiesList,
-                    surfacePropertiesToExclude,
-                    surfaceNameCandidate,
-                    uniquefierNumber + 1,
-                    uniquefierNumberFormat );
+            uniqueSurfaceName = getUniqueSurfaceName( surfacePropertiesList,
+                                                      surfacePropertiesToExclude,
+                                                      surfaceNameCandidate,
+                                                      uniquefierNumber + 1,
+                                                      uniquefierNumberFormat );
         }
 
         return uniqueSurfaceName;
     }
 
-    public static String getUniqueSurfaceName(
-            final ObservableList< SurfaceProperties > surfacePropertiesList,
-            final SurfaceProperties surfacePropertiesToExclude,
-            final String surfaceNameCandidate,
-            final NumberFormat uniquefierNumberFormat ) {
+    public static String getUniqueSurfaceName( final ObservableList< SurfaceProperties > surfacePropertiesList,
+                                               final SurfaceProperties surfacePropertiesToExclude,
+                                               final String surfaceNameCandidate,
+                                               final NumberFormat uniquefierNumberFormat ) {
         final String surfaceNameDefault = getSurfaceNameDefault(
                 surfacePropertiesToExclude );
-        return getUniqueSurfaceName(
-                surfacePropertiesList,
-                surfacePropertiesToExclude,
-                surfaceNameCandidate,
-                surfaceNameDefault,
-                uniquefierNumberFormat );
+        return getUniqueSurfaceName( surfacePropertiesList,
+                                     surfacePropertiesToExclude,
+                                     surfaceNameCandidate,
+                                     surfaceNameDefault,
+                                     uniquefierNumberFormat );
     }
 
     // Get a unique Surface Name from the candidate name.
-    public static String getUniqueSurfaceName(
-            final ObservableList< SurfaceProperties > surfacePropertiesList,
-            final SurfaceProperties surfacePropertiesToExclude,
-            final String surfaceNameCandidate,
-            final String surfaceNameDefault,
-            final NumberFormat uniquefierNumberFormat ) {
+    public static String getUniqueSurfaceName( final ObservableList< SurfaceProperties > surfacePropertiesList,
+                                               final SurfaceProperties surfacePropertiesToExclude,
+                                               final String surfaceNameCandidate,
+                                               final String surfaceNameDefault,
+                                               final NumberFormat uniquefierNumberFormat ) {
         // Try to use the specified Surface Name if it exists and is non-empty;
         // otherwise apply the pre-assigned default name for the current
         // Surface, leaving unadorned if possible.
         final int uniquefierNumber = 0;
-        final String surfaceNameCandidateAdjusted
-                = ( surfaceNameCandidate == null )
-                || surfaceNameCandidate.trim().isEmpty()
-                    ? surfaceNameDefault
-                    : surfaceNameCandidate;
-        return getUniqueSurfaceName(
-                surfacePropertiesList,
-                surfacePropertiesToExclude,
-                surfaceNameCandidateAdjusted,
-                uniquefierNumber,
-                uniquefierNumberFormat );
+        final String surfaceNameCandidateAdjusted =
+                ( surfaceNameCandidate == null ) || surfaceNameCandidate.trim()
+                                                                        .isEmpty()
+                ? surfaceNameDefault
+                : surfaceNameCandidate;
+        return getUniqueSurfaceName( surfacePropertiesList,
+                                     surfacePropertiesToExclude,
+                                     surfaceNameCandidateAdjusted,
+                                     uniquefierNumber,
+                                     uniquefierNumberFormat );
     }
 
-    public static boolean isSurfaceNameUnique(
-            final ObservableList< SurfaceProperties > surfacePropertiesList,
-            final int surfaceToExcludeIndex,
-            final String surfaceNameCandidate ) {
+    public static boolean isSurfaceNameUnique( final ObservableList< SurfaceProperties > surfacePropertiesList,
+                                               final int surfaceToExcludeIndex,
+                                               final String surfaceNameCandidate ) {
         // Iterate through all the Surfaces, to see if any use the proposed
         // Surface Name.
         boolean surfaceNameUnique = true;
@@ -148,15 +141,13 @@ public final class SurfacePropertiesNameManager {
         return surfaceNameUnique;
     }
 
-    public static boolean isSurfaceNameUnique(
-            final ObservableList< SurfaceProperties > surfacePropertiesList,
-            final SurfaceProperties surfacePropertiesToExclude,
-            final String surfaceNameCandidate ) {
-        final int surfaceToExcludeIndex
-                = surfacePropertiesToExclude.getSurfaceNumber() - 1;
-        return isSurfaceNameUnique(
-                surfacePropertiesList,
-                surfaceToExcludeIndex,
-                surfaceNameCandidate );
+    public static boolean isSurfaceNameUnique( final ObservableList< SurfaceProperties > surfacePropertiesList,
+                                               final SurfaceProperties surfacePropertiesToExclude,
+                                               final String surfaceNameCandidate ) {
+        final int surfaceToExcludeIndex =
+                surfacePropertiesToExclude.getSurfaceNumber() - 1;
+        return isSurfaceNameUnique( surfacePropertiesList,
+                                    surfaceToExcludeIndex,
+                                    surfaceNameCandidate );
     }
 }

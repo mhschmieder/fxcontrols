@@ -54,13 +54,19 @@ public class EditActions {
 
     // Default constructor
     public EditActions( final ClientProperties pClientProperties ) {
-        _undoAction = LabeledActionFactory.getEditUndoAction( pClientProperties );
-        _redoAction = LabeledActionFactory.getEditRedoAction( pClientProperties );
+        _undoAction
+                = LabeledActionFactory.getEditUndoAction( pClientProperties );
+        _redoAction
+                = LabeledActionFactory.getEditRedoAction( pClientProperties );
         _cutAction = LabeledActionFactory.getEditCutAction( pClientProperties );
-        _copyAction = LabeledActionFactory.getEditCopyAction( pClientProperties );
-        _pasteAction = LabeledActionFactory.getEditPasteAction( pClientProperties );
-        _cancelPasteAction = LabeledActionFactory.getEditCancelPasteAction( pClientProperties );
-        _deleteAction = LabeledActionFactory.getEditDeleteAction( pClientProperties );
+        _copyAction
+                = LabeledActionFactory.getEditCopyAction( pClientProperties );
+        _pasteAction = LabeledActionFactory.getEditPasteAction(
+                pClientProperties );
+        _cancelPasteAction = LabeledActionFactory.getEditCancelPasteAction(
+                pClientProperties );
+        _deleteAction = LabeledActionFactory.getEditDeleteAction(
+                pClientProperties );
 
         // NOTE: Undo and Redo are disabled until there is useful context.
         _undoAction.setDisabled( true );

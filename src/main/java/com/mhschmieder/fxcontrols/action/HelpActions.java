@@ -58,10 +58,10 @@ public class HelpActions {
     public final XAction _eulaAction;
     public final XAction _viewInformationAction;
 
-    public HelpActions( final ClientProperties pClientProperties, 
+    public HelpActions( final ClientProperties pClientProperties,
                         final String applicationName ) {
-        _helpAction = LabeledActionFactory.getHelpHelpAction(
-                pClientProperties );
+        _helpAction
+                = LabeledActionFactory.getHelpHelpAction( pClientProperties );
         _knowledgeBaseAction = LabeledActionFactory.getKnowledgeBaseAction(
                 pClientProperties );
         _releaseNotesAction = LabeledActionFactory.getReleaseNotesAction(
@@ -72,21 +72,24 @@ public class HelpActions {
                 pClientProperties );
         _sessionLogAction = LabeledActionFactory.getHelpSessionLogAction(
                 pClientProperties );
-        _accountManagementAction = LabeledActionFactory
-                .getHelpAccountManagementAction( pClientProperties );
-        _checkForUpdatesAction =
-                LabeledActionFactory.getHelpCheckForUpdatesAction(
-                        pClientProperties );
+        _accountManagementAction
+                = LabeledActionFactory.getHelpAccountManagementAction(
+                pClientProperties );
+        _checkForUpdatesAction
+                = LabeledActionFactory.getHelpCheckForUpdatesAction(
+                pClientProperties );
         _teamMembersAction = LabeledActionFactory.getHelpTeamMembersAction(
                 pClientProperties );
-        _thirdPartyLibrariesAction = LabeledActionFactory
-                .getHelpThirdPartyLibrariesAction( pClientProperties );
-        _aboutAction = LabeledActionFactory
-                .getHelpAboutAction( pClientProperties, applicationName );
-        _eulaAction = LabeledActionFactory.getHelpEulaAction(
+        _thirdPartyLibrariesAction
+                = LabeledActionFactory.getHelpThirdPartyLibrariesAction(
                 pClientProperties );
-        _viewInformationAction = LabeledActionFactory
-                .getViewInformationAction( pClientProperties );
+        _aboutAction = LabeledActionFactory.getHelpAboutAction(
+                pClientProperties,
+                applicationName );
+        _eulaAction
+                = LabeledActionFactory.getHelpEulaAction( pClientProperties );
+        _viewInformationAction = LabeledActionFactory.getViewInformationAction(
+                pClientProperties );
     }
 
     // NOTE: This method is not final, so that it can be derived for
@@ -114,7 +117,7 @@ public class HelpActions {
         // if ( !SystemType.MACOS.equals( clientProperties.systemType ) ) {
         helpActionCollection.add( _aboutAction );
         // }
-        
+
         helpActionCollection.add( ActionUtils.ACTION_SEPARATOR );
         helpActionCollection.add( _teamMembersAction );
         helpActionCollection.add( _thirdPartyLibrariesAction );

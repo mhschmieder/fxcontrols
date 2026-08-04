@@ -36,21 +36,13 @@ import com.mhschmieder.jphysics.acoustics.Smoothing;
 /**
  * This is a selector for different Smoothing resolutions.
  */
-public final class SmoothingSelector extends XComboBox<Smoothing> {
+public final class SmoothingSelector extends XComboBox< Smoothing > {
 
     public SmoothingSelector( final ClientProperties pClientProperties,
                               final boolean pToolbarContext ) {
         // Always call the superclass constructor first!
-        super( pClientProperties,
-               "Frequency Response Smoothing", //$NON-NLS-1$
-               pToolbarContext,
-               false,
-               false,
-               Smoothing.values() );
-    }
-
-    public Smoothing getSmoothing() {
-        return getValue();
+        super( pClientProperties, "Frequency Response Smoothing", //$NON-NLS-1$
+               pToolbarContext, false, false, Smoothing.values() );
     }
 
     public int getSmoothingOctaveDivider() {
@@ -59,13 +51,18 @@ public final class SmoothingSelector extends XComboBox<Smoothing> {
         return octaveDivider;
     }
 
+    public Smoothing getSmoothing() {
+        return getValue();
+    }
+
     public void setSmoothing( final Smoothing smoothing ) {
         setValue( smoothing );
     }
 
     public void setSmoothingOctaveDivider( final int octaveDivider ) {
         // Sync up the Combo Box drop-list with the current Smoothing value.
-        final Smoothing smoothing = Smoothing.fromOctaveDivider( octaveDivider );
+        final Smoothing smoothing
+                = Smoothing.fromOctaveDivider( octaveDivider );
         setSmoothing( smoothing );
     }
 }

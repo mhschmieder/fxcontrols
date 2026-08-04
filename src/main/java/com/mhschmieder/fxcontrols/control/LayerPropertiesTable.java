@@ -38,57 +38,22 @@ import com.mhschmieder.fxcontrols.control.cell.LayerStatusTableCell;
 import com.mhschmieder.fxcontrols.model.LayerProperties;
 import com.mhschmieder.fxcontrols.util.LayerPropertiesManagement;
 import com.mhschmieder.jcommons.util.ClientProperties;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
-    // Do not allow the user to sort by other than Layer Name.
-    // NOTE: This has been reverted to disallowed due to our check for
-    //  delete-enabled being by row number vs. by Layer Name, so sorting the
-    //  Layers by name can allow the Default Layer 0 to be deleted. We should
-    //  either exclude that Layer from sorting, or write special logic to detect
-    //  the Default Layer by name vs. by row number.
-    private static final boolean              SORTABLE_DEFAULT         = true;
-
-    // Declare the table column header names.
-    private static final String               COLUMN_HEADER_LAYER_NAME = "LAYER NAME";                                    //$NON-NLS-1$
-    private static final String               COLUMN_HEADER_COLOR      = "COLOR";                                         //$NON-NLS-1$
-    private static final String               COLUMN_HEADER_STATUS     = "STATUS";                                        //$NON-NLS-1$
-    private static final String               COLUMN_HEADER_DISPLAY    = "DISPLAY";                                       //$NON-NLS-1$
-    private static final String               COLUMN_HEADER_LOCK       = "LOCK";                                          //$NON-NLS-1$
-
-    // Declare static constants to use for symbolically referencing table column
-    // indices, to ensure no errors, and ease of extensibility.
-    private static final int                  COLUMN_FIRST             = 0;
-    public static final int                   COLUMN_LAYER_NAME        = COLUMN_FIRST;
-    private static final int                  COLUMN_COLOR             = COLUMN_LAYER_NAME + 1;
-    private static final int                  COLUMN_STATUS            = COLUMN_COLOR + 1;
-    private static final int                  COLUMN_DISPLAY           = COLUMN_STATUS + 1;
-    private static final int                  COLUMN_LOCK              = COLUMN_DISPLAY + 1;
-    private static final int                  COLUMN_LAST              = COLUMN_LOCK;
-    protected static final int                NUMBER_OF_COLUMNS        =
-            ( COLUMN_LAST - COLUMN_FIRST ) + 1;
-
     // Declare the enforced default row/index of 0 for the Default Layer.
-    public static final int                   ROW_DEFAULT_LAYER        =
-            LayerPropertiesManagement.DEFAULT_LAYER_INDEX;
-
-    // Declare the array of column names to be displayed in the table header.
-    public static final String[] _columnName =new String[] {
-            COLUMN_HEADER_LAYER_NAME,
-            COLUMN_HEADER_COLOR,
-            COLUMN_HEADER_STATUS,
-            COLUMN_HEADER_DISPLAY,
-            COLUMN_HEADER_LOCK };
-
+    public static final int ROW_DEFAULT_LAYER
+            = LayerPropertiesManagement.DEFAULT_LAYER_INDEX;
     // Declare preferred widths for each column.
     // NOTE: These numbers must add up to the assumed table width of 440.
     protected static final int[] _columnWidth = new int[] {
@@ -98,16 +63,51 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
             60, // COLUMN_DISPLAY
             80 // COLUMN_LOCK
     };
-
     // Declare the array of column property names to be used for data binding.
-    protected static final String[]  _columnPropertyName= {
+    protected static final String[] _columnPropertyName = {
             "layerName", // COLUMN_LAYER_NAME
             "layerColor", // COLUMN_COLOR
             "layerActive", // COLUMN_STATUS
             "layerVisible", // COLUMN_DISPLAY
             "layerLocked" // COLUMN_LOCK
     };
-
+    // Do not allow the user to sort by other than Layer Name.
+    // NOTE: This has been reverted to disallowed due to our check for
+    //  delete-enabled being by row number vs. by Layer Name, so sorting the
+    //  Layers by name can allow the Default Layer 0 to be deleted. We should
+    //  either exclude that Layer from sorting, or write special logic to detect
+    //  the Default Layer by name vs. by row number.
+    private static final boolean SORTABLE_DEFAULT = true;
+    // Declare the table column header names.
+    private static final String COLUMN_HEADER_LAYER_NAME = "LAYER NAME";
+            //$NON-NLS-1$
+    private static final String COLUMN_HEADER_COLOR = "COLOR";
+            //$NON-NLS-1$
+            //$NON-NLS-1$
+    private static final String COLUMN_HEADER_STATUS = "STATUS";
+            //$NON-NLS-1$
+    private static final String COLUMN_HEADER_DISPLAY = "DISPLAY";
+            //$NON-NLS-1$
+    private static final String COLUMN_HEADER_LOCK = "LOCK";
+    // Declare the array of column names to be displayed in the table header.
+    public static final String[] _columnName = new String[] {
+            COLUMN_HEADER_LAYER_NAME,
+            COLUMN_HEADER_COLOR,
+            COLUMN_HEADER_STATUS,
+            COLUMN_HEADER_DISPLAY,
+            COLUMN_HEADER_LOCK
+    };
+    // Declare static constants to use for symbolically referencing table column
+    // indices, to ensure no errors, and ease of extensibility.
+    private static final int COLUMN_FIRST = 0;
+    public static final int COLUMN_LAYER_NAME = COLUMN_FIRST;
+    private static final int COLUMN_COLOR = COLUMN_LAYER_NAME + 1;
+    private static final int COLUMN_STATUS = COLUMN_COLOR + 1;
+    private static final int COLUMN_DISPLAY = COLUMN_STATUS + 1;
+    private static final int COLUMN_LOCK = COLUMN_DISPLAY + 1;
+    private static final int COLUMN_LAST = COLUMN_LOCK;
+    protected static final int NUMBER_OF_COLUMNS =
+            ( COLUMN_LAST - COLUMN_FIRST ) + 1;
     // Cache the Layer Collection reference.
     private ObservableList< LayerProperties > _layerCollection;
 
@@ -123,92 +123,6 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         }
     }
 
-    // Insert a Layer at the insert index, initially cloned from the reference
-    // index (or defaulted if the reference index is too low).
-    @Override
-    public final int addItemAt( final int insertIndex,
-                                final int minimumInsertIndex,
-                                final int maximumInsertIndex,
-                                final int maximumLastRowIndex ) {
-        // First determine whether the indicated row can be inserted.
-        if ( !canInsertTableRowAt( insertIndex,
-                minimumInsertIndex,
-                maximumInsertIndex,
-                maximumLastRowIndex ) ) {
-            return -1;
-        }
-
-        // Insert a new cloned Layer into the Layer Collection.
-        final LayerProperties layer = LayerPropertiesManagement.addLayerClone(
-                _layerCollection, insertIndex );
-
-        // Make sure we catch failed inserts, to avoid null pointers later on.
-        if ( layer == null ) {
-            return -1;
-        }
-
-        // Find the new reference index for the newly added item, post-sort.
-        final int referenceIndex = _layerCollection.indexOf( layer );
-
-        // Return the newly added item as the reference index for the next
-        // action, adjusted for the post-insert sort order.
-        return referenceIndex;
-    }
-
-    @Override
-    public final boolean canDeleteTableRowAt( final int deleteIndex ) {
-        final int minimumDeleteIndex = ROW_DEFAULT_LAYER + 1;
-        final int maximumDeleteIndex = getLastRowIndex();
-        final int minimumLastRowIndex = ROW_DEFAULT_LAYER;
-        return canDeleteTableRowAt( deleteIndex,
-                minimumDeleteIndex,
-                maximumDeleteIndex,
-                minimumLastRowIndex );
-    }
-
-    // TODO: Think about a different strategy that delegates this logic to the
-    //  business model, unless it is clearly tied to view parameters such as row
-    //  count. For instance, the business model should control the Default Layer.
-    @Override
-    public final boolean canDeleteTableRowAt( final int deleteIndex,
-                                              final int minimumDeleteIndex,
-                                              final int maximumDeleteIndex,
-                                              final int minimumLastRowIndex ) {
-        // If the index is out of bounds, or the table size has already reached
-        // the minimum number of rows required by the table, ignore the deletion
-        // request.
-        if ( !super.canDeleteTableRowAt( deleteIndex,
-                minimumDeleteIndex,
-                maximumDeleteIndex,
-                minimumLastRowIndex ) ) {
-            return false;
-        }
-
-        // Now, make sure the Layer at the selected row isn't locked.
-        final LayerProperties layerToDelete = LayerPropertiesManagement
-                .getLayer( _layerCollection, deleteIndex );
-        return ( layerToDelete != null ) && !layerToDelete.isLayerLocked();
-    }
-
-    // TODO: Think about a different strategy that delegates this logic to the
-    //  business model, unless it is clearly tied to view parameters such as row
-    //  count. For instance, the business model should control the Default Layer.
-    @Override
-    public final int deleteTableRows() {
-        // The deletable row range starts after the default "Layer 0".
-        // NOTE: The minimum last row index of 0 is required for tables that
-        //  cannot be empty (whether initially or after editing), as an index of
-        //  -1 corresponds to a minimum row count of zero.
-        final int minimumDeleteIndex = ROW_DEFAULT_LAYER + 1;
-        final int minimumLastRowIndex = ROW_DEFAULT_LAYER;
-
-        // Delete the selected table row(s).
-        final int referenceIndex = deleteTableRows(
-                minimumDeleteIndex, minimumLastRowIndex );
-
-        return referenceIndex;
-    }
-
     private final void initTable( final ClientProperties pClientProperties ) {
         // This is an editable table, in terms of selectivity but not typing.
         setTableEditable( true );
@@ -220,36 +134,34 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
         final ObservableList< TableColumn< LayerProperties, ? > > columns
                 = getColumns();
-        final List< TableColumn< LayerProperties, ? > > tableColumnCollection =
-                new ArrayList<>( NUMBER_OF_COLUMNS );
+        final List< TableColumn< LayerProperties, ? > > tableColumnCollection
+                = new ArrayList<>( NUMBER_OF_COLUMNS );
 
         int columnIndex = COLUMN_LAYER_NAME;
         final TableColumn< LayerProperties, String > layerNameColumn
-                = TableColumnFactory
-                .makeTableColumnForString( _columnName[ columnIndex ],
-                        _columnWidth[ columnIndex ],
-                        _columnPropertyName[ columnIndex ],
-                        SORTABLE_DEFAULT );
+                =
+                TableColumnFactory.makeTableColumnForString( _columnName[ columnIndex ],
+                                                               _columnWidth[ columnIndex ],
+                                                               _columnPropertyName[ columnIndex ],
+                                                               SORTABLE_DEFAULT );
         tableColumnCollection.add( layerNameColumn );
 
         layerNameColumn.setCellFactory( column -> {
-            final List< Integer > uneditableRows
-                    = new ArrayList<>( 1 );
+            final List< Integer > uneditableRows = new ArrayList<>( 1 );
             uneditableRows.add( Integer.valueOf( ROW_DEFAULT_LAYER ) );
 
-            return new LayerNameTableCell(
-                    uneditableRows,
-                    false,
-                    pClientProperties );
+            return new LayerNameTableCell( uneditableRows,
+                                           false,
+                                           pClientProperties );
         } );
 
         columnIndex = COLUMN_COLOR;
         final TableColumn< LayerProperties, Color > layerColorColumn
-                = TableColumnFactory
-                .makeTableColumnForColor( _columnName[ columnIndex ],
-                        _columnWidth[ columnIndex ],
-                        _columnPropertyName[ columnIndex ],
-                        SORTABLE_DEFAULT );
+                =
+                TableColumnFactory.makeTableColumnForColor( _columnName[ columnIndex ],
+                                                              _columnWidth[ columnIndex ],
+                                                              _columnPropertyName[ columnIndex ],
+                                                              SORTABLE_DEFAULT );
         tableColumnCollection.add( layerColorColumn );
 
         // TODO: Make a factory method, or at least a constant for the tool
@@ -258,42 +170,36 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
 
         columnIndex = COLUMN_STATUS;
         final TableColumn< LayerProperties, Boolean > layerStatusColumn
-                = TableColumnFactory
-                .makeTableColumnForBoolean( _columnName[ columnIndex ],
-                        _columnWidth[ columnIndex ],
-                        _columnPropertyName[ columnIndex ],
-                        SORTABLE_DEFAULT );
+                =
+                TableColumnFactory.makeTableColumnForBoolean( _columnName[ columnIndex ],
+                                                                _columnWidth[ columnIndex ],
+                                                                _columnPropertyName[ columnIndex ],
+                                                                SORTABLE_DEFAULT );
         tableColumnCollection.add( layerStatusColumn );
 
-        layerStatusColumn.setCellFactory(
-                column ->
-                        new LayerStatusTableCell() );
+        layerStatusColumn.setCellFactory( column -> new LayerStatusTableCell() );
 
         columnIndex = COLUMN_DISPLAY;
         final TableColumn< LayerProperties, Boolean > layerDisplayColumn
-                = TableColumnFactory
-                .makeTableColumnForBoolean( _columnName[ columnIndex ],
-                        _columnWidth[ columnIndex ],
-                        _columnPropertyName[ columnIndex ],
-                        SORTABLE_DEFAULT );
+                =
+                TableColumnFactory.makeTableColumnForBoolean( _columnName[ columnIndex ],
+                                                                _columnWidth[ columnIndex ],
+                                                                _columnPropertyName[ columnIndex ],
+                                                                SORTABLE_DEFAULT );
         tableColumnCollection.add( layerDisplayColumn );
 
-        layerDisplayColumn.setCellFactory(
-                column ->
-                        new LayerDisplayTableCell() );
+        layerDisplayColumn.setCellFactory( column -> new LayerDisplayTableCell() );
 
         columnIndex = COLUMN_LOCK;
         final TableColumn< LayerProperties, Boolean > layerLockColumn
-                = TableColumnFactory
-                .makeTableColumnForBoolean( _columnName[ columnIndex ],
-                        _columnWidth[ columnIndex ],
-                        _columnPropertyName[ columnIndex ],
-                        SORTABLE_DEFAULT );
+                =
+                TableColumnFactory.makeTableColumnForBoolean( _columnName[ columnIndex ],
+                                                                _columnWidth[ columnIndex ],
+                                                                _columnPropertyName[ columnIndex ],
+                                                                SORTABLE_DEFAULT );
         tableColumnCollection.add( layerLockColumn );
 
-        layerLockColumn.setCellFactory(
-                column ->
-                        new LayerLockTableCell() );
+        layerLockColumn.setCellFactory( column -> new LayerLockTableCell() );
 
         columns.addAll( 0, tableColumnCollection );
 
@@ -304,8 +210,8 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         // Name column, keeps that row as the first row in the table, regardless
         // of which column header was clicked as the main sorting criteria.
         sortPolicyProperty().set( tableView -> {
-            final Comparator< LayerProperties > comparator = (
-                    layer1, layer2 ) -> {
+            final Comparator< LayerProperties > comparator
+                    = ( layer1, layer2 ) -> {
                 final String layerName1 = layer1.getLayerName();
                 if ( LayerPropertiesManagement.DEFAULT_LAYER_NAME.equals(
                         layerName1 ) ) {
@@ -336,15 +242,106 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         } );
     }
 
+    @Override
+    public final boolean canDeleteTableRowAt( final int deleteIndex ) {
+        final int minimumDeleteIndex = ROW_DEFAULT_LAYER + 1;
+        final int maximumDeleteIndex = getLastRowIndex();
+        final int minimumLastRowIndex = ROW_DEFAULT_LAYER;
+        return canDeleteTableRowAt( deleteIndex,
+                                    minimumDeleteIndex,
+                                    maximumDeleteIndex,
+                                    minimumLastRowIndex );
+    }
+
     // TODO: Think about a different strategy that delegates this logic to the
     //  business model, unless it is clearly tied to view parameters such as row
-    //  count. For instance, the business model should control the Default Layer.
+    //  count. For instance, the business model should control the Default
+    //  Layer.
+    @Override
+    public final boolean canDeleteTableRowAt( final int deleteIndex,
+                                              final int minimumDeleteIndex,
+                                              final int maximumDeleteIndex,
+                                              final int minimumLastRowIndex ) {
+        // If the index is out of bounds, or the table size has already reached
+        // the minimum number of rows required by the table, ignore the deletion
+        // request.
+        if ( !super.canDeleteTableRowAt( deleteIndex,
+                                         minimumDeleteIndex,
+                                         maximumDeleteIndex,
+                                         minimumLastRowIndex ) ) {
+            return false;
+        }
+
+        // Now, make sure the Layer at the selected row isn't locked.
+        final LayerProperties layerToDelete
+                = LayerPropertiesManagement.getLayer( _layerCollection,
+                                                      deleteIndex );
+        return ( layerToDelete != null ) && !layerToDelete.isLayerLocked();
+    }
+
+    // TODO: Think about a different strategy that delegates this logic to the
+    //  business model, unless it is clearly tied to view parameters such as row
+    //  count. For instance, the business model should control the Default
+    //  Layer.
     @Override
     public final int insertTableRow() {
         // Clone the selected or defaulted row when adding a new one, but do not
         // allow the Default Layer to be bumped via an insert action.
         final int minimumInsertIndex = ROW_DEFAULT_LAYER + 1;
         final int referenceIndex = insertTableRow( minimumInsertIndex );
+
+        return referenceIndex;
+    }
+
+    // Insert a Layer at the insert index, initially cloned from the reference
+    // index (or defaulted if the reference index is too low).
+    @Override
+    public final int addItemAt( final int insertIndex,
+                                final int minimumInsertIndex,
+                                final int maximumInsertIndex,
+                                final int maximumLastRowIndex ) {
+        // First determine whether the indicated row can be inserted.
+        if ( !canInsertTableRowAt( insertIndex,
+                                   minimumInsertIndex,
+                                   maximumInsertIndex,
+                                   maximumLastRowIndex ) ) {
+            return -1;
+        }
+
+        // Insert a new cloned Layer into the Layer Collection.
+        final LayerProperties layer = LayerPropertiesManagement.addLayerClone(
+                _layerCollection,
+                insertIndex );
+
+        // Make sure we catch failed inserts, to avoid null pointers later on.
+        if ( layer == null ) {
+            return -1;
+        }
+
+        // Find the new reference index for the newly added item, post-sort.
+        final int referenceIndex = _layerCollection.indexOf( layer );
+
+        // Return the newly added item as the reference index for the next
+        // action, adjusted for the post-insert sort order.
+        return referenceIndex;
+    }
+
+    // TODO: Think about a different strategy that delegates this logic to the
+    //  business model, unless it is clearly tied to view parameters such as row
+    //  count. For instance, the business model should control the Default
+    //  Layer.
+    @Override
+    public final int deleteTableRows() {
+        // The deletable row range starts after the default "Layer 0".
+        // NOTE: The minimum last row index of 0 is required for tables that
+        //  cannot be empty (whether initially or after editing), as an index of
+        //  -1 corresponds to a minimum row count of zero.
+        final int minimumDeleteIndex = ROW_DEFAULT_LAYER + 1;
+        final int minimumLastRowIndex = ROW_DEFAULT_LAYER;
+
+        // Delete the selected table row(s).
+        final int referenceIndex = deleteTableRows( minimumDeleteIndex,
+                                                    minimumLastRowIndex );
 
         return referenceIndex;
     }
@@ -356,8 +353,7 @@ public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {
         //  forward this to the main application to sync it and reassign layers.
     }
 
-    public final void setLayerCollection(
-            final ObservableList< LayerProperties > pLayerCollection ) {
+    public final void setLayerCollection( final ObservableList< LayerProperties > pLayerCollection ) {
         // Cache a local copy of the Layer Collection, to act on directly.
         _layerCollection = pLayerCollection;
 

@@ -42,42 +42,64 @@ import com.mhschmieder.jphysics.acoustics.RelativeBandwidth;
 public class OctaveRangeSelector extends TextSelector {
 
     // Default Octave Ranges, for best "out of box" experience.
-    public static final String    OCTAVE_RANGE_WIDE_DEFAULT   =
-                                                            FrequencyRange.OCTAVE_RANGE_WIDE_DEFAULT;
-    public static final String    OCTAVE_RANGE_NARROW_DEFAULT =
-                                                              FrequencyRange.OCTAVE_RANGE_NARROW_DEFAULT;
+    public static final String OCTAVE_RANGE_WIDE_DEFAULT
+            = FrequencyRange.OCTAVE_RANGE_WIDE_DEFAULT;
+    public static final String OCTAVE_RANGE_NARROW_DEFAULT
+            = FrequencyRange.OCTAVE_RANGE_NARROW_DEFAULT;
 
     // List the single wide Octave Range for full frequency spectrum.
-    private static final String[] OCTAVE_RANGES_WIDE          =
-                                                     new String[] { OCTAVE_RANGE_WIDE_DEFAULT };
+    private static final String[] OCTAVE_RANGES_WIDE = new String[] {
+            OCTAVE_RANGE_WIDE_DEFAULT
+    };
 
     // List each narrow Octave Range as a full inclusive range.
-    private static final String[] OCTAVE_RANGES_NARROW        = new String[] {
-                                                                               "20 Hz to 40 Hz",                   //$NON-NLS-1$
-                                                                               "40 Hz to 80 Hz",                   //$NON-NLS-1$
-                                                                               "80 Hz to 160 Hz",                  //$NON-NLS-1$
-                                                                               "160 Hz to 315 Hz",                 //$NON-NLS-1$
-                                                                               "315 Hz to 630 Hz",                 //$NON-NLS-1$
-                                                                               "630 Hz to 1.25 kHz",               //$NON-NLS-1$
-                                                                               "1.25 kHz to 2.5 kHz",              //$NON-NLS-1$
-                                                                               "2.5 kHz to 5 kHz",                 //$NON-NLS-1$
-                                                                               "5 kHz to 10 kHz",                  //$NON-NLS-1$
-                                                                               "10 kHz to 20 kHz"                  //$NON-NLS-1$
+    private static final String[] OCTAVE_RANGES_NARROW = new String[] {
+            "20 Hz to 40 Hz",
+            //$NON-NLS-1$
+            "40 Hz to 80 Hz",
+            //$NON-NLS-1$
+            "80 Hz to 160 Hz",
+            //$NON-NLS-1$
+            "160 Hz to 315 Hz",
+            //$NON-NLS-1$
+            "315 Hz to 630 Hz",
+            //$NON-NLS-1$
+            "630 Hz to 1.25 kHz",
+            //$NON-NLS-1$
+            "1.25 kHz to 2.5 kHz",
+            //$NON-NLS-1$
+            "2.5 kHz to 5 kHz",
+            //$NON-NLS-1$
+            "5 kHz to 10 kHz",
+            //$NON-NLS-1$
+            "10 kHz to 20 kHz"
+            //$NON-NLS-1$
     };
     private static final String[] OCTAVE_RANGES_NARROW_EXTENDED = new String[] {
-                                                                               "10 Hz to 20 Hz",                   //$NON-NLS-1$
-                                                                               "20 Hz to 40 Hz",                   //$NON-NLS-1$
-                                                                               "40 Hz to 80 Hz",                   //$NON-NLS-1$
-                                                                               "80 Hz to 160 Hz",                  //$NON-NLS-1$
-                                                                               "160 Hz to 315 Hz",                 //$NON-NLS-1$
-                                                                               "315 Hz to 630 Hz",                 //$NON-NLS-1$
-                                                                               "630 Hz to 1.25 kHz",               //$NON-NLS-1$
-                                                                               "1.25 kHz to 2.5 kHz",              //$NON-NLS-1$
-                                                                               "2.5 kHz to 5 kHz",                 //$NON-NLS-1$
-                                                                               "5 kHz to 10 kHz",                  //$NON-NLS-1$
-                                                                               "10 kHz to 20 kHz"                  //$NON-NLS-1$
+            "10 Hz to 20 Hz",
+            //$NON-NLS-1$
+            "20 Hz to 40 Hz",
+            //$NON-NLS-1$
+            "40 Hz to 80 Hz",
+            //$NON-NLS-1$
+            "80 Hz to 160 Hz",
+            //$NON-NLS-1$
+            "160 Hz to 315 Hz",
+            //$NON-NLS-1$
+            "315 Hz to 630 Hz",
+            //$NON-NLS-1$
+            "630 Hz to 1.25 kHz",
+            //$NON-NLS-1$
+            "1.25 kHz to 2.5 kHz",
+            //$NON-NLS-1$
+            "2.5 kHz to 5 kHz",
+            //$NON-NLS-1$
+            "5 kHz to 10 kHz",
+            //$NON-NLS-1$
+            "10 kHz to 20 kHz"
+            //$NON-NLS-1$
     };
-    
+
     // Flag for whether to use the low frequency extended range, which goes
     // below the normal human hearing range but might be useful for scientific
     // applications as well as entertainment oriented sound effects.
@@ -95,9 +117,9 @@ public class OctaveRangeSelector extends TextSelector {
                12,
                OCTAVE_RANGE_NARROW_DEFAULT,
                useExtendedRange
-                   ? OCTAVE_RANGES_NARROW_EXTENDED
-                   : OCTAVE_RANGES_NARROW );
-        
+               ? OCTAVE_RANGES_NARROW_EXTENDED
+               : OCTAVE_RANGES_NARROW );
+
         _useExtendedRange = useExtendedRange;
     }
 
@@ -113,19 +135,22 @@ public class OctaveRangeSelector extends TextSelector {
     public final void updateOctaveRangeForBandwidthAndFrequency( final RelativeBandwidth relativeBandwidth,
                                                                  final double centerFrequency ) {
         // Determine and set the correct Octave Ranges to use.
-        final String[] octaveRanges = ( RelativeBandwidth.ONE_OCTAVE.equals( relativeBandwidth )
-                || RelativeBandwidth.THIRD_OCTAVE.equals( relativeBandwidth ) )
-                    ? OCTAVE_RANGES_WIDE
-                    : _useExtendedRange
-                        ? OCTAVE_RANGES_NARROW_EXTENDED
-                        : OCTAVE_RANGES_NARROW;
+        final String[] octaveRanges = ( RelativeBandwidth.ONE_OCTAVE.equals(
+                relativeBandwidth ) || RelativeBandwidth.THIRD_OCTAVE.equals(
+                relativeBandwidth ) )
+                                      ? OCTAVE_RANGES_WIDE
+                                      : _useExtendedRange
+                                        ? OCTAVE_RANGES_NARROW_EXTENDED
+                                        : OCTAVE_RANGES_NARROW;
 
         // Determine which Octave Range contains the current Center Frequency.
-        final String defaultOctaveRange = ( RelativeBandwidth.ONE_OCTAVE.equals( relativeBandwidth )
-                || RelativeBandwidth.THIRD_OCTAVE.equals( relativeBandwidth ) )
-                    ? OCTAVE_RANGE_WIDE_DEFAULT
-                    : FrequencyRange
-                            .getNominalOctaveRangeDefaultForCenterFrequency( centerFrequency );
+        final String defaultOctaveRange = ( RelativeBandwidth.ONE_OCTAVE.equals(
+                relativeBandwidth ) || RelativeBandwidth.THIRD_OCTAVE.equals(
+                relativeBandwidth ) )
+                                          ? OCTAVE_RANGE_WIDE_DEFAULT
+                                          :
+                                          FrequencyRange.getNominalOctaveRangeDefaultForCenterFrequency(
+                                                  centerFrequency );
 
         // Replace the entire list, and re-assert or default the selection.
         updateValues( octaveRanges, defaultOctaveRange, true );

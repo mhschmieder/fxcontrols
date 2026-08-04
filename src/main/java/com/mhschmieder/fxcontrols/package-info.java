@@ -30,9 +30,5 @@
  */
 /**
  * This package contains the fxcontrols Library's highest-level classes.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxcontrols;

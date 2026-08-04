@@ -32,6 +32,11 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.text.NumberFormatUtilities;
 import com.mhschmieder.jcommons.text.TextUtilities;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,11 +47,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
-import org.apache.commons.math3.util.FastMath;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
 
 /**
  * Converts between user-edited strings and {@link Double} values.
@@ -56,103 +56,17 @@ import java.util.Locale;
  * is preemptively monitored for invalid input during typing, and restricts
  * valid input to a specified range when committed.
  */
-public final class DoubleSpinnerStringConverter extends StringConverter< Double > {
-
-    /**
-     * Creates an {@link DoubleSpinnerStringConverter} for the specified
-     * {@link Spinner}.
-     * <p>
-     * Uses the {@link TextField} and minimum and maximum values of the
-     * specified {@link Spinner} for construction, and also sets the new
-     * {@link DoubleSpinnerStringConverter} on its
-     * {@link SpinnerValueFactory.DoubleSpinnerValueFactory}.
-     *
-     * @param doubleSpinner
-     *            The {@link Spinner} to create a
-     *            {@link DoubleSpinnerStringConverter} for
-     * @param valueDescriptor
-     *            The descriptor for the spinner's value category, used mostly
-     *            in tool tips
-     * @param defaultNumericValue
-     *            The default {@link Double} value
-     * @param maximumSpinnerWidth
-     *            The maximum allowed width of the spinner
-     * @param wrapAround
-     *            The flag for whether to wrap from max to min (and vice-versa)
-     * @param numericFormatterPattern
-     *            The specific pattern to apply for the number representation
-     * @param measurementUnitString
-     *            The string representation of the Measurement Unit to tag onto
-     *            the numbers after they've been edited and committed
-     * @param locale
-     *            The locale to use for number formatting
-     * @return The new {@link DoubleSpinnerStringConverter}
-     * @throws NullPointerException
-     *             If {@code spinner} is {@code null}
-     */
-    public static DoubleSpinnerStringConverter createFor( final Spinner< Double > doubleSpinner,
-                                                          final String valueDescriptor,
-                                                          final double defaultNumericValue,
-                                                          final double maximumSpinnerWidth,
-                                                          final boolean wrapAround,
-                                                          final String numericFormatterPattern,
-                                                          final String measurementUnitString,
-                                                          final Locale locale ) {
-        // Use a decimal formatter that defaults to doubles when possible.
-        final NumberFormat numberFormat = NumberFormatUtilities
-                .getUnitDecoratedDecimalFormat( numericFormatterPattern,
-                                                measurementUnitString,
-                                                locale );
-
-        final SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValueFactory =
-                                                                                ( SpinnerValueFactory.DoubleSpinnerValueFactory ) doubleSpinner
-                                                                                        .getValueFactory();
-
-        // NOTE: Java 21 throws an exception for "already bound property"
-        //  if you set the tool tip on the editor rather than on the spinner.
-        final double minimumNumericValue = spinnerValueFactory.getMin();
-        final double maximumNumericValue = spinnerValueFactory.getMax();
-        final String tooltipText = TextUtilities.getValueRangeTooltipText( valueDescriptor,
-                                                                           minimumNumericValue,
-                                                                           maximumNumericValue,
-                                                                           numberFormat );
-        doubleSpinner.setTooltip( new Tooltip( tooltipText ) );
-
-        final TextField editor = doubleSpinner.getEditor();
-        final DoubleSpinnerStringConverter converter =
-                                                     new DoubleSpinnerStringConverter( spinnerValueFactory,
-                                                                                       editor,
-                                                                                       minimumNumericValue,
-                                                                                       maximumNumericValue,
-                                                                                       defaultNumericValue,
-                                                                                       measurementUnitString,
-                                                                                       numberFormat );
-
-        // Apply the string conversions to/from numbers (with units).
-        spinnerValueFactory.setConverter( converter );
-
-        // Honor the wrap-around setting from highest to lowest value.
-        spinnerValueFactory.setWrapAround( wrapAround );
-
-        // Set the attributes and callbacks common to all Number Spinners.
-        ControlUtilities.applySpinnerAttributes(
-                doubleSpinner, tooltipText, maximumSpinnerWidth );
-
-        return converter;
-    }
+public final class DoubleSpinnerStringConverter
+        extends StringConverter< Double > {
 
     private SpinnerValueFactory.DoubleSpinnerValueFactory _spinnerValueFactory;
-    private TextField                                     _editor;
-
-    private Runnable                                      _reset;
-
-    private double                                        _minimumNumericValue;
-    private double                                        _maximumNumericValue;
-    private double                                        _defaultNumericValue;
-
-    private String                                        _measurementUnitString;
-
-    private NumberFormat                                  _numberFormat;
+    private TextField _editor;
+    private Runnable _reset;
+    private double _minimumNumericValue;
+    private double _maximumNumericValue;
+    private double _defaultNumericValue;
+    private String _measurementUnitString;
+    private NumberFormat _numberFormat;
 
     /**
      * Creates an {@link DoubleSpinnerStringConverter}.
@@ -160,7 +74,8 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * Swallows {@link NumberFormatException} but does nothing in response until
      * {@link #setReset} is defined.
      */
-    public DoubleSpinnerStringConverter() {}
+    public DoubleSpinnerStringConverter() {
+    }
 
     /**
      * Creates an {@link DoubleSpinnerStringConverter} with an textField reset
@@ -168,9 +83,8 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * <p>
      * Specifying {@code null} has the same effect as the default constructor.
      *
-     * @param reset
-     *            The {@link Runnable} to call upon
-     *            {@link NumberFormatException}
+     * @param reset The {@link Runnable} to call upon
+     *              {@link NumberFormatException}
      */
     public DoubleSpinnerStringConverter( final Runnable reset ) {
         _reset = reset;
@@ -181,29 +95,25 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * range.
      * <p>
      * Preemptively monitors {@code textField} to reject any invalid characters
-     * during typing, restricts {@code textField} to [{@code minimumNumericValue},
-     * {@code maximumNumericValue}] (inclusive) when valid text is committed,
-     * and resets {@code textField} to the default value when invalid text is
-     * committed.
+     * during typing, restricts {@code textField} to
+     * [{@code minimumNumericValue}, {@code maximumNumericValue}] (inclusive)
+     * when valid text is committed, and resets {@code textField} to the default
+     * value when invalid text is committed.
      *
-     * @param spinnerValueFactory
-     *            The {@link SpinnerValueFactory} that regulates the supported
-     *            value list for the associated {@link Spinner}
-     * @param textField
-     *            The {@link TextField} providing user-edited strings
-     * @param minimumNumericValue
-     *            The smallest valid {@link Double} value
-     * @param maximumNumericValue
-     *            The greatest valid {@link Double} value
-     * @param defaultNumericValue
-     *            The default {@link Double} value
-     * @param measurementUnitString
-     *            The string representation of the Measurement Unit to tag onto
-     *            the numbers after they've been edited and committed
-     * @param numberFormat
-     *            The number formatter to apply for the number representation
-     * @throws NullPointerException
-     *             If {@code textField} is {@code null}
+     * @param spinnerValueFactory   The {@link SpinnerValueFactory} that
+     *                              regulates the supported value list for the
+     *                              associated {@link Spinner}
+     * @param textField             The {@link TextField} providing user-edited
+     *                              strings
+     * @param minimumNumericValue   The smallest valid {@link Double} value
+     * @param maximumNumericValue   The greatest valid {@link Double} value
+     * @param defaultNumericValue   The default {@link Double} value
+     * @param measurementUnitString The string representation of the Measurement
+     *                              Unit to tag onto the numbers after they've
+     *                              been edited and committed
+     * @param numberFormat          The number formatter to apply for the number
+     *                              representation
+     * @throws NullPointerException If {@code textField} is {@code null}
      */
     public DoubleSpinnerStringConverter( final SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValueFactory,
                                          final TextField textField,
@@ -213,7 +123,8 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
                                          final String measurementUnitString,
                                          final NumberFormat numberFormat ) {
         if ( spinnerValueFactory == null ) {
-            throw new NullPointerException( "spinnerValueFactory" ); //$NON-NLS-1$
+            throw new NullPointerException( "spinnerValueFactory" ); //$NON
+            // -NLS-1$
         }
 
         if ( textField == null ) {
@@ -230,10 +141,15 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         _measurementUnitString = measurementUnitString;
         _numberFormat = numberFormat;
 
-        _reset = () -> _editor.setText( Double.toString( _defaultNumericValue ) );
+        _reset
+                =
+                () -> _editor.setText( Double.toString( _defaultNumericValue ) );
 
         // Restrict keyboard input to numerals, sign, and delimiters.
-        final String allowedCharacters = ( _minimumNumericValue < 0 ) ? "[0-9.,-]" : "[0-9.,]"; //$NON-NLS-1$ //$NON-NLS-2$
+        final String allowedCharacters = ( _minimumNumericValue < 0 )
+                                         ? "[0-9.,-]"
+                                         : "[0-9.,]"; //$NON-NLS-1$
+        // $NON-NLS-2$
         _editor.addEventFilter( KeyEvent.KEY_TYPED, keyEvent -> {
             if ( !keyEvent.getCharacter().matches( allowedCharacters ) ) {
                 keyEvent.consume();
@@ -241,46 +157,56 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         } );
 
         // Restrict direct input to valid numerical characters.
-        _editor.textProperty().addListener( ( observableValue, oldValue, newValue ) -> {
-            // Return with old value vs. penalizing user for internal errors.
-            if ( ( newValue == null ) || newValue.trim().isEmpty() ) {
-                Platform.runLater( () -> _editor.setText( oldValue ) );
-                return;
-            }
+        _editor.textProperty()
+               .addListener( ( observableValue, oldValue, newValue ) -> {
+                   // Return with old value vs. penalizing user for internal
+                   // errors.
+                   if ( ( newValue == null ) || newValue.trim().isEmpty() ) {
+                       Platform.runLater( () -> _editor.setText( oldValue ) );
+                       return;
+                   }
 
-            // Handle differences in behavior for negative values allowed.
-            if ( ( _minimumNumericValue < 0.0d ) ) {
-                // Special case: minus sign if negative values allowed.
-                if ( newValue.endsWith( "-" ) ) { //$NON-NLS-1$
-                    if ( newValue.length() > 1 ) {
-                        Platform.runLater( () -> _editor.setText( "-" ) ); //$NON-NLS-1$
-                    }
-                    return;
-                }
-            }
+                   // Handle differences in behavior for negative values
+                   // allowed.
+                   if ( ( _minimumNumericValue < 0.0d ) ) {
+                       // Special case: minus sign if negative values allowed.
+                       if ( newValue.endsWith( "-" ) ) { //$NON-NLS-1$
+                           if ( newValue.length() > 1 ) {
+                               Platform.runLater( () -> _editor.setText( "-" ) ); //$NON-NLS-1$
+                           }
+                           return;
+                       }
+                   }
 
-            // Revert to oldValue if newValue cannot be parsed.
-            // TODO: Review whether this should be removed, as we do validity
-            // checks at the time edits are committed and that may be enough.
-            try {
-                _numberFormat.parse( newValue );
-            }
-            catch ( final ParseException pe ) {
-                final int measurementUnitIndex = newValue.indexOf( _measurementUnitString );
-                try {
-                    final String numericString = ( measurementUnitIndex < 0 )
-                        ? newValue
-                        : newValue.substring( 0, measurementUnitIndex + 1 );
-                    Double.parseDouble( numericString );
-                }
-                catch ( final Exception e ) {
-                    Platform.runLater( () -> _editor.setText( oldValue ) );
-                }
-            }
-        } );
+                   // Revert to oldValue if newValue cannot be parsed.
+                   // TODO: Review whether this should be removed, as we do
+                   //  validity
+                   // checks at the time edits are committed and that may be
+                   // enough.
+                   try {
+                       _numberFormat.parse( newValue );
+                   }
+                   catch ( final ParseException pe ) {
+                       final int measurementUnitIndex = newValue.indexOf(
+                               _measurementUnitString );
+                       try {
+                           final String numericString = ( measurementUnitIndex
+                                                          < 0 )
+                                                        ? newValue
+                                                        : newValue.substring( 0,
+                                                                              measurementUnitIndex
+                                                                              + 1 );
+                           Double.parseDouble( numericString );
+                       }
+                       catch ( final Exception e ) {
+                           Platform.runLater( () -> _editor.setText( oldValue ) );
+                       }
+                   }
+               } );
 
         // Validate committed input and restrict to legal range.
-        final EventHandler< ActionEvent > defaultHandler = _editor.getOnAction();
+        final EventHandler< ActionEvent > defaultHandler
+                = _editor.getOnAction();
         _editor.setOnAction( evt -> {
             // Clamp the committed value to the allowed range.
             clampValue();
@@ -293,62 +219,147 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
 
         // When focus is lost, commit the changes; otherwise strip the unit.
         // NOTE: This callback is for manual edits, after they are committed.
-        _editor.focusedProperty().addListener( ( observableValue, wasFocused, isNowFocused ) -> {
-            if ( !isNowFocused ) {
-                // Save edits from the Text Field to the property bean. Commit
-                // the current selection as-is, or focus gets frozen.
-                _editor.commitValue();
+        _editor.focusedProperty()
+               .addListener( ( observableValue, wasFocused, isNowFocused ) -> {
+                   if ( !isNowFocused ) {
+                       // Save edits from the Text Field to the property bean
+                       // . Commit
+                       // the current selection as-is, or focus gets frozen.
+                       _editor.commitValue();
 
-                // Clamp the committed value to the allowed range.
-                clampValue();
-            }
-        } );
+                       // Clamp the committed value to the allowed range.
+                       clampValue();
+                   }
+               } );
 
         // Unfortunately, it is up to us to commit edits from TAB focus.
         _editor.setOnKeyPressed( keyEvent -> {
             final KeyCode keyCode = keyEvent.getCode();
             switch ( keyCode ) {
-            case ENTER:
-                // Commit the current selection as-is, or focus gets frozen.
-                _editor.commitValue();
+                case ENTER:
+                    // Commit the current selection as-is, or focus gets frozen.
+                    _editor.commitValue();
 
-                // Clamp the committed value to the allowed range.
-                clampValue();
+                    // Clamp the committed value to the allowed range.
+                    clampValue();
 
-                break;
-            case ESCAPE:
-                // Revert to the previous selection.
-                // NOTE: This code may never be reached; ESC must be caught at
-                // a higher level and consumed. Need to debug to see if called.
-                _editor.cancelEdit();
+                    break;
+                case ESCAPE:
+                    // Revert to the previous selection.
+                    // NOTE: This code may never be reached; ESC must be
+                    // caught at
+                    // a higher level and consumed. Need to debug to see if
+                    // called.
+                    _editor.cancelEdit();
 
-                // Try to force the previous value to reassert and display.
-                Platform.runLater( () -> {
-                    final Double canceledValue = getRestrictedValue();
-                    spinnerValueFactory.setValue( canceledValue );
-                } );
+                    // Try to force the previous value to reassert and display.
+                    Platform.runLater( () -> {
+                        final Double canceledValue = getRestrictedValue();
+                        spinnerValueFactory.setValue( canceledValue );
+                    } );
 
-                break;
-            case TAB:
-                // Commit the current selection as-is, or focus gets frozen.
-                _editor.commitValue();
+                    break;
+                case TAB:
+                    // Commit the current selection as-is, or focus gets frozen.
+                    _editor.commitValue();
 
-                // Clamp the committed value to the allowed range.
-                clampValue();
+                    // Clamp the committed value to the allowed range.
+                    clampValue();
 
-                break;
-            // $CASES-OMITTED$
-            default:
-                break;
+                    break;
+                // $CASES-OMITTED$
+                default:
+                    break;
             }
         } );
+    }
+
+    /**
+     * Creates an {@link DoubleSpinnerStringConverter} for the specified
+     * {@link Spinner}.
+     * <p>
+     * Uses the {@link TextField} and minimum and maximum values of the
+     * specified {@link Spinner} for construction, and also sets the new
+     * {@link DoubleSpinnerStringConverter} on its
+     * {@link SpinnerValueFactory.DoubleSpinnerValueFactory}.
+     *
+     * @param doubleSpinner           The {@link Spinner} to create a
+     *                                {@link DoubleSpinnerStringConverter} for
+     * @param valueDescriptor         The descriptor for the spinner's value
+     *                                category, used mostly in tool tips
+     * @param defaultNumericValue     The default {@link Double} value
+     * @param maximumSpinnerWidth     The maximum allowed width of the spinner
+     * @param wrapAround              The flag for whether to wrap from max to
+     *                                min (and vice-versa)
+     * @param numericFormatterPattern The specific pattern to apply for the
+     *                                number representation
+     * @param measurementUnitString   The string representation of the
+     *                                Measurement Unit to tag onto the numbers
+     *                                after they've been edited and committed
+     * @param locale                  The locale to use for number formatting
+     * @return The new {@link DoubleSpinnerStringConverter}
+     * @throws NullPointerException If {@code spinner} is {@code null}
+     */
+    public static DoubleSpinnerStringConverter createFor( final Spinner< Double > doubleSpinner,
+                                                          final String valueDescriptor,
+                                                          final double defaultNumericValue,
+                                                          final double maximumSpinnerWidth,
+                                                          final boolean wrapAround,
+                                                          final String numericFormatterPattern,
+                                                          final String measurementUnitString,
+                                                          final Locale locale ) {
+        // Use a decimal formatter that defaults to doubles when possible.
+        final NumberFormat numberFormat
+                = NumberFormatUtilities.getUnitDecoratedDecimalFormat(
+                numericFormatterPattern,
+                measurementUnitString,
+                locale );
+
+        final SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValueFactory
+                =
+                ( SpinnerValueFactory.DoubleSpinnerValueFactory ) doubleSpinner.getValueFactory();
+
+        // NOTE: Java 21 throws an exception for "already bound property"
+        //  if you set the tool tip on the editor rather than on the spinner.
+        final double minimumNumericValue = spinnerValueFactory.getMin();
+        final double maximumNumericValue = spinnerValueFactory.getMax();
+        final String tooltipText = TextUtilities.getValueRangeTooltipText(
+                valueDescriptor,
+                minimumNumericValue,
+                maximumNumericValue,
+                numberFormat );
+        doubleSpinner.setTooltip( new Tooltip( tooltipText ) );
+
+        final TextField editor = doubleSpinner.getEditor();
+        final DoubleSpinnerStringConverter converter
+                = new DoubleSpinnerStringConverter( spinnerValueFactory,
+                                                    editor,
+                                                    minimumNumericValue,
+                                                    maximumNumericValue,
+                                                    defaultNumericValue,
+                                                    measurementUnitString,
+                                                    numberFormat );
+
+        // Apply the string conversions to/from numbers (with units).
+        spinnerValueFactory.setConverter( converter );
+
+        // Honor the wrap-around setting from highest to lowest value.
+        spinnerValueFactory.setWrapAround( wrapAround );
+
+        // Set the attributes and callbacks common to all Number Spinners.
+        ControlUtilities.applySpinnerAttributes( doubleSpinner,
+                                                 tooltipText,
+                                                 maximumSpinnerWidth );
+
+        return converter;
     }
 
     public void clampValue() {
         final double restrictedValue = getRestrictedValue();
 
         try {
-            final String restrictedString = _numberFormat.format( restrictedValue );
+            final String restrictedString = _numberFormat.format(
+                    restrictedValue );
             Platform.runLater( () -> _editor.setText( restrictedString ) );
         }
         catch ( final Exception e ) {
@@ -366,56 +377,10 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         } );
     }
 
-    /**
-     * Converts the specified {@link String} into its {@link Double} value.
-     * <p>
-     * A {@code null}, empty, or otherwise invalid argument returns zero and
-     * also executes the textField reset callback, if any.
-     *
-     * @param stringValue
-     *            The {@link String} to convert
-     * @return The {@link Double} value of {@code stringValue}
-     * @see #setReset
-     */
-    @Override
-    public Double fromString( final String stringValue ) {
-        // Return with default value vs. penalizing user for internal errors.
-        final double defaultValue = _defaultNumericValue;
-        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
-            return defaultValue;
-        }
-
-        // If the user typed a formatted number with units, parse it exactly;
-        // otherwise strip the units and try to directly convert the string to a
-        // double.
-        double newValue = defaultValue;
-        try {
-            final Number numericValue = _numberFormat.parse( stringValue );
-            newValue = numericValue.doubleValue();
-        }
-        catch ( final ParseException pe ) {
-            final int measurementUnitIndex = stringValue.indexOf( _measurementUnitString );
-            try {
-                final String numericString = ( measurementUnitIndex < 0 )
-                    ? stringValue
-                    : stringValue.substring( 0, measurementUnitIndex + 1 );
-                newValue = Double.parseDouble( numericString );
-            }
-            catch ( final Exception e ) {
-                if ( _reset != null ) {
-                    _reset.run();
-                }
-            }
-        }
-
-        // If limits were established, enforce them by range-checking and
-        // restricting the parsed or defaulted value. Always check though, to
-        // avoid overflow and underflow conditions.
-        return getClampedValue( newValue );
-    }
-
     public double getClampedValue( final double unclampedValue ) {
-        return Math.clamp( unclampedValue, _minimumNumericValue, _maximumNumericValue );
+        return Math.clamp( unclampedValue,
+                           _minimumNumericValue,
+                           _maximumNumericValue );
     }
 
     public double getRestrictedValue() {
@@ -429,14 +394,12 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * <p>
      * Specify {@code null} to clear a previously set {@link Runnable}. When
      * creating an {@link DoubleSpinnerStringConverter} for a {@link TextField}
-     * or
-     * {@link Spinner}, this callback is automatically defined to reset
+     * or {@link Spinner}, this callback is automatically defined to reset
      * committed invalid input to the closest value to zero within the legal
      * range. Setting a different callback will overwrite this functionality.
      *
-     * @param reset
-     *            The {@link Runnable} to call upon
-     *            {@link NumberFormatException}
+     * @param reset The {@link Runnable} to call upon
+     *              {@link NumberFormatException}
      * @see #fromString
      */
     public void setReset( final Runnable reset ) {
@@ -448,8 +411,7 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
      * <p>
      * A {@code null} argument is converted into the default value.
      *
-     * @param doubleValue
-     *            The {@link Double} to convert
+     * @param doubleValue The {@link Double} to convert
      * @return The {@link String} form of {@code doubleValue}
      */
     @Override
@@ -470,4 +432,53 @@ public final class DoubleSpinnerStringConverter extends StringConverter< Double 
         return stringValue;
     }
 
+    /**
+     * Converts the specified {@link String} into its {@link Double} value.
+     * <p>
+     * A {@code null}, empty, or otherwise invalid argument returns zero and
+     * also executes the textField reset callback, if any.
+     *
+     * @param stringValue The {@link String} to convert
+     * @return The {@link Double} value of {@code stringValue}
+     * @see #setReset
+     */
+    @Override
+    public Double fromString( final String stringValue ) {
+        // Return with default value vs. penalizing user for internal errors.
+        final double defaultValue = _defaultNumericValue;
+        if ( ( stringValue == null ) || stringValue.trim().isEmpty() ) {
+            return defaultValue;
+        }
+
+        // If the user typed a formatted number with units, parse it exactly;
+        // otherwise strip the units and try to directly convert the string to a
+        // double.
+        double newValue = defaultValue;
+        try {
+            final Number numericValue = _numberFormat.parse( stringValue );
+            newValue = numericValue.doubleValue();
+        }
+        catch ( final ParseException pe ) {
+            final int measurementUnitIndex = stringValue.indexOf(
+                    _measurementUnitString );
+            try {
+                final String numericString = ( measurementUnitIndex < 0 )
+                                             ? stringValue
+                                             : stringValue.substring( 0,
+                                                                      measurementUnitIndex
+                                                                      + 1 );
+                newValue = Double.parseDouble( numericString );
+            }
+            catch ( final Exception e ) {
+                if ( _reset != null ) {
+                    _reset.run();
+                }
+            }
+        }
+
+        // If limits were established, enforce them by range-checking and
+        // restricting the parsed or defaulted value. Always check though, to
+        // avoid overflow and underflow conditions.
+        return getClampedValue( newValue );
+    }
 }

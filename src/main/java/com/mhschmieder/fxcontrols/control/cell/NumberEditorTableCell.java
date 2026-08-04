@@ -31,19 +31,20 @@
 package com.mhschmieder.fxcontrols.control.cell;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import javafx.geometry.Pos;
 
 import java.text.NumberFormat;
 import java.util.List;
 
+import javafx.geometry.Pos;
+
 public abstract class NumberEditorTableCell< RT, Number >
         extends EditorTableCell< RT, Number > {
 
-    // Maintain a reference to the Measurement Unit label (can be blank).
-    @SuppressWarnings("nls") protected String _measurementUnit = "";
-
     // Cache a number formatter for displaying the numeric values.
-    protected final NumberFormat              _numberFormat;
+    protected final NumberFormat _numberFormat;
+    // Maintain a reference to the Measurement Unit label (can be blank).
+    @SuppressWarnings( "nls" )
+    protected String _measurementUnit = "";
 
     public NumberEditorTableCell( final boolean pAllowedToBeBlank,
                                   final ClientProperties pClientProperties ) {
@@ -60,9 +61,23 @@ public abstract class NumberEditorTableCell< RT, Number >
         setAlignment( Pos.CENTER );
 
         // Make sure we show the numbers in the user's locale.
-        _numberFormat = NumberFormat.getNumberInstance( pClientProperties.locale );
+        _numberFormat
+                = NumberFormat.getNumberInstance( pClientProperties.locale );
         _numberFormat.setMinimumFractionDigits( 0 );
         _numberFormat.setMinimumIntegerDigits( 1 );
+    }
+
+    @Override
+    public Number getAdjustedValue( final Number unadjustedValue ) {
+        // If blank text is allowed, return the input unadjusted; otherwise trim
+        // the edited value to make it legal, and to avoid confusing the user.
+        // TODO: Think out all the edge cases and what to do, such as blank
+        //  trim.
+        final Number adjustedValue = blankTextAllowed
+                                     ? unadjustedValue
+                                     : adjustPrecision( unadjustedValue );
+
+        return adjustedValue;
     }
 
     @Override
@@ -77,18 +92,6 @@ public abstract class NumberEditorTableCell< RT, Number >
         }
     }
 
-    @Override
-    public Number getAdjustedValue( final Number unadjustedValue ) {
-        // If blank text is allowed, return the input unadjusted; otherwise trim
-        // the edited value to make it legal, and to avoid confusing the user.
-        // TODO: Think out all the edge cases and what to do, such as blank trim.
-        final Number adjustedValue = blankTextAllowed 
-                ? unadjustedValue 
-                : adjustPrecision( unadjustedValue );
-
-        return adjustedValue;
-    }
-    
     protected Number adjustPrecision( final Number unadjustedValue ) {
         // NOTE: There is nothing to do by default, but some derivations may
         //  need to supply type-specific overrides in a domain context.

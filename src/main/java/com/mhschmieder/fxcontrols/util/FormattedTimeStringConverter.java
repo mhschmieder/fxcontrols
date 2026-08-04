@@ -31,8 +31,9 @@
 package com.mhschmieder.fxcontrols.util;
 
 import com.mhschmieder.jcommons.time.TimeUtilities;
-import javafx.util.StringConverter;
 import org.apache.commons.math3.util.FastMath;
+
+import javafx.util.StringConverter;
 
 public class FormattedTimeStringConverter extends StringConverter< Number > {
 
@@ -40,13 +41,12 @@ public class FormattedTimeStringConverter extends StringConverter< Number > {
     public String toString( final Number object ) {
         // Convert the seconds total to "HHH:MM:SS" format.
         final long totalSeconds = ( long ) FastMath.floor( ( double ) object );
-        return TimeUtilities.secondsToFormattedHoursMinutesSeconds(
-                totalSeconds );
+        return TimeUtilities.secondsToFormattedHoursMinutesSeconds( totalSeconds );
     }
 
     @Override
     public Number fromString( final String label ) {
-        return Double.valueOf( TimeUtilities
-                .secondsFromFormattedHoursMinutesSeconds( label ) );
+        return Double.valueOf( TimeUtilities.secondsFromFormattedHoursMinutesSeconds(
+                label ) );
     }
 }

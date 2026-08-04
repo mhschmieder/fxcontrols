@@ -54,50 +54,53 @@ public final class SplPaletteChoices {
 
     // Default constructor
     public SplPaletteChoices( final ClientProperties clientProperties ) {
-        _splPaletteColors256Choice = LabeledActionFactory
-                .getSplPaletteColors256Choice( clientProperties );
-        _splPaletteColors64Choice = LabeledActionFactory
-                .getSplPaletteColors64Choice( clientProperties );
-        _splPaletteColor1dbChoice = LabeledActionFactory
-                .getSplPaletteColor1dbChoice( clientProperties );
-        _splPaletteColor2dbChoice = LabeledActionFactory
-                .getSplPaletteColor2dbChoice( clientProperties );
-        _splPaletteColor3dbChoice = LabeledActionFactory
-                .getSplPaletteColor3dbChoice( clientProperties );
+        _splPaletteColors256Choice
+                = LabeledActionFactory.getSplPaletteColors256Choice(
+                clientProperties );
+        _splPaletteColors64Choice
+                = LabeledActionFactory.getSplPaletteColors64Choice(
+                clientProperties );
+        _splPaletteColor1dbChoice
+                = LabeledActionFactory.getSplPaletteColor1dbChoice(
+                clientProperties );
+        _splPaletteColor2dbChoice
+                = LabeledActionFactory.getSplPaletteColor2dbChoice(
+                clientProperties );
+        _splPaletteColor3dbChoice
+                = LabeledActionFactory.getSplPaletteColor3dbChoice(
+                clientProperties );
     }
 
     public Collection< Action > getSplPaletteChoiceCollection() {
-        final Collection< Action > splPaletteChoiceCollection = Arrays
-                .asList( _splPaletteColors256Choice,
-                         _splPaletteColors64Choice,
-                         _splPaletteColor1dbChoice,
-                         _splPaletteColor2dbChoice,
-                         _splPaletteColor3dbChoice );
+        final Collection< Action > splPaletteChoiceCollection = Arrays.asList(
+                _splPaletteColors256Choice,
+                _splPaletteColors64Choice,
+                _splPaletteColor1dbChoice,
+                _splPaletteColor2dbChoice,
+                _splPaletteColor3dbChoice );
         return splPaletteChoiceCollection;
     }
 
-    public void setSplPaletteResolution(
-            final SplPaletteResolution splPaletteResolution ) {
+    public void setSplPaletteResolution( final SplPaletteResolution splPaletteResolution ) {
         switch ( splPaletteResolution ) {
-        case RES_256:
-            _splPaletteColors256Choice.setSelected( true );
-            break;
-        case RES_64:
-            _splPaletteColors64Choice.setSelected( true );
-            break;
-        case RES_1DB:
-            _splPaletteColor1dbChoice.setSelected( true );
-            break;
-        case RES_2DB:
-            _splPaletteColor2dbChoice.setSelected( true );
-            break;
-        case RES_3DB:
-            _splPaletteColor3dbChoice.setSelected( true );
-            break;
-        default:
-            _splPaletteColors64Choice.setSelected( true );
-            break;
+            case RES_256:
+                _splPaletteColors256Choice.setSelected( true );
+                break;
+            case RES_64:
+                _splPaletteColors64Choice.setSelected( true );
+                break;
+            case RES_1DB:
+                _splPaletteColor1dbChoice.setSelected( true );
+                break;
+            case RES_2DB:
+                _splPaletteColor2dbChoice.setSelected( true );
+                break;
+            case RES_3DB:
+                _splPaletteColor3dbChoice.setSelected( true );
+                break;
+            default:
+                _splPaletteColors64Choice.setSelected( true );
+                break;
         }
     }
-
 }

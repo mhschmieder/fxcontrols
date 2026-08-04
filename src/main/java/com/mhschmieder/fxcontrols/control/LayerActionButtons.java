@@ -47,5 +47,4 @@ public final class LayerActionButtons {
     public void setLayerDeleteEnabled( final boolean layerDeleteEnabled ) {
         _deleteButton.setDisable( !layerDeleteEnabled );
     }
-
 }

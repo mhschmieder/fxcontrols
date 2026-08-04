@@ -31,6 +31,16 @@
 package com.mhschmieder.fxcontrols.action;
 
 import com.mhschmieder.fxcontrols.control.MenuUtilities;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionCheck;
+import org.controlsfx.control.action.ActionGroup;
+import org.controlsfx.control.action.ActionUtils;
+import org.controlsfx.tools.Duplicatable;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ObjectBinding;
 import javafx.collections.ListChangeListener;
@@ -46,43 +56,36 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.control.action.ActionCheck;
-import org.controlsfx.control.action.ActionGroup;
-import org.controlsfx.control.action.ActionUtils;
-import org.controlsfx.tools.Duplicatable;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * These are wrappers around the ControlsFX ActionUtils methods, taking care of
  * any extended behavior unique to xAction and XActionGroup while delegating the
  * normal handling to the existing methods in ControlsFX, when possible.
- * 
+ * <p>
  * NOTE: Most of this code is identical as there is very little behavior to add
  * for XAction and XActionGroup, but unfortunately much of the ActionUtil class
- * is Private API, so there was no way to extend behavior via nested invocation.
+ * is Private API, so there was no way to extend behavior via nested
+ * invocation.
  */
 public final class XActionUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private XActionUtilities() {}
+    private XActionUtilities() {
+    }
 
     /**
      * Takes the provided {@link XAction} and returns a {@link MenuItem}
      * instance with all relevant properties bound to the properties of the
      * Action.
      * <p>
-     * NOTE: This is a revision of the method in ControlsFX ActionUtils, as
-     * we need to extend coverage for RadioMenuItem needs.
+     * NOTE: This is a revision of the method in ControlsFX ActionUtils, as we
+     * need to extend coverage for RadioMenuItem needs.
      *
-     * @param action
-     *            The {@link XAction} that the {@link MenuItem} should bind
-     *            to.
+     * @param action The {@link XAction} that the {@link MenuItem} should bind
+     *               to.
      * @return A {@link MenuItem} that is bound to the state of the provided
      *         {@link Action}
      */
@@ -90,10 +93,13 @@ public final class XActionUtilities {
         // NOTE: This is messy logic because we cannot yet use annotation alone
         // in order to distinguish the required type of Menu Item to return.
         // Preferably we would use a switch statement for the Action Verb cases.
-        final MenuItem menuItem = ( action.getClass().isAnnotationPresent( ActionCheck.class )
-                || action.isCheck() || action.isToggle() )
-                    ? new CheckMenuItem()
-                    : action.isChoice() ? new RadioMenuItem() : new MenuItem();
+        final MenuItem menuItem = ( action.getClass()
+                                          .isAnnotationPresent( ActionCheck.class )
+                                    || action.isCheck() || action.isToggle() )
+                                  ? new CheckMenuItem()
+                                  : action.isChoice()
+                                    ? new RadioMenuItem()
+                                    : new MenuItem();
 
         return configure( menuItem, action );
     }
@@ -103,10 +109,9 @@ public final class XActionUtilities {
      * with all relevant properties bound to the properties of the Action.
      * <p>
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-     *  extend coverage for ActionGroup needs in the enhanced configure() call.
+     * extend coverage for ActionGroup needs in the enhanced configure() call.
      *
-     * @param action
-     *            The {@link Action} that the {@link Menu} should bind to.
+     * @param action The {@link Action} that the {@link Menu} should bind to.
      * @return A {@link Menu} that is bound to the state of the provided
      *         {@link Action}
      */
@@ -123,8 +128,8 @@ public final class XActionUtilities {
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
      * extend coverage for ActionGroup needs.
      *
-     * @param actions
-     *            The {@link Action actions} to place on the {@link MenuBar}.
+     * @param actions The {@link Action actions} to place on the
+     *                {@link MenuBar}.
      * @return A {@link MenuBar} that contains {@link Node nodes} which are
      *         bound to the state of the provided {@link Action}
      */
@@ -141,10 +146,9 @@ public final class XActionUtilities {
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
      * extend coverage for ActionGroup needs.
      *
-     * @param menuBar
-     *            The {@link MenuBar menuBar} to update
-     * @param actions
-     *            The {@link Action actions} to place on the {@link MenuBar}.
+     * @param menuBar The {@link MenuBar menuBar} to update
+     * @param actions The {@link Action actions} to place on the
+     *                {@link MenuBar}.
      * @return A {@link MenuBar} that contains {@link Node nodes} which are
      *         bound to the state of the provided {@link Action}
      */
@@ -152,8 +156,8 @@ public final class XActionUtilities {
                                          final Collection< ? extends Action > actions ) {
         menuBar.getMenus().clear();
         for ( final Action action : actions ) {
-            if ( ( action == ActionUtils.ACTION_SEPARATOR )
-                    || ( action == ActionUtils.ACTION_SPAN ) ) {
+            if ( ( action == ActionUtils.ACTION_SEPARATOR ) || ( action
+                                                                 == ActionUtils.ACTION_SPAN ) ) {
                 continue;
             }
 
@@ -163,7 +167,8 @@ public final class XActionUtilities {
                 // Nothing to do here, but we want to avoid errors.
             }
             else if ( action instanceof ActionGroup ) {
-                menu.getItems().addAll( toMenuItems( ( ( ActionGroup ) action ).getActions() ) );
+                menu.getItems()
+                    .addAll( toMenuItems( ( ( ActionGroup ) action ).getActions() ) );
             }
             else {
                 // Nothing to do here, but we want to avoid errors.
@@ -184,13 +189,13 @@ public final class XActionUtilities {
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
      * extend coverage for ActionGroup needs.
      *
-     * @param actions
-     *            The {@link Action actions} to place on the
-     *            {@link ContextMenu}.
+     * @param actions The {@link Action actions} to place on the
+     *                {@link ContextMenu}.
      * @return A {@link ContextMenu} that contains {@link Node nodes} which are
      *         bound to the state of the provided {@link Action}
      */
-    public static ContextMenu createContextMenu( final Collection< ? extends Action > actions ) {
+    public static ContextMenu createContextMenu( final Collection< ?
+            extends Action > actions ) {
         return updateContextMenu( new ContextMenu(), actions );
     }
 
@@ -203,24 +208,25 @@ public final class XActionUtilities {
      * NOTE: This is a revision of the method in ControlsFX ActionUtils, to
      * extend coverage for ActionGroup needs.
      *
-     * @param menu
-     *            The {@link ContextMenu menu} to update
-     * @param actions
-     *            The {@link Action actions} to place on the
-     *            {@link ContextMenu}.
+     * @param menu    The {@link ContextMenu menu} to update
+     * @param actions The {@link Action actions} to place on the
+     *                {@link ContextMenu}.
      * @return A {@link ContextMenu} that contains {@link Node nodes} which are
      *         bound to the state of the provided {@link Action}
      */
     public static ContextMenu updateContextMenu( final ContextMenu menu,
-                                                 final Collection< ? extends Action > actions ) {
+                                                 final Collection< ?
+                                                         extends Action > actions ) {
         menu.getItems().clear();
         menu.getItems().addAll( toMenuItems( actions ) );
         return menu;
     }
 
     // NOTE: This is a revision of the method in ControlsFX ActionUtils, to
-    //  extend coverage for RadioMenuItem needs, including Menu Item ToggleGroups.
-    private static Collection< MenuItem > toMenuItems( final Collection< ? extends Action > actions ) {
+    //  extend coverage for RadioMenuItem needs, including Menu Item
+    //  ToggleGroups.
+    private static Collection< MenuItem > toMenuItems( final Collection< ?
+            extends Action > actions ) {
         final Collection< MenuItem > items = new ArrayList<>( actions.size() );
 
         for ( final Action action : actions ) {
@@ -231,11 +237,12 @@ public final class XActionUtilities {
             if ( action == null ) {
                 continue;
             }
-            
+
             if ( action instanceof XActionGroup ) {
                 final Menu menu = createMenu( action );
                 final XActionGroup actionGroup = ( XActionGroup ) action;
-                final Collection< MenuItem > menuItems = toMenuItems( actionGroup.getActions() );
+                final Collection< MenuItem > menuItems = toMenuItems(
+                        actionGroup.getActions() );
                 if ( actionGroup.isChoiceGroup() ) {
                     // Set the Toggle Group for the Choice Group of Menu Items.
                     MenuUtilities.setToggleGroup( menuItems );
@@ -246,22 +253,29 @@ public final class XActionUtilities {
             else if ( action instanceof ActionGroup ) {
                 final Menu menu = ActionUtils.createMenu( action );
 
-                // Make sure the mnemonic is used to underline a character vs. printing
+                // Make sure the mnemonic is used to underline a character vs
+                // . printing
                 // as a separate literal character.
                 menu.setMnemonicParsing( true );
 
-                final Collection< MenuItem > menuItems = toMenuItems( ( ( ActionGroup ) action )
-                        .getActions() );
+                final Collection< MenuItem > menuItems
+                        =
+                        toMenuItems( ( ( ActionGroup ) action ).getActions() );
                 menu.getItems().addAll( menuItems );
                 items.add( menu );
             }
-            else if ( ActionUtils.ACTION_SEPARATOR.toString().equals( action.toString() ) ) {
-                // This code is unreachable unless we check it before instanceof.
+            else if ( ActionUtils.ACTION_SEPARATOR.toString()
+                                                  .equals( action.toString() ) ) {
+                // This code is unreachable unless we check it before
+                // instanceof.
                 items.add( new SeparatorMenuItem() );
             }
-            else if ( ActionUtils.ACTION_SPAN.toString().equals( action.toString() ) ) {
-                // This code is unreachable unless we check it before instanceof.
-                // NOTE: Nothing to do here yet, but we want to avoid future errors.
+            else if ( ActionUtils.ACTION_SPAN.toString()
+                                             .equals( action.toString() ) ) {
+                // This code is unreachable unless we check it before
+                // instanceof.
+                // NOTE: Nothing to do here yet, but we want to avoid future
+                // errors.
             }
             else if ( action instanceof XAction ) {
                 final MenuItem menuItem = createMenuItem( ( XAction ) action );
@@ -270,7 +284,8 @@ public final class XActionUtilities {
             else if ( action instanceof Action ) {
                 final MenuItem menuItem = ActionUtils.createMenuItem( action );
 
-                // Make sure the mnemonic is used to underline a character vs. printing
+                // Make sure the mnemonic is used to underline a character vs
+                // . printing
                 // as a separate literal character.
                 menuItem.setMnemonicParsing( true );
 
@@ -298,26 +313,32 @@ public final class XActionUtilities {
     //
     // Binding is not a good solution since it wipes out existing @Styleable
     // classes.
-    private static void bindStyle( final Styleable styleable, final Action action ) {
+    private static void bindStyle( final Styleable styleable,
+                                   final Action action ) {
         styleable.getStyleClass().addAll( action.getStyleClass() );
         action.getStyleClass()
-                .addListener( ( final ListChangeListener.Change< ? extends String > change ) -> {
-                    while ( change.next() ) {
-                        if ( change.wasRemoved() ) {
-                            styleable.getStyleClass().removeAll( change.getRemoved() );
-                        }
-                        if ( change.wasAdded() ) {
-                            styleable.getStyleClass().addAll( change.getAddedSubList() );
-                        }
-                    }
-                } );
+              .addListener( ( final ListChangeListener.Change< ?
+                      extends String > change ) -> {
+                  while ( change.next() ) {
+                      if ( change.wasRemoved() ) {
+                          styleable.getStyleClass()
+                                   .removeAll( change.getRemoved() );
+                      }
+                      if ( change.wasAdded() ) {
+                          styleable.getStyleClass()
+                                   .addAll( change.getAddedSubList() );
+                      }
+                  }
+              } );
     }
 
     // NOTE: This is a revision of the method in ControlsFX ActionUtils, to
     //  extend coverage for RadioMenuItem needs.
-    private static < T extends MenuItem > T configure( final T menuItem, final Action action ) {
+    private static < T extends MenuItem > T configure( final T menuItem,
+                                                       final Action action ) {
         if ( action == null ) {
-            throw new NullPointerException( "Action cannot be null" ); //$NON-NLS-1$
+            throw new NullPointerException( "Action cannot be null" ); //$NON
+            // -NLS-1$
         }
 
         // Button bind to action properties.
@@ -334,11 +355,12 @@ public final class XActionUtilities {
         // NOTE: This is the only setting unique to XAction and XActionGroup,
         // but we can't make a nested call to ActionUtils.configure() as it is
         // Private API, so we copy/paste and extend here instead.
-        if ( ( action instanceof XAction ) && ( ( XAction ) action ).isHideIfDisabled() ) {
+        if ( ( action instanceof XAction )
+             && ( ( XAction ) action ).isHideIfDisabled() ) {
             menuItem.visibleProperty().bind( action.disabledProperty().not() );
         }
         else if ( ( action instanceof XActionGroup )
-                && ( ( XActionGroup ) action ).isHideIfDisabled() ) {
+                  && ( ( XActionGroup ) action ).isHideIfDisabled() ) {
             menuItem.visibleProperty().bind( action.disabledProperty().not() );
         }
 
@@ -348,14 +370,14 @@ public final class XActionUtilities {
             }
 
             @Override
-            protected Node computeValue() {
-                return copyNode( action.graphicProperty().get() );
-            }
-
-            @Override
             public void removeListener( final InvalidationListener listener ) {
                 super.removeListener( listener );
                 unbind( action.graphicProperty() );
+            }
+
+            @Override
+            protected Node computeValue() {
+                return copyNode( action.graphicProperty().get() );
             }
         } );
 
@@ -363,17 +385,18 @@ public final class XActionUtilities {
         // a listener so they are always copied across.
         menuItem.getProperties().putAll( action.getProperties() );
         action.getProperties()
-                .addListener( new MenuItemPropertiesMapChangeListener<>( menuItem, action ) );
+              .addListener( new MenuItemPropertiesMapChangeListener<>( menuItem,
+                                                                       action ) );
 
         // Handle the selected state of the menu item if it is a
         // CheckMenuItem or RadioMenuItem.
         if ( menuItem instanceof RadioMenuItem ) {
             ( ( RadioMenuItem ) menuItem ).selectedProperty()
-                    .bindBidirectional( action.selectedProperty() );
+                                          .bindBidirectional( action.selectedProperty() );
         }
         else if ( menuItem instanceof CheckMenuItem ) {
             ( ( CheckMenuItem ) menuItem ).selectedProperty()
-                    .bindBidirectional( action.selectedProperty() );
+                                          .bindBidirectional( action.selectedProperty() );
         }
 
         // Just call the execute method on the action itself when the action
@@ -387,9 +410,10 @@ public final class XActionUtilities {
             implements MapChangeListener< Object, Object > {
 
         private final WeakReference< T > menuItemWeakReference;
-        private final Action             action;
+        private final Action action;
 
-        protected MenuItemPropertiesMapChangeListener( final T pMenuItem, final Action pAction ) {
+        protected MenuItemPropertiesMapChangeListener( final T pMenuItem,
+                                                       final Action pAction ) {
             menuItemWeakReference = new WeakReference<>( pMenuItem );
             action = pAction;
         }
@@ -407,31 +431,35 @@ public final class XActionUtilities {
         }
 
         @Override
+        public int hashCode() {
+            final T menuItem = menuItemWeakReference.get();
+            int result = menuItem != null
+                         ? menuItem.hashCode()
+                         : 0;
+            result = ( 31 * result ) + action.hashCode();
+            return result;
+        }
+
+        @Override
         public boolean equals( final Object otherObject ) {
             if ( this == otherObject ) {
                 return true;
             }
-            if ( ( otherObject == null ) || ( getClass() != otherObject.getClass() ) ) {
+            if ( ( otherObject == null ) || ( getClass()
+                                              != otherObject.getClass() ) ) {
                 return false;
             }
 
-            final MenuItemPropertiesMapChangeListener< ? > otherListener =
-                                                                         ( MenuItemPropertiesMapChangeListener< ? > ) otherObject;
+            final MenuItemPropertiesMapChangeListener< ? > otherListener
+                    = ( MenuItemPropertiesMapChangeListener< ? > ) otherObject;
 
             final T menuItem = menuItemWeakReference.get();
-            final MenuItem otherMenuItem = otherListener.menuItemWeakReference.get();
+            final MenuItem otherMenuItem
+                    = otherListener.menuItemWeakReference.get();
             return menuItem != null
-                ? menuItem.equals( otherMenuItem )
-                : ( otherMenuItem == null ) && action.equals( otherListener.action );
-        }
-
-        @Override
-        public int hashCode() {
-            final T menuItem = menuItemWeakReference.get();
-            int result = menuItem != null ? menuItem.hashCode() : 0;
-            result = ( 31 * result ) + action.hashCode();
-            return result;
+                   ? menuItem.equals( otherMenuItem )
+                   : ( otherMenuItem == null )
+                     && action.equals( otherListener.action );
         }
     }
-
 }

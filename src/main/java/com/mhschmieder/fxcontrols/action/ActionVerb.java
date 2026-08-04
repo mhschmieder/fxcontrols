@@ -35,14 +35,14 @@ package com.mhschmieder.fxcontrols.action;
  * terms, which in turn can be useful towards deciding what kind of control to
  * use to expose the action. For instance, one might be an exclusive "choice".
  * <p>
- * DO = typical action that invokes a method directly, or shows a control
- * CHECK = binary variable whose two states are exact opposites; uses check box
- * TOGGLE = binary valued variable, usually shown with a toggle button
- * CHOOSE = mutually exclusive choice, generally modeled with radio buttons
- * SELECT = inclusive or exclusive choice from longer list, requiring container
- * SPIN = action to choose a value via incremental +/- from a finite list
- * PICK_DATE = action to pick a date using the Time/Date API for representation
- * PICK_COLOR = action to pick a color using a specialized control
+ * DO = typical action that invokes a method directly, or shows a control CHECK
+ * = binary variable whose two states are exact opposites; uses check box TOGGLE
+ * = binary valued variable, usually shown with a toggle button CHOOSE =
+ * mutually exclusive choice, generally modeled with radio buttons SELECT =
+ * inclusive or exclusive choice from longer list, requiring container SPIN =
+ * action to choose a value via incremental +/- from a finite list PICK_DATE =
+ * action to pick a date using the Time/Date API for representation PICK_COLOR =
+ * action to pick a color using a specialized control
  * <p>
  * Only the first three can be modeled directly by special Menu Item classes;
  * the others act as "DO" in that context but may launch a window or control to
@@ -57,10 +57,16 @@ package com.mhschmieder.fxcontrols.action;
  * should try to be consistent about this rationale across the application.
  */
 public enum ActionVerb {
-    DO, CHECK, TOGGLE, CHOOSE, SELECT, SPIN, PICK_DATE, PICK_COLOR;
+    DO,
+    CHECK,
+    TOGGLE,
+    CHOOSE,
+    SELECT,
+    SPIN,
+    PICK_DATE,
+    PICK_COLOR;
 
     public static ActionVerb defaultValue() {
         return DO;
     }
-
 }

@@ -31,14 +31,15 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Region;
 
 public final class SessionLogViewerToolBar extends ToolBar {
 
     // Declare all of the Tool Bar components.
-    public FileActionButtons          _fileActionButtons;
-    public TextFormattingButtons      _textFormattingButtons;
+    public FileActionButtons _fileActionButtons;
+    public TextFormattingButtons _textFormattingButtons;
     public SessionLogNewUpdateButtons _sessionLogNewUpdateButtons;
 
     // Default constructor
@@ -58,7 +59,8 @@ public final class SessionLogViewerToolBar extends ToolBar {
         // Make the Nodes for the Tool Bar.
         _fileActionButtons = new FileActionButtons( pClientProperties );
         _textFormattingButtons = new TextFormattingButtons();
-        _sessionLogNewUpdateButtons = new SessionLogNewUpdateButtons( pClientProperties );
+        _sessionLogNewUpdateButtons = new SessionLogNewUpdateButtons(
+                pClientProperties );
 
         // Add some spacers to separate logical groupings.
         final int spacerWidth = 40;

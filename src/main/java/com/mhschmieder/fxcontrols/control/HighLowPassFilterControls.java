@@ -33,6 +33,7 @@ package com.mhschmieder.fxcontrols.control;
 import com.mhschmieder.fxcontrols.util.LabelFactory;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jsigproc.filter.ElectronicFilterType;
+
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -40,13 +41,13 @@ import javafx.scene.layout.GridPane;
 
 public final class HighLowPassFilterControls {
 
-    public Label                         _highLowPassFilterLabel;
+    public Label _highLowPassFilterLabel;
     public HighLowPassFilterTypeSelector _highLowPassFilterSelector;
 
-    public Label                         _highLowPassCutoffFrequencyLabel;
-    public FrequencyEditor               _highLowPassCutoffFrequencyEditor;
+    public Label _highLowPassCutoffFrequencyLabel;
+    public FrequencyEditor _highLowPassCutoffFrequencyEditor;
 
-    public ToggleButton                  _highLowPassToggleButton;
+    public ToggleButton _highLowPassToggleButton;
 
     public HighLowPassFilterControls( final ClientProperties clientProperties,
                                       final boolean applyToolkitCss,
@@ -56,32 +57,37 @@ public final class HighLowPassFilterControls {
                                       final double maximumFrequencyHz,
                                       final double initialFrequencyHz ) {
         final String filterTypeName = filterType.label();
-        _highLowPassFilterLabel = ControlUtilities.getControlLabel( filterTypeName );
-        final String highLowPassFilterSlopeTooltipText = LabelFactory
-                .getHighLowPassFilterSlopeTooltip( filterType );
-        _highLowPassFilterSelector =
-                                   new HighLowPassFilterTypeSelector( clientProperties,
-                                                                      highLowPassFilterSlopeTooltipText,
-                                                                      applyToolkitCss,
-                                                                      filterType,
-                                                                      showHighOrderFilters );
+        _highLowPassFilterLabel = ControlUtilities.getControlLabel(
+                filterTypeName );
+        final String highLowPassFilterSlopeTooltipText
+                = LabelFactory.getHighLowPassFilterSlopeTooltip( filterType );
+        _highLowPassFilterSelector = new HighLowPassFilterTypeSelector(
+                clientProperties,
+                highLowPassFilterSlopeTooltipText,
+                applyToolkitCss,
+                filterType,
+                showHighOrderFilters );
 
         _highLowPassCutoffFrequencyLabel = ControlUtilities.getControlLabel(
                 LabelFactory.getFrequencyLabel() );
-        final String highLowPassCutoffFrequencyTooltip = filterTypeName + " Cutoff Frequency";
-        _highLowPassCutoffFrequencyEditor = ControlFactory
-                .getFrequencyEditor( clientProperties,
-                                     highLowPassCutoffFrequencyTooltip,
-                                     " Hz",
-                                     minimumFrequencyHz,
-                                     maximumFrequencyHz,
-                                     initialFrequencyHz,
-                                     1000.0d,
-                                     2 );
+        final String highLowPassCutoffFrequencyTooltip = filterTypeName
+                                                         + " Cutoff Frequency";
+        _highLowPassCutoffFrequencyEditor = ControlFactory.getFrequencyEditor(
+                clientProperties,
+                highLowPassCutoffFrequencyTooltip,
+                " Hz",
+                minimumFrequencyHz,
+                maximumFrequencyHz,
+                initialFrequencyHz,
+                1000.0d,
+                2 );
         _highLowPassCutoffFrequencyEditor.setValueIncrement( 0.1d );
 
-        _highLowPassToggleButton = LabeledControlFactory
-                .getHighLowPassToggleButton( filterTypeName, true, true );
+        _highLowPassToggleButton
+                = LabeledControlFactory.getHighLowPassToggleButton(
+                filterTypeName,
+                true,
+                true );
 
         // Force all the labels to right-justify, to match standard constraints.
         GridPane.setHalignment( _highLowPassFilterLabel, HPos.RIGHT );

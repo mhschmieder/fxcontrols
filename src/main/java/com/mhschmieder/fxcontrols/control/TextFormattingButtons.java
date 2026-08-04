@@ -42,5 +42,4 @@ public class TextFormattingButtons {
         // Make the JavaFX image buttons.
         _wrapTextButton = LabeledControlFactory.getTextWrapToggleButton();
     }
-
 }
