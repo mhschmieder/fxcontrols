@@ -42,8 +42,8 @@ public abstract class NumberEditorTableCell< RT, Number >
 
     // Cache a number formatter for displaying the numeric values.
     protected final NumberFormat _numberFormat;
+
     // Maintain a reference to the Measurement Unit label (can be blank).
-    @SuppressWarnings( "nls" )
     protected String _measurementUnit = "";
 
     protected NumberEditorTableCell( final boolean pAllowedToBeBlank,
