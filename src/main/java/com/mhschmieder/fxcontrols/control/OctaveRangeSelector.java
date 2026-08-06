@@ -136,8 +136,9 @@ public class OctaveRangeSelector extends TextSelector {
                                                                  final double centerFrequency ) {
         // Determine and set the correct Octave Ranges to use.
         final String[] octaveRanges = ( RelativeBandwidth.ONE_OCTAVE
-                                        == relativeBandwidth || RelativeBandwidth.THIRD_OCTAVE
-                                       == relativeBandwidth )
+                                        == relativeBandwidth
+                                        || RelativeBandwidth.THIRD_OCTAVE
+                                           == relativeBandwidth )
                                       ? OCTAVE_RANGES_WIDE
                                       : _useExtendedRange
                                         ? OCTAVE_RANGES_NARROW_EXTENDED
@@ -145,8 +146,9 @@ public class OctaveRangeSelector extends TextSelector {
 
         // Determine which Octave Range contains the current Center Frequency.
         final String defaultOctaveRange = ( RelativeBandwidth.ONE_OCTAVE
-                                            == relativeBandwidth || RelativeBandwidth.THIRD_OCTAVE
-                                       == relativeBandwidth )
+                                            == relativeBandwidth
+                                            || RelativeBandwidth.THIRD_OCTAVE
+                                               == relativeBandwidth )
                                           ? OCTAVE_RANGE_WIDE_DEFAULT
                                           :
                                           FrequencyRange.getNominalOctaveRangeDefaultForCenterFrequency(

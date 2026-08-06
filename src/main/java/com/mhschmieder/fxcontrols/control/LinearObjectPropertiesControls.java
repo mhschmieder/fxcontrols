@@ -51,8 +51,7 @@ public final class LinearObjectPropertiesControls {
     public LinearObjectPropertiesControls( final ClientProperties pClientProperties,
                                            final boolean applyToolkitCss,
                                            final String linearObjectLabelDefault,
-                                           final GraphicalObjectCollection< ?
-                                                   extends LinearObject > linearObjectCollection,
+                                           final GraphicalObjectCollection< ? extends LinearObject > linearObjectCollection,
                                            final String projectorType,
                                            final String projectionZonesType,
                                            final String projectionZonesUsageContext ) {

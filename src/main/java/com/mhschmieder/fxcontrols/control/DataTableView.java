@@ -41,7 +41,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 /**
@@ -121,8 +120,7 @@ public class DataTableView extends XTableView< ObservableList< String > > {
 
             // We are using non property style for making a dynamic table.
             final int j = i;
-            final Callback< TableColumn.CellDataFeatures< ObservableList< String >,
-                    String >, ObservableValue< String > >
+            final Callback< TableColumn.CellDataFeatures< ObservableList< String >, String >, ObservableValue< String > >
                     callback
                     = param -> new SimpleStringProperty( param.getValue()
                                                               .get( j ) );

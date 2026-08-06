@@ -78,8 +78,7 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an  with an textField reset
-     * callback.
+     * Creates an  with an textField reset callback.
      * <p>
      * Specifying {@code null} has the same effect as the default constructor.
      *
@@ -91,8 +90,7 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an  with the specified input
-     * range.
+     * Creates an  with the specified input range.
      * <p>
      * Preemptively monitors {@code textField} to reject any invalid characters
      * during typing, restricts {@code textField} to
@@ -275,16 +273,13 @@ public final class IntegerSpinnerStringConverter
     }
 
     /**
-     * Creates an  for the specified
-     * {@link Spinner}.
+     * Creates an  for the specified {@link Spinner}.
      * <p>
      * Uses the {@link TextField} and minimum and maximum values of the
-     * specified {@link Spinner} for construction, and also sets the new
-     *  on its
+     * specified {@link Spinner} for construction, and also sets the new on its
      * {@link SpinnerValueFactory.IntegerSpinnerValueFactory}.
      *
-     * @param integerSpinner          The {@link Spinner} to create a
-     *                                 for
+     * @param integerSpinner          The {@link Spinner} to create a for
      * @param valueDescriptor         The descriptor for the spinner's value
      *                                category, used mostly in tool tips
      * @param defaultNumericValue     The default {@link Integer} value
@@ -393,10 +388,10 @@ public final class IntegerSpinnerStringConverter
      * Sets the textField reset callback.
      * <p>
      * Specify {@code null} to clear a previously set {@link Runnable}. When
-     * creating an  for a {@link TextField}
-     * or {@link Spinner}, this callback is automatically defined to reset
-     * committed invalid input to the closest value to zero within the legal
-     * range. Setting a different callback will overwrite this functionality.
+     * creating an  for a {@link TextField} or {@link Spinner}, this callback is
+     * automatically defined to reset committed invalid input to the closest
+     * value to zero within the legal range. Setting a different callback will
+     * overwrite this functionality.
      *
      * @param reset The {@link Runnable} to call upon
      *              {@link NumberFormatException}

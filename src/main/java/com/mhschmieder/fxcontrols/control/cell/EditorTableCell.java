@@ -365,7 +365,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
 
     private TableColumn< RT, ? > getNextColumn( final boolean forward ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
-        for ( final TableColumn< RT, ? > column : getTableView().getColumns() ) {
+        for ( final TableColumn< RT, ? > column :
+                getTableView().getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
 
@@ -400,7 +401,8 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         int newColumn = 0;
 
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
-        for ( final TableColumn< RT, ? > column : getTableView().getColumns() ) {
+        for ( final TableColumn< RT, ? > column :
+                getTableView().getColumns() ) {
             columns.addAll( getLeaves( column ) );
         }
 
@@ -444,8 +446,7 @@ public abstract class EditorTableCell< RT, VT > extends XTableCell< RT, VT > {
         return new Point( newColumn, newRow );
     }
 
-    private List< TableColumn< RT, ? > > getLeaves( final TableColumn< RT,
-            ? > root ) {
+    private List< TableColumn< RT, ? > > getLeaves( final TableColumn< RT, ? > root ) {
         final List< TableColumn< RT, ? > > columns = new ArrayList<>();
         if ( root.getColumns().isEmpty() ) {
             // We only want the leaves that are editable, for tab traversal.

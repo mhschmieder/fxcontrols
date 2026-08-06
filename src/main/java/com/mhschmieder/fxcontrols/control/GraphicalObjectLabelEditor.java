@@ -54,8 +54,7 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
 
     public GraphicalObjectLabelEditor( final ClientProperties pClientProperties,
                                        final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ?
-                                               extends GraphicalObject > graphicalObjectCollection ) {
+                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
         this( graphicalObjectCollection.getNewLabelDefault(
                       graphicalObjectLabelDefault ),
               null,
@@ -68,8 +67,7 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
                                        final String tooltipText,
                                        final ClientProperties pClientProperties,
                                        final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ?
-                                               extends GraphicalObject > graphicalObjectCollection ) {
+                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
         // Always call the superclass constructor first!
         super( initialText, tooltipText, true, true, pClientProperties );
 
@@ -93,8 +91,7 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
     public GraphicalObjectLabelEditor( final String initialText,
                                        final ClientProperties pClientProperties,
                                        final String graphicalObjectLabelDefault,
-                                       final GraphicalObjectCollection< ?
-                                               extends GraphicalObject > graphicalObjectCollection ) {
+                                       final GraphicalObjectCollection< ? extends GraphicalObject > graphicalObjectCollection ) {
         this( initialText,
               null,
               pClientProperties,

@@ -1489,8 +1489,7 @@ public class ControlUtilities {
      *         provided {@link Action actions}
      */
     public static SegmentedButton getSegmentedButton( final ActionUtils.ActionTextBehavior textBehavior,
-                                                      final Collection< ?
-                                                              extends Action > actions ) {
+                                                      final Collection< ? extends Action > actions ) {
         // Get the Segmented Button from a collection of mutually exclusive
         // choices modeled as actions.
         final SegmentedButton segmentedButton

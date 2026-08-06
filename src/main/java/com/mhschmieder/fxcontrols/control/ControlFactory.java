@@ -148,8 +148,7 @@ public class ControlFactory {
                                                         final double maximumOpacityPercent,
                                                         final double initialOpacityPercent ) {
         // Get the current value and format it as initial text.
-        final String initialText = initialOpacityPercent
-                                   + measurementUnit;
+        final String initialText = initialOpacityPercent + measurementUnit;
 
         // Declare value increment/decrement amount for up and down arrow keys,
         // set to 0.5% as a mid-way value of general use for auto-increment.
@@ -337,8 +336,7 @@ public class ControlFactory {
                                                final double maximumValue,
                                                final double initialValue ) {
         // Get the current value and format it as initial text.
-        final String initialText = initialValue
-                                   + measurementUnit;
+        final String initialText = initialValue + measurementUnit;
 
         final AngleEditor angleEditor = new AngleEditor( clientProperties,
                                                          initialText,
@@ -369,8 +367,7 @@ public class ControlFactory {
                                                final double initialValue,
                                                final double valueIncrement ) {
         // Get the current value and format it as initial text.
-        final String initialText = initialValue
-                                   + measurementUnit;
+        final String initialText = initialValue + measurementUnit;
 
         final AngleEditor angleEditor = new AngleEditor( clientProperties,
                                                          initialText,
@@ -589,16 +586,16 @@ public class ControlFactory {
         // Return the fully initialized SPL Range Spinner.
         final String valueDescriptor = "an SPL range";
         return makeIntegerSpinner( clientProperties,
-                                                  applyToolkitCss,
-                                                  valueDescriptor,
-                                                  minimumSplRangeDb,
-                                                  maximumSplRangeDb,
-                                                  defaultSplRangeDb,
-                                                  splRangeIncrementDb,
-                                                  false,
-                                                  numericFormatterPattern,
-                                                  " dB",
-                                                  maximumSpinnerWidth );
+                                   applyToolkitCss,
+                                   valueDescriptor,
+                                   minimumSplRangeDb,
+                                   maximumSplRangeDb,
+                                   defaultSplRangeDb,
+                                   splRangeIncrementDb,
+                                   false,
+                                   numericFormatterPattern,
+                                   " dB",
+                                   maximumSpinnerWidth );
     }
 
     public static final Spinner< Integer > makeIntegerSpinner( final ClientProperties clientProperties,
@@ -658,16 +655,16 @@ public class ControlFactory {
         final String valueDescriptor
                 = "amount to dither individual sound sources";
         return makeDoubleSpinner( clientProperties,
-                                                 applyToolkitCss,
-                                                 valueDescriptor,
-                                                 minimumDitheringAmount,
-                                                 maximumDitheringAmount,
-                                                 defaultDitheringAmount,
-                                                 ditheringAmountIncrement,
-                                                 true,
-                                                 numericFormatterPattern,
-                                                 " %",
-                                                 maximumSpinnerWidth );
+                                  applyToolkitCss,
+                                  valueDescriptor,
+                                  minimumDitheringAmount,
+                                  maximumDitheringAmount,
+                                  defaultDitheringAmount,
+                                  ditheringAmountIncrement,
+                                  true,
+                                  numericFormatterPattern,
+                                  " %",
+                                  maximumSpinnerWidth );
     }
 
     public static final Spinner< Double > makeDoubleSpinner( final ClientProperties clientProperties,

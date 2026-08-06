@@ -215,11 +215,10 @@ public class MessageFactory {
         final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
                                         ? " could not load file contents due "
                                           + "to parsing errors."
-                                        :
-                                        " could not fully load file contents "
-                                        + "due to parsing errors."
-                                        + " File content may be wrong data "
-                                        + "type for selected action.";
+                                        : " could not fully load file contents "
+                                          + "due to parsing errors."
+                                          + " File content may be wrong data "
+                                          + "type for selected action.";
         return MessageFactory.getFileErrorMessage( errorMessageBody, file );
     }
 

@@ -243,10 +243,9 @@ public class LayerSelector extends TextSelector {
              && !selectedLayerIndexInvalid ) {
             selectionModel.select( selectedLayerIndex );
         }
-        else if (
-                ( preserveSelectedLayerByName || ( preserveSelectedLayerByIndex
-                                                   && selectedLayerIndexInvalid ) )
-                && ( _layerNames.contains( selectedLayerName ) ) ) {
+        else if ( ( preserveSelectedLayerByName || (
+                preserveSelectedLayerByIndex && selectedLayerIndexInvalid ) )
+                  && ( _layerNames.contains( selectedLayerName ) ) ) {
             selectionModel.select( selectedLayerName );
         }
         else {

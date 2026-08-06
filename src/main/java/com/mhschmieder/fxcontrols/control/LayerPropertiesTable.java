@@ -46,7 +46,6 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 
 public class LayerPropertiesTable extends DynamicXTableView< LayerProperties > {

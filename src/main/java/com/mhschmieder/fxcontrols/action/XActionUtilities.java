@@ -194,8 +194,7 @@ public final class XActionUtilities {
      * @return A {@link ContextMenu} that contains {@link Node nodes} which are
      *         bound to the state of the provided {@link Action}
      */
-    public static ContextMenu createContextMenu( final Collection< ?
-            extends Action > actions ) {
+    public static ContextMenu createContextMenu( final Collection< ? extends Action > actions ) {
         return updateContextMenu( new ContextMenu(), actions );
     }
 
@@ -215,8 +214,7 @@ public final class XActionUtilities {
      *         bound to the state of the provided {@link Action}
      */
     public static ContextMenu updateContextMenu( final ContextMenu menu,
-                                                 final Collection< ?
-                                                         extends Action > actions ) {
+                                                 final Collection< ? extends Action > actions ) {
         menu.getItems().clear();
         menu.getItems().addAll( toMenuItems( actions ) );
         return menu;
@@ -225,8 +223,7 @@ public final class XActionUtilities {
     // NOTE: This is a revision of the method in ControlsFX ActionUtils, to
     //  extend coverage for RadioMenuItem needs, including Menu Item
     //  ToggleGroups.
-    private static Collection< MenuItem > toMenuItems( final Collection< ?
-            extends Action > actions ) {
+    private static Collection< MenuItem > toMenuItems( final Collection< ? extends Action > actions ) {
         final Collection< MenuItem > items = new ArrayList<>( actions.size() );
 
         for ( final Action action : actions ) {
@@ -317,8 +314,7 @@ public final class XActionUtilities {
                                    final Action action ) {
         styleable.getStyleClass().addAll( action.getStyleClass() );
         action.getStyleClass()
-              .addListener( ( final ListChangeListener.Change< ?
-                      extends String > change ) -> {
+              .addListener( ( final ListChangeListener.Change< ? extends String > change ) -> {
                   while ( change.next() ) {
                       if ( change.wasRemoved() ) {
                           styleable.getStyleClass()

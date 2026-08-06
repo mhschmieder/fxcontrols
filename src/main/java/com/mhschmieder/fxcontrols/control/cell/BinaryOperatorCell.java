@@ -51,8 +51,7 @@ public class BinaryOperatorCell< T >
 
     private XComboBox< BinaryConditionalOperator > comboBox;
 
-    public BinaryOperatorCell( final TableColumn< T,
-                                       BinaryConditionalOperator > column,
+    public BinaryOperatorCell( final TableColumn< T, BinaryConditionalOperator > column,
                                final String tooltipText,
                                final ClientProperties clientProperties ) {
         super();
@@ -70,8 +69,7 @@ public class BinaryOperatorCell< T >
         }
     }
 
-    private void initTableCell( final TableColumn< T,
-                                        BinaryConditionalOperator > column,
+    private void initTableCell( final TableColumn< T, BinaryConditionalOperator > column,
                                 final String tooltipText,
                                 final ClientProperties clientProperties ) {
         comboBox = ListViewUtilities.makeLabeledSelector( clientProperties,

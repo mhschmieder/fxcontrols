@@ -68,6 +68,7 @@ public final class AnalysisTimeHorizontalZoomChoices {
     public XAction _zoom1120msAnalysisTimeChoice;
     // Cache the associated choice group, for ease of overall enablement.
     public XActionGroup _analysisTimeHorizontalZoomChoiceGroup;
+
     // Default constructor
     @SuppressWarnings( "nls" )
     public AnalysisTimeHorizontalZoomChoices( final ClientProperties clientProperties ) {

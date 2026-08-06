@@ -46,8 +46,16 @@ public final class ParametricFilterControls {
     public static final double GAIN_MAXIMUM_DB = 18.0d;
 
     private static final Double[] DEFAULT_FREQUENCIES = {
-            32.0d, 63.0d, 125.0d, 250.0d, 500.0d, 1000.0d,
-            2000.0d, 4000.0d, 8000.0d, 16000.0d
+            32.0d,
+            63.0d,
+            125.0d,
+            250.0d,
+            500.0d,
+            1000.0d,
+            2000.0d,
+            4000.0d,
+            8000.0d,
+            16000.0d
     };
 
     public ToggleButton _filterToggleButton;

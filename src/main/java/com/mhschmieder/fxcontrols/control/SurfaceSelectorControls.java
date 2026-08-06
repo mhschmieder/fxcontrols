@@ -54,8 +54,7 @@ public final class SurfaceSelectorControls {
                                     final boolean applyToolkitCss,
                                     final int surfaceNumber ) {
         // Make the permanent static label for the Surface ID.
-        final String surfaceId = "Surface "
-                                 + surfaceNumber; //$NON
+        final String surfaceId = "Surface " + surfaceNumber; //$NON
         // -NLS-1$
         _surfaceIdLabel = new Label( surfaceId );
         _surfaceIdLabel.setAlignment( Pos.CENTER );

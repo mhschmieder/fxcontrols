@@ -342,7 +342,8 @@ public class NumberSlider extends Slider {
     }
 
     protected void updateTooltipText() {
-        setTooltip( new Tooltip( "Use ARROW Keys to Step by " + getBlockIncrement()
-                                 + measurementUnitString ) );
+        setTooltip( new Tooltip(
+                "Use ARROW Keys to Step by " + getBlockIncrement()
+                + measurementUnitString ) );
     }
 }

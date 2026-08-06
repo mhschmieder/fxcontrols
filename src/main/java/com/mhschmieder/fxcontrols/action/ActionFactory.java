@@ -209,11 +209,10 @@ public final class ActionFactory {
         final String actionName = groupName + "." + itemName;
 
         // Generate the resource lookup key for the action accelerator.
-        final String resourceKey = actionName + ".accelerator"
-                                   + ( SystemType.MACOS
-                                       == clientProperties.systemType
-                                       ? ".mac"
-                                       : "" );
+        final String resourceKey = actionName + ".accelerator" + (
+                SystemType.MACOS == clientProperties.systemType
+                ? ".mac"
+                : "" );
 
         try {
             // NOTE: Not all actions have Accelerators, so we have to check

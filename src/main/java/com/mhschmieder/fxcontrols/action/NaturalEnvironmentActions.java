@@ -66,8 +66,8 @@ public final class NaturalEnvironmentActions {
 
         // The tool tip for "Reset" is unique per context so isn't in the
         // locale-sensitive resources for the generic action lookup.
-        resetAction.setLongText( "Reset Natural Environment to Default "
-                                 + "Values" );
+        resetAction.setLongText(
+                "Reset Natural Environment to Default " + "Values" );
     }
 
     public Collection< Action > getBackgroundColorChoiceCollection() {

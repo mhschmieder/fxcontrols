@@ -52,7 +52,8 @@ import javafx.scene.paint.Color;
 public final class BackgroundColorChoices {
 
     // List all the equal weighted (achromatic) gray scale colors.
-    public XAction _backgroundColorBlackChoice;    public static final String DEFAULT_BACKGROUND_COLOR_NAME
+    public XAction _backgroundColorBlackChoice;
+    public static final String DEFAULT_BACKGROUND_COLOR_NAME
             = getBackgroundColorName( ColorConstants.DEFAULT_BACKGROUND_COLOR );
     public XAction _backgroundColorNightChoice;
     public XAction _backgroundColorDarkCharcoalChoice;
@@ -490,6 +491,4 @@ public final class BackgroundColorChoices {
 
         return backgroundColor;
     }
-
-
 }

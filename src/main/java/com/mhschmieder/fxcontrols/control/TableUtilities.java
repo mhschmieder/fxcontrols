@@ -68,8 +68,7 @@ public final class TableUtilities {
      * @param column The {@link TableColumn} whose header properties should be
      *               set
      */
-    public static void setTableColumnHeaderProperties( final TableColumn< ?
-            extends Object, ? > column ) {
+    public static void setTableColumnHeaderProperties( final TableColumn< ? extends Object, ? > column ) {
         // Apply custom style guidelines to table headers and make them wrap.
         //
         // Larger fonts are used on the Mac in general, by default.
@@ -99,10 +98,10 @@ public final class TableUtilities {
      * @param columnPropertyName The name of the table property that this column
      *                           manages
      */
-    public static < TD, CT > void setCellValueFactory( final TableColumn< TD,
-                                                               CT > tableColumn,
+    public static < TD, CT > void setCellValueFactory( final TableColumn< TD, CT > tableColumn,
                                                        final String columnPropertyName ) {
-        final Callback< TableColumn.CellDataFeatures< TD, CT >, ObservableValue< CT > >
+        final Callback< TableColumn.CellDataFeatures< TD, CT >,
+                              ObservableValue< CT > >
                 callback = new PropertyValueFactory<>( columnPropertyName );
         tableColumn.setCellValueFactory( callback );
     }
@@ -119,8 +118,7 @@ public final class TableUtilities {
      * @param tableColumn The {@link TableColumn} whose cell alignment should be
      *                    set
      */
-    public static < TD, CT > void setCellAlignment( final TableColumn< TD,
-            CT > tableColumn ) {
+    public static < TD, CT > void setCellAlignment( final TableColumn< TD, CT > tableColumn ) {
         tableColumn.setCellFactory( column -> {
             final TableCell< TD, CT > cell = new TableCell< TD, CT >() {
                 @Override

@@ -105,10 +105,10 @@ public class AngleEditor extends DoubleEditor {
         // Unwrap the angle based on period, using the established minimum and
         // maximum so that we don't accidentally clamp, but still clamp if the
         // allowed range itself is less than a full period.
-        final double unwrappedAngleDegrees = MathUtilities.unwrapAngleRangeDegrees(
-                unclampedValue,
-                _minimumValue,
-                _maximumValue );
+        final double unwrappedAngleDegrees
+                = MathUtilities.unwrapAngleRangeDegrees( unclampedValue,
+                                                         _minimumValue,
+                                                         _maximumValue );
 
         return unwrappedAngleDegrees;
     }

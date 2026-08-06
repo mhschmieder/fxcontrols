@@ -38,15 +38,15 @@ import javafx.scene.layout.StackPane;
 public final class TableColumnManagement {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
     private TableColumnManagement() {
     }
 
-    public static < TD > void updateColumnHeader(
-            final TableColumn< TD, ? > column,
-            final String newHeader,
-            final String newUnitsLabel ) {
+    public static < TD > void updateColumnHeader( final TableColumn< TD, ? > column,
+                                                  final String newHeader,
+                                                  final String newUnitsLabel ) {
         final Node pane = column.getGraphic();
         if ( pane instanceof final StackPane stackPane ) {
             final Node firstChild = stackPane.getChildren().getFirst();
@@ -57,8 +57,7 @@ public final class TableColumnManagement {
                 //  method for constructing the column potentially needs to bind
                 //  the text field to the label created to streamline setting
                 //  the header from the column.setText method.
-                columnHeader.setText(
-                        newHeader + "(" + newUnitsLabel + " )");
+                columnHeader.setText( newHeader + "(" + newUnitsLabel + " )" );
             }
         }
     }
