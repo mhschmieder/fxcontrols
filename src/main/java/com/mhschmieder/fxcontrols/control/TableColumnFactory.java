@@ -114,6 +114,39 @@ public final class TableColumnFactory {
         return tableColumn;
     }
 
+
+    /**
+     * Returns a {@link TableColumn} for managing {@link Number} values.
+     *
+     * @param <TD>               The data type for the table
+     * @param columnName         The string to show when the TableColumn is
+     *                           placed within the TableView
+     * @param columnWidth        The minimum width the table column is permitted
+     *                           to be resized to
+     * @param columnPropertyName The name of the table property that this column
+     *                           manages
+     * @param sortable           If {@code true}, this columns can be used to
+     *                           sort the rows
+     * @return A {@link TableColumn} for managing {@link Number} values
+     */
+    public static < TD > TableColumn< TD, Number > makeTableColumnForNumber( final String columnName,
+                                                                             final double columnWidth,
+                                                                             final String columnPropertyName,
+                                                                             final boolean sortable ) {
+        final TableColumn< TD, Number > tableColumn = new TableColumn<>(
+                columnName );
+        tableColumn.setMinWidth( columnWidth );
+        TableUtilities.setTableColumnHeaderProperties( tableColumn );
+
+        // Conditionally prevent row-sorting of this column as it may destroy
+        // the ability to understand how things relate to one another.
+        tableColumn.setSortable( sortable );
+
+        TableUtilities.setCellValueFactory( tableColumn, columnPropertyName );
+
+        return tableColumn;
+    }
+
     /**
      * Returns a {@link TableColumn} for managing {@link Integer} values.
      *
