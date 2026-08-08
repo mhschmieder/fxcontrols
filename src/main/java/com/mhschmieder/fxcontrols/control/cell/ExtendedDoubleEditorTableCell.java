@@ -30,23 +30,49 @@
  */
 package com.mhschmieder.fxcontrols.control.cell;
 
-import com.mhschmieder.fxcontrols.control.DoubleEditor;
+import com.mhschmieder.fxcontrols.control.NumberEditor;
 import com.mhschmieder.jcommons.lang.Abbreviated;
 import com.mhschmieder.jcommons.lang.Labeled;
 import com.mhschmieder.jcommons.util.ClientProperties;
 
 import java.util.List;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.control.TextField;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * An extension of {@link DoubleEditorTableCell} that adds support for unit
+ * conversion between the UI data model and value displayed to the user.
+ *
+ * @param <RT> The type of the row data
+ * @param <ET> The enum used for the units in the UI model and displayed value
+ */
 public abstract class ExtendedDoubleEditorTableCell< RT, ET extends Enum< ET > & Labeled< ET > & Abbreviated< ET > >
-        extends ExtendedNumberEditorTableCell< RT, ET > {
+        extends DoubleEditorTableCell< RT, ET > {
 
-    // Cache the raw Double representation of the data cachedValue.
-    // NOTE: This field has to follow JavaFX Property Beans conventions.
-    private final DoubleProperty cachedValue;
+    /**
+     * Represents the data model unit associated with the current table cell.
+     * This unit is used to handle data model-specific operations such as
+     * conversion or representation in the context of the cell.
+     * <p>
+     * The unit is final as a constant is needed to ensure proper unit
+     * conversion. It is used within the cell to coordinate between display
+     * units and data model values.
+     */
+    protected final ET dataModelUnit;
+
+    /**
+     * Represents an observable property that defines the unit type used for
+     * displaying values in the table cell. The unit type is generic and denoted
+     * by the parameterized type {@code ET}.
+     * <p>
+     * This property is intended to allow dynamic updates to the display unit
+     * without requiring individual listeners for each table cell. The
+     * {@code displayUnit} is linked with {@link #getDisplayValue(Double)} and
+     * {@link #getDataModelValue(Double)} to ensure proper synchronization
+     * between the displayed values and the unit of measurement.
+     */
+    protected ObjectProperty< ET > displayUnit;
 
     protected ExtendedDoubleEditorTableCell( final boolean pAllowedToBeBlank,
                                              final ET pDataModelUnit,
@@ -59,93 +85,80 @@ public abstract class ExtendedDoubleEditorTableCell< RT, ET extends Enum< ET > &
                                              final ET pDataModelUnit,
                                              final ClientProperties pClientProperties ) {
         // Always call the superclass constructor first!
-        super( pUneditableRows,
-               pAllowedToBeBlank,
-               pDataModelUnit,
-               pClientProperties );
+        super( pUneditableRows, pAllowedToBeBlank, pClientProperties );
 
-        cachedValue = new SimpleDoubleProperty( 0.0d );
-
-        // Use two decimal places of precision for doubles, in the default
-        // locale.
-        _numberFormat.setMaximumFractionDigits( 2 );
-        _numberFormat.setParseIntegerOnly( false );
+        dataModelUnit = pDataModelUnit;
+        displayUnit = new SimpleObjectProperty<>( dataModelUnit );
     }
 
     @Override
-    protected Double getEditorValue() {
-        final String textValue = textField.getText();
-        if ( textValue == null ) {
-            return null;
+    public void commitEdit( final Double newValue ) {
+        // NOTE: The value passed in is in the units of the displayed value and
+        //  needs to be converted back into the units of the backend data model
+        //  prior to updating the backend data model.
+        final double dataModelValue = getDataModelValue( newValue );
+        super.commitEdit( dataModelValue );
+    }
+
+    @Override
+    public void updateItem( final Double item,
+                            final boolean empty ) {
+        setMeasurementUnit( displayUnit.get().abbreviation() );
+
+        // First get a handle on the textField from the EditorTableCell base
+        // class to update the measurement unit string.
+        if ( textField instanceof NumberEditor editor ) {
+            editor.setMeasurementUnitString( displayUnit.get().abbreviation() );
         }
 
-        final double doubleValue = ( ( DoubleEditor ) textField ).fromString(
-                textValue );
+        Double displayValue = null;
 
-        return Double.valueOf( doubleValue );
-    }
-
-    @Override
-    protected String getString() {
-        final Number value = getItem();
-        if ( value == null ) {
-            return "";
+        // A manual check needs to be done since the passed value is the Double
+        // class instead of primitive, which could cause the conversion to throw
+        // an exception.
+        if ( item != null ) {
+            displayValue = getDisplayValue( item );
         }
 
-        // This text goes to the editor, so we don't want to clutter the user's
-        // editing session with measurement units, but do need localization.
-        final String stringValue
-                =
-                ( ( DoubleEditor ) textField ).toFormattedString( value.doubleValue() );
-
-        return stringValue;
+        // Pass the value to the superclass for display without impacting the
+        // backend data model.
+        super.updateItem( displayValue, empty );
     }
 
-    @Override
-    protected TextField makeTextField() {
-        return new DoubleEditor( clientProperties,
-                                 "0",
-                                 "",
-                                 blankTextAllowed,
-                                 0,
-                                 2,
-                                 0,
-                                 4 );
-    }
+    /**
+     * Converts a given data model value into a display value based on the
+     * {@link #displayUnit} property value.
+     *
+     * @param pDataModelValue The value from the data model to be converted into
+     *                        a display value; may be null depending on the
+     *                        implementation.
+     * @return The converted display value; may return null if the input value
+     *         is null or if the conversion cannot be performed.
+     */
+    public abstract Double getDisplayValue( final Double pDataModelValue );
 
-    @Override
-    protected String getTextValue() {
-        final Number value = getItem();
-        if ( value == null ) {
-            return "";
-        }
+    /**
+     * Converts a given display value into a corresponding data model value
+     * based on the specified {@code dataModelUnit} property.
+     *
+     * @param pDisplayValue The display value to be converted into a data model
+     *                      value; may be null depending on the implementation
+     * @return The converted data model value; may return null if the input
+     *         value is null or if the conversion cannot be performed
+     */
+    public abstract Double getDataModelValue( final Double pDisplayValue );
 
-        final String textValue
-                =
-                ( ( DoubleEditor ) textField ).toString( value.doubleValue() );
-
-        return textValue;
-    }
-
-    @Override
-    public final void setValue( final Number pValue ) {
-        // Locally cache the new cachedValue, separately from the textField.
-        cachedValue.set( pValue.doubleValue() );
-
-        // Now do whatever we do for all data types in the base class.
-        super.setValue( pValue );
-    }
-
-    public final DoubleProperty cachedValueProperty() {
-        return cachedValue;
-    }
-
-    public final double getCachedValue() {
-        return cachedValue.get();
-    }
-
-    public final void setCachedValue( final double pCachedValue ) {
-        // Locally cache the new cachedValue, separately from the textField.
-        cachedValue.set( pCachedValue );
+    /**
+     * Updates the instance of the {@link ObjectProperty} used to determine the
+     * units to be used for displaying distance to the user.
+     * <p>
+     * NOTE: The observable is passed in to avoid the need for adding a listener
+     *  for every table cell and for removing a listener when the cell is no
+     *  longer in use.
+     * @param pDisplayUnit The new observable property with the unit to display.
+     */
+    public void setDisplayUnitProperty(
+            final ObjectProperty< ET > pDisplayUnit ) {
+        displayUnit = pDisplayUnit;
     }
 }
