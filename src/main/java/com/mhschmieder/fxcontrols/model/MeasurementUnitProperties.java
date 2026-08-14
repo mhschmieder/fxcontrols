@@ -54,7 +54,7 @@ public final class MeasurementUnitProperties {
             = new MeasurementUnitProperties( DistanceUnit.METERS,
                                              AngleUnit.RADIANS,
                                              WeightUnit.KILOGRAMS,
-                                             DensityUnit.KILOGRAMS_PER_METER_CUBED,
+                                             DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                                              TemperatureUnit.KELVIN,
                                              PressureUnit.PASCALS );
 

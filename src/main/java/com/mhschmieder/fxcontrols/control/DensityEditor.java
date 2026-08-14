@@ -40,7 +40,7 @@ public class DensityEditor extends DoubleEditor {
     // NOTE: We increment by 0.1 degrees kilograms per meter cubed as this is
     // a typical default.
     // TODO: Use a different increment if units are grams per centimeter cubed?
-    public static final double VALUE_INCREMENT_KILOGRAMS_PER_METER_CUBED = 0.1d;
+    public static final double VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER = 0.1d;
 
     // Store the Density Unit so we'll know when we need to convert.
     private DensityUnit densityUnit;
@@ -51,7 +51,7 @@ public class DensityEditor extends DoubleEditor {
     public DensityEditor( final ClientProperties pClientProperties,
                           final String tooltipText ) {
         this( pClientProperties,
-              '0' + DensityUnit.KILOGRAMS_PER_METER_CUBED.abbreviation(),
+              '0' + DensityUnit.KILOGRAMS_PER_CUBIC_METER.abbreviation(),
               tooltipText,
               0.0d,
               Double.MAX_VALUE,
@@ -61,9 +61,9 @@ public class DensityEditor extends DoubleEditor {
     public DensityEditor( final ClientProperties pClientProperties,
                           final String initialText,
                           final String tooltipText,
-                          final double minimumDensityKilogramsPerMeterCubed,
-                          final double maximumDensityKilogramsPerMeterCubed,
-                          final double initialDensityKilogramsPerMeterCubed ) {
+                          final double minimumDensityKilogramsPerCubicMeter,
+                          final double maximumDensityKilogramsPerCubicMeter,
+                          final double initialDensityKilogramsPerCubicMeter ) {
         // Always call the superclass constructor first!
         // NOTE: We use up to two decimal places of precision for displaying
         //  Density, and six decimal places for parsing Density.
@@ -75,10 +75,10 @@ public class DensityEditor extends DoubleEditor {
                2,
                0,
                6,
-               minimumDensityKilogramsPerMeterCubed,
-               maximumDensityKilogramsPerMeterCubed,
-               initialDensityKilogramsPerMeterCubed,
-               VALUE_INCREMENT_KILOGRAMS_PER_METER_CUBED );
+               minimumDensityKilogramsPerCubicMeter,
+               maximumDensityKilogramsPerCubicMeter,
+               initialDensityKilogramsPerCubicMeter,
+               VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER );
 
         densityUnit = DensityUnit.defaultValue();
 
@@ -101,10 +101,10 @@ public class DensityEditor extends DoubleEditor {
 
         // Set the level of precision based on the granularity of the unit.
         switch ( densityUnit ) {
-            case GRAMS_PER_CENTIMETER_CUBED:
+            case GRAMS_PER_CUBIC_CENTIMETER:
                 _numberFormat.setMaximumFractionDigits( 4 );
                 break;
-            case KILOGRAMS_PER_METER_CUBED:
+            case KILOGRAMS_PER_CUBIC_METER:
                 _numberFormat.setMaximumFractionDigits( 1 );
                 break;
             default:
@@ -131,32 +131,32 @@ public class DensityEditor extends DoubleEditor {
         setMeasurementUnitString( densityUnit.abbreviation() );
     }
 
-    // Convert minimum Density value from kilograms to cubic meter to display
+    // Convert minimum Density value from kilograms per cubic meter to display
     // units.
     public void setMinimumDensityKilogramsPerCubicMeter( final double minimumDensityKilogramsPerCubicMeter ) {
         setMinimumValue( DensityConversion.convertDensity(
                 minimumDensityKilogramsPerCubicMeter,
-                DensityUnit.KILOGRAMS_PER_METER_CUBED,
+                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                 densityUnit ) );
     }
 
-    // Convert maximum Density value from kilograms per cubic meter to
-    // display units.
+    // Convert maximum Density value from kilograms per cubic meter to display
+    // units.
     public void setMaximumDensityKilogramsPerCubicMeter( final double maximumDensityKilogramsPerCubicMeter ) {
         setMaximumValue( DensityConversion.convertDensity(
                 maximumDensityKilogramsPerCubicMeter,
-                DensityUnit.KILOGRAMS_PER_METER_CUBED,
+                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                 densityUnit ) );
     }
 
-    // Convert current Density value from display units to kilograms per
-    // cubic meter.
+    // Convert current Density value from display units to kilograms per cubic
+    // meter.
     // NOTE: This method is unused currently, but is provided in case we
     //  change our mind about having a related slider be the data master.
     public double getDensityKilogramsPerCubicMeter() {
         return DensityConversion.convertDensity( getValue(),
                                                  densityUnit,
-                                                 DensityUnit.KILOGRAMS_PER_METER_CUBED );
+                                                 DensityUnit.KILOGRAMS_PER_CUBIC_METER );
     }
 
     // Convert new Density value from kilograms per cubic meter to display
@@ -166,7 +166,7 @@ public class DensityEditor extends DoubleEditor {
     public void setDensityKilogramsPerCubicMeter( final double densityKilogramsPerCubicMeter ) {
         setValue( DensityConversion.convertDensity(
                 densityKilogramsPerCubicMeter,
-                DensityUnit.KILOGRAMS_PER_METER_CUBED,
+                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                 densityUnit ) );
     }
 }
