@@ -107,7 +107,7 @@ public abstract class ExtendedFloatEditorTableCell< RT, ET extends Enum< ET > & 
 
         // First get a handle on the textField from the EditorTableCell base
         // class to update the measurement unit string.
-        if ( textField instanceof NumberEditor editor ) {
+        if ( textField instanceof final NumberEditor editor ) {
             editor.setMeasurementUnitString( displayUnit.get().abbreviation() );
         }
 
@@ -153,12 +153,13 @@ public abstract class ExtendedFloatEditorTableCell< RT, ET extends Enum< ET > & 
      * units to be used for displaying distance to the user.
      * <p>
      * NOTE: The observable is passed in to avoid the need for adding a listener
-     *  for every table cell and for removing a listener when the cell is no
-     *  longer in use.
-     * @param pDisplayUnit The new observable property with the unit to display.
+     * for every table cell and for removing a listener when the cell is no
+     * longer in use.
+     *
+     * @param pDisplayUnit The new observable property with the unit to
+     *                     display.
      */
-    public void setDisplayUnitProperty(
-            final ObjectProperty< ET > pDisplayUnit ) {
+    public void setDisplayUnitProperty( final ObjectProperty< ET > pDisplayUnit ) {
         displayUnit = pDisplayUnit;
     }
 }

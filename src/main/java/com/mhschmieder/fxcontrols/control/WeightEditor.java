@@ -107,7 +107,7 @@ public class WeightEditor extends DoubleEditor {
         // sliders and editors consistently so it gets confusing very quickly as
         // to the order of callbacks and events as well as when and whether unit
         // conversion has already been applied when values are synced or bound.
-        setMinimumWeightKg( -Double.MAX_VALUE );
+        setMinimumWeightKg( 0.0d );
         setMaximumWeightKg( Double.MAX_VALUE );
 
         setValue( weightCurrent );

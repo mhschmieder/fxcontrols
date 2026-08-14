@@ -64,7 +64,7 @@ public final class GainEditor extends DoubleEditor {
                gainDefaultDb,
                VALUE_INCREMENT_DEFAULT_DB );
 
-        this.defaultToNegativeGain = pDefaultToNegativeGain;
+        defaultToNegativeGain = pDefaultToNegativeGain;
     }
 
     @Override

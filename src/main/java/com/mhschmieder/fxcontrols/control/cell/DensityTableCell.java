@@ -1,0 +1,93 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2026 Mark Schmieder. All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * This file is part of the jphysics Library
+ *
+ * You should have received a copy of the MIT License along with the jphysics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
+ *
+ * Project: https://github.com/mhschmieder/jphysics
+ */
+package com.mhschmieder.fxcontrols.control.cell;
+
+import com.mhschmieder.fxcontrols.control.DensityEditor;
+import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.measure.DensityConversion;
+import com.mhschmieder.jphysics.measure.DensityUnit;
+
+import javafx.scene.control.TextField;
+
+public class DensityTableCell< RT >
+        extends ExtendedDoubleEditorTableCell< RT, DensityUnit > {
+
+    /**
+     * Constructs a DensityTableCell with specific settings for whether the cell
+     * can be left blank, the unit of measurement for the data model, and client
+     * properties.
+     *
+     * @param pAllowedToBeBlank A boolean indicating whether the cell is allowed
+     *                          to have a blank or null value.
+     * @param pDataModelUnit    The unit of measurement to be used for the data
+     *                          model values, specified as a
+     *                          {@code DensityUnit}.
+     * @param pClientProperties An object containing client properties and hat
+     *                          may influence the behavior or appearance of the
+     *                          table cell.
+     */
+    public DensityTableCell( final boolean pAllowedToBeBlank,
+                             final DensityUnit pDataModelUnit,
+                             final ClientProperties pClientProperties ) {
+        // Always call the superclass constructor first!
+        super( pAllowedToBeBlank, pDataModelUnit, pClientProperties );
+    }
+
+    @Override
+    protected TextField makeTextField() {
+        return new DensityEditor( clientProperties, "Edit Density" );
+    }
+
+    @Override
+    public void setBeanProperty( final RT selectedRecord ) {
+        // NOTE: This method is redundant here, as bindings outside the table
+        //  cell handlers already take care of syncing bean properties, and the
+        //  depth values have no constraints or impact on other table cells.
+    }
+
+    @Override
+    public Double getDisplayValue( final Double pDataModelValue ) {
+        return ( pDataModelValue != null )
+               ? DensityConversion.convertDensity( pDataModelValue,
+                                                   dataModelUnit,
+                                                   displayUnit.getValue() )
+               : null;
+    }
+
+    @Override
+    public Double getDataModelValue( final Double pDisplayValue ) {
+        return ( pDisplayValue != null )
+               ? DensityConversion.convertDensity( pDisplayValue,
+                                                   displayUnit.getValue(),
+                                                   dataModelUnit )
+               : null;
+    }
+}

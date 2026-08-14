@@ -114,7 +114,6 @@ public final class TableColumnFactory {
         return tableColumn;
     }
 
-
     /**
      * Returns a {@link TableColumn} for managing {@link Number} values.
      *

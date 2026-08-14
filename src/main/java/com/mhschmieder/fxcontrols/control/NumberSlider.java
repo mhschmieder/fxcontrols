@@ -245,7 +245,7 @@ public class NumberSlider extends Slider {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // traditional mouse scroll wheel events.
-        if ( ScrollingSensitivity.OFF == scrollingSensitivity ) {
+        if ( scrollingSensitivity == ScrollingSensitivity.OFF ) {
             return;
         }
 

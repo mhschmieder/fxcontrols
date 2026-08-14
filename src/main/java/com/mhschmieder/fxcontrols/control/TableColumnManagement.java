@@ -57,7 +57,7 @@ public final class TableColumnManagement {
                 //  method for constructing the column potentially needs to bind
                 //  the text field to the label created to streamline setting
                 //  the header from the column.setText method.
-                columnHeader.setText( newHeader + "(" + newUnitsLabel + " )" );
+                columnHeader.setText( newHeader + '(' + newUnitsLabel + " )" );
             }
         }
     }

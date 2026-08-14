@@ -49,7 +49,7 @@ public final class GraphicalObjectLabelEditor extends TextEditor {
     // uniquefier appendices.
     public NumberFormat _uniquefierNumberFormat;
     // Declare a collection of Graphical Objects.
-    private GraphicalObjectCollection< ? extends GraphicalObject >
+    private final GraphicalObjectCollection< ? extends GraphicalObject >
             _graphicalObjectCollection;
 
     public GraphicalObjectLabelEditor( final ClientProperties pClientProperties,
