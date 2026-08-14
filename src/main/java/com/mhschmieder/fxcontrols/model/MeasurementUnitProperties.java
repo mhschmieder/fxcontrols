@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.model;
 
 import com.mhschmieder.jphysics.measure.AngleUnit;
+import com.mhschmieder.jphysics.measure.DensityUnit;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.PressureUnit;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
@@ -53,12 +54,14 @@ public final class MeasurementUnitProperties {
             = new MeasurementUnitProperties( DistanceUnit.METERS,
                                              AngleUnit.RADIANS,
                                              WeightUnit.KILOGRAMS,
+                                             DensityUnit.KILOGRAMS_PER_METER_CUBED,
                                              TemperatureUnit.KELVIN,
                                              PressureUnit.PASCALS );
 
     private final ObjectProperty< DistanceUnit > distanceUnit;
     private final ObjectProperty< AngleUnit > angleUnit;
     private final ObjectProperty< WeightUnit > weightUnit;
+    private final ObjectProperty< DensityUnit > densityUnit;
     private final ObjectProperty< TemperatureUnit > temperatureUnit;
     private final ObjectProperty< PressureUnit > pressureUnit;
 
@@ -66,6 +69,7 @@ public final class MeasurementUnitProperties {
     private final DistanceUnit distanceUnitDefault;
     private final AngleUnit angleUnitDefault;
     private final WeightUnit weightUnitDefault;
+    private final DensityUnit densityUnitDefault;
     private final TemperatureUnit temperatureUnitDefault;
     private final PressureUnit pressureUnitDefault;
 
@@ -73,17 +77,19 @@ public final class MeasurementUnitProperties {
     private BooleanBinding distanceUnitChanged;
     private BooleanBinding angleUnitChanged;
     private BooleanBinding weightUnitChanged;
+    private BooleanBinding densityUnitChanged;
     private BooleanBinding temperatureUnitChanged;
     private BooleanBinding pressureUnitChanged;
 
     /**
      * This is the default constructor; it sets all instance variables to
-     * default values in the standard standard MKS scientific unit system.
+     * default values in the standard MKS scientific unit system.
      */
     public MeasurementUnitProperties() {
         this( DistanceUnit.defaultValue(),
               AngleUnit.defaultValue(),
               WeightUnit.defaultValue(),
+              DensityUnit.defaultValue() ,
               TemperatureUnit.defaultValue(),
               PressureUnit.defaultValue() );
     }
@@ -94,30 +100,51 @@ public final class MeasurementUnitProperties {
      * @param pDistanceUnit    The Distance Unit to use
      * @param pAngleUnit       The Angle Unit to use
      * @param pWeightUnit      The Weight Unit to use
+     * @param pDensityUnit     The Density Unit to use
      * @param pTemperatureUnit The Temperature Unit to use
      * @param pPressureUnit    The Pressure Unit to use
      */
     public MeasurementUnitProperties( final DistanceUnit pDistanceUnit,
                                       final AngleUnit pAngleUnit,
                                       final WeightUnit pWeightUnit,
+                                      final DensityUnit pDensityUnit,
                                       final TemperatureUnit pTemperatureUnit,
                                       final PressureUnit pPressureUnit ) {
         distanceUnit = new SimpleObjectProperty<>( pDistanceUnit );
         angleUnit = new SimpleObjectProperty<>( pAngleUnit );
         weightUnit = new SimpleObjectProperty<>( pWeightUnit );
+        densityUnit = new SimpleObjectProperty<>( pDensityUnit );
         temperatureUnit = new SimpleObjectProperty<>( pTemperatureUnit );
         pressureUnit = new SimpleObjectProperty<>( pPressureUnit );
 
         distanceUnitDefault = pDistanceUnit;
         angleUnitDefault = pAngleUnit;
         weightUnitDefault = pWeightUnit;
+        densityUnitDefault = pDensityUnit;
         temperatureUnitDefault = pTemperatureUnit;
         pressureUnitDefault = pPressureUnit;
 
-        // Bind all of the properties to the associated dirty flag.
+        // Bind all the properties to the associated dirty flag.
         // NOTE: This is done during initialization, as it is best to make
         //  singleton objects and just update their values vs. reconstructing.
         makeBooleanBindings();
+    }
+
+    /**
+     * This is the copy constructor, and is offered in place of clone() to
+     * guarantee that the source object is never modified by the new target
+     * object created here.
+     *
+     * @param pMeasurementUnitProperties The Measurement Units reference for the
+     *                                   copy
+     */
+    public MeasurementUnitProperties( final MeasurementUnitProperties pMeasurementUnitProperties ) {
+        this( pMeasurementUnitProperties.getDistanceUnit(),
+              pMeasurementUnitProperties.getAngleUnit(),
+              pMeasurementUnitProperties.getWeightUnit(),
+              pMeasurementUnitProperties.getDensityUnit(),
+              pMeasurementUnitProperties.getTemperatureUnit(),
+              pMeasurementUnitProperties.getPressureUnit() );
     }
 
     public void makeBooleanBindings() {
@@ -168,6 +195,21 @@ public final class MeasurementUnitProperties {
                 return true;
             }
         };
+        densityUnitChanged = new BooleanBinding() {
+            {
+                // When the specific assignable value of interest changes, the
+                // densityUnitChanged Boolean Binding is invalidated and
+                // notifies its listeners.
+                super.bind( densityUnitProperty() );
+            }
+
+            // Just auto-clear the invalidation by overriding with a status that
+            // is affirmative of a change having triggered the call.
+            @Override
+            protected boolean computeValue() {
+                return true;
+            }
+        };
         temperatureUnitChanged = new BooleanBinding() {
             {
                 // When the specific assignable value of interest changes, the
@@ -204,44 +246,16 @@ public final class MeasurementUnitProperties {
         return distanceUnit;
     }
 
-    public ObjectProperty< AngleUnit > angleUnitProperty() {
-        return angleUnit;
-    }
-
-    public ObjectProperty< WeightUnit > weightUnitProperty() {
-        return weightUnit;
-    }
-
-    public ObjectProperty< TemperatureUnit > temperatureUnitProperty() {
-        return temperatureUnit;
-    }
-
-    public ObjectProperty< PressureUnit > pressureUnitProperty() {
-        return pressureUnit;
-    }
-
-    /**
-     * This is the copy constructor, and is offered in place of clone() to
-     * guarantee that the source object is never modified by the new target
-     * object created here.
-     *
-     * @param pMeasurementUnitProperties The Measurement Units reference for the
-     *                                   copy
-     */
-    public MeasurementUnitProperties( final MeasurementUnitProperties pMeasurementUnitProperties ) {
-        this( pMeasurementUnitProperties.getDistanceUnit(),
-              pMeasurementUnitProperties.getAngleUnit(),
-              pMeasurementUnitProperties.getWeightUnit(),
-              pMeasurementUnitProperties.getTemperatureUnit(),
-              pMeasurementUnitProperties.getPressureUnit() );
-    }
-
     public DistanceUnit getDistanceUnit() {
         return distanceUnit.get();
     }
 
     public void setDistanceUnit( final DistanceUnit pDistanceUnit ) {
         distanceUnit.set( pDistanceUnit );
+    }
+
+    public ObjectProperty< AngleUnit > angleUnitProperty() {
+        return angleUnit;
     }
 
     public AngleUnit getAngleUnit() {
@@ -252,6 +266,10 @@ public final class MeasurementUnitProperties {
         angleUnit.set( pAngleUnit );
     }
 
+    public ObjectProperty< WeightUnit > weightUnitProperty() {
+        return weightUnit;
+    }
+
     public WeightUnit getWeightUnit() {
         return weightUnit.get();
     }
@@ -260,12 +278,32 @@ public final class MeasurementUnitProperties {
         weightUnit.set( pWeightUnit );
     }
 
+    public ObjectProperty< DensityUnit > densityUnitProperty() {
+        return densityUnit;
+    }
+
+    public DensityUnit getDensityUnit() {
+        return densityUnit.get();
+    }
+
+    public void setDensityUnit( final DensityUnit pDensityUnit ) {
+        densityUnit.set( pDensityUnit );
+    }
+
+    public ObjectProperty< TemperatureUnit > temperatureUnitProperty() {
+        return temperatureUnit;
+    }
+
     public TemperatureUnit getTemperatureUnit() {
         return temperatureUnit.get();
     }
 
     public void setTemperatureUnit( final TemperatureUnit pTemperatureUnit ) {
         temperatureUnit.set( pTemperatureUnit );
+    }
+
+    public ObjectProperty< PressureUnit > pressureUnitProperty() {
+        return pressureUnit;
     }
 
     public PressureUnit getPressureUnit() {
@@ -293,6 +331,9 @@ public final class MeasurementUnitProperties {
         result = ( prime * result ) + ( ( weightUnit == null )
                                         ? 0
                                         : weightUnit.hashCode() );
+        result = ( prime * result ) + ( ( densityUnit == null )
+                                        ? 0
+                                        : densityUnit.hashCode() );
         result = ( prime * result ) + ( ( temperatureUnit == null )
                                         ? 0
                                         : temperatureUnit.hashCode() );
@@ -343,6 +384,14 @@ public final class MeasurementUnitProperties {
         else if ( !weightUnit.equals( other.weightUnit ) ) {
             return false;
         }
+        if ( densityUnit == null ) {
+            if ( other.densityUnit != null ) {
+                return false;
+            }
+        }
+        else if ( !densityUnit.equals( other.densityUnit ) ) {
+            return false;
+        }
         if ( temperatureUnit == null ) {
             if ( other.temperatureUnit != null ) {
                 return false;
@@ -376,6 +425,7 @@ public final class MeasurementUnitProperties {
         setMeasurementUnits( distanceUnitDefault,
                              angleUnitDefault,
                              weightUnitDefault,
+                             densityUnitDefault,
                              temperatureUnitDefault,
                              pressureUnitDefault );
     }
@@ -387,17 +437,20 @@ public final class MeasurementUnitProperties {
      * @param pDistanceUnit    The Distance Unit to use
      * @param pAngleUnit       The Angle Unit to use
      * @param pWeightUnit      The Weight Unit to use
+     * @param pDensityUnit     The Density Unit to use
      * @param pTemperatureUnit The Temperature Unit to use
      * @param pPressureUnit    The Pressure Unit to use
      */
     public void setMeasurementUnits( final DistanceUnit pDistanceUnit,
                                      final AngleUnit pAngleUnit,
                                      final WeightUnit pWeightUnit,
+                                     final DensityUnit pDensityUnit,
                                      final TemperatureUnit pTemperatureUnit,
                                      final PressureUnit pPressureUnit ) {
         setDistanceUnit( pDistanceUnit );
         setAngleUnit( pAngleUnit );
         setWeightUnit( pWeightUnit );
+        setDensityUnit( pDensityUnit );
         setTemperatureUnit( pTemperatureUnit );
         setPressureUnit( pPressureUnit );
     }
@@ -412,6 +465,7 @@ public final class MeasurementUnitProperties {
         setMeasurementUnits( pMeasurementUnitProperties.getDistanceUnit(),
                              pMeasurementUnitProperties.getAngleUnit(),
                              pMeasurementUnitProperties.getWeightUnit(),
+                             pMeasurementUnitProperties.getDensityUnit(),
                              pMeasurementUnitProperties.getTemperatureUnit(),
                              pMeasurementUnitProperties.getPressureUnit() );
     }
@@ -438,6 +492,14 @@ public final class MeasurementUnitProperties {
 
     public boolean isWeightUnitChanged() {
         return weightUnitChanged.get();
+    }
+
+    public BooleanBinding densityUnitChangedProperty() {
+        return densityUnitChanged;
+    }
+
+    public boolean isDensityUnitChanged() {
+        return densityUnitChanged.get();
     }
 
     public BooleanBinding temperatureUnitChangedProperty() {
