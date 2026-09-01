@@ -41,10 +41,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.Rectangle;
 
 /**
- * The <code>DrawingLimitsProperties</code> class is the implementation class
- * for the inclusive bounds of a CAD drawing, such as venues used in CAD apps.
- * It currently contains a rectangle describing the boundary of the CAD space,
- * as well as a flag for whether to auto-sync to another boundary (usually a
+ * The {@code DrawingLimitsProperties} class is the implementation class for the
+ * inclusive bounds of a CAD drawing, such as venues used in CAD apps. It
+ * currently contains a rectangle describing the boundary of the CAD space, as
+ * well as a flag for whether to auto-sync to another boundary (usually a
  * Region2D, such as one that is used as a Prediction Plane in CAD apps).
  * <p>
  * This class is generally for 2D CAD, but is deliberately flexible towards
@@ -62,7 +62,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
      * height to "-1". Default constructors might do that, but this is clearer.
      */
     public static final BoundingBox INVALID_BOUNDING_BOX
-            = new BoundingBox( 0.0d, 0.0d, -1d, -1d );
+            = new BoundingBox( 0.0d, 0.0d, -1.0d, -1.0d );
 
     /**
      * Cached observable copy of most recent auto-sync setting.
@@ -114,8 +114,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Rectangle} to .
      *
      * @param pBoundary The {@link Rectangle} to use for setting the fields
      */
@@ -124,8 +123,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Rectangle} to .
      *
      * @param pAutoSync {@code true} if auto-sync to other extents
      * @param pBoundary The {@link Rectangle} to use for setting the fields
@@ -140,8 +138,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle2D} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Rectangle2D} to .
      *
      * @param pBounds The {@link Rectangle2D} to use for setting the fields
      */
@@ -150,8 +147,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle2D} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Rectangle2D} to .
      *
      * @param pAutoSync {@code true} if auto-sync to other extents
      * @param pBounds   The {@link Rectangle2D} to use for setting the fields
@@ -166,8 +162,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Bounds} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Bounds} to .
      *
      * @param computedBounds The {@link Bounds} to use for setting the fields
      */
@@ -176,8 +171,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Bounds} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Bounds} to .
      *
      * @param pAutoSync      {@code true} if auto-sync to other extents
      * @param computedBounds The {@link Bounds} to use for setting the fields
@@ -191,8 +185,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Extents2DProperties} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Extents2DProperties} to .
      *
      * @param pExtents The {@link Extents2DProperties} to use for setting the
      *                 fields
@@ -202,8 +195,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Extents2DProperties} to
-     * {@link DrawingLimitsProperties}.
+     * Cross-constructor from {@link Extents2DProperties} to .
      *
      * @param pAutoSync {@code true} if auto-sync to other extents
      * @param pExtents  The {@link Extents2DProperties} to use for setting the
@@ -222,13 +214,10 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
      * Partially qualified constructor. Turns auto-sync off by default.
      *
      * @param pBoundaryX      The x-origin to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryY      The y-origin to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryWidth  The width to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryHeight The height to use for the new
-     *                        {@link DrawingLimitsProperties}
+     *
      */
     public DrawingLimitsProperties( final double pBoundaryX,
                                     final double pBoundaryY,
@@ -246,13 +235,10 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
      *
      * @param pAutoSync       {@code true} if auto-sync to other extents
      * @param pBoundaryX      The x-origin to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryY      The y-origin to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryWidth  The width to use for the new
-     *                        {@link DrawingLimitsProperties}
      * @param pBoundaryHeight The height to use for the new
-     *                        {@link DrawingLimitsProperties}
+     *
      */
     public DrawingLimitsProperties( final boolean pAutoSync,
                                     final double pBoundaryX,
@@ -268,8 +254,7 @@ public final class DrawingLimitsProperties extends Extents2DProperties {
     /**
      * Copy Constructor.
      *
-     * @param pDrawingLimitsProperties The {@link DrawingLimitsProperties} to
-     *                                 use for setting the fields
+     * @param pDrawingLimitsProperties The  to use for setting the fields
      */
     public DrawingLimitsProperties( final DrawingLimitsProperties pDrawingLimitsProperties ) {
         this( pDrawingLimitsProperties.isAutoSync(),

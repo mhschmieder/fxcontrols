@@ -42,9 +42,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.shape.Rectangle;
 
 /**
- * The <code>Region2DProperties</code> class is the implementation class for a
- * Region as used in some CAD apps. It currently contains a rectangle describing
- * the dimensions of a subspace of interest, along with surfaces and their
+ * The {@code Region2DProperties} class is the implementation class for a Region
+ * as used in some CAD apps. It currently contains a rectangle describing the
+ * dimensions of a subspace of interest, along with surfaces and their
  * status/materials. As such, it isn't quite the same as a Reference Plane.
  * <p>
  * This class is loosely based on the Region object from AutoCAD, which is a

@@ -291,15 +291,11 @@ public final class AnalysisTimeHorizontalZoomChoices {
     }
 
     public boolean isAnalysisTimeZoomedIn() {
-        if ( _zoom7msAnalysisTimeChoice.isSelected()
-             || _zoom14msAnalysisTimeChoice.isSelected()
-             || _zoom28msAnalysisTimeChoice.isSelected()
-             || _zoom56msAnalysisTimeChoice.isSelected()
-             || _zoom112msAnalysisTimeChoice.isSelected() ) {
-            return true;
-        }
-
-        return false;
+        return _zoom7msAnalysisTimeChoice.isSelected()
+               || _zoom14msAnalysisTimeChoice.isSelected()
+               || _zoom28msAnalysisTimeChoice.isSelected()
+               || _zoom56msAnalysisTimeChoice.isSelected()
+               || _zoom112msAnalysisTimeChoice.isSelected();
     }
 
     public void setDisabled( final boolean disabled ) {

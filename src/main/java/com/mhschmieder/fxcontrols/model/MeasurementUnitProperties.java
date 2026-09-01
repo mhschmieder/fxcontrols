@@ -89,7 +89,7 @@ public final class MeasurementUnitProperties {
         this( DistanceUnit.defaultValue(),
               AngleUnit.defaultValue(),
               WeightUnit.defaultValue(),
-              DensityUnit.defaultValue() ,
+              DensityUnit.defaultValue(),
               TemperatureUnit.defaultValue(),
               PressureUnit.defaultValue() );
     }
@@ -155,7 +155,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // distanceUnitChanged Boolean Binding is invalidated and
                 // notifies its listeners.
-                super.bind( distanceUnitProperty() );
+                bind( distanceUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -170,7 +170,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // angleUnitChanged Boolean Binding is invalidated and notifies
                 // its listeners.
-                super.bind( angleUnitProperty() );
+                bind( angleUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -185,7 +185,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // weightUnitChanged Boolean Binding is invalidated and notifies
                 // its listeners.
-                super.bind( weightUnitProperty() );
+                bind( weightUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -200,7 +200,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // densityUnitChanged Boolean Binding is invalidated and
                 // notifies its listeners.
-                super.bind( densityUnitProperty() );
+                bind( densityUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -215,7 +215,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // temperatureUnitChanged Boolean Binding is invalidated and
                 // notifies its listeners.
-                super.bind( temperatureUnitProperty() );
+                bind( temperatureUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -230,7 +230,7 @@ public final class MeasurementUnitProperties {
                 // When the specific assignable value of interest changes, the
                 // pressureUnitChanged Boolean Binding is invalidated and
                 // notifies its listeners.
-                super.bind( pressureUnitProperty() );
+                bind( pressureUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -355,11 +355,9 @@ public final class MeasurementUnitProperties {
         if ( obj == null ) {
             return false;
         }
-        if ( !( obj instanceof MeasurementUnitProperties ) ) {
+        if ( !( obj instanceof final MeasurementUnitProperties other ) ) {
             return false;
         }
-        final MeasurementUnitProperties other
-                = ( MeasurementUnitProperties ) obj;
         if ( distanceUnit == null ) {
             if ( other.distanceUnit != null ) {
                 return false;
@@ -401,14 +399,11 @@ public final class MeasurementUnitProperties {
             return false;
         }
         if ( pressureUnit == null ) {
-            if ( other.pressureUnit != null ) {
-                return false;
-            }
+            return other.pressureUnit == null;
         }
-        else if ( !pressureUnit.equals( other.pressureUnit ) ) {
-            return false;
+        else {
+            return pressureUnit.equals( other.pressureUnit );
         }
-        return true;
     }
 
     // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
@@ -461,7 +456,7 @@ public final class MeasurementUnitProperties {
      * @param pMeasurementUnitProperties The Measurement Units to use to set
      *                                   this object
      */
-    protected void setMeasurementUnits( final MeasurementUnitProperties pMeasurementUnitProperties ) {
+    private void setMeasurementUnits( final MeasurementUnitProperties pMeasurementUnitProperties ) {
         setMeasurementUnits( pMeasurementUnitProperties.getDistanceUnit(),
                              pMeasurementUnitProperties.getAngleUnit(),
                              pMeasurementUnitProperties.getWeightUnit(),

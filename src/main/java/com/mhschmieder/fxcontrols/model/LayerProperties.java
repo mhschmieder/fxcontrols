@@ -152,7 +152,7 @@ public final class LayerProperties
     }
 
     @Override
-    public void setLabel( String label ) {
+    public void setLabel( final String label ) {
         setLayerName( label );
     }
 }

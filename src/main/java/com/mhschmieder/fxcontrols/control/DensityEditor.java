@@ -45,7 +45,6 @@ public class DensityEditor extends DoubleEditor {
     // Store the Density Unit so we'll know when we need to convert.
     private DensityUnit densityUnit;
 
-    //
     // ////////////////////////////////////////////////////////////////////////
     // Constructors and Initialization
     public DensityEditor( final ClientProperties pClientProperties,
@@ -76,11 +75,9 @@ public class DensityEditor extends DoubleEditor {
                0,
                6,
                minimumDensityKilogramsPerCubicMeter,
-               maximumDensityKilogramsPerCubicMeter,
-               initialDensityKilogramsPerCubicMeter,
-               VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER );
+               maximumDensityKilogramsPerCubicMeter );
 
-        densityUnit = DensityUnit.defaultValue();
+        setValue( initialDensityKilogramsPerCubicMeter );
 
         try {
             initEditor();
@@ -91,62 +88,11 @@ public class DensityEditor extends DoubleEditor {
     }
 
     private void initEditor() {
-        // Update the Density Unit and related resolutions and ranges.
-        updateDensityUnit( densityUnit );
-    }
+        // Set the Density Unit to the SI default.
+        densityUnit = DensityUnit.KILOGRAMS_PER_CUBIC_METER;
 
-    public void updateDensityUnit( final DensityUnit pDensityUnit ) {
-        // Store the new Density Unit to provide context for next change.
-        densityUnit = pDensityUnit;
-
-        // Set the level of precision based on the granularity of the unit.
-        switch ( densityUnit ) {
-            case GRAMS_PER_CUBIC_CENTIMETER:
-                _numberFormat.setMaximumFractionDigits( 4 );
-                break;
-            case KILOGRAMS_PER_CUBIC_METER:
-                _numberFormat.setMaximumFractionDigits( 1 );
-                break;
-            default:
-                break;
-        }
-
-        // NOTE: Text Editors must set their adjusted range before setting the
-        //  adjusted current value, as we manage value legality within callbacks
-        //  that check the locally cached minimum and maximum values.
-        // NOTE: Unit conversion is done in the sliders for the doubled-up
-        //  controls, so ideally we can move that code to these respective
-        //  editors to help make the editors consistently own the data and the
-        //  measurement units. The Distance Editor is the model for doing this.
-        // NOTE: The attempted consolidation of bindings strategies ended up
-        //  causing too many conflicts and problems, as we aren't handling
-        //  sliders and editors consistently so it gets confusing very quickly
-        //  as to the order of callbacks and events as well as when and whether
-        //  unit conversion has already been applied when values are synced
-        //  or bound.
-        setMinimumDensityKilogramsPerCubicMeter( 0.0d );
-        setMaximumDensityKilogramsPerCubicMeter( Double.MAX_VALUE );
-
-        // Set the embedded unit label in the generic number textField.
-        setMeasurementUnitString( densityUnit.abbreviation() );
-    }
-
-    // Convert minimum Density value from kilograms per cubic meter to display
-    // units.
-    public void setMinimumDensityKilogramsPerCubicMeter( final double minimumDensityKilogramsPerCubicMeter ) {
-        setMinimumValue( DensityConversion.convertDensity(
-                minimumDensityKilogramsPerCubicMeter,
-                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
-                densityUnit ) );
-    }
-
-    // Convert maximum Density value from kilograms per cubic meter to display
-    // units.
-    public void setMaximumDensityKilogramsPerCubicMeter( final double maximumDensityKilogramsPerCubicMeter ) {
-        setMaximumValue( DensityConversion.convertDensity(
-                maximumDensityKilogramsPerCubicMeter,
-                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
-                densityUnit ) );
+        // Now it is safe to set the value increment amount.
+        setValueIncrement( VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER );
     }
 
     // Convert current Density value from display units to kilograms per cubic
@@ -168,5 +114,66 @@ public class DensityEditor extends DoubleEditor {
                 densityKilogramsPerCubicMeter,
                 DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                 densityUnit ) );
+    }
+
+    // Convert minimum Density value from kilograms per cubic meter to display
+    // units.
+    public void setMinimumDensityKilogramsPerCubicMeter( final double minimumDensityKilogramsPerCubicMeter ) {
+        setMinimumValue( DensityConversion.convertDensity(
+                minimumDensityKilogramsPerCubicMeter,
+                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
+                densityUnit ) );
+    }
+
+    // Convert maximum Density value from kilograms per cubic meter to display
+    // units.
+    public void setMaximumDensityKilogramsPerCubicMeter( final double maximumDensityKilogramsPerCubicMeter ) {
+        setMaximumValue( DensityConversion.convertDensity(
+                maximumDensityKilogramsPerCubicMeter,
+                DensityUnit.KILOGRAMS_PER_CUBIC_METER,
+                densityUnit ) );
+    }
+
+    public void updateDensityUnit( final DensityUnit densityUnitNew ) {
+        // Convert Density range from old units to new units.
+        final double minimumDensity = DensityConversion.convertDensity(
+                _minimumValue,
+                densityUnit,
+                densityUnitNew );
+        final double maximumDensity = DensityConversion.convertDensity(
+                _maximumValue,
+                densityUnit,
+                densityUnitNew );
+
+        // Convert the current Density from previous units to new units.
+        final double currentDensity
+                = DensityConversion.convertDensity( getValue(),
+                                                    densityUnit,
+                                                    densityUnitNew );
+
+        // Cache the new Density Unit to provide context for next change.
+        densityUnit = densityUnitNew;
+
+        // Set the level of precision based on the granularity of the unit.
+        switch ( densityUnit ) {
+            case GRAMS_PER_CUBIC_CENTIMETER:
+                _numberFormat.setMaximumFractionDigits( 4 );
+                break;
+            case KILOGRAMS_PER_CUBIC_METER:
+                _numberFormat.setMaximumFractionDigits( 1 );
+                break;
+            default:
+                break;
+        }
+
+        // NOTE: Text Editors must set their adjusted range before setting the
+        //  adjusted current value, as we manage value legality within callbacks
+        //  that check the locally cached minimum and maximum values.
+        setMinimumValue( minimumDensity );
+        setMaximumValue( maximumDensity );
+        setValue( currentDensity );
+
+        // Set the embedded unit label in the generic number textField.
+        setMeasurementUnitString( densityUnit.abbreviation() );
     }
 }

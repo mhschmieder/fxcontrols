@@ -368,7 +368,7 @@ public class FileActions {
         //  If we also include one with the File Menu, then the menu shortcut
         //  gets triggered twice, which causes the File Save confirmation dialog
         //  to pop up a second time -- especially if the user canceled the exit.
-        if ( !SystemType.MACOS.equals( pClientProperties.systemType ) ) {
+        if ( pClientProperties.systemType != SystemType.MACOS ) {
             fileActionCollection.add( ActionUtils.ACTION_SEPARATOR );
             fileActionCollection.add( _exitAction );
         }

@@ -562,7 +562,7 @@ public final class LayerPropertiesManagement {
         // Get a unique Layer Name from the candidate name.
         // NOTE: Make sure we aren't trying to change the Default Layer Name.
         final String oldLayerName = layerProperties.getLayerName();
-        final String newLayerName = ( DEFAULT_LAYER_NAME == labelToExclude )
+        final String newLayerName = ( labelToExclude == DEFAULT_LAYER_NAME )
                                     ? DEFAULT_LAYER_NAME
                                     : LabeledObjectManagement.getUniqueLabel(
                                             layerCollection,

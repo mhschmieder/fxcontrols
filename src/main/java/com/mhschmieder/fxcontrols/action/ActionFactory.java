@@ -206,11 +206,11 @@ public final class ActionFactory {
         }
 
         // Composite the action name from the group and item names.
-        final String actionName = groupName + "." + itemName;
+        final String actionName = groupName + '.' + itemName;
 
         // Generate the resource lookup key for the action accelerator.
         final String resourceKey = actionName + ".accelerator" + (
-                SystemType.MACOS == clientProperties.systemType
+                clientProperties.systemType == SystemType.MACOS
                 ? ".mac"
                 : "" );
 

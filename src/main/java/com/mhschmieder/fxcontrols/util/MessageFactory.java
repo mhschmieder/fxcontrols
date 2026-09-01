@@ -123,7 +123,7 @@ public class MessageFactory {
     public static String getFilePromptMessage( final String promptMessageBody,
                                                final File file ) {
         final String fileName = file.getName();
-        return "File: " + '"' + fileName + '"' + " " + promptMessageBody;
+        return "File: " + '"' + fileName + '"' + ' ' + promptMessageBody;
     }
 
     public static String getFileExitTitle( final String productName ) {
@@ -132,23 +132,21 @@ public class MessageFactory {
 
     public static String getFileImportErrorMessage( final FileMode fileMode,
                                                     final File file ) {
-        final String errorMessageQualifier = FileMode.IMPORT_CAD.equals(
-                fileMode )
+        final String errorMessageQualifier = fileMode == FileMode.IMPORT_CAD
                                              ? ""
                                              : " was opened for project data,"
                                                + " but";
         final String errorMessageBody = errorMessageQualifier
                                         + " could not load graphics data due "
                                         + "to invalid file content.";
-        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static String getFileErrorMessage( final String errorMessageBody,
                                               final File file ) {
         try {
             final Path path = file.toPath();
-            return "File: " + '"' + path.toString() + '"' + " "
-                   + errorMessageBody;
+            return "File: " + '"' + path + '"' + ' ' + errorMessageBody;
         }
         catch ( final InvalidPathException ipe ) {
             ipe.printStackTrace();
@@ -158,8 +156,7 @@ public class MessageFactory {
 
     public static String getFileImportOutOfMemoryMessage( final FileMode fileMode,
                                                           final File file ) {
-        final String errorMessageQualifier = FileMode.IMPORT_CAD.equals(
-                fileMode )
+        final String errorMessageQualifier = fileMode == FileMode.IMPORT_CAD
                                              ? ""
                                              : " was opened for project data,"
                                                + " but";
@@ -167,7 +164,7 @@ public class MessageFactory {
                                         + " could not load graphics data as "
                                         + "more Java heap space memory"
                                         + " is required than is available.";
-        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static String getFileNameConflictTitle() {
@@ -186,7 +183,7 @@ public class MessageFactory {
     }
 
     public static String getFileNotOpenedMasthead( final FileMode fileMode ) {
-        return FileMode.IMPORT_CAD.equals( fileMode )
+        return fileMode == FileMode.IMPORT_CAD
                ? "File Partially Opened"
                : getFileNotOpenedMasthead();
     }
@@ -212,14 +209,14 @@ public class MessageFactory {
 
     public static String getFileReadErrorMessage( final FileMode fileMode,
                                                   final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
+        final String errorMessageBody = fileMode == FileMode.IMPORT_CAD
                                         ? " could not load file contents due "
                                           + "to parsing errors."
                                         : " could not fully load file contents "
                                           + "due to parsing errors."
                                           + " File content may be wrong data "
                                           + "type for selected action.";
-        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static String getFileOpenErrorTitle() {
@@ -304,13 +301,13 @@ public class MessageFactory {
 
     public static String getGraphicsFileReadErrorMessage( final FileMode fileMode,
                                                           final File file ) {
-        final String errorMessageBody = FileMode.IMPORT_CAD.equals( fileMode )
+        final String errorMessageBody = fileMode == FileMode.IMPORT_CAD
                                         ? " could not load graphics data due "
                                           + "to parsing errors."
                                         : " was opened for project data, but "
                                           + "could not load graphics data due"
                                           + " to parsing errors.";
-        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static String getGraphicsFileWriteErrorMessage( final File file ) {
@@ -339,7 +336,7 @@ public class MessageFactory {
 
     public static String getLoginCredentialsMasthead( final LoginType loginType,
                                                       final String loginTarget ) {
-        return "Please Log In to the " + loginTarget + " " + loginType.label();
+        return "Please Log In to the " + loginTarget + ' ' + loginType.label();
     }
 
     public static String getLoginCredentialsTitle( final LoginType loginType ) {
@@ -358,7 +355,7 @@ public class MessageFactory {
         final String errorMessageBody =
                 " was partially saved as the graphics import source has moved,"
                 + " is missing from file system, or is corrupted.";
-        return MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        return getFileErrorMessage( errorMessageBody, file );
     }
 
     public static String getNoPrinterAvailableMessage() {
@@ -486,8 +483,9 @@ public class MessageFactory {
 
     public static String getWriteProtectedFileMessage( final File file ) {
         final String errorMessageBody = " is write-protected.";
-        final String writeProtectedFileMessage
-                = MessageFactory.getFileErrorMessage( errorMessageBody, file );
+        final String writeProtectedFileMessage = getFileErrorMessage(
+                errorMessageBody,
+                file );
         return writeProtectedFileMessage;
     }
 

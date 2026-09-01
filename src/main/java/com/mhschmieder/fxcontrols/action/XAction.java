@@ -103,23 +103,23 @@ public class XAction extends Action {
     }
 
     public final boolean isAction() {
-        return ActionVerb.DO.equals( actionVerb );
+        return actionVerb == ActionVerb.DO;
     }
 
     public final boolean isCheck() {
-        return ActionVerb.CHECK.equals( actionVerb );
+        return actionVerb == ActionVerb.CHECK;
     }
 
     public final boolean isChoice() {
-        return ActionVerb.CHOOSE.equals( actionVerb );
+        return actionVerb == ActionVerb.CHOOSE;
     }
 
     public final boolean isColor() {
-        return ActionVerb.PICK_COLOR.equals( actionVerb );
+        return actionVerb == ActionVerb.PICK_COLOR;
     }
 
     public final boolean isDate() {
-        return ActionVerb.PICK_DATE.equals( actionVerb );
+        return actionVerb == ActionVerb.PICK_DATE;
     }
 
     public final boolean isHideIfDisabled() {
@@ -131,15 +131,15 @@ public class XAction extends Action {
     }
 
     public final boolean isSelect() {
-        return ActionVerb.SELECT.equals( actionVerb );
+        return actionVerb == ActionVerb.SELECT;
     }
 
     public final boolean isSpin() {
-        return ActionVerb.SPIN.equals( actionVerb );
+        return actionVerb == ActionVerb.SPIN;
     }
 
     public final boolean isToggle() {
-        return ActionVerb.TOGGLE.equals( actionVerb );
+        return actionVerb == ActionVerb.TOGGLE;
     }
 
     @Override

@@ -101,10 +101,9 @@ public class MasterLevelSettings {
         if ( obj == null ) {
             return false;
         }
-        if ( !( obj instanceof MasterLevelSettings ) ) {
+        if ( !( obj instanceof final MasterLevelSettings other ) ) {
             return false;
         }
-        final MasterLevelSettings other = ( MasterLevelSettings ) obj;
         if ( gain == null ) {
             if ( other.gain != null ) {
                 return false;
@@ -122,14 +121,11 @@ public class MasterLevelSettings {
             return false;
         }
         if ( polarityReversed == null ) {
-            if ( other.polarityReversed != null ) {
-                return false;
-            }
+            return other.polarityReversed == null;
         }
-        else if ( !polarityReversed.equals( other.polarityReversed ) ) {
-            return false;
+        else {
+            return polarityReversed.equals( other.polarityReversed );
         }
-        return true;
     }
 
     public final boolean isMuted() {

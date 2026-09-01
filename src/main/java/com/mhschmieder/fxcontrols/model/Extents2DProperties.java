@@ -69,11 +69,9 @@ public class Extents2DProperties {
      * Fully qualified constructor.
      *
      * @param pX      The x-origin to use for the new
-     *                {@link Extents2DProperties}
      * @param pY      The y-origin to use for the new
-     *                {@link Extents2DProperties}
-     * @param pWidth  The width to use for the new {@link Extents2DProperties}
-     * @param pHeight The height to use for the new {@link Extents2DProperties}
+     * @param pWidth  The width to use for the new
+     * @param pHeight The height to use for the new
      */
     public Extents2DProperties( final double pX,
                                 final double pY,
@@ -86,7 +84,7 @@ public class Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle} to {@link Extents2DProperties}.
+     * Cross-constructor from {@link Rectangle} to .
      *
      * @param pBoundary The {@link Rectangle} to use for setting the fields
      */
@@ -98,8 +96,7 @@ public class Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Rectangle2D} to
-     * {@link Extents2DProperties}.
+     * Cross-constructor from {@link Rectangle2D} to .
      *
      * @param pBounds The {@link Rectangle2D} to use for setting the fields
      */
@@ -111,7 +108,7 @@ public class Extents2DProperties {
     }
 
     /**
-     * Cross-constructor from {@link Bounds} to {@link Extents2DProperties}.
+     * Cross-constructor from {@link Bounds} to .
      *
      * @param computedBounds The {@link Bounds} to use for setting the fields
      */
@@ -125,8 +122,7 @@ public class Extents2DProperties {
     /**
      * Copy Constructor.
      *
-     * @param pExtents The {@link Extents2DProperties} to use for setting the
-     *                 fields
+     * @param pExtents The  to use for setting the fields
      */
     public Extents2DProperties( final Extents2DProperties pExtents ) {
         this( pExtents.getX(),

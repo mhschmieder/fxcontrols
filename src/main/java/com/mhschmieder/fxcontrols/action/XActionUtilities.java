@@ -40,6 +40,7 @@ import org.controlsfx.tools.Duplicatable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ObjectBinding;
@@ -156,8 +157,9 @@ public final class XActionUtilities {
                                          final Collection< ? extends Action > actions ) {
         menuBar.getMenus().clear();
         for ( final Action action : actions ) {
-            if ( ( action == ActionUtils.ACTION_SEPARATOR ) || ( action
-                                                                 == ActionUtils.ACTION_SPAN ) ) {
+            if ( ( Objects.equals( action, ActionUtils.ACTION_SEPARATOR ) ) || ( Objects.equals(
+                    action,
+                    ActionUtils.ACTION_SPAN ) ) ) {
                 continue;
             }
 
@@ -235,9 +237,8 @@ public final class XActionUtilities {
                 continue;
             }
 
-            if ( action instanceof XActionGroup ) {
+            if ( action instanceof final XActionGroup actionGroup ) {
                 final Menu menu = createMenu( action );
-                final XActionGroup actionGroup = ( XActionGroup ) action;
                 final Collection< MenuItem > menuItems = toMenuItems(
                         actionGroup.getActions() );
                 if ( actionGroup.isChoiceGroup() ) {
@@ -250,9 +251,8 @@ public final class XActionUtilities {
             else if ( action instanceof ActionGroup ) {
                 final Menu menu = ActionUtils.createMenu( action );
 
-                // Make sure the mnemonic is used to underline a character vs
-                // . printing
-                // as a separate literal character.
+                // Make sure the mnemonic is used to underline a character vs.
+                // printing as a separate literal character.
                 menu.setMnemonicParsing( true );
 
                 final Collection< MenuItem > menuItems
@@ -264,13 +264,13 @@ public final class XActionUtilities {
             else if ( ActionUtils.ACTION_SEPARATOR.toString()
                                                   .equals( action.toString() ) ) {
                 // This code is unreachable unless we check it before
-                // instanceof.
+                // instanceof XAction and Action.
                 items.add( new SeparatorMenuItem() );
             }
             else if ( ActionUtils.ACTION_SPAN.toString()
                                              .equals( action.toString() ) ) {
                 // This code is unreachable unless we check it before
-                // instanceof.
+                // instanceof XAction and Action.
                 // NOTE: Nothing to do here yet, but we want to avoid future
                 // errors.
             }
@@ -281,9 +281,8 @@ public final class XActionUtilities {
             else if ( action instanceof Action ) {
                 final MenuItem menuItem = ActionUtils.createMenuItem( action );
 
-                // Make sure the mnemonic is used to underline a character vs
-                // . printing
-                // as a separate literal character.
+                // Make sure the mnemonic is used to underline a character vs.
+                // printing as a separate literal character.
                 menuItem.setMnemonicParsing( true );
 
                 items.add( menuItem );
@@ -293,17 +292,19 @@ public final class XActionUtilities {
         return items;
     }
 
-    protected static Node copyNode( final Node node ) {
-        if ( node instanceof ImageView ) {
-            final Image image = ( ( ImageView ) node ).getImage();
-            return new ImageView( image );
+    private static Node copyNode( final Node node ) {
+        final Node copy;
+        switch ( node ) {
+            case final ImageView imageView -> {
+                final Image image = imageView.getImage();
+                copy = new ImageView( image );
+            }
+            case final Duplicatable< ? > duplicatable ->
+                    copy = ( Node ) duplicatable.duplicate();
+            default -> throw new IllegalStateException( "Unexpected value: " + node );
         }
-        else if ( node instanceof Duplicatable< ? > ) {
-            return ( Node ) ( ( Duplicatable< ? > ) node ).duplicate();
-        }
-        else {
-            return null;
-        }
+
+        return copy;
     }
 
     // Carry over action style classes changes to the @Styleable
@@ -402,20 +403,17 @@ public final class XActionUtilities {
         return menuItem;
     }
 
-    private static final class MenuItemPropertiesMapChangeListener< T extends MenuItem >
+    private record MenuItemPropertiesMapChangeListener< T extends MenuItem >(
+            WeakReference< T > menuItemWeakReference, Action action )
             implements MapChangeListener< Object, Object > {
 
-        private final WeakReference< T > menuItemWeakReference;
-        private final Action action;
-
-        protected MenuItemPropertiesMapChangeListener( final T pMenuItem,
-                                                       final Action pAction ) {
-            menuItemWeakReference = new WeakReference<>( pMenuItem );
-            action = pAction;
+        private MenuItemPropertiesMapChangeListener( final T pMenuItemWeakReference,
+                                                     final Action pAction ) {
+            this( new WeakReference<>( pMenuItemWeakReference ), pAction );
         }
 
         @Override
-        public void onChanged( final MapChangeListener.Change< ?, ? > change ) {
+        public void onChanged( final Change< ?, ? > change ) {
             final T menuItem = menuItemWeakReference.get();
             if ( menuItem == null ) {
                 action.getProperties().removeListener( this );
@@ -455,7 +453,7 @@ public final class XActionUtilities {
             return menuItem != null
                    ? menuItem.equals( otherMenuItem )
                    : ( otherMenuItem == null )
-                     && action.equals( otherListener.action );
+                     && action.equals( otherListener.action() );
         }
     }
 }

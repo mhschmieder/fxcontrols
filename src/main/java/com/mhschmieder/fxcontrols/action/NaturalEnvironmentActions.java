@@ -43,7 +43,7 @@ import javafx.scene.paint.Color;
  */
 public final class NaturalEnvironmentActions {
 
-    protected final boolean vectorGraphicsSupported;
+    private final boolean vectorGraphicsSupported;
     public FileActions fileActions;
     public SettingsActions settingsActions;
     public SimulationActions simulationActions;

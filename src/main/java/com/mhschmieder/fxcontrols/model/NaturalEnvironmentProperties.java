@@ -50,7 +50,7 @@ public final class NaturalEnvironmentProperties {
     // Declare default constants, where appropriate, for all fields.
     public static final double TEMPERATURE_K_DEFAULT
             = PhysicsConstants.ROOM_TEMPERATURE_K;
-    public static final double HUMIDITY_RELATIVE_DEFAULT = 50d;
+    public static final double HUMIDITY_RELATIVE_DEFAULT = 50.0d;
     public static final double PRESSURE_PA_DEFAULT
             = PhysicsConstants.PRESSURE_REFERENCE_PA;
     public static final boolean AIR_ATTENUATION_APPLIED_DEFAULT = true;
@@ -64,7 +64,7 @@ public final class NaturalEnvironmentProperties {
     private final BooleanProperty airAttenuationApplied;
 
     // NOTE: This field has to follow JavaFX Property Beans conventions.
-    private BooleanBinding naturalEnvironmentChanged;
+    private final BooleanBinding naturalEnvironmentChanged;
 
     /**
      * This is the default constructor; it sets all instance variables to
@@ -309,7 +309,7 @@ public final class NaturalEnvironmentProperties {
                                      final HumidityUnit pHumidityUnit ) {
         // TODO: Implement molar humidity, which requires adding a conversion
         // method to UnitsConversion based on the C++ Physics Library code.
-        if ( HumidityUnit.RELATIVE.equals( pHumidityUnit ) ) {
+        if ( pHumidityUnit == HumidityUnit.RELATIVE ) {
             setHumidityRelative( pHumidity );
         }
     }

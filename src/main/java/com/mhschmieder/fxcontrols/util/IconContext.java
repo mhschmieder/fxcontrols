@@ -54,5 +54,5 @@ public enum IconContext {
     /**
      * Control Panel context, such as for Modal Dialog OK/Cancel Buttons
      */
-    CONTROL_PANEL;
+    CONTROL_PANEL
 }

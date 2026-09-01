@@ -36,6 +36,7 @@ import com.mhschmieder.jcommons.util.PreferenceUtilities;
 import org.controlsfx.control.action.Action;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -81,10 +82,9 @@ public class MruFileActions {
         // letters at that point and run through the alphabet, at which point we
         // really should break all the MRU's out into a sub-menu.
         final int maximumNumberOfMruFiles = PreferenceUtilities.MRU_CACHE_SIZE;
-        for ( int i = 0; i < maximumNumberOfMruFiles; i++ ) {
-            final XAction mruFileAction = _mruFileActions[ i ];
-            fileActionCollection.add( mruFileAction );
-        }
+        fileActionCollection.addAll( Arrays.asList( _mruFileActions )
+                                           .subList( 0,
+                                                     maximumNumberOfMruFiles ) );
     }
 
     // Update the MRU File actions in the overall File actions, sans file path.
@@ -106,10 +106,10 @@ public class MruFileActions {
                 if ( ( mruFilename != null ) && !mruFilename.trim()
                                                             .isEmpty() ) {
                     final File mruFile = new File( mruFilename );
-                    final String mruLabel = "_"
+                    final String mruLabel = '_'
                                             + LabeledControlFactory.getFileMruHeader(
                             clientProperties,
-                            i + 1 ) + " " + mruFile.getName();
+                            i + 1 ) + ' ' + mruFile.getName();
 
                     mruFileAction.setText( mruLabel );
                     mruFileAction.setDisabled( false );

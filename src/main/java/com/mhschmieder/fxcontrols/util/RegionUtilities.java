@@ -87,7 +87,7 @@ public class RegionUtilities {
      */
     public static Background makeRegionBackground( final Color backColor,
                                                    final Color gradientColor ) {
-        final Stop[] stops = new Stop[] {
+        final Stop[] stops = {
                 new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor )
         };
         final LinearGradient gradient = new LinearGradient( 0.0d,
@@ -187,7 +187,7 @@ public class RegionUtilities {
                                                    final Color gradientColor,
                                                    final CornerRadii radii,
                                                    final Insets insets ) {
-        final Stop[] stops = new Stop[] {
+        final Stop[] stops = {
                 new Stop( 0.0d, backColor ), new Stop( 1.0d, gradientColor )
         };
         final LinearGradient gradient = new LinearGradient( 0.0d,

@@ -121,7 +121,7 @@ public class LabeledActionFactory {
     public static XAction makeFileMruAction( final ClientProperties pClientProperties,
                                              final int mruFileNumber ) {
         // Make sure the MRU File items self-hide if empty and disabled.
-        final String fileMruNumber = "mru" + Integer.toString( mruFileNumber );
+        final String fileMruNumber = "mru" + mruFileNumber;
         return ActionFactory.makeAction( pClientProperties,
                                          BUNDLE_NAME,
                                          "file",
@@ -316,7 +316,7 @@ public class LabeledActionFactory {
 
     public static XAction makeAnimateChartUpdatesCheck( final ClientProperties pClientProperties ) {
         return ActionFactory.makeCheck( pClientProperties,
-                                        LabeledActionFactory.BUNDLE_NAME,
+                                        BUNDLE_NAME,
                                         "view",
                                         "animateChartUpdates",
                                         null,
@@ -325,7 +325,7 @@ public class LabeledActionFactory {
 
     public static XAction getResetAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                                         LabeledActionFactory.BUNDLE_NAME,
+                                         BUNDLE_NAME,
                                          "settings",
                                          "reset",
                                          null );
@@ -594,7 +594,7 @@ public class LabeledActionFactory {
 
     public static XAction getPredictAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                                         LabeledActionFactory.BUNDLE_NAME,
+                                         BUNDLE_NAME,
                                          "simulation",
                                          "predict",
                                          "/icons/glyphish/Calculator16.png" );
@@ -602,7 +602,7 @@ public class LabeledActionFactory {
 
     public static XAction getClearAction( final ClientProperties pClientProperties ) {
         return ActionFactory.makeAction( pClientProperties,
-                                         LabeledActionFactory.BUNDLE_NAME,
+                                         BUNDLE_NAME,
                                          "simulation",
                                          "clear",
                                          "/icons/ahaSoft/Clear16.png" );
@@ -719,7 +719,7 @@ public class LabeledActionFactory {
 
         // Modify the Menu Label to tag the Application Name.
         final String actionText = helpAction.getText();
-        final String actionTextExtended = actionText + " " + applicationName;
+        final String actionTextExtended = actionText + ' ' + applicationName;
         helpAction.setText( actionTextExtended );
 
         return helpAction;
@@ -757,7 +757,7 @@ public class LabeledActionFactory {
         final XActionGroup importActionGroup = ActionFactory.makeActionGroup(
                 clientProperties,
                 importActionCollection,
-                LabeledActionFactory.BUNDLE_NAME,
+                BUNDLE_NAME,
                 "import",
                 "/icons/happyIconStudio/ImportBlack16.png" );
 
@@ -826,7 +826,7 @@ public class LabeledActionFactory {
 
         return ActionFactory.makeActionGroup( clientProperties,
                                               loadActionCollection,
-                                              LabeledActionFactory.BUNDLE_NAME,
+                                              BUNDLE_NAME,
                                               "load",
                                               "/icons/everaldo/FileImport16"
                                               + ".png" );

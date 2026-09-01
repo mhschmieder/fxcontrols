@@ -33,8 +33,8 @@ package com.mhschmieder.fxcontrols.action;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import org.controlsfx.control.action.Action;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This is a struct-like container for actions used by Measurement Units.
@@ -57,7 +57,7 @@ public final class MeasurementUnitsActions {
 
     public Collection< Action > getMeasurementUnitsActionCollection() {
         final Collection< Action > measurementUnitsActionCollection
-                = Arrays.asList( _resetAction );
+                = Collections.singletonList( _resetAction );
 
         return measurementUnitsActionCollection;
     }

@@ -33,8 +33,8 @@ package com.mhschmieder.fxcontrols.action;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import org.controlsfx.control.action.Action;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This is a struct-like container for actions used by Project Properties.
@@ -56,7 +56,7 @@ public final class ProjectPropertiesActions {
 
     public Collection< Action > getProjectPropertiesActionCollection() {
         final Collection< Action > projectPropertiesActionCollection
-                = Arrays.asList( resetAction );
+                = Collections.singletonList( resetAction );
 
         return projectPropertiesActionCollection;
     }

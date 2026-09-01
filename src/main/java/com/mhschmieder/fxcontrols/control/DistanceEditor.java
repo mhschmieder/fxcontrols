@@ -39,10 +39,10 @@ public class DistanceEditor extends DoubleEditor {
     // Declare value increment/decrement amount for up and down arrow keys.
     // NOTE: We increment by 0.5 meters as this works well for most units.
     // TODO: Apply a different increment for each Distance Unit choice?
-    public static final double VALUE_INCREMENT_M = 0.5d;
+    public static final double VALUE_INCREMENT_METERS = 0.5d;
 
     // Store the Distance Unit so we'll know when we need to convert.
-    private DistanceUnit _distanceUnit;
+    private DistanceUnit distanceUnit;
 
     public DistanceEditor( final ClientProperties pClientProperties,
                            final String initialText,
@@ -51,8 +51,6 @@ public class DistanceEditor extends DoubleEditor {
         // NOTE: We use up to two decimal place of precision for displaying
         // distance, and ten decimal places for parsing Distance.
         super( pClientProperties, initialText, tooltipText, true, 0, 2, 0, 10 );
-
-        _distanceUnit = DistanceUnit.METERS;
 
         try {
             initEditor();
@@ -64,16 +62,16 @@ public class DistanceEditor extends DoubleEditor {
 
     private final void initEditor() {
         // Default the Distance Unit to Meters.
-        _distanceUnit = DistanceUnit.METERS;
+        distanceUnit = DistanceUnit.METERS;
 
         // Now it is safe to set the value increment amount.
-        setValueIncrement( VALUE_INCREMENT_M );
+        setValueIncrement( VALUE_INCREMENT_METERS );
     }
 
     // Convert current distance value from display units to Meters.
     public final double getDistanceMeters() {
         return UnitConversion.convertDistance( getValue(),
-                                               _distanceUnit,
+                                               distanceUnit,
                                                DistanceUnit.METERS );
     }
 
@@ -81,45 +79,45 @@ public class DistanceEditor extends DoubleEditor {
     public final void setDistanceMeters( final double distanceMeters ) {
         setValue( UnitConversion.convertDistance( distanceMeters,
                                                   DistanceUnit.METERS,
-                                                  _distanceUnit ) );
-    }
-
-    // Convert maximum Distance value from Meters to display units.
-    public final void setMaximumDistanceMeters( final double maximumDistanceMeters ) {
-        setMaximumValue( UnitConversion.convertDistance( maximumDistanceMeters,
-                                                         DistanceUnit.METERS,
-                                                         _distanceUnit ) );
+                                                  distanceUnit ) );
     }
 
     // Convert minimum Distance value from Meters to display units.
     public final void setMinimumDistanceMeters( final double minimumDistanceMeters ) {
         setMinimumValue( UnitConversion.convertDistance( minimumDistanceMeters,
                                                          DistanceUnit.METERS,
-                                                         _distanceUnit ) );
+                                                         distanceUnit ) );
+    }
+
+    // Convert maximum Distance value from Meters to display units.
+    public final void setMaximumDistanceMeters( final double maximumDistanceMeters ) {
+        setMaximumValue( UnitConversion.convertDistance( maximumDistanceMeters,
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit ) );
     }
 
     public final void updateDistanceUnit( final DistanceUnit distanceUnitNew ) {
         // Convert Distance range from old units to new units.
         final double minimumDistance = UnitConversion.convertDistance(
                 _minimumValue,
-                _distanceUnit,
+                distanceUnit,
                 distanceUnitNew );
         final double maximumDistance = UnitConversion.convertDistance(
                 _maximumValue,
-                _distanceUnit,
+                distanceUnit,
                 distanceUnitNew );
 
         // Convert the current Distance from previous units to new units.
-        final double distanceCurrent
+        final double currentDistance
                 = UnitConversion.convertDistance( getValue(),
-                                                  _distanceUnit,
+                                                  distanceUnit,
                                                   distanceUnitNew );
 
         // Cache the new Distance Unit to provide context for next change.
-        _distanceUnit = distanceUnitNew;
+        distanceUnit = distanceUnitNew;
 
-        // Modify the resolution to be appropriate for the new scale.
-        switch ( _distanceUnit ) {
+        // Set the level of precision based on the granularity of the unit.
+        switch ( distanceUnit ) {
             case METERS:
                 _numberFormat.setMaximumFractionDigits( 3 );
                 break;
@@ -146,13 +144,13 @@ public class DistanceEditor extends DoubleEditor {
         }
 
         // NOTE: Text Editors must set their adjusted range before setting the
-        // adjusted current value, as we manage value legality within callbacks
-        // that check the locally cached minimum and maximum values.
+        //  adjusted current value, as we manage value legality within callbacks
+        //  that check the locally cached minimum and maximum values.
         setMinimumValue( minimumDistance );
         setMaximumValue( maximumDistance );
-        setValue( distanceCurrent );
+        setValue( currentDistance );
 
         // Set the embedded unit string in the generic number textField.
-        setMeasurementUnitString( _distanceUnit.abbreviation() );
+        setMeasurementUnitString( distanceUnit.abbreviation() );
     }
 }
