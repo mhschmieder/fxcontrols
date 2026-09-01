@@ -93,6 +93,9 @@ public class DensityEditor extends DoubleEditor {
 
         // Now it is safe to set the value increment amount.
         setValueIncrement( VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER );
+
+        // Set the embedded unit label in the generic number textField.
+        setMeasurementUnitString( densityUnit.abbreviation() );
     }
 
     // Convert current Density value from display units to kilograms per cubic
