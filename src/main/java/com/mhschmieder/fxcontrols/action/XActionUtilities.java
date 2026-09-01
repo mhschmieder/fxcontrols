@@ -293,6 +293,13 @@ public final class XActionUtilities {
     }
 
     private static Node copyNode( final Node node ) {
+        // Early exit if node is null as instanceof switch statements throw a
+        // runtime exception on the switch statement rather than falling through
+        // to the default case statement.
+        if ( node == null ) {
+            return null;
+        }
+
         final Node copy;
         switch ( node ) {
             case final ImageView imageView -> {
