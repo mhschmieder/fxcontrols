@@ -37,7 +37,7 @@ import com.mhschmieder.jphysics.measure.AngleUnit;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.PressureUnit;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
-import com.mhschmieder.jphysics.measure.WeightUnit;
+import com.mhschmieder.jphysics.measure.MassUnit;
 
 import java.net.URL;
 
@@ -502,13 +502,13 @@ public class ControlFactory {
                                                       defaultAngleUnit );
     }
 
-    public static XComboBox< WeightUnit > makeWeightUnitSelector( final ClientProperties pClientProperties,
-                                                                  final boolean applyToolkitCss,
-                                                                  final WeightUnit defaultWeightUnit ) {
+    public static XComboBox< MassUnit > makeMassUnitSelector( final ClientProperties pClientProperties,
+                                                              final boolean applyToolkitCss,
+                                                              final MassUnit defaultMassUnit ) {
         return ListViewUtilities.makeLabeledSelector( pClientProperties,
-                                                      WeightUnit.values(),
-                                                      "Supported Weight Units",
-                                                      defaultWeightUnit );
+                                                      MassUnit.values(),
+                                                      "Supported Mass Units",
+                                                      defaultMassUnit );
     }
 
     public static XComboBox< TemperatureUnit > makeTemperatureUnitSelector( final ClientProperties pClientProperties,

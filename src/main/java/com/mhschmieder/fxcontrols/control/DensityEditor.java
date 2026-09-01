@@ -37,8 +37,8 @@ import com.mhschmieder.jphysics.measure.DensityUnit;
 public class DensityEditor extends DoubleEditor {
 
     // Declare value increment/decrement amount for up and down arrow keys.
-    // NOTE: We increment by 0.1 degrees kilograms per meter cubed as this is
-    // a typical default.
+    // NOTE: We increment by 0.1 degrees kilograms per meter cubed as this is a
+    //  typical default.
     // TODO: Use a different increment if units are grams per centimeter cubed?
     public static final double VALUE_INCREMENT_KILOGRAMS_PER_CUBIC_METER = 0.1d;
 

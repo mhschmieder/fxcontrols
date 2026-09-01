@@ -35,7 +35,7 @@ import com.mhschmieder.jphysics.measure.DensityUnit;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.PressureUnit;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
-import com.mhschmieder.jphysics.measure.WeightUnit;
+import com.mhschmieder.jphysics.measure.MassUnit;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
@@ -53,14 +53,14 @@ public final class MeasurementUnitProperties {
     public static final MeasurementUnitProperties MKS
             = new MeasurementUnitProperties( DistanceUnit.METERS,
                                              AngleUnit.RADIANS,
-                                             WeightUnit.KILOGRAMS,
+                                             MassUnit.KILOGRAMS,
                                              DensityUnit.KILOGRAMS_PER_CUBIC_METER,
                                              TemperatureUnit.KELVIN,
                                              PressureUnit.PASCALS );
 
     private final ObjectProperty< DistanceUnit > distanceUnit;
     private final ObjectProperty< AngleUnit > angleUnit;
-    private final ObjectProperty< WeightUnit > weightUnit;
+    private final ObjectProperty< MassUnit > massUnit;
     private final ObjectProperty< DensityUnit > densityUnit;
     private final ObjectProperty< TemperatureUnit > temperatureUnit;
     private final ObjectProperty< PressureUnit > pressureUnit;
@@ -68,7 +68,7 @@ public final class MeasurementUnitProperties {
     // Separately, we must cache the preferred default units.
     private final DistanceUnit distanceUnitDefault;
     private final AngleUnit angleUnitDefault;
-    private final WeightUnit weightUnitDefault;
+    private final MassUnit massUnitDefault;
     private final DensityUnit densityUnitDefault;
     private final TemperatureUnit temperatureUnitDefault;
     private final PressureUnit pressureUnitDefault;
@@ -76,7 +76,7 @@ public final class MeasurementUnitProperties {
     // NOTE: These fields have to follow JavaFX Property Beans conventions.
     private BooleanBinding distanceUnitChanged;
     private BooleanBinding angleUnitChanged;
-    private BooleanBinding weightUnitChanged;
+    private BooleanBinding massUnitChanged;
     private BooleanBinding densityUnitChanged;
     private BooleanBinding temperatureUnitChanged;
     private BooleanBinding pressureUnitChanged;
@@ -88,7 +88,7 @@ public final class MeasurementUnitProperties {
     public MeasurementUnitProperties() {
         this( DistanceUnit.defaultValue(),
               AngleUnit.defaultValue(),
-              WeightUnit.defaultValue(),
+              MassUnit.defaultValue(),
               DensityUnit.defaultValue(),
               TemperatureUnit.defaultValue(),
               PressureUnit.defaultValue() );
@@ -99,27 +99,27 @@ public final class MeasurementUnitProperties {
      *
      * @param pDistanceUnit    The Distance Unit to use
      * @param pAngleUnit       The Angle Unit to use
-     * @param pWeightUnit      The Weight Unit to use
+     * @param pMassUnit        The Mass Unit to use
      * @param pDensityUnit     The Density Unit to use
      * @param pTemperatureUnit The Temperature Unit to use
      * @param pPressureUnit    The Pressure Unit to use
      */
     public MeasurementUnitProperties( final DistanceUnit pDistanceUnit,
                                       final AngleUnit pAngleUnit,
-                                      final WeightUnit pWeightUnit,
+                                      final MassUnit pMassUnit,
                                       final DensityUnit pDensityUnit,
                                       final TemperatureUnit pTemperatureUnit,
                                       final PressureUnit pPressureUnit ) {
         distanceUnit = new SimpleObjectProperty<>( pDistanceUnit );
         angleUnit = new SimpleObjectProperty<>( pAngleUnit );
-        weightUnit = new SimpleObjectProperty<>( pWeightUnit );
+        massUnit = new SimpleObjectProperty<>( pMassUnit );
         densityUnit = new SimpleObjectProperty<>( pDensityUnit );
         temperatureUnit = new SimpleObjectProperty<>( pTemperatureUnit );
         pressureUnit = new SimpleObjectProperty<>( pPressureUnit );
 
         distanceUnitDefault = pDistanceUnit;
         angleUnitDefault = pAngleUnit;
-        weightUnitDefault = pWeightUnit;
+        massUnitDefault = pMassUnit;
         densityUnitDefault = pDensityUnit;
         temperatureUnitDefault = pTemperatureUnit;
         pressureUnitDefault = pPressureUnit;
@@ -141,7 +141,7 @@ public final class MeasurementUnitProperties {
     public MeasurementUnitProperties( final MeasurementUnitProperties pMeasurementUnitProperties ) {
         this( pMeasurementUnitProperties.getDistanceUnit(),
               pMeasurementUnitProperties.getAngleUnit(),
-              pMeasurementUnitProperties.getWeightUnit(),
+              pMeasurementUnitProperties.getMassUnit(),
               pMeasurementUnitProperties.getDensityUnit(),
               pMeasurementUnitProperties.getTemperatureUnit(),
               pMeasurementUnitProperties.getPressureUnit() );
@@ -180,12 +180,12 @@ public final class MeasurementUnitProperties {
                 return true;
             }
         };
-        weightUnitChanged = new BooleanBinding() {
+        massUnitChanged = new BooleanBinding() {
             {
                 // When the specific assignable value of interest changes, the
-                // weightUnitChanged Boolean Binding is invalidated and notifies
+                // massUnitChanged Boolean Binding is invalidated and notifies
                 // its listeners.
-                bind( weightUnitProperty() );
+                bind( massUnitProperty() );
             }
 
             // Just auto-clear the invalidation by overriding with a status that
@@ -266,16 +266,16 @@ public final class MeasurementUnitProperties {
         angleUnit.set( pAngleUnit );
     }
 
-    public ObjectProperty< WeightUnit > weightUnitProperty() {
-        return weightUnit;
+    public ObjectProperty< MassUnit > massUnitProperty() {
+        return massUnit;
     }
 
-    public WeightUnit getWeightUnit() {
-        return weightUnit.get();
+    public MassUnit getMassUnit() {
+        return massUnit.get();
     }
 
-    public void setWeightUnit( final WeightUnit pWeightUnit ) {
-        weightUnit.set( pWeightUnit );
+    public void setMassUnit( final MassUnit pMassUnit ) {
+        massUnit.set( pMassUnit );
     }
 
     public ObjectProperty< DensityUnit > densityUnitProperty() {
@@ -328,9 +328,9 @@ public final class MeasurementUnitProperties {
         result = ( prime * result ) + ( ( angleUnit == null )
                                         ? 0
                                         : angleUnit.hashCode() );
-        result = ( prime * result ) + ( ( weightUnit == null )
+        result = ( prime * result ) + ( ( massUnit == null )
                                         ? 0
-                                        : weightUnit.hashCode() );
+                                        : massUnit.hashCode() );
         result = ( prime * result ) + ( ( densityUnit == null )
                                         ? 0
                                         : densityUnit.hashCode() );
@@ -374,12 +374,12 @@ public final class MeasurementUnitProperties {
         else if ( !angleUnit.equals( other.angleUnit ) ) {
             return false;
         }
-        if ( weightUnit == null ) {
-            if ( other.weightUnit != null ) {
+        if ( massUnit == null ) {
+            if ( other.massUnit != null ) {
                 return false;
             }
         }
-        else if ( !weightUnit.equals( other.weightUnit ) ) {
+        else if ( !massUnit.equals( other.massUnit ) ) {
             return false;
         }
         if ( densityUnit == null ) {
@@ -418,8 +418,7 @@ public final class MeasurementUnitProperties {
      */
     public void reset() {
         setMeasurementUnits( distanceUnitDefault,
-                             angleUnitDefault,
-                             weightUnitDefault,
+                             angleUnitDefault, massUnitDefault,
                              densityUnitDefault,
                              temperatureUnitDefault,
                              pressureUnitDefault );
@@ -431,20 +430,20 @@ public final class MeasurementUnitProperties {
      *
      * @param pDistanceUnit    The Distance Unit to use
      * @param pAngleUnit       The Angle Unit to use
-     * @param pWeightUnit      The Weight Unit to use
+     * @param pMassUnit        The Mass Unit to use
      * @param pDensityUnit     The Density Unit to use
      * @param pTemperatureUnit The Temperature Unit to use
      * @param pPressureUnit    The Pressure Unit to use
      */
     public void setMeasurementUnits( final DistanceUnit pDistanceUnit,
                                      final AngleUnit pAngleUnit,
-                                     final WeightUnit pWeightUnit,
+                                     final MassUnit pMassUnit,
                                      final DensityUnit pDensityUnit,
                                      final TemperatureUnit pTemperatureUnit,
                                      final PressureUnit pPressureUnit ) {
         setDistanceUnit( pDistanceUnit );
         setAngleUnit( pAngleUnit );
-        setWeightUnit( pWeightUnit );
+        setMassUnit( pMassUnit );
         setDensityUnit( pDensityUnit );
         setTemperatureUnit( pTemperatureUnit );
         setPressureUnit( pPressureUnit );
@@ -459,7 +458,7 @@ public final class MeasurementUnitProperties {
     private void setMeasurementUnits( final MeasurementUnitProperties pMeasurementUnitProperties ) {
         setMeasurementUnits( pMeasurementUnitProperties.getDistanceUnit(),
                              pMeasurementUnitProperties.getAngleUnit(),
-                             pMeasurementUnitProperties.getWeightUnit(),
+                             pMeasurementUnitProperties.getMassUnit(),
                              pMeasurementUnitProperties.getDensityUnit(),
                              pMeasurementUnitProperties.getTemperatureUnit(),
                              pMeasurementUnitProperties.getPressureUnit() );
@@ -481,12 +480,12 @@ public final class MeasurementUnitProperties {
         return angleUnitChanged.get();
     }
 
-    public BooleanBinding weightUnitChangedProperty() {
-        return weightUnitChanged;
+    public BooleanBinding massUnitChangedProperty() {
+        return massUnitChanged;
     }
 
-    public boolean isWeightUnitChanged() {
-        return weightUnitChanged.get();
+    public boolean getMassUnitChanged() {
+        return massUnitChanged.get();
     }
 
     public BooleanBinding densityUnitChangedProperty() {
