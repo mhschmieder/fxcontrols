@@ -102,6 +102,39 @@ public class TextSelector extends XComboBox< String > {
               ( textValues != null ) && ( textValues.length > 0 )
               ? FXCollections.observableArrayList( textValues )
               : FXCollections.observableArrayList() );
+
+        initTextSelector();
+    }
+
+    private void initTextSelector() {
+        // When user presses Enter, add typed value if not present.
+        setOnAction(event -> updateValues() );
+
+        // When combo box loses focus, add typed value if not present.
+        getEditor().focusedProperty().addListener(
+                ( obs,
+                  wasFocused,
+                  isFocused ) -> {
+                    if ( !isFocused.booleanValue() ) {
+                        updateValues();
+                    }
+                } );
+    }
+
+    /**
+     * Updates the drop-list to include any newly typed values, if the combo box
+     * was set to be editable, then selects the new item in the revised list.
+     */
+    private void updateValues() {
+        if ( !isEditable() ) {
+            return;
+        }
+
+        final String typedValue = getEditor().getText().trim();
+        if ( !typedValue.isEmpty() && !getItems().contains( typedValue ) ) {
+            getItems().add( typedValue );
+            setValue( typedValue ); // Select the newly added item
+        }
     }
 
     public final String getTextValue() {
