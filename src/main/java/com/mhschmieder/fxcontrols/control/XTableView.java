@@ -31,6 +31,7 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.fxcontrols.util.RegionUtilities;
+import com.mhschmieder.fxgraphics.paint.ForegroundManager;
 import org.apache.commons.math3.util.FastMath;
 
 import java.util.Comparator;
@@ -51,7 +52,8 @@ import javafx.scene.paint.Color;
  * @author Mark Schmieder
  * @version 1.0
  */
-public class XTableView< TD > extends TableView< TD > {
+public class XTableView< TD > extends TableView< TD > implements
+                                                      ForegroundManager {
 
     /**
      * Flag for whether auto-selection is enabled, when nothing is selected.
@@ -398,6 +400,7 @@ public class XTableView< TD > extends TableView< TD > {
      * @param backColor The current background color to apply to this table
      * @since 1.0
      */
+    @Override
     public void setForegroundFromBackground( final Color backColor ) {
         final Background background = RegionUtilities.makeRegionBackground(
                 backColor );
