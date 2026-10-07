@@ -32,8 +32,8 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.PhysicsConstants;
+import com.mhschmieder.jphysics.measure.TemperatureConversion;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 public final class TemperatureEditor extends DoubleEditor {
 
@@ -127,33 +127,33 @@ public final class TemperatureEditor extends DoubleEditor {
 
     // Convert maximum Temperature value from Kelvin to display units.
     public void setMaximumTemperatureK( final double maximumTemperatureK ) {
-        setMaximumValue( UnitConversion.convertTemperature( maximumTemperatureK,
-                                                            TemperatureUnit.KELVIN,
-                                                            _temperatureUnit ) );
+        setMaximumValue( TemperatureConversion.convertTemperature( maximumTemperatureK,
+                                                                   TemperatureUnit.KELVIN,
+                                                                   _temperatureUnit ) );
     }
 
     // Convert minimum Temperature value from Kelvin to display units.
     public void setMinimumTemperatureK( final double minimumTemperatureK ) {
-        setMinimumValue( UnitConversion.convertTemperature( minimumTemperatureK,
-                                                            TemperatureUnit.KELVIN,
-                                                            _temperatureUnit ) );
+        setMinimumValue( TemperatureConversion.convertTemperature( minimumTemperatureK,
+                                                                   TemperatureUnit.KELVIN,
+                                                                   _temperatureUnit ) );
     }
 
     // Convert current Temperature value from display units to Kelvin.
     // NOTE: This method is unused currently, but is provided in case we
     // change our mind about having the related slider be the data master.
     public double getTemperatureK() {
-        return UnitConversion.convertTemperature( getValue(),
-                                                  _temperatureUnit,
-                                                  TemperatureUnit.KELVIN );
+        return TemperatureConversion.convertTemperature( getValue(),
+                                                         _temperatureUnit,
+                                                         TemperatureUnit.KELVIN );
     }
 
     // Convert new Temperature value from Kelvin to display units.
     // NOTE: This method is unused currently, but is provided in case we
     // change our mind about having the related slider be the data master.
     public void setTemperatureK( final double temperatureK ) {
-        setValue( UnitConversion.convertTemperature( temperatureK,
-                                                     TemperatureUnit.KELVIN,
-                                                     _temperatureUnit ) );
+        setValue( TemperatureConversion.convertTemperature( temperatureK,
+                                                            TemperatureUnit.KELVIN,
+                                                            _temperatureUnit ) );
     }
 }

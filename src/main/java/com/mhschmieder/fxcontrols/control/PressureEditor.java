@@ -32,8 +32,8 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.PhysicsConstants;
+import com.mhschmieder.jphysics.measure.PressureConversion;
 import com.mhschmieder.jphysics.measure.PressureUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 public class PressureEditor extends DoubleEditor {
 
@@ -128,33 +128,33 @@ public class PressureEditor extends DoubleEditor {
 
     // Convert maximum Pressure value from pascals to display units.
     public final void setMaximumPressurePa( final double maximumPressurePa ) {
-        setMaximumValue( UnitConversion.convertPressure( maximumPressurePa,
-                                                         PressureUnit.PASCALS,
-                                                         _pressureUnit ) );
+        setMaximumValue( PressureConversion.convertPressure( maximumPressurePa,
+                                                             PressureUnit.PASCALS,
+                                                             _pressureUnit ) );
     }
 
     // Convert minimum Pressure value from pascals to display units.
     public final void setMinimumPressurePa( final double minimumPressurePa ) {
-        setMinimumValue( UnitConversion.convertPressure( minimumPressurePa,
-                                                         PressureUnit.PASCALS,
-                                                         _pressureUnit ) );
+        setMinimumValue( PressureConversion.convertPressure( minimumPressurePa,
+                                                             PressureUnit.PASCALS,
+                                                             _pressureUnit ) );
     }
 
     // Convert current Pressure value from display units to pascals.
     // NOTE: This method is unused currently, but is provided in case we
     // change our mind about having the related slider be the data master.
     public final double getPressurePa() {
-        return UnitConversion.convertPressure( getValue(),
-                                               _pressureUnit,
-                                               PressureUnit.PASCALS );
+        return PressureConversion.convertPressure( getValue(),
+                                                   _pressureUnit,
+                                                   PressureUnit.PASCALS );
     }
 
     // Convert new Pressure value from pascals to display units.
     // NOTE: This method is unused currently, but is provided in case we
     // change our mind about having the related slider be the data master.
     public final void setPressurePa( final double pressurePa ) {
-        setValue( UnitConversion.convertPressure( pressurePa,
-                                                  PressureUnit.PASCALS,
-                                                  _pressureUnit ) );
+        setValue( PressureConversion.convertPressure( pressurePa,
+                                                      PressureUnit.PASCALS,
+                                                      _pressureUnit ) );
     }
 }

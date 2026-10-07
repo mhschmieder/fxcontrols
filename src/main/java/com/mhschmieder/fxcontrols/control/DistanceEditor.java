@@ -31,8 +31,8 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
+import com.mhschmieder.jphysics.measure.DistanceConversion;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 public class DistanceEditor extends DoubleEditor {
 
@@ -70,48 +70,48 @@ public class DistanceEditor extends DoubleEditor {
 
     // Convert current distance value from display units to Meters.
     public final double getDistanceMeters() {
-        return UnitConversion.convertDistance( getValue(),
-                                               distanceUnit,
-                                               DistanceUnit.METERS );
+        return DistanceConversion.convertDistance( getValue(),
+                                                   distanceUnit,
+                                                   DistanceUnit.METERS );
     }
 
     // Convert new Distance value from Meters to display units.
     public final void setDistanceMeters( final double distanceMeters ) {
-        setValue( UnitConversion.convertDistance( distanceMeters,
-                                                  DistanceUnit.METERS,
-                                                  distanceUnit ) );
+        setValue( DistanceConversion.convertDistance( distanceMeters,
+                                                      DistanceUnit.METERS,
+                                                      distanceUnit ) );
     }
 
     // Convert minimum Distance value from Meters to display units.
     public final void setMinimumDistanceMeters( final double minimumDistanceMeters ) {
-        setMinimumValue( UnitConversion.convertDistance( minimumDistanceMeters,
-                                                         DistanceUnit.METERS,
-                                                         distanceUnit ) );
+        setMinimumValue( DistanceConversion.convertDistance( minimumDistanceMeters,
+                                                             DistanceUnit.METERS,
+                                                             distanceUnit ) );
     }
 
     // Convert maximum Distance value from Meters to display units.
     public final void setMaximumDistanceMeters( final double maximumDistanceMeters ) {
-        setMaximumValue( UnitConversion.convertDistance( maximumDistanceMeters,
-                                                         DistanceUnit.METERS,
-                                                         distanceUnit ) );
+        setMaximumValue( DistanceConversion.convertDistance( maximumDistanceMeters,
+                                                             DistanceUnit.METERS,
+                                                             distanceUnit ) );
     }
 
     public final void updateDistanceUnit( final DistanceUnit distanceUnitNew ) {
         // Convert Distance range from old units to new units.
-        final double minimumDistance = UnitConversion.convertDistance(
+        final double minimumDistance = DistanceConversion.convertDistance(
                 _minimumValue,
                 distanceUnit,
                 distanceUnitNew );
-        final double maximumDistance = UnitConversion.convertDistance(
+        final double maximumDistance = DistanceConversion.convertDistance(
                 _maximumValue,
                 distanceUnit,
                 distanceUnitNew );
 
         // Convert the current Distance from previous units to new units.
         final double currentDistance
-                = UnitConversion.convertDistance( getValue(),
-                                                  distanceUnit,
-                                                  distanceUnitNew );
+                = DistanceConversion.convertDistance( getValue(),
+                                                      distanceUnit,
+                                                      distanceUnitNew );
 
         // Cache the new Distance Unit to provide context for next change.
         distanceUnit = distanceUnitNew;

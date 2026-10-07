@@ -32,8 +32,8 @@ package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jphysics.PhysicsConstants;
+import com.mhschmieder.jphysics.measure.PressureConversion;
 import com.mhschmieder.jphysics.measure.PressureUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 import javafx.geometry.Orientation;
 
@@ -112,9 +112,9 @@ public class PressureSlider extends NumberSlider {
     public final void updatePressureUnit( final PressureUnit pressureUnit ) {
         // Convert the current Pressure from previous units to new units.
         final double pressureCurrent
-                = UnitConversion.convertPressure( getValue(),
-                                                  _pressureUnit,
-                                                  pressureUnit );
+                = PressureConversion.convertPressure( getValue(),
+                                                      _pressureUnit,
+                                                      pressureUnit );
 
         // Store the new Pressure Unit to provide context for next change.
         _pressureUnit = pressureUnit;
@@ -156,29 +156,29 @@ public class PressureSlider extends NumberSlider {
 
     // Convert maximum Pressure value from pascals to display units.
     public final void setMaximumPressurePa( final double maximumPressurePa ) {
-        setMax( UnitConversion.convertPressure( maximumPressurePa,
-                                                PressureUnit.PASCALS,
-                                                _pressureUnit ) );
+        setMax( PressureConversion.convertPressure( maximumPressurePa,
+                                                    PressureUnit.PASCALS,
+                                                    _pressureUnit ) );
     }
 
     // Convert minimum Pressure value from pascals to display units.
     public final void setMinimumPressurePa( final double minimumPressurePa ) {
-        setMin( UnitConversion.convertPressure( minimumPressurePa,
-                                                PressureUnit.PASCALS,
-                                                _pressureUnit ) );
+        setMin( PressureConversion.convertPressure( minimumPressurePa,
+                                                    PressureUnit.PASCALS,
+                                                    _pressureUnit ) );
     }
 
     // Convert current Pressure value from display units to pascals.
     public final double getPressurePa() {
-        return UnitConversion.convertPressure( getValue(),
-                                               _pressureUnit,
-                                               PressureUnit.PASCALS );
+        return PressureConversion.convertPressure( getValue(),
+                                                   _pressureUnit,
+                                                   PressureUnit.PASCALS );
     }
 
     // Convert new Pressure value from pascals to display units.
     public final void setPressurePa( final double pressurePa ) {
-        setValue( UnitConversion.convertPressure( pressurePa,
-                                                  PressureUnit.PASCALS,
-                                                  _pressureUnit ) );
+        setValue( PressureConversion.convertPressure( pressurePa,
+                                                      PressureUnit.PASCALS,
+                                                      _pressureUnit ) );
     }
 }

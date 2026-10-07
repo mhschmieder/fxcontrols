@@ -33,9 +33,10 @@ package com.mhschmieder.fxcontrols.model;
 import com.mhschmieder.fxgraphics.beans.BeanFactory;
 import com.mhschmieder.jphysics.PhysicsConstants;
 import com.mhschmieder.jphysics.measure.HumidityUnit;
+import com.mhschmieder.jphysics.measure.PressureConversion;
 import com.mhschmieder.jphysics.measure.PressureUnit;
+import com.mhschmieder.jphysics.measure.TemperatureConversion;
 import com.mhschmieder.jphysics.measure.TemperatureUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 import java.util.Objects;
 
@@ -270,19 +271,19 @@ public final class NaturalEnvironmentProperties {
     }
 
     public double getTemperatureC() {
-        return UnitConversion.kelvinToCelsius( temperatureK.get() );
+        return TemperatureConversion.kelvinToCelsius( temperatureK.get() );
     }
 
     public void setTemperatureC( final double pTemperatureC ) {
-        temperatureK.set( UnitConversion.celsiusToKelvin( pTemperatureC ) );
+        temperatureK.set( TemperatureConversion.celsiusToKelvin( pTemperatureC ) );
     }
 
     public double getTemperatureF() {
-        return UnitConversion.kelvinToFahrenheit( temperatureK.get() );
+        return TemperatureConversion.kelvinToFahrenheit( temperatureK.get() );
     }
 
     public void setTemperatureF( final double pTemperatureF ) {
-        temperatureK.set( UnitConversion.fahrenheitToKelvin( pTemperatureF ) );
+        temperatureK.set( TemperatureConversion.fahrenheitToKelvin( pTemperatureF ) );
     }
 
     public void setTemperature( final double pTemperature,
@@ -341,27 +342,27 @@ public final class NaturalEnvironmentProperties {
     }
 
     public double getPressureKpa() {
-        return UnitConversion.pascalsToKilopascals( pressurePa.get() );
+        return PressureConversion.pascalsToKilopascals( pressurePa.get() );
     }
 
     public void setPressureKpa( final double pPressureKpa ) {
-        pressurePa.set( UnitConversion.kilopascalsToPascals( pPressureKpa ) );
+        pressurePa.set( PressureConversion.kilopascalsToPascals( pPressureKpa ) );
     }
 
     public double getPressureMb() {
-        return UnitConversion.pascalsToMillibars( pressurePa.get() );
+        return PressureConversion.pascalsToMillibars( pressurePa.get() );
     }
 
     public void setPressureMb( final double pPressureMb ) {
-        pressurePa.set( UnitConversion.millibarsToPascals( pPressureMb ) );
+        pressurePa.set( PressureConversion.millibarsToPascals( pPressureMb ) );
     }
 
     public double getPressureAtm() {
-        return UnitConversion.pascalsToAtmospheres( pressurePa.get() );
+        return PressureConversion.pascalsToAtmospheres( pressurePa.get() );
     }
 
     public void setPressureAtm( final double pPressureAtm ) {
-        pressurePa.set( UnitConversion.atmospheresToPascals( pPressureAtm ) );
+        pressurePa.set( PressureConversion.atmospheresToPascals( pPressureAtm ) );
     }
 
     public void setPressure( final double pPressure,
