@@ -31,7 +31,6 @@
 package com.mhschmieder.fxcontrols.control;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
-import com.mhschmieder.jcommons.util.SystemType;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -71,8 +70,8 @@ public class XTextField extends TextField {
         }
     }
 
-    private final void initEditor( final String tooltipText,
-                                   final boolean applyToolkitCss ) {
+    private void initEditor( final String tooltipText,
+                             final boolean applyToolkitCss ) {
         // Set the default generic text field tool tip if none is provided.
         if ( ( tooltipText != null ) && !tooltipText.trim().isEmpty() ) {
             setTooltip( new Tooltip( tooltipText ) );
@@ -80,7 +79,7 @@ public class XTextField extends TextField {
         else {
             setTooltip( new Tooltip(
                     "Use ENTER or TAB Key to Commit Edits, and ESC to Cancel "
-                    + "Edits" ) ); //$NON-NLS-1$
+                    + "Edits" ) );
         }
 
         if ( applyToolkitCss ) {
@@ -93,14 +92,9 @@ public class XTextField extends TextField {
         }
 
         // Try to make sure the text field uses enough height so that commas
-        // don't look like periods. More height is required on the Mac for these
-        // and other characters involving descenders, to avoid clipping.
-        setPrefHeight( clientProperties.systemType == SystemType.MACOS
-                       ? 24.0d
-                       : 22.0d );
-        setMinHeight( clientProperties.systemType == SystemType.MACOS
-                      ? 24.0d
-                      : 22.0d );
+        // don't look like periods, and descenders on "g" and "y" don't clip.
+        setPrefHeight( 24.0d );
+        setMinHeight( 24.0d );
 
         // Just in case we use or derive this class without overriding special
         // key handling, add some rudimentary behavior that minimizes surprises.
@@ -119,12 +113,10 @@ public class XTextField extends TextField {
 
                     break;
                 case TAB:
-                    // NOTE: Nothing to do, as Text Input Controls commit
-                    // edits and
-                    // then release focus when the TAB key is pressed, so the
-                    // Focus
-                    // Lost handler is where value restrictions should be
-                    // applied.
+                    // NOTE: Nothing to do, as Text Input Controls commit edits
+                    //  and then release focus when the TAB key is pressed, so
+                    //  that the Focus Lost handler is where value restrictions
+                    //  should be applied.
                     break;
                 // $CASES-OMITTED$
                 default:
